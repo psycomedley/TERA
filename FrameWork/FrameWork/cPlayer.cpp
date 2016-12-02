@@ -46,9 +46,7 @@ cPlayer::cPlayer()
 cPlayer::~cPlayer()
 {
 	for (int i = 0; i < E_STATE_END; i++)
-	{
 		SAFE_DELETE(m_aStates[i]);
-	}
 
 	//SAFE_DELETE(m_pStateIdle);
 	//SAFE_DELETE(m_pStateRun);

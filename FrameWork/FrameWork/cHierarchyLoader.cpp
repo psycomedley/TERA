@@ -93,7 +93,9 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 	// pMeshData->pMesh를 원본 메쉬에 복사
 	if (pMeshData && pMeshData->pMesh)
 	{
-		/*D3DXVECTOR3 vMin(FLT_MAX, FLT_MAX, FLT_MAX);
+		/////////////////////////임시///////////////////////////
+
+		D3DXVECTOR3 vMin(FLT_MAX, FLT_MAX, FLT_MAX);
 		D3DXVECTOR3 vMax(FLT_MIN, FLT_MIN, FLT_MIN);
 
 		LPVOID pV = NULL;
@@ -105,7 +107,9 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 			&vMax);
 		D3DXVec3Minimize(&m_vMin, &m_vMin, &vMin);
 		D3DXVec3Maximize(&m_vMax, &m_vMax, &vMax);
-		pMeshData->pMesh->UnlockVertexBuffer();*/
+		pMeshData->pMesh->UnlockVertexBuffer();
+
+		/////////////////////////////////////////////////////////
 
 		/*pMeshData->pMesh->CloneMeshFVF(
 			pMeshData->pMesh->GetOptions(),

@@ -6,6 +6,7 @@ class cDynamicMesh;
 class cDynamicObj;
 class cStaticObj;
 class cPlayer;
+class cBoss;
 class cGrid;
 class cMap;
 class cMainGame
@@ -14,15 +15,12 @@ private:
 	cCube*				cube;
 	cCamera*			m_pCamera;
 
-	cDynamicObj*		m_pPlayer;
-
-
-	cDynamicObj*		m_pObj;
-	cDynamicObj*		m_pObj2;
+	cDynamicObj*	m_pPlayer;
+	cDynamicObj*	m_pBoss;
 
 	cMap*				m_pMap;
 
-	cGrid*				m_pGrid;
+
 
 	//юс╫ц
 	int a = 0;

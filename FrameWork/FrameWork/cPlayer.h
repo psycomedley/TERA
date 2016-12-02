@@ -3,13 +3,8 @@
 #include "cWeapon.h"
 
 class iState;
-
-
 class cPlayer : public cDynamicObj
 {
-private:
-
-
 private:
 	iState*			m_pState;
 
@@ -37,13 +32,12 @@ public:
 
 	bool IsMoveAble();
 
+public:
 	void SetupBaseWeapon();
 	void SetupState();
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 	void CheckControl();
 	void CheckState();
-
-public:
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 
 
 	//юс╫ц

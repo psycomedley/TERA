@@ -7,11 +7,9 @@
 #include "cRay.h"
 #include "cPlayer.h"
 #include "cMap.h"
+#include "cBoss.h"
 
 //임시
-#include "cStateIdle.h"
-#include "cStateRun.h"
-#include "cStateDefence.h"
 #include "cGrid.h"
 
 cMainGame::cMainGame()
@@ -32,8 +30,7 @@ cMainGame::~cMainGame()
 	Release();
 
 	SAFE_RELEASE(m_pPlayer);
-	SAFE_RELEASE(m_pObj);
-	SAFE_RELEASE(m_pObj2);
+	SAFE_RELEASE(m_pBoss);
 	
 }
 
@@ -52,16 +49,18 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 
-
-//	m_pMesh2 = new cDynamicMesh("Zealot", "zealot.X");
-//	m_pMesh2->SetAnimationIdxBlend(4);
-//	m_pMesh2->SetPosition(D3DXVECTOR3(4, 0, 0));
-
 	m_pPlayer = new cPlayer("Popori", "Popori.X");
 	m_pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	m_pPlayer->SetRevision(matR);
+
+	m_pBoss = new cBoss("Monster", "Boss.X");
+	m_pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	D3DXMATRIXA16 matT, mat;
+	D3DXMatrixTranslation(&matT, 0, 15, 0);
+	mat = matR * matT;
+	m_pBoss->SetRevision(mat);
 
 	m_pCamera = new cCamera;
 	m_pCamera->Setup();
@@ -76,21 +75,10 @@ HRESULT cMainGame::Setup()
 
 	SetLighting();
 
-
-	m_pObj = new cDynamicObj("Popori", "Popori.X");
-	m_pObj->SetPosition(D3DXVECTOR3(5, 0, 0));
-
-	m_pObj2 = new cDynamicObj("Zealot", "zealot.X");
-	m_pObj2->SetPosition(D3DXVECTOR3(-5, 0, 0));
-
+	//	m_pMap = new cStaticObj("Fire", "as.X");
+	//	m_pMap->SetScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
 
 	///////////////////////////////////
-
-	
-
-
-//	m_pMap = new cStaticObj("Fire", "as.X");
-//	m_pMap->SetScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
 
 	return S_OK;
 }
@@ -114,6 +102,12 @@ void cMainGame::Update()
 	///////////////임시////////////////
 	
 	//	m_pMap->Update();
+
+
+	if (KEYBOARD->IsStayKeyDown(DIK_I))
+	{
+		m_pBoss->SetPosition(m_pBoss->GetPosition() - m_pBoss->GetDirection() * 0.1);
+	}
 
 	///////////////////////////////////
 }
@@ -153,12 +147,18 @@ void cMainGame::Render()
 
 
 	if (m_pPlayer)
-	{
 		m_pPlayer->UpdateAndRender();
+//	m_pPlayer->Bounding_Render();
+
+	if (m_pBoss)
+	{
+		m_pBoss->UpdateAndRender();
+//		m_pBoss->Bounding_Render();
 	}
 
 	if (m_pMap)
 		m_pMap->Render();
+
 	///////////////임시////////////////
 	
 	m_pGrid->Render();

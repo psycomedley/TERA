@@ -34,6 +34,12 @@ void cGameObject::Render()
 }
 
 
+void cGameObject::Bounding_Render()
+{
+	m_pMesh->Bounding_Render();
+}
+
+
 void cGameObject::SetPosition(D3DXVECTOR3 vPos)
 {
 	m_vPosition = vPos;
