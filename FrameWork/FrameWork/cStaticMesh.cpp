@@ -77,6 +77,40 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 
 	SetupBounding(m_vMin, m_vMax);
 
+	//스테틱매쉬 버텍스및 인덱스 얻기
+	WORD* index;
+
+	ST_PNT_VERTEX* vertices;
+	m_pMesh->GetVertexBuffer(&m_VB);
+	vertices = new ST_PNT_VERTEX[m_pMesh->GetNumVertices()];
+
+
+	void* pVerties;
+	m_VB->Lock(0, 0, (void**)&pVerties, 0);
+	memcpy(vertices, pVerties, sizeof(ST_PNT_VERTEX)*m_pMesh->GetNumVertices());
+
+	m_vecVertaxies.resize(m_pMesh->GetNumVertices());
+	for (int i = 0; i < m_pMesh->GetNumVertices(); ++i)
+	{
+		m_vecVertaxies[i] = vertices[i];
+	}
+	m_VB->Unlock();
+
+
+	m_pMesh->GetIndexBuffer(&m_IB);
+	index = new WORD[m_pMesh->GetNumFaces() * 3];
+
+	void* pInedex;
+	m_IB->Lock(0, 0, (void**)&pInedex, 0);
+	memcpy(index, pInedex, sizeof(WORD)*m_pMesh->GetNumFaces());
+
+	for (int i = 0; i < m_pMesh->GetNumFaces() * 3; ++i)
+	{
+		m_vecIndecies.push_back(index[i]);
+	}
+	m_IB->Unlock();
+
+
 	return S_OK;
 }
 
@@ -102,6 +136,7 @@ void cStaticMesh::Release()
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pSubSetBuffer);
-
+	SAFE_RELEASE(m_VB);
+	SAFE_RELEASE(m_IB);
 	cMesh::Release();
 }

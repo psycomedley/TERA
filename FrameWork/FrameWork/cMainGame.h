@@ -1,5 +1,4 @@
 #pragma once
-
 class cCube;
 class cCamera;
 class cStaticMesh;
@@ -8,11 +7,12 @@ class cDynamicObj;
 class cStaticObj;
 class cPlayer;
 class cGrid;
+class cMap;
 class cMainGame
 {
 private:
-	cCube*			cube;
-	cCamera*		m_pCamera;
+	cCube*				cube;
+	cCamera*			m_pCamera;
 
 	cDynamicObj*		m_pPlayer;
 
@@ -20,9 +20,9 @@ private:
 	cDynamicObj*		m_pObj;
 	cDynamicObj*		m_pObj2;
 
-//	cStaticObj*		m_pMap;
+	cMap*				m_pMap;
 
-	cGrid*		m_pGrid;
+	cGrid*				m_pGrid;
 
 	//юс╫ц
 	int a = 0;

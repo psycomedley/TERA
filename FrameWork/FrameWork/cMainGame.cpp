@@ -6,6 +6,7 @@
 #include "cCube.h"
 #include "cRay.h"
 #include "cPlayer.h"
+#include "cMap.h"
 
 //임시
 #include "cStateIdle.h"
@@ -26,11 +27,14 @@ cMainGame::~cMainGame()
 	///////////////////////////////////
 
 	SAFE_DELETE(m_pCamera);
+	SAFE_RELEASE(m_pMap);
+
 	Release();
 
 	SAFE_RELEASE(m_pPlayer);
 	SAFE_RELEASE(m_pObj);
 	SAFE_RELEASE(m_pObj2);
+	
 }
 
 
@@ -61,6 +65,9 @@ HRESULT cMainGame::Setup()
 
 	m_pCamera = new cCamera;
 	m_pCamera->Setup();
+
+
+	m_pMap = new cMap("Map","Map.x");
 
 	///////////////임시////////////////
 
@@ -141,6 +148,9 @@ void cMainGame::Render()
 	{
 		m_pPlayer->UpdateAndRender();
 	}
+
+	if (m_pMap)
+		m_pMap->Render();
 	///////////////임시////////////////
 	
 	m_pGrid->Render();
