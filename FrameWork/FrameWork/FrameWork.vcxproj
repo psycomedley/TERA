@@ -105,6 +105,7 @@
     <ClInclude Include="cMap.h" />
     <ClInclude Include="cMesh.h" />
     <ClInclude Include="cMeshMgr.h" />
+    <ClInclude Include="cMonster.h" />
     <ClInclude Include="cMouse.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cObject.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="cMap.cpp" />
     <ClCompile Include="cMesh.cpp" />
     <ClCompile Include="cMeshMgr.cpp" />
+    <ClCompile Include="cMonster.cpp" />
     <ClCompile Include="cMouse.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cObject.cpp" />
