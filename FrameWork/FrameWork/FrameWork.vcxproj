@@ -117,6 +117,7 @@
     <ClInclude Include="cStateDefence.h" />
     <ClInclude Include="cStateIdle.h" />
     <ClInclude Include="cStateRun.h" />
+    <ClInclude Include="cStateSkill.h" />
     <ClInclude Include="cStateWait.h" />
     <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cStaticObj.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="cStateDefence.cpp" />
     <ClCompile Include="cStateIdle.cpp" />
     <ClCompile Include="cStateRun.cpp" />
+    <ClCompile Include="cStateSkill.cpp" />
     <ClCompile Include="cStateWait.cpp" />
     <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cStaticObj.cpp" />

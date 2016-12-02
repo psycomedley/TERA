@@ -33,8 +33,8 @@ private:
 	//iState*		m_pStateAttack;
 
 public:
-	virtual void ChangeState(iState* pState);
-	virtual void ChangeState(int pState);
+	virtual void ChangeState(iState* pState, int nSkillIndex = -1);
+	virtual void ChangeState(int pState, int nSkillIndex = -1);
 
 	bool IsMoveAble();
 

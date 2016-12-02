@@ -7,6 +7,7 @@
 #include "cStateDefence.h"
 #include "cStateWait.h"
 #include "cStateCombo.h"
+#include "cStateSkill.h"
 #include "cAnimationController.h"
 
 
@@ -25,7 +26,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	//Head
 	
 	//юс╫ц
-//	SetupBaseWeapon();
+	SetupBaseWeapon();
 	SetupState();
 }
 
@@ -56,7 +57,7 @@ cPlayer::~cPlayer()
 }
 
 
-void cPlayer::ChangeState(iState* pState)
+void cPlayer::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 {
 	if (m_pState)
 		if (m_pState == pState)
@@ -72,7 +73,7 @@ void cPlayer::ChangeState(iState* pState)
 }
 
 
-void cPlayer::ChangeState(int pState)
+void cPlayer::ChangeState(int pState, int nSkillIndex /*= -1*/)
 {
 	if (m_pState)
 		if (m_pState == m_aStates[pState])
@@ -85,6 +86,9 @@ void cPlayer::ChangeState(int pState)
 		pPrevState->End();
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
+
+	if (m_pState == m_aStates[E_STATE_SKILL])
+		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
 }
@@ -117,6 +121,8 @@ void cPlayer::SetupState()
 	m_aStates[E_STATE_COMBO]->SetParent(this);
 	m_aStates[E_STATE_WAIT] = new cStateWait;
 	m_aStates[E_STATE_WAIT]->SetParent(this);
+	m_aStates[E_STATE_SKILL] = new cStateSkill;
+	m_aStates[E_STATE_SKILL]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 
@@ -187,8 +193,11 @@ void cPlayer::CheckControl()
 	}*/
 	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
 	{
-		ChangeState(E_STATE_COMBO);
-		m_bIsBattle = true;
+		if (m_pState != m_aStates[E_STATE_SKILL])
+		{
+			ChangeState(E_STATE_COMBO);
+			m_bIsBattle = true;
+		}
 	}
 	if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
 	{
@@ -203,6 +212,16 @@ void cPlayer::CheckControl()
 	}
 
 
+	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	{
+		ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
+		m_bIsBattle = true;
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2))
+	{
+		ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+		m_bIsBattle = true;
+	}
 
 
 
