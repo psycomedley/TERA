@@ -56,12 +56,9 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	m_pPlayer->SetRevision(matR);
 
-	m_pBoss = new cBoss("Monster", "Boss.X");
+	m_pBoss = new cBoss("Monster", "Orca.X");
 	m_pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	D3DXMATRIXA16 matT, mat;
-	D3DXMatrixTranslation(&matT, 0, 15, 0);
-	mat = matR * matT;
-	m_pBoss->SetRevision(mat);
+	m_pBoss->SetRevision(matR);
 
 	m_pCamera = new cCamera;
 	m_pCamera->Setup();
@@ -94,6 +91,9 @@ void cMainGame::Update()
 	if (m_pCamera)
 		m_pCamera->Update(&m_pPlayer->GetPosition());
 	
+	if (m_pBoss)
+		m_pBoss->Update();
+
 	//지형 충돌 ...진행중
 	/*if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{

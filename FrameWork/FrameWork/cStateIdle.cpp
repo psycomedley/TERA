@@ -14,7 +14,7 @@ cStateIdle::~cStateIdle()
 
 void cStateIdle::Start()
 {
-	ST_ANIMATION_INFO aniInfo(E_ANI_IDLE, false, true);
+	ST_ANIMATION_INFO aniInfo(E_COMMON_ANI_IDLE, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
 }

@@ -16,6 +16,8 @@ public:
 	bool IsMoveAble();
 
 
+public:
+	virtual void Update() override;
 
 public:
 	void SetupState();

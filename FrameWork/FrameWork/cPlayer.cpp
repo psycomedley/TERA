@@ -212,13 +212,19 @@ void cPlayer::CheckControl()
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
-		ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
-		m_bIsBattle = true;
+		if (m_pState == m_aStates[E_STATE_WAIT])
+		{
+			ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
+			m_bIsBattle = true;
+		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_2))
 	{
-		ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
-		m_bIsBattle = true;
+		if (m_pState == m_aStates[E_STATE_WAIT])
+		{
+			ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+			m_bIsBattle = true;
+		}
 	}
 
 

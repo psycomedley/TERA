@@ -15,7 +15,7 @@ cStateRun::~cStateRun()
 
 void cStateRun::Start()
 {
-	ST_ANIMATION_INFO aniInfo(E_ANI_RUN, false, true);
+	ST_ANIMATION_INFO aniInfo(E_COMMON_ANI_RUN, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
 }

@@ -16,3 +16,9 @@ cMonster::cMonster()
 cMonster::~cMonster()
 {
 }
+
+
+void cMonster::Update()
+{
+	cGameObject::Update();
+}
