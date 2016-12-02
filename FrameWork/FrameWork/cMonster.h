@@ -3,13 +3,16 @@
 
 class cMonster : public cDynamicObj
 {
-private:
+protected:
 	ST_UNIT_INFO	m_stInfo;
 
 public:
 
 public:
-	cMonster();
+	cMonster(char* szFolder, char* szFilename);
 	~cMonster();
+
+protected:
+	cMonster();
 };
 

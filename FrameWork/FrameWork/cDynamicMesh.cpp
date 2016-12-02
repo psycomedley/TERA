@@ -30,17 +30,6 @@ cDynamicMesh::cDynamicMesh(char* szFolder, char* szFilename)
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumTracks(),
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumEvents(),
 		&m_pAnimController->m_pController);
-
-
-//	m_fAnimBlendTime = pDynamicdMesh->m_fAnimBlendTime;
-//	m_fPassedAnimBlendTime = pDynamicdMesh->m_fPassedAnimBlendTime;
-
-	/*pDynamicdMesh->m_pAnimController->CloneAnimationController(
-		pDynamicdMesh->m_pAnimController->GetMaxNumAnimationOutputs(),
-		pDynamicdMesh->m_pAnimController->GetMaxNumAnimationSets(),
-		pDynamicdMesh->m_pAnimController->GetMaxNumTracks(),
-		pDynamicdMesh->m_pAnimController->GetMaxNumEvents(),
-		&m_pAnimController);*/
 }
 
 
@@ -99,9 +88,9 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 		SetupBoneMatrixPtrs(m_pRootFrame);
 
 	//임시 바운딩 만들어야하는데 나중에 변경합시다
-	dlatl(m_pRootFrame);
+//	dlatl(m_pRootFrame);
 	
-	SetupBounding(m_vMin, m_vMax);
+	SetupBounding(ah.GetvMin(), ah.GetvMax());
 
 	return S_OK;
 }

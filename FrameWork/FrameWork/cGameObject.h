@@ -25,6 +25,7 @@ public:
 public:
 	virtual void Update();
 	virtual void Render();
+	void Bounding_Render();
 
 public:
 	cGameObject(void);
