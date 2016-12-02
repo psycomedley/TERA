@@ -33,3 +33,30 @@ void cMap::Render()
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	cStaticObj::Render();
 }
+bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
+{
+	
+	D3DXVECTOR3 rayPos(x, 1000, z);
+	D3DXVECTOR3 rayDir(0, -1, 0);
+	float u, v, d;
+	BOOL Hit;
+	D3DXVECTOR3 p1;
+	D3DXVECTOR3 p2;
+	D3DXVECTOR3 p3;
+	vector<D3DXVECTOR3> vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
+
+	for (int i = 0; i < vecVertex.size(); i += 3)
+	{
+		p1 = vecVertex[i];
+		p2 = vecVertex[i + 1];
+		p3 = vecVertex[i + 2];
+		if (D3DXIntersectTri(&p1, &p2, &p3, &rayPos, &rayDir, &u, &v, &d))
+		{
+			y = 1000 - d;
+			return true;
+
+		}
+	}
+	y = 0;
+	return false;
+}

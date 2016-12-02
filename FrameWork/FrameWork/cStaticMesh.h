@@ -16,8 +16,9 @@ protected:
 
 	LPDIRECT3DVERTEXBUFFER9		m_VB;
 	LPDIRECT3DINDEXBUFFER9		m_IB;
-	vector<ST_PNT_VERTEX>		m_vecVertaxies;
-	vector<WORD>				m_vecIndecies;
+
+	vector<D3DXVECTOR3>			m_vecVertaxies;
+	
 
 public:
 	virtual void Update();
@@ -28,8 +29,7 @@ public:
 	cStaticMesh(char* szFolder, char* szFilename);
 	~cStaticMesh();
 
-	vector<ST_PNT_VERTEX>* GetVecVertaxies(){ return &m_vecVertaxies; }
-	vector<WORD>* GetVecIndecies(){ return &m_vecIndecies; }
+	vector<D3DXVECTOR3>* GetVecVertaxies(){ return &m_vecVertaxies; }
 
 protected:
 	cStaticMesh();

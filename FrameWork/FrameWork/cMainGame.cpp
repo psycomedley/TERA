@@ -100,9 +100,17 @@ void cMainGame::Update()
 {
 	GETSINGLE(cInput)->Update();
 
+	D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();
+
 	if (m_pCamera)
 		m_pCamera->Update(&m_pPlayer->GetPosition());
 	
+	//지형 충돌 ...진행중
+	/*if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
+	{
+		m_pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
+	}*/
+
 	///////////////임시////////////////
 	
 	//	m_pMap->Update();

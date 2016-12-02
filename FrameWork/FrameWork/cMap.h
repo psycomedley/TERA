@@ -15,6 +15,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	bool GetHeight(IN float x, OUT float& y, IN float z);
+
 private:
 	cMap();
 };
