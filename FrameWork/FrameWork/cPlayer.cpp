@@ -24,7 +24,8 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 //	m_pArm = new cDynamicObj(szFolder, "Popori_Arm.X");		//Arm
 	//Leg
 	//Head
-	
+
+	SetBoundingPos();
 	//юс╫ц
 	SetupBaseWeapon();
 	SetupState();
@@ -148,7 +149,7 @@ void cPlayer::CheckControl()
 	{
 		if (IsMoveAble())
 		{
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
+			m_vPosition = m_vPosition - m_vDirection;
 			ChangeState(E_STATE_RUN);
 		}
 	}
@@ -156,7 +157,7 @@ void cPlayer::CheckControl()
 	{
 		if (IsMoveAble())
 		{
-			m_vPosition = m_vPosition + m_vDirection * 0.1;
+			m_vPosition = m_vPosition + m_vDirection;
 			ChangeState(E_STATE_RUN);
 		}
 	}

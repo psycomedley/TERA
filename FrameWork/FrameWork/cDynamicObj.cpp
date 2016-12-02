@@ -6,6 +6,7 @@
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
+	SetBoundingPos();
 }
 
 
@@ -21,6 +22,8 @@ cDynamicObj::~cDynamicObj()
 
 void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 {
+	cGameObject::Update();
+
 	D3DXMATRIXA16 matS, matR, matT, mat;
 	if (pmat)
 	{

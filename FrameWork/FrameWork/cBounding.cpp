@@ -3,6 +3,7 @@
 
 
 cBounding::cBounding()
+	: m_vPosition(0, 0, 0)
 {
 }
 

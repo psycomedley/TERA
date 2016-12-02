@@ -88,6 +88,7 @@
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
     <ClInclude Include="cBoss.h" />
+    <ClInclude Include="cBounding.h" />
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
     <ClInclude Include="cCamera.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
     <ClCompile Include="cBoss.cpp" />
+    <ClCompile Include="cBounding.cpp" />
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />
     <ClCompile Include="cCamera.cpp" />

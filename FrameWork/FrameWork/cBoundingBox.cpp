@@ -28,15 +28,15 @@ HRESULT cBoundingBox::Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax)
 }
 
 
-void cBoundingBox::Render()
+void cBoundingBox::Render(D3DXVECTOR3 vPos)
 {
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	D3DXMATRIXA16 mat;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixTranslation(&mat,
-		0,
-		(m_vMax.y + m_vMin.y) / 2,
-		0);
+		vPos.x,
+		vPos.y + (m_vMax.y + m_vMin.y) / 2,
+		vPos.z);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat); 
 	m_pBoxMesh->DrawSubset(0);
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
