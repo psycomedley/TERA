@@ -19,19 +19,19 @@ void cStateCombo::Start()
 {
 	ST_ANIMATION_INFO aniInfo(E_ANI_COMBO1, true, false);
 	m_pParent->AddAnimation(aniInfo);
-	aniInfo.SetInfo(E_ANI_COMBO1R, true, true);
+	aniInfo.SetInfo(E_ANI_COMBO1R, true, false);
 	m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_COMBO2, true, false);
 	m_pParent->AddAnimation(aniInfo);
-	aniInfo.SetInfo(E_ANI_COMBO2R, true, true);
+	aniInfo.SetInfo(E_ANI_COMBO2R, true, false);
 	m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_COMBO3, true, false);
 	m_pParent->AddAnimation(aniInfo);
-	aniInfo.SetInfo(E_ANI_COMBO3R, true, true);
+	aniInfo.SetInfo(E_ANI_COMBO3R, true, false);
 	m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_COMBO4, true, false);
 	m_pParent->AddAnimation(aniInfo);
-	aniInfo.SetInfo(E_ANI_COMBO4R, true, true);
+	aniInfo.SetInfo(E_ANI_COMBO4R, true, false);
 	m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_COMBO5, true, false);
 	m_pParent->AddAnimation(aniInfo);

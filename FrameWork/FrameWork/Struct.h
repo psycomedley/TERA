@@ -71,3 +71,15 @@ struct ST_ANIMATION_INFO
 
 	void SetInfo(int _nIndex, bool _bPlayOnce, bool _bBlend) { nIndex = _nIndex; bPlayOnce = _bPlayOnce; bBlend = _bBlend; }
 };
+
+
+struct ST_UNIT_INFO
+{
+	int		nMaxHp;
+	int		nHp;
+	int		nMaxMp;
+	int		nMp;
+
+	float	fDamage;
+	float	fDefence;
+};
