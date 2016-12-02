@@ -9,6 +9,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	cVector3 v1, v2;
 	cVector3 v = v1 + v2;
 	v.Print();
+
+	//////益焼たたたたたたたたたたたたたたたたたた粧
+
 	return 0;
 }
 
