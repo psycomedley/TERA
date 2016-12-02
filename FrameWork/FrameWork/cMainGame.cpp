@@ -51,13 +51,14 @@ HRESULT cMainGame::Setup()
 	}
 
 	m_pPlayer = new cPlayer("Popori", "Popori.X");
-//	m_pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	m_pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	m_pPlayer->SetRevision(matR);
+	m_pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
 
 	m_pBoss = new cBoss("Monster", "Orca.X");
-//	m_pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	m_pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	m_pBoss->SetRevision(matR);
 
 	m_pCamera = new cCamera;
@@ -71,16 +72,14 @@ HRESULT cMainGame::Setup()
 	m_pGrid = new cGrid;
 	m_pGrid->Setup(30);
 
-	m_pBoss2 = new cMonster("Monster", "Orca.X");
-//	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	/*m_pBoss2 = new cMonster("Monster", "Orca.X");
+	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	m_pBoss2->SetRevision(matR);
-//	m_pBoss2->setpo
+	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 
 	SetLighting();
 
-	//	m_pMap = new cStaticObj("Fire", "as.X");
-	//	m_pMap->SetScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
 
 	///////////////////////////////////
 
@@ -133,26 +132,34 @@ void cMainGame::Render()
 //	OutputInteger(msg, "x", pos.x);
 //	OutputInteger(msg, "y", pos.y);
 
-	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
-	{
-		POINT p = MOUSE->GetWindowPos();
-
-		cRay r;
-		r = cRay::CalcWorldSpace(p);
-
-		cBoundingSphere* sphere = m_pPlayer->GetSphere();
-		r = r.WorldToLocal(sphere->GetCenter());
-
-
-		//	bool pick = r.IsPick(sphere);
-		if (GETSINGLE(cCollision)->Collision(sphere, &r))
-		{
-			static int c = 2;
-			m_pPlayer->SetAnimationIdxBlend(++c % 5);
-		}
-
-//		if (GETSINGLE())
-	}
+//	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
+//	{
+//		POINT p = MOUSE->GetWindowPos();
+//
+//		cRay r;
+//		r = cRay::CalcWorldSpace(p);
+//
+//		cBoundingSphere sphere = m_pBoss->GetSphere();
+//		cBoundingSphere sphere2 = m_pBoss2->GetSphere();
+//		r = r.WorldToLocal(sphere.GetCenter());
+//
+//		cRay r2;
+//		r2 = cRay::CalcWorldSpace(p);
+//		r2 = r2.WorldToLocal(sphere2.GetCenter());
+//
+//		//	bool pick = r.IsPick(sphere);
+//		if (GETSINGLE(cCollision)->Collision(&sphere, &r))
+//		{
+//			static int c = 2;
+//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
+//		}
+//		if (GETSINGLE(cCollision)->Collision(&sphere2, &r2))
+//		{
+//			static int c = 2;
+//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
+//		}
+////		if (GETSINGLE())
+//	}
 
 
 	if (m_pPlayer)
@@ -172,9 +179,12 @@ void cMainGame::Render()
 	
 	m_pGrid->Render();
 
-	m_pBoss2->UpdateAndRender();
-	m_pBoss2->Bounding_Render();
-	
+	if (m_pBoss2)
+	{	
+		/*m_pBoss2->UpdateAndRender();
+		m_pBoss2->Bounding_Render();*/
+	}
+
 	///////////////////////////////////
 
 	GETSINGLE(cDevice)->EndRender();

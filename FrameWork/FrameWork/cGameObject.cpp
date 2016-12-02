@@ -36,7 +36,7 @@ void cGameObject::Render()
 
 void cGameObject::Bounding_Render()
 {
-	m_pMesh->Bounding_Render(m_vPosition);
+	m_pMesh->Bounding_Render(m_vPosition, m_vScale);
 }
 
 
@@ -56,13 +56,13 @@ void cGameObject::SetBoundingPos()
 }
 
 
-cBoundingBox* cGameObject::GetBox()
+cBoundingBox cGameObject::GetBox()
 {
 	return m_pMesh->GetBox(m_vPosition);
 }
 
 
-cBoundingSphere* cGameObject::GetSphere()
+cBoundingSphere cGameObject::GetSphere()
 {
 	return m_pMesh->GetSphere(m_vPosition, m_vScale.x);
 }

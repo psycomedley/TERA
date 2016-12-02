@@ -17,12 +17,12 @@ public:
 
 public:
 	HRESULT SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax);
-	cBoundingBox* GetBox(D3DXVECTOR3 vPosition);
-	cBoundingSphere* GetSphere(D3DXVECTOR3 vPosition, float fScale);
+	cBoundingBox GetBox(D3DXVECTOR3 vPosition);
+	cBoundingSphere GetSphere(D3DXVECTOR3 vPosition, float fScale);
 
 public:
 	virtual void Render();
-	void Bounding_Render(D3DXVECTOR3 vPos);
+	void Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale);
 	virtual void Release();
 
 public:
