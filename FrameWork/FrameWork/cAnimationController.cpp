@@ -4,7 +4,7 @@
 
 
 cAnimationController::cAnimationController()
-	: m_fAnimBlendTime(0.002f)
+	: m_fAnimBlendTime(0.1f)
 	, m_fPassedAnimBlendTime(0.0f)
 	, m_dPeriod(0.0f)
 	, m_bPlayOnce(false)

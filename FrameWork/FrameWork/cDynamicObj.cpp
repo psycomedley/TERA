@@ -42,6 +42,8 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 		D3DXMatrixTranspose(&matR, &matR);
 
 		mat = m_matRevision * matS * matR * matT;
+
+		m_matWorld = mat;
 	}
 	
 	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat);

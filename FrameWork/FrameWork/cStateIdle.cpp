@@ -34,5 +34,8 @@ void cStateIdle::End()
 
 void cStateIdle::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
-
+	if (animInfo.nIndex == E_ANI_DEFENCE_CALCEL)
+	{
+		pController->AnimationNext();
+	}
 }

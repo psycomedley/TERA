@@ -13,10 +13,19 @@
 cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, szFilename)
 	: m_pRightWeapon(NULL)
 	, m_pLeftWeapon(NULL)
+	, m_bIsBattle(false)
+	, m_fWaitTime(IDLESWITCHTIME)
+	/*, m_pArm(NULL)
+	, m_pLeg(NULL)
+	, m_pHead(NULL)*/
 {
-	m_pMesh = new cDynamicMesh(szFolder, szFilename);
+	m_pMesh = new cDynamicMesh(szFolder, szFilename);		//Body
+//	m_pArm = new cDynamicObj(szFolder, "Popori_Arm.X");		//Arm
+	//Leg
+	//Head
+	
 	//юс╫ц
-	SetupBaseWeapon();
+//	SetupBaseWeapon();
 	SetupState();
 }
 
@@ -24,6 +33,11 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 cPlayer::cPlayer()
 	: m_pRightWeapon(NULL)
 	, m_pLeftWeapon(NULL)
+	, m_bIsBattle(false)
+	, m_fWaitTime(IDLESWITCHTIME)
+	/*, m_pArm(NULL)
+	, m_pLeg(NULL)
+	, m_pHead(NULL)*/
 {
 }
 
@@ -32,7 +46,7 @@ cPlayer::~cPlayer()
 {
 	for (int i = 0; i < E_STATE_END; i++)
 	{
-		SAFE_DELETE(m_pStates[i]);
+		SAFE_DELETE(m_aStates[i]);
 	}
 
 	//SAFE_DELETE(m_pStateIdle);
@@ -61,11 +75,11 @@ void cPlayer::ChangeState(iState* pState)
 void cPlayer::ChangeState(int pState)
 {
 	if (m_pState)
-		if (m_pState == m_pStates[pState])
+		if (m_pState == m_aStates[pState])
 			return;
 
 	iState* pPrevState = m_pState;
-	m_pState = m_pStates[pState];
+	m_pState = m_aStates[pState];
 
 	if (pPrevState)
 		pPrevState->End();
@@ -93,17 +107,34 @@ void cPlayer::SetupBaseWeapon()
 
 void cPlayer::SetupState()
 {
-	m_pStates[E_STATE_IDLE] = new cStateIdle;
-	m_pStates[E_STATE_IDLE]->SetParent(this);
-	m_pStates[E_STATE_RUN] = new cStateRun;
-	m_pStates[E_STATE_RUN]->SetParent(this);
-	m_pStates[E_STATE_DEFENCE] = new cStateDefence;
-	m_pStates[E_STATE_DEFENCE]->SetParent(this);
-	m_pStates[E_STATE_COMBO] = new cStateCombo;
-	m_pStates[E_STATE_COMBO]->SetParent(this);
-	m_pStates[E_STATE_WAIT] = new cStateWait;
-	m_pStates[E_STATE_WAIT]->SetParent(this);
+	m_aStates[E_STATE_IDLE] = new cStateIdle;
+	m_aStates[E_STATE_IDLE]->SetParent(this);
+	m_aStates[E_STATE_RUN] = new cStateRun;
+	m_aStates[E_STATE_RUN]->SetParent(this);
+	m_aStates[E_STATE_DEFENCE] = new cStateDefence;
+	m_aStates[E_STATE_DEFENCE]->SetParent(this);
+	m_aStates[E_STATE_COMBO] = new cStateCombo;
+	m_aStates[E_STATE_COMBO]->SetParent(this);
+	m_aStates[E_STATE_WAIT] = new cStateWait;
+	m_aStates[E_STATE_WAIT]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
+}
+
+
+void cPlayer::CheckState()
+{
+	if (m_bIsBattle && m_pState == m_aStates[E_STATE_WAIT])
+	{
+		m_fWaitTime -= GETSINGLE(cTimeMgr)->getElapsedTime();
+		if (m_fWaitTime <= 0.0f)
+		{
+			m_bIsBattle = false;
+			ChangeState(m_aStates[E_STATE_IDLE]);
+			m_fWaitTime = IDLESWITCHTIME;
+		}
+	}
+	else if (m_bIsBattle)
+		m_fWaitTime = IDLESWITCHTIME;
 }
 
 
@@ -127,8 +158,13 @@ void cPlayer::CheckControl()
 	}
 	else
 	{
-		if (m_pState == m_pStates[E_STATE_RUN])
-			ChangeState(E_STATE_WAIT);
+		if (m_pState == m_aStates[E_STATE_RUN])
+		{
+			if (m_bIsBattle)
+				ChangeState(E_STATE_WAIT);
+			else
+				ChangeState(E_STATE_IDLE);
+		}
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_A))
 	{
@@ -152,6 +188,7 @@ void cPlayer::CheckControl()
 	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
 	{
 		ChangeState(E_STATE_COMBO);
+		m_bIsBattle = true;
 	}
 	if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
 	{
@@ -159,8 +196,14 @@ void cPlayer::CheckControl()
 	}
 	if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
 	{
-		ChangeState(E_STATE_WAIT);
+		if (m_bIsBattle)
+			ChangeState(E_STATE_WAIT);
+		else
+			ChangeState(E_STATE_IDLE);
 	}
+
+
+
 
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
@@ -173,9 +216,11 @@ void cPlayer::CheckControl()
 
 void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
+	CheckState();
 	CheckControl();
 	m_pState->Update();
 	cDynamicObj::UpdateAndRender(pmat);
+//	m_pArm->UpdateAndRender();
 	
 	if (m_pRightWeapon)
 	{
@@ -192,9 +237,9 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 
 bool cPlayer::IsMoveAble()
 {
-	if (m_pState == m_pStates[E_STATE_RUN] ||
-		m_pState == m_pStates[E_STATE_IDLE] ||
-		m_pState == m_pStates[E_STATE_WAIT])
+	if (m_pState == m_aStates[E_STATE_RUN] ||
+		m_pState == m_aStates[E_STATE_IDLE] ||
+		m_pState == m_aStates[E_STATE_WAIT])
 		return true;
 	return false;
 }
