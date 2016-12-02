@@ -18,8 +18,8 @@ private:
 	cDynamicObj*	m_pPlayer;
 	cDynamicObj*	m_pBoss;
 
-	cMap*				m_pMap;
-
+	cMap*			m_pMap;
+	cGrid*			m_pGrid;
 
 
 	//юс╫ц

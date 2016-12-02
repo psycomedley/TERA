@@ -8,9 +8,10 @@
 #include "cPlayer.h"
 #include "cMap.h"
 #include "cBoss.h"
+#include "cGrid.h"
 
 //юс╫ц
-#include "cGrid.h"
+
 
 cMainGame::cMainGame()
 	: m_pCamera(NULL)
