@@ -6,7 +6,7 @@ class cGameObject : public cObject
 {
 protected:
 	cMesh* m_pMesh;
-
+	
 	D3DXVECTOR3 m_vPosition;
 	SYNTHESIZE(float, m_fAngle, Angle);
 	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
