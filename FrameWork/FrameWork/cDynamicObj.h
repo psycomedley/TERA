@@ -19,7 +19,8 @@ public:
 	void AnimationNext();
 	void AnimationRemove();
 
-	virtual void ChangeState(int n);
+	ST_ANIMATION_INFO GetCurrentAnimInfo();
+	double GetCurrentAnimPosition();
 
 public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL);

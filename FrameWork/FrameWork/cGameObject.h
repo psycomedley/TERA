@@ -19,6 +19,9 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRevision, Revision);
 
 public:
+	void Move(float fSpeed);
+
+public:
 	virtual cBoundingSphere GetSphere();
 	virtual cBoundingBox GetBox();
 

@@ -164,12 +164,12 @@ void cMainGame::Render()
 
 	if (m_pPlayer)
 		m_pPlayer->UpdateAndRender();
-	m_pPlayer->Bounding_Render();
+//	m_pPlayer->Bounding_Render();
 
 	if (m_pBoss)
 	{
 		m_pBoss->UpdateAndRender();
-		m_pBoss->Bounding_Render();
+//		m_pBoss->Bounding_Render();
 	}
 
 	if (m_pMap)

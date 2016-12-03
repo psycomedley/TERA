@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cDynamicObj.h"
 #include "cDynamicMesh.h"
+#include "cAnimationController.h"
 
 
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
@@ -95,7 +96,13 @@ void cDynamicObj::AnimationRemove()
 }
 
 
-void cDynamicObj::ChangeState(int n)
+ST_ANIMATION_INFO cDynamicObj::GetCurrentAnimInfo()
 {
+	return ((cDynamicMesh*)m_pMesh)->GetAnimController()->GetCurrentAnimInfo();
+}
 
+
+double cDynamicObj::GetCurrentAnimPosition()
+{
+	return ((cDynamicMesh*)m_pMesh)->GetAnimController()->GetCurrentAnimPosition();
 }

@@ -6,8 +6,12 @@ class cMonster : public cDynamicObj
 protected:
 	ST_UNIT_INFO	m_stInfo;
 
+	float			m_fDetectRange;
+
 public:
-	virtual void Update() override;
+	virtual void SetupState() PURE;
+	virtual void SetupStatus() PURE;
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL) override;
 
 public:
 	cMonster(char* szFolder, char* szFilename);
@@ -15,5 +19,6 @@ public:
 
 protected:
 	cMonster();
+	virtual void Update() override;
 };
 

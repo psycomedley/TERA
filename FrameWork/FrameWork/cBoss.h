@@ -15,14 +15,10 @@ public:
 
 	bool IsMoveAble();
 
-
 public:
-	virtual void Update() override;
-
-public:
-	void SetupState();
+	virtual void SetupState() override;
+	virtual void SetupStatus() override;
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
-	void CheckState();
 
 public:
 	cBoss(char* szFolder, char* szFilename);
@@ -30,5 +26,6 @@ public:
 
 private:
 	cBoss();
+	virtual void Update() override;
 };
 

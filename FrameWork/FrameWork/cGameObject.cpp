@@ -55,6 +55,12 @@ void cGameObject::SetBoundingPos()
 	m_pMesh->GetSphere()->SetPosition(m_vPosition);*/
 }
 
+//임시  조금 변형할 것
+void cGameObject::Move(float fSpeed)
+{
+	m_vPosition = m_vPosition - m_vDirection * fSpeed;
+}
+
 
 cBoundingBox cGameObject::GetBox()
 {

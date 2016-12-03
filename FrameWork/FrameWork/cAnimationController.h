@@ -33,6 +33,11 @@ public:
 	void AnimationRemove();
 
 public:
+	ST_ANIMATION_INFO GetCurrentAnimInfo() { return m_vecAnimation[m_nCurrentIdx]; }
+	//0~1 ªÁ¿Ã
+	double GetCurrentAnimPosition();
+
+public:
 	void Update();
 
 public:
