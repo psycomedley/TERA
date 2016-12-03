@@ -18,10 +18,9 @@ public:
 	virtual void ChangeState(int pState, int nSkillIndex = -1);
 
 	bool IsMoveAble();
+	bool IsTargetCollision();
 
 public:
-	virtual void SetupState() override;
-	virtual void SetupStatus() override;
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 
 public:
@@ -30,6 +29,8 @@ public:
 
 private:
 	cBoss();
+	virtual void SetupState() override;
+	virtual void SetupStatus() override;
 	virtual void Update() override;
 };
 

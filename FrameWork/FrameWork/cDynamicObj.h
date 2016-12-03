@@ -23,6 +23,10 @@ public:
 	double GetCurrentAnimPosition();
 
 public:
+	virtual cBoundingSphere GetSphere() { return cGameObject::GetSphere(); }
+	virtual cBoundingBox GetBox() { return cGameObject::GetBox(); }
+
+public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL);
 
 public:

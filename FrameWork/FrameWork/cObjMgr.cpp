@@ -51,6 +51,7 @@ void cObjMgr::Render()
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
 			(*iter2)->UpdateAndRender();
+			(*iter2)->Bounding_Render();
 		}
 	}
 }

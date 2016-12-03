@@ -117,6 +117,7 @@
     <ClInclude Include="cPyramid.h" />
     <ClInclude Include="cRay.h" />
     <ClInclude Include="cSingleton.h" />
+    <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
     <ClInclude Include="cStateDefence.h" />
     <ClInclude Include="cStateIdle.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="cPyramid.cpp" />
     <ClCompile Include="cRay.cpp" />
     <ClCompile Include="cSingleton.cpp" />
+    <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
     <ClCompile Include="cStateIdle.cpp" />

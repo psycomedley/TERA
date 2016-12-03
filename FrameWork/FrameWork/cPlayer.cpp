@@ -274,12 +274,13 @@ bool cPlayer::IsMoveAble()
 
 void cPlayer::dlatl()
 {
+	SAFE_RELEASE(m_pLeftWeapon);
 	m_pLeftWeapon = new cWeapon("Weapon", "Gauntlet04_L.X");
 	m_pLeftWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
 
-
+	SAFE_RELEASE(m_pRightWeapon);
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet04_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");
