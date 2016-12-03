@@ -5,18 +5,15 @@ class iState;
 class cOrca : public cMonster
 {
 private:
-	iState*			m_pState;
-
-	iState*			m_aStates[E_STATE_END];
-
 	ST_SKILL_INFO	m_skillLongMove;
 	ST_SKILL_INFO	m_skillHeavyAtk;
 	ST_SKILL_INFO	m_skillAttack;
 
+	int				m_nNumClone;
+
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
 	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
-
 
 public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;

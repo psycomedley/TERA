@@ -142,6 +142,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="cFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cAction.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="cDynamicMesh.cpp" />
     <ClCompile Include="cDynamicObj.cpp" />
     <ClCompile Include="cFrustum.cpp" />
+    <ClCompile Include="cFunction.cpp" />
     <ClCompile Include="cGameObject.cpp" />
     <ClCompile Include="cGrid.cpp" />
     <ClCompile Include="cHierarchyLoader.cpp" />

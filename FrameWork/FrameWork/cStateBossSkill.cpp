@@ -25,8 +25,12 @@ void cStateBossSkill::Start()
 		m_pParent->AnimationRemove();
 		aniInfo.SetInfo(m_nSkillIndex, true, false);
 		m_pParent->AddAnimation(aniInfo);
+		
 		aniInfo.SetInfo(E_BOSS_LONGMOVE_LOOP, true, false);
-		m_pParent->AddAnimation(aniInfo);
+		int loop = GetFromIntTo(1, 3);
+		for (int i = 0; i < loop; i++)
+			m_pParent->AddAnimation(aniInfo);
+		
 		aniInfo.SetInfo(E_BOSS_LONGMOVE_RUN, true, false);
 		m_pParent->AddAnimation(aniInfo);
 		aniInfo.SetInfo(E_BOSS_LONGMOVE_END, true, true);
@@ -63,7 +67,7 @@ void cStateBossSkill::Update()
 void cStateBossSkill::End()
 {
 	m_pParent->AnimationRemove();
-	((cOrca*)m_pParent)->ChangeState(E_STATE_WAIT);
+	m_pParent->ChangeState(E_STATE_WAIT);
 }
 
 

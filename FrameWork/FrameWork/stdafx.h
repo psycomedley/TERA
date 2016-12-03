@@ -42,3 +42,5 @@ extern HWND	g_hWnd;
 
 #include "IncludeMgr.h"
 #include "MacroFunc.h"
+#include "cFunction.h"
+using namespace MY_FUNCTION;

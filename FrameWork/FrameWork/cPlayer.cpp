@@ -65,11 +65,16 @@ void cPlayer::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 		if (m_pState == pState)
 			return;
 
-	if (m_pState)
-		m_pState->End();
-
+	iState* pPrevState = m_pState;
 	m_pState = pState;
+
+	if (pPrevState)
+		pPrevState->End();
+
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
+
+	if (m_pState == m_aStates[E_STATE_SKILL])
+		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
 }
