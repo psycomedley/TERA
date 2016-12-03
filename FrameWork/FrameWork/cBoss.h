@@ -14,14 +14,14 @@ private:
 	ST_SKILL_INFO	m_skillAttack;
 
 public:
-	virtual void ChangeState(iState* pState, int nSkillIndex = -1);
-	virtual void ChangeState(int pState, int nSkillIndex = -1);
+	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
+	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
 
-	bool IsMoveAble();
-	bool IsTargetCollision();
 
 public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
+
+	virtual bool IsMoveAble() override;
 
 public:
 	cBoss(char* szFolder, char* szFilename);

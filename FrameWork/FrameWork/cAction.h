@@ -1,6 +1,6 @@
 #pragma once
 
-class cGameObject;
+class cDynamicObj;
 class cAction;
 
 class iActionDelegate
@@ -15,7 +15,7 @@ protected:
 	float m_fPassedActionTime;
 	SYNTHESIZE(iActionDelegate*, m_pDelegate, Delegate);
 	SYNTHESIZE(float, m_fActionTime, ActionTime);
-	SYNTHESIZE(cGameObject*, m_pTarget, Target);
+	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
 
 public:
 	cAction(void);

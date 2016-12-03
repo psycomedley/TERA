@@ -96,6 +96,12 @@ void cPlayer::ChangeState(int pState, int nSkillIndex /*= -1*/)
 }
 
 
+void cPlayer::Attack()
+{
+	ChangeState(E_STATE_COMBO);
+}
+
+
 void cPlayer::SetupBaseWeapon()
 {
 	m_pLeftWeapon = new cWeapon("Weapon", "Gauntlet00_L.X");

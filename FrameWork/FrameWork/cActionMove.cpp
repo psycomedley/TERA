@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "cActionMove.h"
-#include "cGameObject.h"
+#include "cDynamicObj.h"
 
 cActionMove::cActionMove(void)
 	: m_vFrom(0, 0, 0)

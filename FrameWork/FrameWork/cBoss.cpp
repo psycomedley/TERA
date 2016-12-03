@@ -8,6 +8,7 @@
 #include "cStateCombo.h"
 #include "cStateBossSkill.h"
 #include "cAnimationController.h"
+#include "cActionMoveToAttack.h"
 
 
 cBoss::cBoss(char* szFolder, char* szFilename)
@@ -60,7 +61,7 @@ void cBoss::SetupStatus()
 	m_fDetectRange = 15.0f;
 
 	m_skillLongMove.SetInfo(30.0f, 100);
-	m_skillHeavyAtk.SetInfo(20.0f, 100);
+	m_skillHeavyAtk.SetInfo(15.0f, 100);
 	m_skillAttack.SetInfo(3.0f, 10);
 }
 
@@ -159,13 +160,22 @@ void cBoss::Update()
 			{
 				if (IsTargetCollision())
 				{
+					if (m_pAction)
+						SAFE_RELEASE(m_pAction);
 					m_skillAttack.fPassedTime = 0.0f;
 					LookTarget();
 					ChangeState(E_STATE_SKILL, E_BOSS_ATK1);
 				}
 				else
 				{
-
+					cActionMoveToAttack* pActionMove = new cActionMoveToAttack;
+					pActionMove->SetFrom(m_vPosition);
+					pActionMove->SetTo(m_pTarget->GetPosition());
+					float fDist = D3DXVec3Length(&(m_vPosition - m_pTarget->GetPosition()));
+					pActionMove->SetActionTime(fDist * 0.2);
+					pActionMove->SetTarget(this);
+					SetAction(pActionMove);
+					SAFE_RELEASE(pActionMove);
 				}
 			}
 			else
@@ -174,12 +184,4 @@ void cBoss::Update()
 			}
 		}
 	}
-}
-
-
-bool cBoss::IsTargetCollision()
-{
-	if (GETSINGLE(cCollision)->Collision(&m_pTarget->GetSphere(), &GetSphere()))
-		return true;
-	return false;
 }

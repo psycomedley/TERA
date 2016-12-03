@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="cAction.h" />
     <ClInclude Include="cActionMove.h" />
+    <ClInclude Include="cActionMoveToAttack.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAnimationController.h" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="cAction.cpp" />
     <ClCompile Include="cActionMove.cpp" />
+    <ClCompile Include="cActionMoveToAttack.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
