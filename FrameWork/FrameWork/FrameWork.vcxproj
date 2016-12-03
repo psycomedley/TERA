@@ -88,7 +88,6 @@
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
-    <ClInclude Include="cBoss.h" />
     <ClInclude Include="cBounding.h" />
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
@@ -114,6 +113,8 @@
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectMgr.h" />
     <ClInclude Include="cObjMgr.h" />
+    <ClInclude Include="cOrca.h" />
+    <ClInclude Include="cOrcaClone.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPyramid.h" />
     <ClInclude Include="cRay.h" />
@@ -150,7 +151,6 @@
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
-    <ClCompile Include="cBoss.cpp" />
     <ClCompile Include="cBounding.cpp" />
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />
@@ -176,6 +176,8 @@
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectMgr.cpp" />
     <ClCompile Include="cObjMgr.cpp" />
+    <ClCompile Include="cOrca.cpp" />
+    <ClCompile Include="cOrcaClone.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPyramid.cpp" />
     <ClCompile Include="cRay.cpp" />

@@ -6,7 +6,7 @@ class cDynamicMesh;
 class cDynamicObj;
 class cStaticObj;
 class cPlayer;
-class cBoss;
+class cOrca;
 class cGrid;
 class cMap;
 class cMainGame

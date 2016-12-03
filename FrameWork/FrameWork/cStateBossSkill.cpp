@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "cStateBossSkill.h"
 #include "cDynamicObj.h"
-#include "cBoss.h"
+#include "cOrca.h"
 
 
 cStateBossSkill::cStateBossSkill()
@@ -63,7 +63,7 @@ void cStateBossSkill::Update()
 void cStateBossSkill::End()
 {
 	m_pParent->AnimationRemove();
-	((cBoss*)m_pParent)->ChangeState(E_STATE_WAIT);
+	((cOrca*)m_pParent)->ChangeState(E_STATE_WAIT);
 }
 
 

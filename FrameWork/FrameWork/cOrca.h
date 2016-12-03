@@ -2,7 +2,7 @@
 #include "cMonster.h"
 
 class iState;
-class cBoss : public cMonster
+class cOrca : public cMonster
 {
 private:
 	iState*			m_pState;
@@ -24,13 +24,15 @@ public:
 	virtual bool IsMoveAble() override;
 
 public:
-	cBoss(char* szFolder, char* szFilename);
-	~cBoss();
+	cOrca(char* szFolder, char* szFilename);
+	~cOrca();
 
 private:
-	cBoss();
+	cOrca();
 	virtual void SetupState() override;
 	virtual void SetupStatus() override;
 	virtual void Update() override;
+
+	void LongMove();
 };
 

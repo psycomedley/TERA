@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "cBoss.h"
+#include "cOrca.h"
 #include "iState.h"
 #include "cStateIdle.h"
 #include "cStateRun.h"
@@ -11,7 +11,7 @@
 #include "cActionMoveToAttack.h"
 
 
-cBoss::cBoss(char* szFolder, char* szFilename)
+cOrca::cOrca(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 
@@ -20,19 +20,19 @@ cBoss::cBoss(char* szFolder, char* szFilename)
 }
 
 
-cBoss::cBoss()
+cOrca::cOrca()
 {
 }
 
 
-cBoss::~cBoss()
+cOrca::~cOrca()
 {
 	for (int i = 0; i < E_STATE_END; i++)
 		SAFE_DELETE(m_aStates[i]);
 }
 
 
-void cBoss::SetupState()
+void cOrca::SetupState()
 {
 	m_aStates[E_STATE_IDLE] = new cStateIdle;
 	m_aStates[E_STATE_IDLE]->SetParent(this);
@@ -46,7 +46,7 @@ void cBoss::SetupState()
 }
 
 
-void cBoss::SetupStatus()
+void cOrca::SetupStatus()
 {
 	m_stInfo.sName = "Orca";
 
@@ -66,7 +66,7 @@ void cBoss::SetupStatus()
 }
 
 
-void cBoss::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	Update();
 	m_pState->Update();
@@ -74,7 +74,7 @@ void cBoss::UpdateAndRender(D3DXMATRIXA16* pmat)
 }
 
 
-void cBoss::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
+void cOrca::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 {
 	if (m_pState)
 		if (m_pState == pState)
@@ -90,7 +90,7 @@ void cBoss::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 }
 
 
-void cBoss::ChangeState(int pState, int nSkillIndex /*= -1*/)
+void cOrca::ChangeState(int pState, int nSkillIndex /*= -1*/)
 {
 	if (m_pState)
 		if (m_pState == m_aStates[pState])
@@ -111,7 +111,7 @@ void cBoss::ChangeState(int pState, int nSkillIndex /*= -1*/)
 }
 
 
-bool cBoss::IsMoveAble()
+bool cOrca::IsMoveAble()
 {
 	if (m_pState == m_aStates[E_STATE_RUN] ||
 		m_pState == m_aStates[E_STATE_IDLE] ||
@@ -121,7 +121,7 @@ bool cBoss::IsMoveAble()
 }
 
 
-void cBoss::Update()
+void cOrca::Update()
 {
 	cMonster::Update();
 
@@ -146,9 +146,7 @@ void cBoss::Update()
 		{
 			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
 			{
-				m_skillLongMove.fPassedTime = 0.0f;
-				LookTarget();
-				ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
+				LongMove();
 			}
 			else if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
 			{
@@ -184,4 +182,40 @@ void cBoss::Update()
 			}
 		}
 	}
+}
+
+
+void cOrca::LongMove()
+{
+	m_skillLongMove.fPassedTime = 0.0f;
+	LookTarget();
+
+	D3DXMATRIXA16 matR;
+	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
+
+	cDynamicObj* clone = new cOrca("Monster", "Orca.X");
+	clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	clone->SetRevision(matR);
+	clone->SetPosition(D3DXVECTOR3(10, 0, 0));
+	GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
+
+	clone = new cOrca("Monster", "Orca.X");
+	clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	clone->SetRevision(matR);
+	clone->SetPosition(D3DXVECTOR3(0, 0, 10));
+	GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
+
+	clone = new cOrca("Monster", "Orca.X");
+	clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	clone->SetRevision(matR);
+	clone->SetPosition(D3DXVECTOR3(-10, 0, 0));
+	GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
+
+	clone = new cOrca("Monster", "Orca.X");
+	clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	clone->SetRevision(matR);
+	clone->SetPosition(D3DXVECTOR3(0, 0, -10));
+	GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
+
+	ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
 }

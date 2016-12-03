@@ -7,7 +7,7 @@
 #include "cRay.h"
 #include "cPlayer.h"
 #include "cMap.h"
-#include "cBoss.h"
+#include "cOrca.h"
 #include "cGrid.h"
 
 //юс╫ц
@@ -59,16 +59,16 @@ HRESULT cMainGame::Setup()
 	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
-	cDynamicObj* pBoss = new cBoss("Monster", "Orca.X");
+	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
-	GETSINGLE(cObjMgr)->AddMonster(((cBoss*)pBoss)->GetInfo().sName, pBoss);
+	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
-	/*cDynamicObj* m_pBoss2 = new cBoss("Monster", "Orca.X");
+	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
 	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	m_pBoss2->SetRevision(matR);
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
-	GETSINGLE(cObjMgr)->AddMonster(((cBoss*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
+	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
 	m_pCamera = new cCamera;
 	m_pCamera->Setup();
