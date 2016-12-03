@@ -15,12 +15,10 @@ private:
 	cCube*				cube;
 	cCamera*			m_pCamera;
 
-	cDynamicObj*	m_pPlayer;
-	cDynamicObj*	m_pBoss;
-	cDynamicObj*	m_pBoss2;
+	cDynamicObj*		m_pBoss2;
 
-	cMap*			m_pMap;
-	cGrid*			m_pGrid;
+	cMap*				m_pMap;
+	cGrid*				m_pGrid;
 
 
 	//юс╫ц
@@ -29,7 +27,9 @@ private:
 	void SetLighting();
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;
-	
+
+	//	cDynamicObj*	m_pPlayer;
+	//	cDynamicObj*	m_pBoss;
 
 public:
 	HRESULT		Setup();

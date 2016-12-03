@@ -9,6 +9,10 @@ private:
 
 	iState*			m_aStates[E_STATE_END];
 
+	ST_SKILL_INFO	m_skillLongMove;
+	ST_SKILL_INFO	m_skillHeavyAtk;
+	ST_SKILL_INFO	m_skillAttack;
+
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1);
 	virtual void ChangeState(int pState, int nSkillIndex = -1);

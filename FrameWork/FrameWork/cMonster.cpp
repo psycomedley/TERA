@@ -4,6 +4,7 @@
 
 cMonster::cMonster(char* szFolder, char* szFilename)
 	: m_fDetectRange(0.0f)
+	, m_bIsBattle(false)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 

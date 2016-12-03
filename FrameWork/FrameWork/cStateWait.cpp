@@ -15,7 +15,7 @@ cStateWait::~cStateWait()
 
 void cStateWait::Start()
 {
-	ST_ANIMATION_INFO aniInfo(E_COMMON_ANI_WAIT, false, true);
+	ST_ANIMATION_INFO aniInfo(E_ANI_WAIT, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
 }

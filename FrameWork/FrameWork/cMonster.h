@@ -4,8 +4,9 @@
 class cMonster : public cDynamicObj
 {
 protected:
-	ST_UNIT_INFO	m_stInfo;
+	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 
+	bool			m_bIsBattle;
 	float			m_fDetectRange;
 
 public:

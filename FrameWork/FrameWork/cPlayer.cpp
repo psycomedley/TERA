@@ -49,6 +49,9 @@ cPlayer::~cPlayer()
 	for (int i = 0; i < E_STATE_END; i++)
 		SAFE_DELETE(m_aStates[i]);
 
+	SAFE_RELEASE(m_pRightWeapon);
+	SAFE_RELEASE(m_pLeftWeapon);
+
 	//SAFE_DELETE(m_pStateIdle);
 	//SAFE_DELETE(m_pStateRun);
 	//SAFE_DELETE(m_pStateDefence);
