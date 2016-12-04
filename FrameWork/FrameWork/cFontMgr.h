@@ -8,6 +8,9 @@ public:
 	LPD3DXFONT GetFont(E_FONT_TYPE eFontType);
 
 public:
+	void Release();
+
+public:
 	cFontMgr();
 	~cFontMgr();
 };

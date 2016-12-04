@@ -310,6 +310,9 @@
       <Filter>소스 파일\17. Shader</Filter>
     </ClInclude>
     <ClInclude Include="cFontMgr.h">
+      <Filter>소스 파일\18. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="cTextMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -486,6 +489,9 @@
       <Filter>소스 파일\17. Shader</Filter>
     </ClCompile>
     <ClCompile Include="cFontMgr.cpp">
+      <Filter>소스 파일\18. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="cTextMgr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,7 +14,7 @@ cFontMgr::~cFontMgr()
 
 LPD3DXFONT cFontMgr::GetFont(E_FONT_TYPE eFontType)
 {
-	if (m_mapFont.find(eFontType) == m_mapFont.end)
+	if (m_mapFont.find(eFontType) == m_mapFont.end())
 	{
 		D3DXFONT_DESC fd;
 		ZeroMemory(&fd, sizeof(D3DXFONT_DESC));

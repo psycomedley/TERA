@@ -10,3 +10,4 @@
 #include "cFontMgr.h"
 #include "cObjMgr.h"
 #include "cShaderMgr.h"
+#include "cTextMgr.h"

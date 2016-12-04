@@ -91,5 +91,6 @@ enum E_ANIMATION_BOSS
 
 enum E_FONT_TYPE
 {
-
+	E_FONT_BOSS,
+	E_FONT_END,
 };

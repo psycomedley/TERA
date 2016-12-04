@@ -15,4 +15,28 @@ namespace MY_FUNCTION
 		float rnd = (float)rand() / (float)RAND_MAX;
 		return (rnd * (toNum - fromNum) + fromNum);
 	}
+
+	RECT RectMake(int x, int y, int width, int height)
+	{
+		RECT rc = { x, y, x + width, y + height };
+		return rc;
+	}
+	RECT RectMakeCenter(int x, int y, int width, int height)
+	{
+		RECT rc = { x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2) };
+		return rc;
+	}
+
+	int GetWindowWidth()
+	{
+		RECT rect;
+		GetWindowRect(g_hWnd, &rect);
+		return (rect.right - rect.left);
+	}
+	int GetWindowHeight()
+	{
+		RECT rect;
+		GetWindowRect(g_hWnd, &rect);
+		return (rect.bottom - rect.top);
+	}
 }

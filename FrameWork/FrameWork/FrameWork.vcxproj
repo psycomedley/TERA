@@ -130,6 +130,7 @@
     <ClInclude Include="cStateWait.h" />
     <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cStaticObj.h" />
+    <ClInclude Include="cTextMgr.h" />
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="cTimeMgr.h" />
     <ClInclude Include="cTimer.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="cStateWait.cpp" />
     <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cStaticObj.cpp" />
+    <ClCompile Include="cTextMgr.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cTimeMgr.cpp" />
     <ClCompile Include="cTimer.cpp" />
