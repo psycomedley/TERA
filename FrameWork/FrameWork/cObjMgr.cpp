@@ -19,7 +19,7 @@ void cObjMgr::AddMonster(string sKey, cDynamicObj* pMonster)
 
 	if (iter == m_mapMonster.end())
 	{
-		list<cDynamicObj*> ObjList;
+		vector<cDynamicObj*> ObjList;
 		ObjList.push_back(pMonster);
 		m_mapMonster.insert(make_pair(sKey, ObjList));
 	}
@@ -71,4 +71,14 @@ void cObjMgr::Release()
 	}
 
 	cSingleton::Release();
+}
+
+
+vector<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
+{
+	auto iter = m_mapMonster.find(sKey);
+
+	if (iter == m_mapMonster.end())
+		return NULL;
+	return &m_mapMonster[sKey];
 }

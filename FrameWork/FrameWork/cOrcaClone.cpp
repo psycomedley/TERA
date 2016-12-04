@@ -6,6 +6,7 @@
 
 
 cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
+	: m_bActive(true)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	
@@ -15,6 +16,7 @@ cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
 
 
 cOrcaClone::cOrcaClone()
+	: m_bActive(true)
 {
 }
 
@@ -54,8 +56,10 @@ void cOrcaClone::SetupStatus()
 
 void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
-	if (m_pState == m_aStates[E_STATE_WAIT])
+	if (m_bActive == false)
 		return;
+	if (m_pState == m_aStates[E_STATE_WAIT])
+		m_bActive = false;
 
 	Update();
 	m_pState->Update();

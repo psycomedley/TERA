@@ -7,12 +7,13 @@ class cObjMgr : public cSingleton<cObjMgr>
 private:
 	cDynamicObj* m_pPlayer;
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
-	map<string, list<cDynamicObj*>>		m_mapMonster;
+	map<string, vector<cDynamicObj*>>		m_mapMonster;
 
 public:
 	void AddMonster(string sKey, cDynamicObj* pMonster);
 
-	map<string, list<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
+	map<string, vector<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
+	vector<cDynamicObj*>* GetMonsterList(string sKey);
 
 public:
 	cDynamicObj* GetPlayer() { return m_pPlayer; }

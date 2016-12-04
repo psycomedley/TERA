@@ -63,8 +63,9 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(0, 100);
-	m_skillHeavyAtk.SetInfo(15.0f, 100);
+	m_skillLongMove.SetInfo(30.0f, 100);
+	m_skillLongMove.sSpeech = "어디 한 번 나의 속도를 느껴보아라!!";
+	m_skillHeavyAtk.SetInfo(20.0f, 100);
 	m_skillAttack.SetInfo(3.0f, 10);
 }
 
@@ -152,6 +153,19 @@ void cOrca::Update()
 
 		if (IsMoveAble())
 		{
+			if (m_nNumClone > 0)
+			{
+				m_nNumClone = 3;
+				auto monsterList = GETSINGLE(cObjMgr)->GetMonsterList("Orca_Clone");
+	
+				for (auto iter = monsterList->begin(); iter != monsterList->end(); iter++)
+				{
+					if (!((cOrcaClone*)(*iter))->IsActive())
+						m_nNumClone--;
+				}
+
+				return;
+			}
 			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
 			{
 				LongMove();
@@ -195,6 +209,8 @@ void cOrca::Update()
 
 void cOrca::LongMove()
 {
+	if (m_pAction)
+		SAFE_RELEASE(m_pAction);
 	m_skillLongMove.fPassedTime = 0.0f;
 	m_nNumClone = 3;
 
@@ -202,7 +218,7 @@ void cOrca::LongMove()
 	int nRealOrca = GetInt(4);
 	int nSign = pow(-1, (nRealOrca % 2));
 	int nX = nSign * (nRealOrca / 2) * 15;
-	D3DXVECTOR3 vPos(nX, 0, 15 - abs(nX) * nSign);
+	D3DXVECTOR3 vPos(nX, 0, (15 - abs(nX)) * nSign);
 	SetPosition(vEnemyPos + vPos);
 	LookTarget();
 
@@ -215,7 +231,7 @@ void cOrca::LongMove()
 			continue;
 		int sign = pow(-1, (i % 2));
 		int x = sign * (i / 2) * 15;
-		D3DXVECTOR3 vPos(x, 0, (15 - abs(x)) * sign);
+		D3DXVECTOR3 vPos(x, 0, ((15 - abs(x))) * sign);
 		cDynamicObj* clone = new cOrcaClone("Monster", "Orca.X");
 		clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 		clone->SetRevision(matR);
@@ -224,24 +240,6 @@ void cOrca::LongMove()
 		clone->LookTarget();
 		GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
 	}
-
-	//cDynamicObj* clone = new cOrcaClone("Monster", "Orca.X");
-	//clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	//clone->SetRevision(matR);
-	//clone->SetPosition(D3DXVECTOR3(10, 0, 0));
-	//GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
-
-	//clone = new cOrcaClone("Monster", "Orca.X");
-	//clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	//clone->SetRevision(matR);
-	//clone->SetPosition(D3DXVECTOR3(0, 0, 10));
-	//GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
-
-	//clone = new cOrcaClone("Monster", "Orca.X");
-	//clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	//clone->SetRevision(matR);
-	//clone->SetPosition(D3DXVECTOR3(-10, 0, 0));
-	//GETSINGLE(cObjMgr)->AddMonster("Orca_Clone", clone);
-
+	
 	ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
 }
