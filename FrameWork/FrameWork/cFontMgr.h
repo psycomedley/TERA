@@ -1,11 +1,6 @@
 #pragma once
-#include "cSingleton.h"
-
-class cFontMgr : public cSingleton<cFontMgr>
+class cFontMgr
 {
-private:
-
-
 public:
 	cFontMgr();
 	~cFontMgr();

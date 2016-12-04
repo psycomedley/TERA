@@ -16,7 +16,7 @@ LPD3DXEFFECT cShaderMgr::GetEffect(string sKey)
 {
 	if (m_mapEffect.find(sKey) == m_mapEffect.end())
 	{
-		LPD3DXBUFFER pErrBuf;
+		LPD3DXBUFFER pErrBuf = NULL;
 		if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice, sKey.c_str(), NULL, NULL, D3DXSHADER_DEBUG
 			, NULL, &m_mapEffect[sKey], &pErrBuf)))
 		{
@@ -24,7 +24,6 @@ LPD3DXEFFECT cShaderMgr::GetEffect(string sKey)
 			SAFE_RELEASE(pErrBuf);
 			return NULL;
 		}
-		SAFE_RELEASE(pErrBuf);
 	}
 	return m_mapEffect[sKey];
 }

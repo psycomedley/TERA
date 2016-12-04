@@ -112,6 +112,12 @@
     <Filter Include="소스 파일\16. Monster">
       <UniqueIdentifier>{37461460-00ee-4a88-90af-2fc05ff92393}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\17. Shader">
+      <UniqueIdentifier>{b305cc7d-0dc0-4679-973d-c3e6dc1bf475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\18. Font">
+      <UniqueIdentifier>{6a5e12ea-3a18-4216-a5c1-73d2f8aaa515}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -300,6 +306,12 @@
     <ClInclude Include="cFunction.h">
       <Filter>헤더 파일\00. Include</Filter>
     </ClInclude>
+    <ClInclude Include="cShaderMgr.h">
+      <Filter>소스 파일\17. Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cFontMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -469,6 +481,12 @@
     </ClCompile>
     <ClCompile Include="cFunction.cpp">
       <Filter>헤더 파일\00. Include</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderMgr.cpp">
+      <Filter>소스 파일\17. Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cFontMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

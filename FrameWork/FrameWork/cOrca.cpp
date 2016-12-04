@@ -229,7 +229,7 @@ void cOrca::LongMove()
 	if (cloneList)
 	{
 		int i = 0;
-		for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++, i++)
+		for (auto iter = cloneList->begin(); iter != cloneList->end(); i++)
 		{
 			if (i == nRealOrca)
 				continue;
@@ -240,6 +240,7 @@ void cOrca::LongMove()
 			(*iter)->SetPosition(vEnemyPos + vPos);
 			(*iter)->LookTarget();
 			(*iter)->ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
+			iter++;
 		}
 	}
 	else

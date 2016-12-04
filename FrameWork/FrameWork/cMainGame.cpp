@@ -215,6 +215,7 @@ void cMainGame::Release()
 	GETSINGLE(cCollision)->Release();
 	GETSINGLE(cObjMgr)->Release();
 	GETSINGLE(cObjectMgr)->Release();
+	GETSINGLE(cShaderMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
