@@ -24,7 +24,8 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 //	m_pArm = new cDynamicObj(szFolder, "Popori_Arm.X");		//Arm
 	//Leg
 	//Head
-	
+
+	SetBoundingPos();
 	//юс╫ц
 	SetupBaseWeapon();
 	SetupState();
@@ -48,6 +49,9 @@ cPlayer::~cPlayer()
 	for (int i = 0; i < E_STATE_END; i++)
 		SAFE_DELETE(m_aStates[i]);
 
+	SAFE_RELEASE(m_pRightWeapon);
+	SAFE_RELEASE(m_pLeftWeapon);
+
 	//SAFE_DELETE(m_pStateIdle);
 	//SAFE_DELETE(m_pStateRun);
 	//SAFE_DELETE(m_pStateDefence);
@@ -61,11 +65,16 @@ void cPlayer::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 		if (m_pState == pState)
 			return;
 
-	if (m_pState)
-		m_pState->End();
-
+	iState* pPrevState = m_pState;
 	m_pState = pState;
+
+	if (pPrevState)
+		pPrevState->End();
+
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
+
+	if (m_pState == m_aStates[E_STATE_SKILL])
+		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
 }
@@ -89,6 +98,12 @@ void cPlayer::ChangeState(int pState, int nSkillIndex /*= -1*/)
 		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
+}
+
+
+void cPlayer::Attack()
+{
+	ChangeState(E_STATE_COMBO);
 }
 
 
@@ -212,13 +227,19 @@ void cPlayer::CheckControl()
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
-		ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
-		m_bIsBattle = true;
+		if (m_pState == m_aStates[E_STATE_WAIT])
+		{
+			ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
+			m_bIsBattle = true;
+		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_2))
 	{
-		ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
-		m_bIsBattle = true;
+		if (m_pState == m_aStates[E_STATE_WAIT])
+		{
+			ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+			m_bIsBattle = true;
+		}
 	}
 
 
@@ -264,12 +285,13 @@ bool cPlayer::IsMoveAble()
 
 void cPlayer::dlatl()
 {
+	SAFE_RELEASE(m_pLeftWeapon);
 	m_pLeftWeapon = new cWeapon("Weapon", "Gauntlet04_L.X");
 	m_pLeftWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
 
-
+	SAFE_RELEASE(m_pRightWeapon);
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet04_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");

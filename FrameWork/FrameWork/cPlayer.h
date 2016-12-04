@@ -6,8 +6,6 @@ class iState;
 class cPlayer : public cDynamicObj
 {
 private:
-	iState*			m_pState;
-
 	cWeapon*		m_pRightWeapon;
 	cWeapon*		m_pLeftWeapon;
 
@@ -19,16 +17,11 @@ private:
 	cDynamicObj*	m_pLeg;
 	cDynamicObj*	m_pHead;*/
 
-	//State
-	iState*			m_aStates[E_STATE_END];
-	//iState*		m_pStateIdle;
-	//iState*		m_pStateRun;
-	//iState*		m_pStateDefence;
-	//iState*		m_pStateAttack;
-
 public:
-	virtual void ChangeState(iState* pState, int nSkillIndex = -1);
-	virtual void ChangeState(int pState, int nSkillIndex = -1);
+	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
+	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
+
+	virtual void Attack() override;
 
 	bool IsMoveAble();
 

@@ -3,9 +3,13 @@
 #include "cDynamicMesh.h"
 
 //class cDynamicMesh;
+class iState;
 class cDynamicObj : public cGameObject
 {
-private:
+protected:
+	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
+	iState*			m_pState;
+	iState*			m_aStates[E_STATE_END];
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }
@@ -19,7 +23,20 @@ public:
 	void AnimationNext();
 	void AnimationRemove();
 
-	virtual void ChangeState(int n);
+	ST_ANIMATION_INFO GetCurrentAnimInfo();
+	double GetCurrentAnimPosition();
+
+	virtual void ChangeState(iState* pState, int nSkillIndex = -1) PURE;
+	virtual void ChangeState(int pState, int nSkillIndex = -1) PURE;
+
+	virtual void Attack() {};
+	virtual bool IsMoveAble() PURE;
+	virtual bool IsTargetCollision();
+	virtual void LookTarget();
+
+public:
+	virtual cBoundingSphere GetSphere() { return cGameObject::GetSphere(); }
+	virtual cBoundingBox GetBox() { return cGameObject::GetBox(); }
 
 public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL);

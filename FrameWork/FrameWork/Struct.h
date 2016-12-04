@@ -75,6 +75,8 @@ struct ST_ANIMATION_INFO
 
 struct ST_UNIT_INFO
 {
+	string	sName;
+
 	int		nMaxHp;
 	int		nHp;
 	int		nMaxMp;
@@ -82,4 +84,15 @@ struct ST_UNIT_INFO
 
 	float	fDamage;
 	float	fDefence;
+};
+
+
+struct ST_SKILL_INFO
+{
+	float	fCoolTime;
+	float	fPassedTime;
+	float	fValue;
+	string	sSpeech;
+
+	void SetInfo(float _fCoolTime, float _fValue, string _sSpeech = "") { fCoolTime = _fCoolTime; fPassedTime = 0; fValue = _fValue; sSpeech = _sSpeech; }
 };

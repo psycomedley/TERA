@@ -6,10 +6,12 @@
 #include "cCube.h"
 #include "cRay.h"
 #include "cPlayer.h"
-#include "cBoss.h"
+#include "cMap.h"
+#include "cOrca.h"
+#include "cGrid.h"
 
 //임시
-#include "cGrid.h"
+
 
 cMainGame::cMainGame()
 	: m_pCamera(NULL)
@@ -24,10 +26,14 @@ cMainGame::~cMainGame()
 	///////////////////////////////////
 
 	SAFE_DELETE(m_pCamera);
+	SAFE_RELEASE(m_pMap);
+
 	Release();
 
-	SAFE_RELEASE(m_pPlayer);
-	SAFE_RELEASE(m_pBoss);
+//	SAFE_RELEASE(m_pPlayer);
+//	SAFE_RELEASE(m_pBoss);
+	SAFE_RELEASE(m_pBoss2);
+	
 }
 
 
@@ -45,31 +51,44 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 
-	m_pPlayer = new cPlayer("Popori", "Popori.X");
-	m_pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
+	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
-	m_pPlayer->SetRevision(matR);
+	pPlayer->SetRevision(matR);
+	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
+	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
-	m_pBoss = new cBoss("Monster", "Boss.X");
-	m_pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	D3DXMATRIXA16 matT, mat;
-	D3DXMatrixTranslation(&matT, 0, 15, 0);
-	mat = matR * matT;
-	m_pBoss->SetRevision(mat);
+	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
+	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pBoss->SetRevision(matR);
+	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
+
+	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
+	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	m_pBoss2->SetRevision(matR);
+	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
+	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
 	m_pCamera = new cCamera;
 	m_pCamera->Setup();
+
+
+	m_pMap = new cMap("Map","Map.x");
 
 	///////////////임시////////////////
 
 	m_pGrid = new cGrid;
 	m_pGrid->Setup(30);
 
+	/*m_pBoss2 = new cMonster("Monster", "Orca.X");
+	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	m_pBoss2->SetRevision(matR);
+	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
+
+
 	SetLighting();
 
-	//	m_pMap = new cStaticObj("Fire", "as.X");
-	//	m_pMap->SetScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
 
 	///////////////////////////////////
 
@@ -81,18 +100,31 @@ void cMainGame::Update()
 {
 	GETSINGLE(cInput)->Update();
 
+	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
+
 	if (m_pCamera)
-		m_pCamera->Update(&m_pPlayer->GetPosition());
+		m_pCamera->Update(&GETSINGLE(cObjMgr)->GetPlayer()->GetPosition());
 	
+	
+
+	//지형 충돌 ...진행중
+	/*if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
+	{
+		m_pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
+	}*/
+
 	///////////////임시////////////////
 	
 	//	m_pMap->Update();
 
 
-	if (KEYBOARD->IsStayKeyDown(DIK_I))
+	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
 	{
 		m_pBoss->SetPosition(m_pBoss->GetPosition() - m_pBoss->GetDirection() * 0.1);
-	}
+	}*/
+
+	/*if (m_pBoss)
+		m_pBoss->Update();*/
 
 	///////////////////////////////////
 }
@@ -116,36 +148,56 @@ void cMainGame::Render()
 //		cRay r;
 //		r = cRay::CalcWorldSpace(p);
 //
-//		cBoundingSphere* sphere = m_pMesh->GetSphere();
-//		r = r.WorldToLocal(sphere->GetCenter());
+//		cBoundingSphere sphere = m_pBoss->GetSphere();
+//		cBoundingSphere sphere2 = m_pBoss2->GetSphere();
+//		r = r.WorldToLocal(sphere.GetCenter());
 //
+//		cRay r2;
+//		r2 = cRay::CalcWorldSpace(p);
+//		r2 = r2.WorldToLocal(sphere2.GetCenter());
 //
 //		//	bool pick = r.IsPick(sphere);
-//		if (GETSINGLE(cCollision)->Collision(sphere, &r))
+//		if (GETSINGLE(cCollision)->Collision(&sphere, &r))
 //		{
 //			static int c = 2;
-//			m_pMesh->SetAnimationIdxBlend(++c % 5);
+//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
 //		}
-//
+//		if (GETSINGLE(cCollision)->Collision(&sphere2, &r2))
+//		{
+//			static int c = 2;
+//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
+//		}
 ////		if (GETSINGLE())
 //	}
 
+	GETSINGLE(cObjMgr)->Render();
 
-	if (m_pPlayer)
-		m_pPlayer->UpdateAndRender();
-//	m_pPlayer->Bounding_Render();
 
-	if (m_pBoss)
-	{
-		m_pBoss->UpdateAndRender();
-//		m_pBoss->Bounding_Render();
-	}
 
+
+	if (m_pMap)
+		m_pMap->Render();
 
 	///////////////임시////////////////
 	
 	m_pGrid->Render();
-	
+
+	if (m_pBoss2)
+	{	
+		/*m_pBoss2->UpdateAndRender();
+		m_pBoss2->Bounding_Render();*/
+	}
+
+	/*if (m_pPlayer)
+	m_pPlayer->UpdateAndRender();*/
+	//	m_pPlayer->Bounding_Render();
+
+	//if (m_pBoss)
+	//{
+	//	m_pBoss->UpdateAndRender();
+//	//	m_pBoss->Bounding_Render();
+	//}
+
 	///////////////////////////////////
 
 	GETSINGLE(cDevice)->EndRender();
@@ -161,6 +213,8 @@ void cMainGame::Release()
 	GETSINGLE(cInput)->Release();
 	GETSINGLE(cMeshMgr)->Release();
 	GETSINGLE(cCollision)->Release();
+	GETSINGLE(cObjMgr)->Release();
+	GETSINGLE(cObjectMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }

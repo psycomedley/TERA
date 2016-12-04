@@ -6,6 +6,7 @@
 cStaticObj::cStaticObj(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
+	SetBoundingPos();
 }
 
 

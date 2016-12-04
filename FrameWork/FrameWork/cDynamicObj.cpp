@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "cDynamicObj.h"
 #include "cDynamicMesh.h"
+#include "cAnimationController.h"
 
 
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
+	SetBoundingPos();
 }
 
 
@@ -21,6 +23,8 @@ cDynamicObj::~cDynamicObj()
 
 void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 {
+	cGameObject::Update();
+
 	D3DXMATRIXA16 matS, matR, matT, mat;
 	if (pmat)
 	{
@@ -92,7 +96,37 @@ void cDynamicObj::AnimationRemove()
 }
 
 
-void cDynamicObj::ChangeState(int n)
+ST_ANIMATION_INFO cDynamicObj::GetCurrentAnimInfo()
 {
+	return ((cDynamicMesh*)m_pMesh)->GetAnimController()->GetCurrentAnimInfo();
+}
 
+
+double cDynamicObj::GetCurrentAnimPosition()
+{
+	return ((cDynamicMesh*)m_pMesh)->GetAnimController()->GetCurrentAnimPosition();
+}
+
+
+bool cDynamicObj::IsTargetCollision()
+{
+	if (GETSINGLE(cCollision)->Collision(&m_pTarget->GetSphere(), &GetSphere()))
+		return true;
+	return false;
+}
+
+
+void cDynamicObj::LookTarget()
+{
+	if (m_pTarget)
+	{
+		D3DXVECTOR3 vTargetPos = m_pTarget->GetPosition();
+		m_vDirection = m_vPosition - vTargetPos;
+		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+
+		float nX = vTargetPos.x - m_vPosition.x;
+		float nZ = vTargetPos.z - m_vPosition.z;
+
+		m_fAngle = D3DX_PI / 2 - atan2(nZ, nX);
+	}
 }

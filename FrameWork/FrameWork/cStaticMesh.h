@@ -14,6 +14,12 @@ protected:
 	vector<LPDIRECT3DTEXTURE9>	vecTexture;
 	vector<D3DMATERIAL9>		vecMaterial;
 
+	LPDIRECT3DVERTEXBUFFER9		m_VB;
+	LPDIRECT3DINDEXBUFFER9		m_IB;
+
+	vector<D3DXVECTOR3>			m_vecVertaxies;
+	
+
 public:
 	virtual void Update();
 	virtual void Render();
@@ -22,6 +28,8 @@ public:
 public:
 	cStaticMesh(char* szFolder, char* szFilename);
 	~cStaticMesh();
+
+	vector<D3DXVECTOR3>* GetVecVertaxies(){ return &m_vecVertaxies; }
 
 protected:
 	cStaticMesh();

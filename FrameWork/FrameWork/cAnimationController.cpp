@@ -4,7 +4,7 @@
 
 
 cAnimationController::cAnimationController()
-	: m_fAnimBlendTime(0.1f)
+	: m_fAnimBlendTime(0.2f)
 	, m_fPassedAnimBlendTime(0.0f)
 	, m_dPeriod(0.0f)
 	, m_bPlayOnce(false)
@@ -199,4 +199,13 @@ void cAnimationController::AnimationRemove()
 		m_stPrevAnimation = m_vecAnimation[m_nCurrentIdx];
 	m_nCurrentIdx = 0;
 	m_vecAnimation.clear();
+}
+
+
+double cAnimationController::GetCurrentAnimPosition()
+{
+	D3DXTRACK_DESC td;
+	m_pController->GetTrackDesc(0, &td);
+
+	return td.Position / m_dPeriod;
 }

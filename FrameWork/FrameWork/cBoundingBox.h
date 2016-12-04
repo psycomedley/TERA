@@ -1,5 +1,7 @@
 #pragma once
-class cBoundingBox
+#include "cBounding.h"
+
+class cBoundingBox : public cBounding
 {
 private:
 	LPD3DXMESH		m_pBoxMesh;
@@ -9,7 +11,7 @@ private:
 
 public:
 	HRESULT Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax);
-	void Render();
+	void Render(D3DXVECTOR3 vPos);
 	void Release();
 
 public:

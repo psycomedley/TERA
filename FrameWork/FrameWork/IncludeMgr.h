@@ -8,3 +8,4 @@
 #include "cMeshMgr.h"
 #include "cCollision.h"
 #include "cFontMgr.h"
+#include "cObjMgr.h"

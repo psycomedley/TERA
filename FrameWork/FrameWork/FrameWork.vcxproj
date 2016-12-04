@@ -83,11 +83,12 @@
   <ItemGroup>
     <ClInclude Include="cAction.h" />
     <ClInclude Include="cActionMove.h" />
+    <ClInclude Include="cActionMoveToAttack.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
-    <ClInclude Include="cBoss.h" />
+    <ClInclude Include="cBounding.h" />
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
     <ClInclude Include="cCamera.h" />
@@ -111,10 +112,14 @@
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectMgr.h" />
+    <ClInclude Include="cObjMgr.h" />
+    <ClInclude Include="cOrca.h" />
+    <ClInclude Include="cOrcaClone.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPyramid.h" />
     <ClInclude Include="cRay.h" />
     <ClInclude Include="cSingleton.h" />
+    <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
     <ClInclude Include="cStateDefence.h" />
     <ClInclude Include="cStateIdle.h" />
@@ -137,15 +142,17 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="cFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cAction.cpp" />
     <ClCompile Include="cActionMove.cpp" />
+    <ClCompile Include="cActionMoveToAttack.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
-    <ClCompile Include="cBoss.cpp" />
+    <ClCompile Include="cBounding.cpp" />
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />
     <ClCompile Include="cCamera.cpp" />
@@ -155,6 +162,7 @@
     <ClCompile Include="cDynamicMesh.cpp" />
     <ClCompile Include="cDynamicObj.cpp" />
     <ClCompile Include="cFrustum.cpp" />
+    <ClCompile Include="cFunction.cpp" />
     <ClCompile Include="cGameObject.cpp" />
     <ClCompile Include="cGrid.cpp" />
     <ClCompile Include="cHierarchyLoader.cpp" />
@@ -169,10 +177,14 @@
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectMgr.cpp" />
+    <ClCompile Include="cObjMgr.cpp" />
+    <ClCompile Include="cOrca.cpp" />
+    <ClCompile Include="cOrcaClone.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPyramid.cpp" />
     <ClCompile Include="cRay.cpp" />
     <ClCompile Include="cSingleton.cpp" />
+    <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
     <ClCompile Include="cStateIdle.cpp" />

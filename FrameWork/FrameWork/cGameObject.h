@@ -19,8 +19,16 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRevision, Revision);
 
 public:
+	void Move(float fSpeed);
+
+public:
+	virtual cBoundingSphere GetSphere();
+	virtual cBoundingBox GetBox();
+
+public:
 	D3DXVECTOR3 GetPosition() { return m_vPosition; }
 	void SetPosition(D3DXVECTOR3 vPos);
+	void SetBoundingPos();
 
 public:
 	virtual void Update();

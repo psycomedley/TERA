@@ -36,7 +36,7 @@ void cGameObject::Render()
 
 void cGameObject::Bounding_Render()
 {
-	m_pMesh->Bounding_Render();
+	m_pMesh->Bounding_Render(m_vPosition, m_vScale);
 }
 
 
@@ -44,6 +44,31 @@ void cGameObject::SetPosition(D3DXVECTOR3 vPos)
 {
 	m_vPosition = vPos;
 
-	if (m_pMesh)
-		m_pMesh->GetSphere()->SetCenter(D3DXVECTOR3(vPos.x, vPos.y + m_pMesh->GetSphere()->GetOriginalY(), vPos.z));
+//	if (m_pMesh)
+//		m_pMesh->GetSphere()->SetCenter(D3DXVECTOR3(vPos.x, vPos.y + m_pMesh->GetSphere()->GetOriginalY(), vPos.z));
+}
+
+
+void cGameObject::SetBoundingPos()
+{
+	/*m_pMesh->GetBox()->SetPosition(m_vPosition);
+	m_pMesh->GetSphere()->SetPosition(m_vPosition);*/
+}
+
+//임시  조금 변형할 것
+void cGameObject::Move(float fSpeed)
+{
+	m_vPosition = m_vPosition - m_vDirection * fSpeed;
+}
+
+
+cBoundingBox cGameObject::GetBox()
+{
+	return m_pMesh->GetBox(m_vPosition);
+}
+
+
+cBoundingSphere cGameObject::GetSphere()
+{
+	return m_pMesh->GetSphere(m_vPosition, m_vScale.x);
 }
