@@ -88,3 +88,8 @@ enum E_ANIMATION_BOSS
 	E_BOSS_ATK1,
 	E_BOSS_END,
 };
+
+enum E_FONT_TYPE
+{
+
+};

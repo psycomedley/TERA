@@ -31,15 +31,9 @@ LPD3DXEFFECT cShaderMgr::GetEffect(string sKey)
 
 void cShaderMgr::Release()
 {
-	for (auto iter = m_mapEffect.begin();
-		iter != m_mapEffect.end(); iter++)
-	{
-		if (iter->second)
-		{
-			SAFE_RELEASE(iter->second);
-		}
-	}
-	m_mapEffect.clear();
+	for each(auto it in m_mapEffect)
+		SAFE_RELEASE(it.second);
+//	m_mapEffect.clear();
 
 	cSingleton::Release();
 }

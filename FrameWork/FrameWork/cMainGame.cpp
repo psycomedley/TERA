@@ -216,6 +216,7 @@ void cMainGame::Release()
 	GETSINGLE(cObjMgr)->Release();
 	GETSINGLE(cObjectMgr)->Release();
 	GETSINGLE(cShaderMgr)->Release();
+	GETSINGLE(cFontMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
