@@ -109,6 +109,9 @@
     <Filter Include="소스 파일\99. Temp">
       <UniqueIdentifier>{d9b65945-be6a-4aaa-8370-bc5debcc11dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\16. Monster">
+      <UniqueIdentifier>{37461460-00ee-4a88-90af-2fc05ff92393}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -267,6 +270,36 @@
     <ClInclude Include="cStateCombo.h">
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
+    <ClInclude Include="cMap.h">
+      <Filter>소스 파일\12. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="cMonster.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateSkill.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateBossSkill.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cBounding.h">
+      <Filter>소스 파일\07. Bounding</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjMgr.h">
+      <Filter>소스 파일\02. Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionMoveToAttack.h">
+      <Filter>소스 파일\03. Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cOrcaClone.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cOrca.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cFunction.h">
+      <Filter>헤더 파일\00. Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -406,6 +439,36 @@
     </ClCompile>
     <ClCompile Include="cStateCombo.cpp">
       <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cMap.cpp">
+      <Filter>소스 파일\12. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="cMonster.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateSkill.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateBossSkill.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cBounding.cpp">
+      <Filter>소스 파일\07. Bounding</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjMgr.cpp">
+      <Filter>소스 파일\02. Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionMoveToAttack.cpp">
+      <Filter>소스 파일\03. Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cOrcaClone.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cOrca.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cFunction.cpp">
+      <Filter>헤더 파일\00. Include</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
