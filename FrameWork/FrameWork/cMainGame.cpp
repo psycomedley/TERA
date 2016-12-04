@@ -105,7 +105,7 @@ void cMainGame::Update()
 	if (m_pCamera)
 		m_pCamera->Update(&GETSINGLE(cObjMgr)->GetPlayer()->GetPosition());
 	
-	
+	GETSINGLE(cTextMgr)->Update();
 
 	//지형 충돌 ...진행중
 	/*if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
@@ -172,7 +172,7 @@ void cMainGame::Render()
 
 	GETSINGLE(cObjMgr)->Render();
 
-
+	GETSINGLE(cTextMgr)->Render();
 
 
 	if (m_pMap)
@@ -215,6 +215,9 @@ void cMainGame::Release()
 	GETSINGLE(cCollision)->Release();
 	GETSINGLE(cObjMgr)->Release();
 	GETSINGLE(cObjectMgr)->Release();
+	GETSINGLE(cShaderMgr)->Release();
+	GETSINGLE(cFontMgr)->Release();
+	GETSINGLE(cTextMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }

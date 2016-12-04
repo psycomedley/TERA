@@ -96,3 +96,16 @@ struct ST_SKILL_INFO
 
 	void SetInfo(float _fCoolTime, float _fValue, string _sSpeech = "") { fCoolTime = _fCoolTime; fPassedTime = 0; fValue = _fValue; sSpeech = _sSpeech; }
 };
+
+
+struct ST_TEXT
+{
+	E_FONT_TYPE		eFontType;
+	string			sText;
+	float			fShowTime;
+	float			fPassedTime;
+	RECT			rect;
+
+	ST_TEXT() : eFontType(E_FONT_END), sText(""), fShowTime(0.0f), fPassedTime(0.0f) {}
+	ST_TEXT(E_FONT_TYPE _eType, string _sText, float _fShowTime, RECT _rect) : eFontType(_eType), sText(_sText), fShowTime(_fShowTime), fPassedTime(0.0f), rect(_rect) {}
+};

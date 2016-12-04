@@ -97,6 +97,7 @@
     <ClInclude Include="cDevice.h" />
     <ClInclude Include="cDynamicMesh.h" />
     <ClInclude Include="cDynamicObj.h" />
+    <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cFrustum.h" />
     <ClInclude Include="cGameObject.h" />
     <ClInclude Include="cGrid.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPyramid.h" />
     <ClInclude Include="cRay.h" />
+    <ClInclude Include="cShaderMgr.h" />
     <ClInclude Include="cSingleton.h" />
     <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
@@ -128,6 +130,7 @@
     <ClInclude Include="cStateWait.h" />
     <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cStaticObj.h" />
+    <ClInclude Include="cTextMgr.h" />
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="cTimeMgr.h" />
     <ClInclude Include="cTimer.h" />
@@ -161,6 +164,7 @@
     <ClCompile Include="cDevice.cpp" />
     <ClCompile Include="cDynamicMesh.cpp" />
     <ClCompile Include="cDynamicObj.cpp" />
+    <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cFrustum.cpp" />
     <ClCompile Include="cFunction.cpp" />
     <ClCompile Include="cGameObject.cpp" />
@@ -183,6 +187,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPyramid.cpp" />
     <ClCompile Include="cRay.cpp" />
+    <ClCompile Include="cShaderMgr.cpp" />
     <ClCompile Include="cSingleton.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
@@ -193,6 +198,7 @@
     <ClCompile Include="cStateWait.cpp" />
     <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cStaticObj.cpp" />
+    <ClCompile Include="cTextMgr.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cTimeMgr.cpp" />
     <ClCompile Include="cTimer.cpp" />

@@ -11,4 +11,10 @@ namespace MY_FUNCTION
 	float GetFloat(void);
 	float GetFloat(float num);
 	float GetFromFloatTo(float fromNum, float toNum);
+
+	RECT RectMake(int x, int y, int width, int height);
+	RECT RectMakeCenter(int x, int y, int width, int height);
+
+	int GetWindowWidth();
+	int GetWindowHeight();
 }

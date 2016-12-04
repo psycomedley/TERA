@@ -6,7 +6,7 @@ class cOrcaClone : public cMonster
 {
 private:
 	ST_SKILL_INFO	m_skillLongMove;
-	bool			m_bActive;
+	SYNTHESIZE(bool, m_bActive, Active);
 
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
@@ -16,7 +16,6 @@ public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 
 	virtual bool IsMoveAble() override;
-	bool IsActive() { return m_bActive; }
 
 public:
 	cOrcaClone(char* szFolder, char* szFilename);
