@@ -23,6 +23,11 @@ cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
+
+	SAFE_DELETE(m_pEffect);
+	SAFE_DELETE(m_pEffect2);
+
+	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
@@ -31,8 +36,6 @@ cMainGame::~cMainGame()
 
 //	SAFE_RELEASE(m_pPlayer);
 //	SAFE_RELEASE(m_pBoss);
-	SAFE_RELEASE(m_pBoss2);
-	
 }
 
 
@@ -87,7 +90,10 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup();
+	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, true);
+	m_pEffect2 = new cEffect;
+	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, false, 128);
+	
 
 	SetLighting();
 
@@ -120,6 +126,17 @@ void cMainGame::Update()
 
 	///////////////임시////////////////
 	
+	if (KEYBOARD->IsOnceKeyDown(DIK_E))
+	{
+		if (m_pEffect->GetProcess())
+			m_pEffect->Stop();
+		else
+			m_pEffect->Start();
+	}
+
+	if (KEYBOARD->IsOnceKeyDown(DIK_R))
+		m_pEffect2->Start();
+
 	//	m_pMap->Update();
 
 
@@ -131,10 +148,13 @@ void cMainGame::Update()
 	/*if (m_pBoss)
 		m_pBoss->Update();*/
 
+	if (m_pEffect)
+		m_pEffect->Update();
+	if (m_pEffect2)
+		m_pEffect2->Update();
+
 	///////////////////////////////////
 
-	if(m_pEffect)
-		m_pEffect->Update();
 }
 
 
@@ -206,9 +226,12 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
-	///////////////////////////////////
-	if(m_pEffect)
+	if (m_pEffect)
 		m_pEffect->Render();
+	if (m_pEffect2)
+		m_pEffect2->Render();
+
+	///////////////////////////////////
 
 	GETSINGLE(cDevice)->EndRender();
 }

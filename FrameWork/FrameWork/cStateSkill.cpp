@@ -35,6 +35,7 @@ void cStateSkill::Start()
 
 void cStateSkill::Update()
 {
+
 }
 
 

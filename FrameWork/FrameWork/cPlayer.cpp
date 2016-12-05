@@ -293,7 +293,10 @@ void cPlayer::CheckControl()
 	}
 
 	if (bControl == true && !CAMERA->GetControl())
+	{
 		CAMERA->SetControl(true);
+		ShowCursor(false);
+	}
 }
 
 
