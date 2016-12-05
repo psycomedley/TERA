@@ -10,6 +10,9 @@ private:
 	float			m_fCamRotY;
 	float			m_fCamDist;
 
+	SYNTHESIZE(bool, m_bUse, Use);
+	SYNTHESIZE(bool, m_bControl, Control);
+
 public:
 	cCamera(void);
 	~cCamera(void);

@@ -9,6 +9,8 @@ cCamera::cCamera(void)
 	, m_fCamRotX(0.0f)
 	, m_fCamRotY(0.0f)
 	, m_fCamDist(5)
+	, m_bUse(false)
+	, m_bControl(true)
 {
 }
 
@@ -33,11 +35,15 @@ void cCamera::Setup()
 
 void cCamera::Update(D3DXVECTOR3* pTarget /*= NULL*/)
 {
-	CameraMove();
+	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+		m_bControl = !m_bControl;
+
+	if (m_bControl)
+		CameraMove();
 
 	D3DXMATRIXA16 matR, matRX, matRY;
-	D3DXMatrixRotationX(&matRX, m_fCamRotX);
-	D3DXMatrixRotationY(&matRY, m_fCamRotY);
+	D3DXMatrixRotationX(&matRX, m_fCamRotY);
+	D3DXMatrixRotationY(&matRY, m_fCamRotX);
 	matR = matRX * matRY;
 
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
@@ -62,20 +68,19 @@ void cCamera::CameraMove()
 	if (m_fCamDist < 1)
 		m_fCamDist = 1;
 
-	//회전 예제
-	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
-	{
-		POINT movePoint = MOUSE->GetMouseVariation();
+//	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+//	{
+	POINT movePoint = MOUSE->GetMouseVariation();
 
-		m_fCamRotX += (movePoint.y / 100.f);
-		m_fCamRotY += (movePoint.x / 100.f);
+	m_fCamRotY += (movePoint.y / 300.f);
+	m_fCamRotX += (movePoint.x / 300.f);
 
-		if (m_fCamRotX < -D3DX_PI / 2.0f + 0.0001f)
-			m_fCamRotX = -D3DX_PI / 2.0f + 0.0001f;
+	if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
+		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;
 
-		if (m_fCamRotX > D3DX_PI / 2.0f - 0.0001f)
-			m_fCamRotX = D3DX_PI / 2.0f - 0.0001f;
-	}
+	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
+		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
+//	}
 }
 
 
