@@ -118,6 +118,9 @@
     <Filter Include="소스 파일\18. Font">
       <UniqueIdentifier>{6a5e12ea-3a18-4216-a5c1-73d2f8aaa515}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\19.Effect">
+      <UniqueIdentifier>{5b8ad642-bad7-4002-8720-0d67f075296e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -315,6 +318,9 @@
     <ClInclude Include="cTextMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="cEffect.h">
+      <Filter>소스 파일\19.Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -491,9 +497,10 @@
     <ClCompile Include="cFontMgr.cpp">
       <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
-    <ClCompile Include="cTextMgr.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="cEffect.cpp">
+      <Filter>소스 파일\19.Effect</Filter>
     </ClCompile>
+    <ClCompile Include="cTextMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FrameWork.rc">

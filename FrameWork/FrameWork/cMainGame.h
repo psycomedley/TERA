@@ -9,6 +9,7 @@ class cPlayer;
 class cOrca;
 class cGrid;
 class cMap;
+class cEffect;
 class cMainGame
 {
 private:
@@ -19,6 +20,8 @@ private:
 
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
+
+	cEffect*			m_pEffect;
 
 
 	//юс╫ц
