@@ -15,7 +15,6 @@
 
 
 cMainGame::cMainGame()
-	: m_pCamera(NULL)
 {
 }
 
@@ -26,7 +25,6 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pGrid);
 	///////////////////////////////////
 
-	SAFE_DELETE(m_pCamera);
 	SAFE_RELEASE(m_pMap);
 
 	Release();
@@ -71,9 +69,8 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
-	m_pCamera = new cCamera;
-	m_pCamera->Setup();
-
+	GETSINGLE(cCameraMgr)->Setup();
+	GETSINGLE(cCameraMgr)->GetCamera()->SetTarget(GETSINGLE(cObjMgr)->GetPlayer());
 
 	m_pMap = new cMap("Map","Map.x");
 
@@ -105,9 +102,8 @@ void cMainGame::Update()
 
 	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
-	if (m_pCamera)
-		m_pCamera->Update(&GETSINGLE(cObjMgr)->GetPlayer()->GetPosition());
-	
+	GETSINGLE(cCameraMgr)->Update();
+
 	GETSINGLE(cTextMgr)->Update();
 
 	//지형 충돌 ...진행중
@@ -226,6 +222,7 @@ void cMainGame::Release()
 	GETSINGLE(cShaderMgr)->Release();
 	GETSINGLE(cFontMgr)->Release();
 	GETSINGLE(cTextMgr)->Release();
+	GETSINGLE(cCameraMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }

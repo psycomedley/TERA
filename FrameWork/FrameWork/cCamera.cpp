@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "cCamera.h"
+#include "cGameObject.h"
 
 
 cCamera::cCamera(void)
@@ -33,7 +34,7 @@ void cCamera::Setup()
 }
 
 
-void cCamera::Update(D3DXVECTOR3* pTarget /*= NULL*/)
+void cCamera::Update()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
 		m_bControl = !m_bControl;
@@ -49,16 +50,44 @@ void cCamera::Update(D3DXVECTOR3* pTarget /*= NULL*/)
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
 
-	if (pTarget)
+	if (m_pTarget)
 	{
-		m_vEye = m_vEye + *pTarget;
-		m_vLookAt = *pTarget;
+		m_vEye = m_vEye + m_pTarget->GetPosition();
+		m_vLookAt = m_pTarget->GetPosition();
 	}
 
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
 	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 }
+
+
+//void cCamera::Update(D3DXVECTOR3* pTarget /*= NULL*/)
+//{
+//	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+//		m_bControl = !m_bControl;
+//
+//	if (m_bControl)
+//		CameraMove();
+//
+//	D3DXMATRIXA16 matR, matRX, matRY;
+//	D3DXMatrixRotationX(&matRX, m_fCamRotY);
+//	D3DXMatrixRotationY(&matRY, m_fCamRotX);
+//	matR = matRX * matRY;
+//
+//	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
+//	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
+//
+//	if (pTarget)
+//	{
+//		m_vEye = m_vEye + *pTarget;
+//		m_vLookAt = *pTarget;
+//	}
+//
+//	D3DXMATRIXA16 matView;
+//	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
+//	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+//}
 
 
 void cCamera::CameraMove()

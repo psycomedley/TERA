@@ -92,6 +92,7 @@
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
     <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCameraMgr.h" />
     <ClInclude Include="cCollision.h" />
     <ClInclude Include="cCube.h" />
     <ClInclude Include="cDevice.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCameraMgr.cpp" />
     <ClCompile Include="cCollision.cpp" />
     <ClCompile Include="cCube.cpp" />
     <ClCompile Include="cDevice.cpp" />
