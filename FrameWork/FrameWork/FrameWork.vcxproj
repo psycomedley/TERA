@@ -97,6 +97,7 @@
     <ClInclude Include="cDevice.h" />
     <ClInclude Include="cDynamicMesh.h" />
     <ClInclude Include="cDynamicObj.h" />
+    <ClInclude Include="cEffect.h" />
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cFrustum.h" />
     <ClInclude Include="cGameObject.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="cDevice.cpp" />
     <ClCompile Include="cDynamicMesh.cpp" />
     <ClCompile Include="cDynamicObj.cpp" />
+    <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cFrustum.cpp" />
     <ClCompile Include="cFunction.cpp" />
