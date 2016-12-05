@@ -12,6 +12,9 @@ private:
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
 
+	SYNTHESIZE(int, m_nKeyDir, KeyDir);
+	SYNTHESIZE(float, m_fTempAngle, TempAngle);
+
 	//이후에 몸통 따로 구성
 	/*cDynamicObj*	m_pArm;
 	cDynamicObj*	m_pLeg;

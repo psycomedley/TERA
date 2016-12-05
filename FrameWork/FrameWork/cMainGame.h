@@ -14,7 +14,6 @@ class cMainGame
 {
 private:
 	cCube*				cube;
-	cCamera*			m_pCamera;
 
 	cDynamicObj*		m_pBoss2;
 

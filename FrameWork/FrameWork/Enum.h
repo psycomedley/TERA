@@ -1,5 +1,20 @@
 #define IDLESWITCHTIME	5.0f
 
+#define	DIRECTION_NONE	0
+#define	DIRECTION_LEFT	(1 << 0)
+#define	DIRECTION_RIGHT	(1 << 1)
+#define	DIRECTION_UP	(1 << 2)
+#define	DIRECTION_DOWN	(1 << 3)
+
+//enum E_DIRECTION
+//{
+//	E_NONE = 0,
+//	E_LEFT = 1 << 0,
+//	E_RIGHT = 1 << 1,
+//	E_UP = 1 << 2,
+//	E_DOWN = 1 << 3,
+//};
+
 enum MOUSEBUTTON
 {
 	MOUSEBTN_LEFT,

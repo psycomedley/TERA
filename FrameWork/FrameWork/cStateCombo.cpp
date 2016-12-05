@@ -2,6 +2,7 @@
 #include "cStateCombo.h"
 #include "cDynamicObj.h"
 #include "cPlayer.h"
+#include "cCamera.h"
 
 
 cStateCombo::cStateCombo()
@@ -34,8 +35,9 @@ void cStateCombo::Start()
 
 void cStateCombo::Update()
 {
-	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
-		m_bNextAttack = true;
+	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
+			m_bNextAttack = true;
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 || 
@@ -67,6 +69,11 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			animInfo.nIndex == E_ANI_COMBO3 ||
 			animInfo.nIndex == E_ANI_COMBO4)
 		{
+			//if (((cPlayer*)m_pParent)->GetKeyDir() == DIRECTION_NONE)
+			//	m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX());
+			//else
+		//	if (m_pParent->IsMoveAble())
+			m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
 			pController->AnimationNext();
 			m_bNextAttack = false;
 		}

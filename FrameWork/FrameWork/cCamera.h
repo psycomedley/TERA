@@ -1,4 +1,6 @@
 #pragma once
+
+class cGameObject;
 class cCamera
 {
 private:
@@ -6,19 +8,21 @@ private:
 	D3DXVECTOR3		m_vLookAt;
 	D3DXVECTOR3		m_vUp;
 
-	float			m_fCamRotX;
-	float			m_fCamRotY;
+	SYNTHESIZE(float, m_fCamRotX, CamRotX);
+	SYNTHESIZE(float, m_fCamRotY, CamRotY);
 	float			m_fCamDist;
 
 	SYNTHESIZE(bool, m_bUse, Use);
 	SYNTHESIZE(bool, m_bControl, Control);
+	SYNTHESIZE(cGameObject*, m_pTarget, Target);
 
 public:
 	cCamera(void);
 	~cCamera(void);
 
 	void Setup();
-	void Update(D3DXVECTOR3* pTarget = NULL);
+//	void Update(D3DXVECTOR3* pTarget = NULL);
+	void Update();
 	void CameraMove();
 
 	//
