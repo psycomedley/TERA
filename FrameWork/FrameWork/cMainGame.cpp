@@ -87,7 +87,7 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup();
+	m_pEffect->Setup("Effect/fire.tga", 20, 20, 128, 4, 4);
 
 	SetLighting();
 
