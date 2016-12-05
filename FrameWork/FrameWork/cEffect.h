@@ -1,4 +1,5 @@
 #pragma once
+class cPlayer;
 class cEffect
 {
 private:
@@ -10,6 +11,7 @@ private:
 	int fireFrameNumber;
 	bool startAttackEffect;
 	int attackFrameTimer;
+	int attackFrameNumber;
 
 public:
 	cEffect();

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cEffect.h"
+#include "cPlayer.h"
 
 
 cEffect::cEffect()
@@ -18,6 +19,7 @@ void cEffect::Setup()
 
 	startAttackEffect = false;
 	attackFrameTimer = 0;
+	attackFrameNumber = 0;
 
 	fireEffectSetup();
 	attackEffectSetup();
@@ -36,7 +38,7 @@ void cEffect::Update()
 		setFireFrame(fireFrameNumber);
 		fireFrameTimer = 0;
 	}
-	if(KEYBOARD->IsOnceKeyDown(VK_SPACE))
+	if(KEYBOARD->IsOnceKeyDown(DIK_E))
 	{
 		startAttackEffect = true;
 	}
@@ -44,12 +46,7 @@ void cEffect::Update()
 	{
 		attackEffectFrame();
 	}
-	attackFrameTimer++;
-	if (attackFrameTimer > 5)
-	{
-		attackFrameTimer = 0;
 
-	}
 }
 
 void cEffect::Render()
@@ -70,23 +67,34 @@ void cEffect::Render()
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000003);*/
 
-	D3DXMATRIXA16 matFireWorld, matFireView;
-	D3DXMatrixIdentity(&matFireWorld);
+	//D3DXMATRIXA16 matFireWorld, matFireView;
+	//D3DXMatrixIdentity(&matFireWorld);
 
-	g_pD3DDevice->SetTexture(0, GETSINGLE(cTextureMgr)->GetTexture("effect/fire.tga"));
-	g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
-	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matFireView);
-	D3DXMatrixInverse(&matFireWorld, 0, &matFireView);
-	matFireWorld._41 = 0;
-	matFireWorld._42 = 0;
-	matFireWorld._43 = 0;
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matFireWorld);
-	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex1[0], sizeof(ST_PCT_VERTEX));
+	//g_pD3DDevice->SetTexture(0, GETSINGLE(cTextureMgr)->GetTexture("effect/fire.tga"));
+	//g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
+	//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matFireView);
+	//D3DXMatrixInverse(&matFireWorld, 0, &matFireView);
+	//matFireWorld._41 = 0;
+	//matFireWorld._42 = 0;
+	//matFireWorld._43 = 0;
+	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &matFireWorld);
+	//g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex1[0], sizeof(ST_PCT_VERTEX));
 
 
 	if (startAttackEffect)
 	{
+		D3DXMATRIXA16 matAttackWorld, matAttackView;
+		D3DXMatrixIdentity(&matAttackWorld);
 
+		g_pD3DDevice->SetTexture(0, GETSINGLE(cTextureMgr)->GetTexture("effect/attack.tga"));
+		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matAttackView);
+		D3DXMatrixInverse(&matAttackWorld, 0, &matAttackView);
+		matAttackWorld._41 = 0;
+		matAttackWorld._42 = 0;
+		matAttackWorld._43 = 0;
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matAttackWorld);
+		g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex2[0], sizeof(ST_PCT_VERTEX));
 	}
 
 
@@ -244,7 +252,57 @@ void cEffect::setFireFrame(int fn)
 
 void cEffect::attackEffectFrame()
 {
-	
+	attackFrameTimer++;
+	if (attackFrameTimer > 3)
+	{
+		attackFrameTimer = 0;
+		attackFrameNumber++;
+		if (attackFrameNumber > 3)
+		{
+			attackFrameNumber = 0;
+			//m_vecVertex2[0].p.x = -1;
+			//m_vecVertex2[1].p.x = -1;
+			//m_vecVertex2[2].p.x = 1;
+			//m_vecVertex2[3].p.x = -1;
+			//m_vecVertex2[4].p.x = 1;
+			//m_vecVertex2[5].p.x = 1;
+			//m_vecVertex2[0].p.y = -1;
+			//m_vecVertex2[1].p.y = 1;
+			//m_vecVertex2[2].p.y = 1;
+			//m_vecVertex2[3].p.y = -1;
+			//m_vecVertex2[4].p.y = 1;
+			//m_vecVertex2[5].p.y = -1;
+
+			m_vecVertex2[0].p.x = 0;
+			m_vecVertex2[1].p.x = 0;
+			m_vecVertex2[2].p.x = 0;
+			m_vecVertex2[3].p.x = 0;
+			m_vecVertex2[4].p.x = 0;
+			m_vecVertex2[5].p.x = 0;
+			m_vecVertex2[0].p.y = 0;
+			m_vecVertex2[1].p.y = 0;
+			m_vecVertex2[2].p.y = 0;
+			m_vecVertex2[3].p.y = 0;
+			m_vecVertex2[4].p.y = 0;
+			m_vecVertex2[5].p.y = 0;
+			startAttackEffect = false;
+		}
+		m_vecVertex2[0].p.x -= 1;
+		m_vecVertex2[1].p.x -= 1;
+		m_vecVertex2[2].p.x += 1;
+		m_vecVertex2[3].p.x -= 1;
+		m_vecVertex2[4].p.x += 1;
+		m_vecVertex2[5].p.x += 1;
+		m_vecVertex2[0].p.y -= 1;
+		m_vecVertex2[1].p.y += 1;
+		m_vecVertex2[2].p.y += 1;
+		m_vecVertex2[3].p.y -= 1;
+		m_vecVertex2[4].p.y += 1;
+		m_vecVertex2[5].p.y -= 1;
+	}
+
+
+
 }
 
 void cEffect::fireEffectSetup()
@@ -280,27 +338,27 @@ void cEffect::attackEffectSetup()
 {
 	m_vecVertex2.resize(6);
 
-	m_vecVertex2[0].p = D3DXVECTOR3(-1, -1 , 0);
+	m_vecVertex2[0].p = D3DXVECTOR3(0, 0 , 0);
 	m_vecVertex2[0].t = D3DXVECTOR2(0, 1);
 	m_vecVertex2[0].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	m_vecVertex2[1].p = D3DXVECTOR3(-1, 1, 0);
+	m_vecVertex2[1].p = D3DXVECTOR3(0, 0, 0);
 	m_vecVertex2[1].t = D3DXVECTOR2(0, 0);
 	m_vecVertex2[1].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	m_vecVertex2[2].p = D3DXVECTOR3(1, 1, 0);
+	m_vecVertex2[2].p = D3DXVECTOR3(0, 0, 0);
 	m_vecVertex2[2].t = D3DXVECTOR2(1, 0);
 	m_vecVertex2[2].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	m_vecVertex2[3].p = D3DXVECTOR3(-1, -1, 0);
+	m_vecVertex2[3].p = D3DXVECTOR3(0, 0, 0);
 	m_vecVertex2[3].t = D3DXVECTOR2(0, 1);
 	m_vecVertex2[3].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	m_vecVertex2[4].p = D3DXVECTOR3(1, 1, 0);
+	m_vecVertex2[4].p = D3DXVECTOR3(0, 0, 0);
 	m_vecVertex2[4].t = D3DXVECTOR2(1, 0);
 	m_vecVertex2[4].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	m_vecVertex2[5].p = D3DXVECTOR3(1, -1, 0);
+	m_vecVertex2[5].p = D3DXVECTOR3(0, 0, 0);
 	m_vecVertex2[5].t = D3DXVECTOR2(1, 1);
 	m_vecVertex2[5].c = D3DCOLOR_ARGB(255, 255, 255, 255);
 }
