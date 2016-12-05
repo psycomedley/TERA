@@ -109,3 +109,15 @@ struct ST_TEXT
 	ST_TEXT() : eFontType(E_FONT_END), sText(""), fShowTime(0.0f), fPassedTime(0.0f) {}
 	ST_TEXT(E_FONT_TYPE _eType, string _sText, float _fShowTime, RECT _rect) : eFontType(_eType), sText(_sText), fShowTime(_fShowTime), fPassedTime(0.0f), rect(_rect) {}
 };
+
+struct ST_PCT_VERTEX
+{
+	D3DXVECTOR3 p;
+	D3DCOLOR c;
+	D3DXVECTOR2 t;
+
+	ST_PCT_VERTEX() : p(0, 0, 0), c(D3DCOLOR_XRGB(255, 255, 255)), t(0, 0) {}
+	ST_PCT_VERTEX(D3DXVECTOR3 _p, D3DXCOLOR _c, D3DXVECTOR2 _t) : p(_p), c(_c), t(_t) {}
+
+	enum {FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1,};
+};
