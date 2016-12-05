@@ -9,6 +9,7 @@
 #include "cMap.h"
 #include "cOrca.h"
 #include "cGrid.h"
+#include "cEffect.h"
 
 //юс╫ц
 
@@ -86,6 +87,8 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetRevision(matR);
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
+	m_pEffect = new cEffect;
+	m_pEffect->Setup();
 
 	SetLighting();
 
@@ -127,6 +130,9 @@ void cMainGame::Update()
 		m_pBoss->Update();*/
 
 	///////////////////////////////////
+
+	if(m_pEffect)
+		m_pEffect->Update();
 }
 
 
@@ -199,6 +205,8 @@ void cMainGame::Render()
 	//}
 
 	///////////////////////////////////
+	if(m_pEffect)
+		m_pEffect->Render();
 
 	GETSINGLE(cDevice)->EndRender();
 }
