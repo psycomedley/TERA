@@ -37,7 +37,10 @@ void cCamera::Setup()
 void cCamera::Update()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+	{
 		m_bControl = !m_bControl;
+		ShowCursor(!m_bControl);
+	}
 
 	if (m_bControl)
 		CameraMove();

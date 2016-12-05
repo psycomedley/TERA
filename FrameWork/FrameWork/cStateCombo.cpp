@@ -42,14 +42,14 @@ void cStateCombo::Update()
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 || 
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO3)
-		m_pParent->Move(0.1f);
+		m_pParent->Move(0.05f);
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
-			m_pParent->Move(0.1f);
+			m_pParent->Move(0.05f);
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
-			m_pParent->Move(0.1f);
+			m_pParent->Move(0.05f);
 }
 
 
@@ -73,7 +73,10 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			//	m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX());
 			//else
 		//	if (m_pParent->IsMoveAble())
-			m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
+			if (((cPlayer*)m_pParent)->GetKeyDir() == DIRECTION_NONE)
+				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX());
+			else
+				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
 			pController->AnimationNext();
 			m_bNextAttack = false;
 		}
