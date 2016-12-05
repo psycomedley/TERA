@@ -86,7 +86,7 @@ void cEffect::Render()
 		D3DXMATRIXA16 matAttackWorld, matAttackView;
 		D3DXMatrixIdentity(&matAttackWorld);
 
-		g_pD3DDevice->SetTexture(0, GETSINGLE(cTextureMgr)->GetTexture("effect/attack.tga"));
+		g_pD3DDevice->SetTexture(0, GETSINGLE(cTextureMgr)->GetTexture("effect/attack2.tga"));
 		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matAttackView);
 		D3DXMatrixInverse(&matAttackWorld, 0, &matAttackView);
