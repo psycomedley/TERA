@@ -102,17 +102,21 @@ void cMainGame::Update()
 {
 	GETSINGLE(cInput)->Update();
 
-	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
+	
 
 	GETSINGLE(cCameraMgr)->Update();
 
 	GETSINGLE(cTextMgr)->Update();
 
-	//지형 충돌 ...진행중
-	/*if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
+	//지형 충돌 
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
+	
+	if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{
-		m_pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
-	}*/
+		float y = playerPos.y;
+		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
+	}
 
 	///////////////임시////////////////
 	
