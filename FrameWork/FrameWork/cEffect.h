@@ -12,6 +12,10 @@ private:
 
 	int						m_nMaxFrameX;
 	int						m_nMaxFrameY;
+	int						m_nMaxFrame;
+
+	bool					m_bLoop;
+	bool					m_bProcess;
 
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire
 	//std::vector<ST_PCT_VERTEX> m_vecVertex2;	//attack
@@ -24,10 +28,14 @@ private:
 	//int attackFrameNumber;
 
 public:
-//	void	Start();
+	void	Start();
+	void	Stop();
+	void	Pause();
 
 public:
-	HRESULT	Setup(string sPath, float fWidth, float fHeight, int nAlpha, int nMaxFrameX, int nMaxFrameY);
+	HRESULT	Setup(string sPath, float fWidth, float fHeight,
+		int nMaxFrameX, int nMaxFrameY, bool bLoop = false, 
+		int nAlpha = 255, int nMaxFrame = 0);
 	void	Update();
 	void	Render();
 

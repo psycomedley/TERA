@@ -9,6 +9,9 @@ cEffect::cEffect()
 	, m_fNextTime(0.1f)
 	, m_nMaxFrameX(0)
 	, m_nMaxFrameY(0)
+	, m_nMaxFrame(0)
+	, m_bLoop(false)
+	, m_bProcess(false)
 {
 }
 
@@ -18,17 +21,24 @@ cEffect::~cEffect()
 }
 
 
-HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight, int nAlpha, int nMaxFrameX, int nMaxFrameY)
+HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
+	int nMaxFrameX, int nMaxFrameY, bool bLoop /*= false*/, 
+	int nAlpha /*= 255*/, int nMaxFrame /*= 0*/)
 {
 	m_vecVertex.resize(6);
 
 	m_pTexture = GETSINGLE(cTextureMgr)->GetTexture(sPath);
+	m_bLoop = bLoop;
 
 	float fHalfWidth = fWidth / 2;
 	float fHalfHeight = fHeight / 2;
 
 	m_nMaxFrameX = nMaxFrameX;
 	m_nMaxFrameY = nMaxFrameY;
+	if (nMaxFrame == 0)
+		m_nMaxFrame = m_nMaxFrameX * m_nMaxFrameY;
+	else
+		m_nMaxFrame = nMaxFrame;
 
 	m_vecVertex[0].p = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0);
 	m_vecVertex[0].t = D3DXVECTOR2(0, 0.25);
@@ -73,15 +83,19 @@ HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight, int nAlpha, in
 
 void cEffect::Update()
 {
-	m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
-
-	if (m_fPassedTime >= m_fNextTime)
+	if (m_bProcess)
 	{
-		m_fPassedTime -= m_fNextTime;
-		m_nFrame++ % 16;
-		UpdateUV();
-	}
+		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
+		if (m_fPassedTime >= m_fNextTime)
+		{
+			m_fPassedTime -= m_fNextTime;
+			(++m_nFrame) % m_nFrame;
+			UpdateUV();
+			if (!m_bLoop)
+				Stop();
+		}
+	}
 	/*fireFrameTimer++;
 	if (fireFrameTimer > 5)
 	{
@@ -106,30 +120,32 @@ void cEffect::Update()
 
 void cEffect::Render()
 {
-	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	if (m_bProcess)
+	{
+		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 
-	g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+		g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 
-	D3DXMATRIXA16 matWorld, matView;
-	D3DXMatrixIdentity(&matWorld);
+		D3DXMATRIXA16 matWorld, matView;
+		D3DXMatrixIdentity(&matWorld);
 
-	g_pD3DDevice->SetTexture(0, m_pTexture);
-	g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
-	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixInverse(&matWorld, 0, &matView);
-	matWorld._41 = 0;
-	matWorld._42 = 0;
-	matWorld._43 = 0;
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex[0], sizeof(ST_PCT_VERTEX));
+		g_pD3DDevice->SetTexture(0, m_pTexture);
+		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matWorld, 0, &matView);
+		matWorld._41 = 0;
+		matWorld._42 = 0;
+		matWorld._43 = 0;
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+		g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex[0], sizeof(ST_PCT_VERTEX));
 
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-
+		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	}
 
 	/*
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
@@ -188,6 +204,26 @@ void cEffect::UpdateUV()
 	m_vecVertex[3].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
 	m_vecVertex[4].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * nY);
 	m_vecVertex[5].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * (nY + 1));
+}
+
+
+void cEffect::Start()
+{
+	m_bProcess = true;
+}
+
+
+void cEffect::Stop()
+{
+	m_bProcess = false;
+	m_fPassedTime = 0.0f;
+	m_nFrame = 0;
+}
+
+
+void cEffect::Pause()
+{
+	m_bProcess = false;
 }
 
 //
