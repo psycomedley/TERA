@@ -163,6 +163,7 @@ void cPlayer::CheckControl()
 	{
 		if (IsMoveAble())
 		{
+//			m_fAngle = 
 			m_vPosition = m_vPosition - m_vDirection * 0.1;
 			ChangeState(E_STATE_RUN);
 		}
