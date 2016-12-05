@@ -17,6 +17,8 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	, m_pLeftWeapon(NULL)
 	, m_bIsBattle(false)
 	, m_fWaitTime(IDLESWITCHTIME)
+	, m_nKeyDir(DIRECTION_NONE)
+	, m_fTempAngle(0.0f)
 	/*, m_pArm(NULL)
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
@@ -38,6 +40,8 @@ cPlayer::cPlayer()
 	, m_pLeftWeapon(NULL)
 	, m_bIsBattle(false)
 	, m_fWaitTime(IDLESWITCHTIME)
+	, m_nKeyDir(DIRECTION_NONE)
+	, m_fTempAngle(0.0f)
 	/*, m_pArm(NULL)
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
@@ -160,110 +164,75 @@ void cPlayer::CheckState()
 
 void cPlayer::CheckControl()
 {
-	int nDirection = DIRECTION_NONE;
+	m_nKeyDir = DIRECTION_NONE;
 	if (KEYBOARD->IsStayKeyDown(DIK_W))
 	{
-		if (IsMoveAble())
-		{
-			nDirection |= DIRECTION_UP;
-			/*m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
-			ChangeState(E_STATE_RUN);
-			bMove = true;*/
-		}
+	//	if (IsMoveAble())
+			m_nKeyDir |= DIRECTION_UP;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_S))
 	{
-		if (IsMoveAble())
-		{
-			nDirection |= DIRECTION_DOWN;
-			/*m_fAngle = -GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
-			ChangeState(E_STATE_RUN);
-			bMove = true;*/
-		}
+	//	if (IsMoveAble())
+			m_nKeyDir |= DIRECTION_DOWN;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_A))
 	{
-		if (IsMoveAble())
-		{
-			nDirection |= DIRECTION_LEFT;
-			/*m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() - D3DX_PI / 2;
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
-			ChangeState(E_STATE_RUN);
-			bMove = true;*/
-		}
+	//	if (IsMoveAble())
+			m_nKeyDir |= DIRECTION_LEFT;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_D))
 	{
-		if (IsMoveAble())
-		{
-			nDirection |= DIRECTION_RIGHT;
-			/*m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + D3DX_PI / 2;
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
-			ChangeState(E_STATE_RUN);
-			bMove = true;*/
-		}
+	//	if (IsMoveAble())
+			m_nKeyDir |= DIRECTION_RIGHT;
 	}
-	if (nDirection == DIRECTION_NONE)
+	if (m_nKeyDir == DIRECTION_NONE)
 	{
-		if (m_bIsBattle)
-			ChangeState(E_STATE_WAIT);
-		else
-			ChangeState(E_STATE_IDLE);
+		if (m_pState == m_aStates[E_STATE_RUN])
+		{
+			if (m_bIsBattle)
+				ChangeState(E_STATE_WAIT);
+			else
+				ChangeState(E_STATE_IDLE);
+		}
 	}
 	else
 	{
 		float fCameraAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
-		float fAngle = 0;
+//		float fAngle = 0;
+		m_fTempAngle = 0.0f;
 		int nKeys = 0;
 
-		if (nDirection & DIRECTION_UP)
+		if (m_nKeyDir & DIRECTION_UP)
 			nKeys++;
-		if (nDirection & DIRECTION_DOWN)
+		if (m_nKeyDir & DIRECTION_DOWN)
 		{
-			fAngle += D3DX_PI;
+			m_fTempAngle += D3DX_PI;
 			nKeys++;
 		}
-		if (nDirection & DIRECTION_LEFT)
+		if (m_nKeyDir & DIRECTION_LEFT)
 		{
-			fAngle -= D3DX_PI / 2;
+			m_fTempAngle -= D3DX_PI / 2;
 			nKeys++;
-			if (nDirection & DIRECTION_DOWN)
-				fAngle += D3DX_PI * 2;
+			if (m_nKeyDir & DIRECTION_DOWN)
+				m_fTempAngle += D3DX_PI * 2;
 		}
-		else if (nDirection & DIRECTION_RIGHT)
+		else if (m_nKeyDir & DIRECTION_RIGHT)
 		{
-			fAngle += D3DX_PI / 2;
+			m_fTempAngle += D3DX_PI / 2;
 			nKeys++;
 		}
 		if (nKeys >= 2)
-			fAngle /= 2;
+			m_fTempAngle /= 2;
 
-		m_fAngle = fCameraAngle + fAngle;
-		m_vPosition = m_vPosition - m_vDirection * 0.1;
-		ChangeState(E_STATE_RUN);
-	}
-	//if
-	//{
-	//	if (!bMove/* && m_pState == m_aStates[E_STATE_RUN]*/)
-	//	{
-	//		if (m_bIsBattle)
-	//			ChangeState(E_STATE_WAIT);
-	//		else
-	//			ChangeState(E_STATE_IDLE);
-	//	}
-	//}
-	/*if (KEYBOARD->IsStayKeyDown(DIK_A))
-	{
+//		m_fAngle = fCameraAngle + fAngle;
+
 		if (IsMoveAble())
-			m_fAngle -= 0.1f;
+		{
+			m_fAngle = fCameraAngle + m_fTempAngle;
+			m_vPosition = m_vPosition - m_vDirection * 0.1;
+			ChangeState(E_STATE_RUN);
+		}
 	}
-	else if (KEYBOARD->IsStayKeyDown(DIK_D))
-	{
-		if (IsMoveAble())
-			m_fAngle += 0.1f;
-	}*/
 
 	/*if (KEYBOARD->IsOnceKeyDown(DIK_O))
 	{
@@ -273,10 +242,13 @@ void cPlayer::CheckControl()
 	{
 		ChangeState(E_STATE_RUN);
 	}*/
-	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
+	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 	{
 		if (m_pState != m_aStates[E_STATE_SKILL])
 		{
+			if (m_nKeyDir == DIRECTION_NONE &&
+				m_pState != m_aStates[E_STATE_COMBO])
+				m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
 			ChangeState(E_STATE_COMBO);
 			m_bIsBattle = true;
 		}
