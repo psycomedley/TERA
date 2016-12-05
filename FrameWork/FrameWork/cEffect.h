@@ -15,7 +15,7 @@ private:
 	int						m_nMaxFrame;
 
 	bool					m_bLoop;
-	bool					m_bProcess;
+	SYNTHESIZE(bool, m_bProcess, Process);
 
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire
 	//std::vector<ST_PCT_VERTEX> m_vecVertex2;	//attack
