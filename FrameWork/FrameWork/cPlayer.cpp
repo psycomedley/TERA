@@ -164,27 +164,30 @@ void cPlayer::CheckState()
 
 void cPlayer::CheckControl()
 {
+	bool bControl = false;
 	m_nKeyDir = DIRECTION_NONE;
 	if (KEYBOARD->IsStayKeyDown(DIK_W))
 	{
-	//	if (IsMoveAble())
-			m_nKeyDir |= DIRECTION_UP;
+		m_nKeyDir |= DIRECTION_UP;
+		bControl = true;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_S))
 	{
-	//	if (IsMoveAble())
-			m_nKeyDir |= DIRECTION_DOWN;
+		m_nKeyDir |= DIRECTION_DOWN;
+		bControl = true;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_A))
 	{
-	//	if (IsMoveAble())
-			m_nKeyDir |= DIRECTION_LEFT;
+		m_nKeyDir |= DIRECTION_LEFT;
+		bControl = true;
 	}
 	if (KEYBOARD->IsStayKeyDown(DIK_D))
 	{
-	//	if (IsMoveAble())
-			m_nKeyDir |= DIRECTION_RIGHT;
+		m_nKeyDir |= DIRECTION_RIGHT;
+		bControl = true;
 	}
+
+	//이동
 	if (m_nKeyDir == DIRECTION_NONE)
 	{
 		if (m_pState == m_aStates[E_STATE_RUN])
@@ -197,7 +200,7 @@ void cPlayer::CheckControl()
 	}
 	else
 	{
-		float fCameraAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
+		float fCameraAngle = CAMERA->GetCamRotX();
 //		float fAngle = 0;
 		m_fTempAngle = 0.0f;
 		int nKeys = 0;
@@ -231,65 +234,66 @@ void cPlayer::CheckControl()
 			m_fAngle = fCameraAngle + m_fTempAngle;
 			m_vPosition = m_vPosition - m_vDirection * 0.1;
 			ChangeState(E_STATE_RUN);
+			bControl = true;
 		}
-	}
-
-	/*if (KEYBOARD->IsOnceKeyDown(DIK_O))
-	{
-		ChangeState(E_STATE_IDLE);
-	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_P))
-	{
-		ChangeState(E_STATE_RUN);
-	}*/
-	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
-	{
-		if (m_pState != m_aStates[E_STATE_SKILL])
-		{
-			if (m_nKeyDir == DIRECTION_NONE &&
-				m_pState != m_aStates[E_STATE_COMBO])
-				m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
-			ChangeState(E_STATE_COMBO);
-			m_bIsBattle = true;
-		}
-	}
-	if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
-	{
-		ChangeState(E_STATE_DEFENCE);
-	}
-	if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
-	{
-		if (m_bIsBattle)
-			ChangeState(E_STATE_WAIT);
-		else
-			ChangeState(E_STATE_IDLE);
 	}
 
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
-		if (m_pState == m_aStates[E_STATE_WAIT])
+		if (IsMoveAble())
 		{
 			ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
 			m_bIsBattle = true;
+			bControl = true;
 		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_2))
 	{
-		if (m_pState == m_aStates[E_STATE_WAIT])
+		if (IsMoveAble())
 		{
 			ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
 			m_bIsBattle = true;
+			bControl = true;
 		}
 	}
-
-
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
 	{
 		//임시
 		dlatl();
 	}
+
+
+	//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
+	if (CAMERA->GetControl())
+	{
+		if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+		{
+			if (m_pState != m_aStates[E_STATE_SKILL])
+			{
+				if (m_nKeyDir == DIRECTION_NONE &&
+					m_pState != m_aStates[E_STATE_COMBO])
+					m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
+				ChangeState(E_STATE_COMBO);
+				m_bIsBattle = true;
+			}
+		}
+		if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
+		{
+			ChangeState(E_STATE_DEFENCE);
+		}
+		if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
+		{
+			if (m_bIsBattle)
+				ChangeState(E_STATE_WAIT);
+			else
+				ChangeState(E_STATE_IDLE);
+		}
+	}
+
+	if (bControl == true && !CAMERA->GetControl())
+		CAMERA->SetControl(true);
 }
 
 

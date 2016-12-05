@@ -42,14 +42,14 @@ void cStateCombo::Update()
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 || 
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO3)
-		m_pParent->Move(0.1f);
+		m_pParent->Move(0.05f);
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
-			m_pParent->Move(0.1f);
+			m_pParent->Move(0.05f);
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
-			m_pParent->Move(0.1f);
+			m_pParent->Move(0.05f);
 }
 
 

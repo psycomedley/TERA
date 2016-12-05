@@ -19,3 +19,4 @@ public:
 	~cCameraMgr();
 };
 
+#define CAMERA cCameraMgr::GetInst()->GetCamera()

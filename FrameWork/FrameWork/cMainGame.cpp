@@ -38,6 +38,8 @@ cMainGame::~cMainGame()
 
 HRESULT cMainGame::Setup()
 {
+	ShowCursor(false);
+
 	if (FAILED(GETSINGLE(cDevice)->Setup()))
 	{
 		MSGBOX("Device Setup Fail");
