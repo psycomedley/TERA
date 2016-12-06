@@ -63,10 +63,10 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(10.0f, 100);
+	m_skillLongMove.SetInfo(30.0f, 100);
 //	m_skillLongMove.sSpeech = "어디 한 번 나의 속도를 느껴보아라!!";
 	m_skillLongMove.sSpeech = "나의 속도를 쬐끔만 느껴보아라!!";
-	m_skillHeavyAtk.SetInfo(20.0f, 100);
+	m_skillHeavyAtk.SetInfo(15.0f, 100);
 	m_skillAttack.SetInfo(3.0f, 10);
 }
 

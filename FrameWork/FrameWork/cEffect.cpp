@@ -92,7 +92,7 @@ void cEffect::Update()
 			m_fPassedTime -= m_fNextTime;
 			(++m_nFrame) % m_nFrame;
 			UpdateUV();
-			if (!m_bLoop)
+			if (m_nFrame > m_nMaxFrame && !m_bLoop)
 				Stop();
 		}
 	}

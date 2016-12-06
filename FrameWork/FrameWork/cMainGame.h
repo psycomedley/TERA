@@ -21,6 +21,7 @@ private:
 	cGrid*				m_pGrid;
 
 	cEffect*			m_pEffect;
+	cEffect*			m_pEffect2;
 
 
 	//юс╫ц
