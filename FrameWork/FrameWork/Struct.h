@@ -34,6 +34,21 @@ struct ST_PNT_VERTEX
 	enum { FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, };
 };
 
+struct ST_PPPNT_VERTEX
+{
+	D3DXVECTOR3 p;
+	D3DXVECTOR3 p0;
+	D3DXVECTOR3 p1;
+	D3DXVECTOR3 n;
+	D3DXVECTOR2	t;
+
+	ST_PPPNT_VERTEX() : p(0, 0, 0), p0(0, 0, 0), p1(0, 0, 0), n(0, 0, 0), t(0, 0) {}
+	ST_PPPNT_VERTEX(D3DXVECTOR3 _p, D3DXVECTOR3 _p0, D3DXVECTOR3 _p1, D3DXVECTOR3 _n, D3DXVECTOR2 _t) 
+		: p(_p), p0(_p0), p1(_p1), n(_n), t(_t) {}
+
+	enum { FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, };
+};
+
 
 struct ST_BONE : public D3DXFRAME
 {

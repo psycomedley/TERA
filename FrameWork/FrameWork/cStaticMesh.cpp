@@ -80,20 +80,23 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	SetupBounding(m_vMin, m_vMax);
 
 	//스테틱매쉬 버텍스및 인덱스 얻기
-	vector<ST_PNT_VERTEX>		m_vecPNTVertaxies;
+	vector<ST_PPPNT_VERTEX>		m_vecPNTVertaxies;
 	vector<WORD>				m_vecIndecies;
 	WORD* index;
 
-	ST_PNT_VERTEX* vertices;
+	ST_PPPNT_VERTEX* vertices;
 	m_pMesh->GetVertexBuffer(&m_VB);
-	vertices = new ST_PNT_VERTEX[m_pMesh->GetNumVertices()];
+	
+	int a = m_pMesh->GetNumBytesPerVertex();
+	int b = sizeof(ST_PPPNT_VERTEX);
 
+	vertices = new ST_PPPNT_VERTEX[m_pMesh->GetNumVertices()];
+	m_vecPNTVertaxies.resize(m_pMesh->GetNumVertices());
 
 	void* pVerties;
 	m_VB->Lock(0, 0, (void**)&pVerties, 0);
-	memcpy(vertices, pVerties, sizeof(ST_PNT_VERTEX)*m_pMesh->GetNumVertices());
+	memcpy(vertices, pVerties, sizeof(ST_PPPNT_VERTEX)*m_pMesh->GetNumVertices());
 
-	m_vecPNTVertaxies.resize(m_pMesh->GetNumVertices());
 	for (int i = 0; i < m_pMesh->GetNumVertices(); ++i)
 	{
 		m_vecPNTVertaxies[i] = vertices[i];
@@ -102,13 +105,16 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 
 
 	m_pMesh->GetIndexBuffer(&m_IB);
-	index = new WORD[m_pMesh->GetNumFaces() * 3];
+	index = new WORD[m_pMesh->GetNumFaces()*3];
 
+	//m_vecIndecies.resize(m_pMesh->GetNumFaces() * 3);
+	//int c = m_pMesh->GetNumFaces();
+	//int d = sizeof(index)*m_pMesh->GetNumVertices();
 	void* pInedex;
 	m_IB->Lock(0, 0, (void**)&pInedex, 0);
-	memcpy(index, pInedex, sizeof(WORD)*m_pMesh->GetNumFaces());
-
-	for (int i = 0; i < m_pMesh->GetNumFaces(); ++i)
+	memcpy(index, pInedex, sizeof(WORD)*m_pMesh->GetNumFaces() * 3);
+	
+	for (int i = 0; i < m_pMesh->GetNumFaces()*3; ++i)
 	{
 		m_vecIndecies.push_back(index[i]);
 	}
