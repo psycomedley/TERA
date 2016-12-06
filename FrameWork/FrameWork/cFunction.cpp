@@ -30,13 +30,34 @@ namespace MY_FUNCTION
 	int GetWindowWidth()
 	{
 		RECT rect;
-		GetWindowRect(g_hWnd, &rect);
+		GetClientRect(g_hWnd, &rect);
 		return (rect.right - rect.left);
 	}
 	int GetWindowHeight()
 	{
 		RECT rect;
-		GetWindowRect(g_hWnd, &rect);
+		GetClientRect(g_hWnd, &rect);
 		return (rect.bottom - rect.top);
+	}
+
+
+	void LockMouse()
+	{
+		POINT pWinPos = MOUSE->GetWindowPos();
+
+		int nWidth = GetWindowWidth();
+		int nHeight = GetWindowHeight();
+
+		if (pWinPos.x <= 0)
+			pWinPos.x = 0;
+		else if (pWinPos.x >= nWidth - 1)
+			pWinPos.x = nWidth - 1;
+		if (pWinPos.y <= 0)
+			pWinPos.y = 0;
+		else if (pWinPos.y >= nHeight - 1)
+			pWinPos.y = nHeight - 1;
+		ClientToScreen(g_hWnd, &pWinPos);
+		
+		SetCursorPos(pWinPos.x, pWinPos.y);
 	}
 }

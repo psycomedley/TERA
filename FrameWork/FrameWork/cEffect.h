@@ -34,8 +34,8 @@ public:
 
 public:
 	HRESULT	Setup(string sPath, float fWidth, float fHeight,
-		int nMaxFrameX, int nMaxFrameY, bool bLoop = false, 
-		int nAlpha = 255, int nMaxFrame = 0);
+		int nMaxFrameX, int nMaxFrameY, float fNextTime = 0.1f,
+		bool bLoop = false, int nAlpha = 255, int nMaxFrame = 0);
 	void	Update();
 	void	Render();
 
