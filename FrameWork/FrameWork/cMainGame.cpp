@@ -10,6 +10,7 @@
 #include "cOrca.h"
 #include "cGrid.h"
 #include "cEffect.h"
+#include "cStaticMeshEffect.h"
 
 //юс╫ц
 
@@ -92,9 +93,11 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, true);
+	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
 	m_pEffect2 = new cEffect;
-	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, false, 128);
+	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
+
+	m_pStaticMeshEffect = new cStaticMeshEffect;
 
 
 	SetLighting();
@@ -172,6 +175,8 @@ void cMainGame::Render()
 {
 	GETSINGLE(cDevice)->BeginRender();
 
+
+
 	POINT pos = MOUSE->GetWindowPos();
 //	POINT pos;
 //	GetCursorPos(&pos);
@@ -239,10 +244,14 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
+	if (m_pStaticMeshEffect)
+		m_pStaticMeshEffect->Render();
+
 	if (m_pEffect)
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
+
 
 
 	///////////////////////////////////

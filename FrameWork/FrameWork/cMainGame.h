@@ -10,6 +10,7 @@ class cOrca;
 class cGrid;
 class cMap;
 class cEffect;
+class cStaticMeshEffect;
 class cMainGame
 {
 private:
@@ -31,6 +32,8 @@ private:
 
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
+
+	cStaticMeshEffect*	m_pStaticMeshEffect;
 
 	void SetLighting();
 
