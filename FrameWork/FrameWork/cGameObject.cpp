@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "cGameObject.h"
 #include "cMesh.h"
+#include "cCamera.h"
 
 
 cGameObject::cGameObject(void)
 	: m_pMesh(NULL)
 	, m_vScale(1, 1, 1)
 	, m_vPosition(0, 0, 0)
+	, m_vCameraFocus(0, 0, 0)
 	, m_fAngle(0)
 	, m_vDirection(0, 0, 1)
 	, m_pAction(NULL)
@@ -26,6 +28,11 @@ void cGameObject::Update()
 {
 	if (m_pAction)
 		m_pAction->Update();
+
+	float rX = CAMERA->GetCamRotX();
+	float rY = CAMERA->GetCamRotY();
+
+	m_vCameraFocus = m_vPosition + D3DXVECTOR3(0.3 * cosf(rX), 2.2, 0.3 * -sinf(rX));
 }
 
 void cGameObject::Render()
@@ -40,13 +47,13 @@ void cGameObject::Bounding_Render()
 }
 
 
-void cGameObject::SetPosition(D3DXVECTOR3 vPos)
-{
-	m_vPosition = vPos;
-
-//	if (m_pMesh)
-//		m_pMesh->GetSphere()->SetCenter(D3DXVECTOR3(vPos.x, vPos.y + m_pMesh->GetSphere()->GetOriginalY(), vPos.z));
-}
+//void cGameObject::SetPosition(D3DXVECTOR3 vPos)
+//{
+//	m_vPosition = vPos;
+//
+////	if (m_pMesh)
+////		m_pMesh->GetSphere()->SetCenter(D3DXVECTOR3(vPos.x, vPos.y + m_pMesh->GetSphere()->GetOriginalY(), vPos.z));
+//}
 
 
 void cGameObject::SetBoundingPos()

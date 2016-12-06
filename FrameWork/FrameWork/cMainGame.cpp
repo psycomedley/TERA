@@ -10,6 +10,7 @@
 #include "cOrca.h"
 #include "cGrid.h"
 #include "cEffect.h"
+#include "cStaticMeshEffect.h"
 
 //임시
 
@@ -28,6 +29,7 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
 
+
 	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////
 
@@ -43,6 +45,12 @@ cMainGame::~cMainGame()
 HRESULT cMainGame::Setup()
 {
 	ShowCursor(false);
+	POINT pWinPos;
+	pWinPos.x = GetWindowWidth() / 2;
+	pWinPos.y = GetWindowHeight() / 2;
+	ClientToScreen(g_hWnd, &pWinPos);
+
+	SetCursorPos(pWinPos.x, pWinPos.y);
 
 	if (FAILED(GETSINGLE(cDevice)->Setup()))
 	{
@@ -76,7 +84,7 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
 	GETSINGLE(cCameraMgr)->Setup();
-	GETSINGLE(cCameraMgr)->GetCamera()->SetTarget(GETSINGLE(cObjMgr)->GetPlayer());
+	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	m_pMap = new cMap("Map","Map.x");
 
@@ -91,10 +99,12 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, true);
+	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
 	m_pEffect2 = new cEffect;
-	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, false, 128);
-	
+	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
+
+	m_pStaticMeshEffect = new cStaticMeshEffect;
+
 
 	SetLighting();
 
@@ -133,7 +143,7 @@ void cMainGame::Update()
 	}
 
 	///////////////임시////////////////
-	
+
 	if (KEYBOARD->IsOnceKeyDown(DIK_E))
 	{
 		if (m_pEffect->GetProcess())
@@ -161,6 +171,7 @@ void cMainGame::Update()
 	if (m_pEffect2)
 		m_pEffect2->Update();
 
+
 	///////////////////////////////////
 
 }
@@ -169,6 +180,8 @@ void cMainGame::Update()
 void cMainGame::Render()
 {
 	GETSINGLE(cDevice)->BeginRender();
+
+
 
 	POINT pos = MOUSE->GetWindowPos();
 //	POINT pos;
@@ -220,6 +233,7 @@ void cMainGame::Render()
 	
 	m_pGrid->Render();
 
+
 	if (m_pBoss2)
 	{	
 		/*m_pBoss2->UpdateAndRender();
@@ -236,10 +250,15 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
+	if (m_pStaticMeshEffect)
+		m_pStaticMeshEffect->Render();
+
 	if (m_pEffect)
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
+
+
 
 	///////////////////////////////////
 
