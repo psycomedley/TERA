@@ -28,9 +28,9 @@ void cMap::Render()
 	D3DXMatrixIdentity(&matT);
 	D3DXMatrixTranslation(&matT, -110, -77, -300);
 	D3DXMatrixScaling(&matS, 0.03f, 0.03f, 0.03f);
-	mat = matS*matT;
+	m_matWorld = matS*matT;
 	//m_matWorld = m_matWorld* mat;
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 	cStaticObj::Render();
 }
 bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
@@ -50,6 +50,9 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 		p1 = vecVertex[i];
 		p2 = vecVertex[i + 1];
 		p3 = vecVertex[i + 2];
+		D3DXVec3TransformCoord(&p1, &p1, &m_matWorld);
+		D3DXVec3TransformCoord(&p2, &p2, &m_matWorld);
+		D3DXVec3TransformCoord(&p3, &p3, &m_matWorld);
 		if (D3DXIntersectTri(&p1, &p2, &p3, &rayPos, &rayDir, &u, &v, &d))
 		{
 			y = 1000 - d;
