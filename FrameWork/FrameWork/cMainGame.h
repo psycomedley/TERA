@@ -34,6 +34,7 @@ private:
 	//	cDynamicObj*	m_pPlayer;
 	//	cDynamicObj*	m_pBoss;
 
+
 public:
 	HRESULT		Setup();
 	void		Update();

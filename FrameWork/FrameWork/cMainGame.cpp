@@ -27,6 +27,8 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
 
+	SAFE_RELEASE(m_pCircleEffect);
+
 	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////
 
@@ -93,7 +95,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, true);
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, false, 128);
-	
+
 
 	SetLighting();
 
@@ -121,7 +123,7 @@ void cMainGame::Update()
 	}*/
 
 	///////////////юс╫ц////////////////
-	
+
 	if (KEYBOARD->IsOnceKeyDown(DIK_E))
 	{
 		if (m_pEffect->GetProcess())
@@ -148,6 +150,7 @@ void cMainGame::Update()
 		m_pEffect->Update();
 	if (m_pEffect2)
 		m_pEffect2->Update();
+
 
 	///////////////////////////////////
 
@@ -206,6 +209,7 @@ void cMainGame::Render()
 	
 	m_pGrid->Render();
 
+
 	if (m_pBoss2)
 	{	
 		/*m_pBoss2->UpdateAndRender();
@@ -226,6 +230,7 @@ void cMainGame::Render()
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
+
 
 	///////////////////////////////////
 
