@@ -53,7 +53,12 @@ void cCamera::Update()
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
 
-	if (m_pTarget)
+	if (m_vTarget)
+	{
+		m_vEye = m_vEye + *m_vTarget;
+		m_vLookAt = *m_vTarget;
+	}
+	else if (m_pTarget)
 	{
 		m_vEye = m_vEye + m_pTarget->GetPosition();
 		m_vLookAt = m_pTarget->GetPosition();
@@ -97,8 +102,10 @@ void cCamera::CameraMove()
 {
 	//ÁÜÀÎ ÁÜ¾Æ¿ô ¿¹Á¦
 	m_fCamDist -= MOUSE->GetWheelVariation() / 100.0f;
-	if (m_fCamDist < 1)
-		m_fCamDist = 1;
+	if (m_fCamDist < 5)
+		m_fCamDist = 5;
+	else if (m_fCamDist > 30)
+		m_fCamDist = 30;
 
 //	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 //	{

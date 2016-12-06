@@ -7,7 +7,8 @@ class cGameObject : public cObject
 protected:
 	cMesh* m_pMesh;
 	
-	D3DXVECTOR3 m_vPosition;
+	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vCameraFocus, CameraFocus);
 	SYNTHESIZE(float, m_fAngle, Angle);
 	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
 
@@ -26,8 +27,8 @@ public:
 	virtual cBoundingBox GetBox();
 
 public:
-	D3DXVECTOR3 GetPosition() { return m_vPosition; }
-	void SetPosition(D3DXVECTOR3 vPos);
+//	D3DXVECTOR3 GetPosition() { return m_vPosition; }
+//	void SetPosition(D3DXVECTOR3 vPos);
 	void SetBoundingPos();
 
 public:

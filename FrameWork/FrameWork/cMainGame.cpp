@@ -43,6 +43,12 @@ cMainGame::~cMainGame()
 HRESULT cMainGame::Setup()
 {
 	ShowCursor(false);
+	POINT pWinPos;
+	pWinPos.x = GetWindowWidth() / 2;
+	pWinPos.y = GetWindowHeight() / 2;
+	ClientToScreen(g_hWnd, &pWinPos);
+
+	SetCursorPos(pWinPos.x, pWinPos.y);
 
 	if (FAILED(GETSINGLE(cDevice)->Setup()))
 	{
@@ -76,7 +82,7 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
 	GETSINGLE(cCameraMgr)->Setup();
-	GETSINGLE(cCameraMgr)->GetCamera()->SetTarget(GETSINGLE(cObjMgr)->GetPlayer());
+	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	m_pMap = new cMap("Map","Map.x");
 
