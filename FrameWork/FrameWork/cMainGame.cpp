@@ -142,6 +142,17 @@ void cMainGame::Update()
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
 	}
 
+	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
+	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
+	{
+		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
+		if (m_pMap->GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
+		{
+			float y = MonsterPos.y;
+			pVecAllMonster[i]->SetPosition(D3DXVECTOR3(MonsterPos.x, MonsterPos.y, MonsterPos.z));
+		}
+	}
+
 	///////////////юс╫ц////////////////
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_E))
