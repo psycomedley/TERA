@@ -15,6 +15,7 @@
 
 
 cMainGame::cMainGame()
+	: m_bLockMouse(true)
 {
 }
 
@@ -106,7 +107,13 @@ HRESULT cMainGame::Setup()
 
 void cMainGame::Update()
 {
+	if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
+		m_bLockMouse = !m_bLockMouse;
+		
 	GETSINGLE(cInput)->Update();
+
+	if (m_bLockMouse)
+		LockMouse();
 
 	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
@@ -159,11 +166,13 @@ void cMainGame::Render()
 	GETSINGLE(cDevice)->BeginRender();
 
 	POINT pos = MOUSE->GetWindowPos();
+//	POINT pos;
+//	GetCursorPos(&pos);
 	char msg[128];
 
 	
-//	OutputInteger(msg, "x", pos.x);
-//	OutputInteger(msg, "y", pos.y);
+	OutputInteger(msg, "x", pos.x);
+	OutputInteger(msg, "y", pos.y);
 
 //	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //	{

@@ -19,15 +19,21 @@ private:
 
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
+	
+	bool				m_bLockMouse;
 
-	cEffect*			m_pEffect;
-	cEffect*			m_pEffect2;
+
 
 
 	//юс╫ц
 	int a = 0;
 	float b = 0.1;
+
+	cEffect*			m_pEffect;
+	cEffect*			m_pEffect2;
+
 	void SetLighting();
+
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;
 
