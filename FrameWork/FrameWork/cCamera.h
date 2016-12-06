@@ -11,6 +11,7 @@ private:
 	SYNTHESIZE(float, m_fCamRotX, CamRotX);
 	SYNTHESIZE(float, m_fCamRotY, CamRotY);
 	float			m_fCamDist;
+	float			m_fPrevDist;
 
 	SYNTHESIZE(bool, m_bUse, Use);
 	SYNTHESIZE(bool, m_bControl, Control);
