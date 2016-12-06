@@ -12,20 +12,34 @@ cShaderMgr::~cShaderMgr()
 }
 
 
-LPD3DXEFFECT cShaderMgr::GetEffect(string sKey)
+HRESULT cShaderMgr::AddEffect(E_EFFECT_TYPE eType, string sFilename)
 {
-	if (m_mapEffect.find(sKey) == m_mapEffect.end())
+	if (m_mapEffect.find(eType) == m_mapEffect.end())
+		return E_FAIL;
+
+	string sFullPath = "Shader/";
+	sFullPath += sFilename;
+
+	LPD3DXBUFFER pErrBuf = NULL;
+	if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice, sFullPath.c_str(), NULL, NULL, D3DXSHADER_DEBUG
+		, NULL, &m_mapEffect[eType], &pErrBuf)))
 	{
-		LPD3DXBUFFER pErrBuf = NULL;
-		if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice, sKey.c_str(), NULL, NULL, D3DXSHADER_DEBUG
-			, NULL, &m_mapEffect[sKey], &pErrBuf)))
-		{
-			MSGBOX((char*)pErrBuf->GetBufferPointer());
-			SAFE_RELEASE(pErrBuf);
-			return NULL;
-		}
+		MSGBOX((char*)pErrBuf->GetBufferPointer());
+		SAFE_RELEASE(pErrBuf);
+		return E_FAIL;
 	}
-	return m_mapEffect[sKey];
+	return S_OK;
+}
+
+
+
+LPD3DXEFFECT cShaderMgr::GetEffect(E_EFFECT_TYPE eType)
+{
+	auto iter = m_mapEffect.find(eType);
+	if (iter == m_mapEffect.end())
+		return NULL;
+
+	return m_mapEffect[eType];
 }
 
 
