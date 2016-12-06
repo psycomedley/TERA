@@ -1,0 +1,20 @@
+#
+# mtl file for effect.obj obj file
+#
+
+newmtl spells_7fx_druid_ashamanesfrenzyswipe_castworld.m2_Geoset_001_Lum_Dbl
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd effect_bloodsplat_shadow.png
+newmtl spells_7fx_druid_ashamanesfrenzyswipe_castworld.m2_Geoset_000_Lum_Dbl
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd effect_energywedge_h.png
