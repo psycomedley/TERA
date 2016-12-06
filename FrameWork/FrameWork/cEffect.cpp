@@ -22,10 +22,11 @@ cEffect::~cEffect()
 
 
 HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
-	int nMaxFrameX, int nMaxFrameY, bool bLoop /*= false*/, 
-	int nAlpha /*= 255*/, int nMaxFrame /*= 0*/)
+	int nMaxFrameX, int nMaxFrameY, float fNextTime /*= 0.1f*/,
+	bool bLoop /*= false*/, int nAlpha /*= 255*/, int nMaxFrame /*= 0*/)
 {
 	m_vecVertex.resize(6);
+	m_fNextTime = fNextTime;
 
 	m_pTexture = GETSINGLE(cTextureMgr)->GetTexture(sPath);
 	m_bLoop = bLoop;

@@ -53,7 +53,7 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 {
 	m_pAnimController = new cAnimationController;
 
-	m_pEffect = LoadEffect("MultiAnimation.hpp");
+	m_pEffect = LoadEffect("Shader/MultiAnimation.hpp");
 
 	int nPaletteSize = 0;
 	m_pEffect->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
