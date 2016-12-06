@@ -127,14 +127,14 @@ void cMainGame::Update()
 	GETSINGLE(cTextMgr)->Update();
 
 	//지형 충돌 
-	/*cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 	
 	if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
-	}*/
+	}
 
 	///////////////임시////////////////
 
