@@ -10,6 +10,7 @@ cCamera::cCamera(void)
 	, m_fCamRotX(0.0f)
 	, m_fCamRotY(0.0f)
 	, m_fCamDist(5)
+	, m_fPrevDist(5)
 	, m_bUse(false)
 	, m_bControl(true)
 {
@@ -53,15 +54,15 @@ void cCamera::Update()
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
 
-	if (m_vTarget)
-	{
-		m_vEye = m_vEye + *m_vTarget;
-		m_vLookAt = *m_vTarget;
-	}
-	else if (m_pTarget)
+	if (m_pTarget)
 	{
 		m_vEye = m_vEye + m_pTarget->GetPosition();
 		m_vLookAt = m_pTarget->GetPosition();
+	}
+	else if (m_vTarget)
+	{
+		m_vEye = m_vEye + *m_vTarget;
+		m_vLookAt = *m_vTarget;
 	}
 
 	D3DXMATRIXA16 matView;
@@ -100,26 +101,97 @@ void cCamera::Update()
 
 void cCamera::CameraMove()
 {
+//	POINT prevPos;
+//	GetCursorPos(&prevPos);
+
 	//ÁÜÀÎ ÁÜ¾Æ¿ô ¿¹Á¦
-	m_fCamDist -= MOUSE->GetWheelVariation() / 100.0f;
+	/*m_fCamDist -= MOUSE->GetWheelVariation() / 100.0f;
 	if (m_fCamDist < 5)
 		m_fCamDist = 5;
 	else if (m_fCamDist > 30)
-		m_fCamDist = 30;
+		m_fCamDist = 30;*/
+
+	float var = MOUSE->GetWheelVariation() / 120.0f;
+	if (var)
+	{
+		if (m_fCamRotY >= 0)
+		{
+			m_fCamDist -= var;
+			if (m_fCamDist < 5)
+				m_fCamDist = 5;
+			else if (m_fCamDist > 30)
+				m_fCamDist = 30;
+		}
+		else
+		{
+			m_fPrevDist -= var;
+			if (m_fPrevDist < 5)
+				m_fPrevDist = 5;
+			else if (m_fPrevDist > 30)
+				m_fPrevDist = 30;
+		}
+	}
 
 //	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 //	{
 	POINT movePoint = MOUSE->GetMouseVariation();
 
-	m_fCamRotY += (movePoint.y / 300.f);
+//	m_fCamRotY += (movePoint.y / 300.f);
 	m_fCamRotX += (movePoint.x / 300.f);
-
-	if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
-		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;
 
 	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
 		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
-//	}
+	/*if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
+		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;*/
+
+	if (movePoint.y >= 0)
+	{
+		if (m_fPrevDist == 0)
+			m_fCamRotY += (movePoint.y / 300.f);
+		else if (m_fPrevDist >= m_fCamDist)
+		{
+			if (m_fCamRotY >= 0)
+				m_fCamDist += (movePoint.y / 25.f);
+			else
+			{
+				m_fCamDist += (movePoint.y / 50.f);
+				m_fCamRotY += (movePoint.y / 300.f);
+				m_vLookAt.y += (movePoint.y / 50.f);
+			}
+		}
+		else
+			m_fPrevDist = 0;
+	}
+	else
+	{
+		if (m_fCamRotY < 0)
+		{
+			if (m_fCamDist > 5)
+			{
+				if (m_fPrevDist == 0)
+					m_fPrevDist = m_fCamDist;
+				if (m_fPrevDist >= m_fCamDist)
+					m_fCamDist += (movePoint.y / 25.f);
+			}
+			else
+			{
+				if (movePoint.y < -10)
+					movePoint.y = -10;
+				if (m_fCamRotY <= -D3DX_PI / 6)
+				{
+					m_fCamRotY = -D3DX_PI / 6;
+					return;
+				}
+				m_fCamDist += (movePoint.y / 50.f);
+				m_fCamRotY += (movePoint.y / 300.f);
+				m_vLookAt.y += (movePoint.y / 50.f);
+			}
+		}
+		else
+		{
+			m_fCamRotY += (movePoint.y / 300.f);
+		}
+	}
 }
 
 
