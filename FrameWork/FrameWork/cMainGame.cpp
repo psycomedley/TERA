@@ -28,7 +28,6 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
 
-	SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////

@@ -13,7 +13,7 @@ cStaticMeshEffect::~cStaticMeshEffect()
 
 HRESULT cStaticMeshEffect::Setup()
 {
-
+	return HRESULT();
 }
 
 void cStaticMeshEffect::Update()
