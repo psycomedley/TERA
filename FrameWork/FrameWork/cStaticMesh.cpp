@@ -39,7 +39,8 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	if (FAILED(D3DXLoadMeshFromX(sFullPath.c_str(), D3DXMESH_MANAGED, g_pD3DDevice, NULL, &m_pSubSetBuffer
 		, NULL, &m_dwSubSetCnt, &m_pMesh)))
 	{
-		MSGBOX("Static Mesh Load Fail");
+		sFullPath += " Static Mesh Load Fail";
+		MSGBOX(sFullPath.c_str());
 		return E_FAIL;
 	}
 

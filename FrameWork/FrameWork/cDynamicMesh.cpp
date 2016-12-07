@@ -66,13 +66,18 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 	sFullPath += std::string("/");
 	sFullPath += std::string(szFile);
 
-	D3DXLoadMeshHierarchyFromX(sFullPath.c_str(),
+	if (FAILED(D3DXLoadMeshHierarchyFromX(sFullPath.c_str(),
 		D3DXMESH_MANAGED,
 		g_pD3DDevice,
 		&ah,
 		NULL,
 		(LPD3DXFRAME*)&m_pRootFrame,
-		&m_pAnimController->m_pController);
+		&m_pAnimController->m_pController)))
+	{
+		sFullPath += " Dynamic Mesh Load Fail";
+		MSGBOX(sFullPath.c_str());
+		return E_FAIL;
+	}
 
 	if (m_pmWorkingPalette)
 		delete[] m_pmWorkingPalette;
