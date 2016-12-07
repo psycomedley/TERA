@@ -71,6 +71,11 @@ struct ST_BONE_MESH : public D3DXMESHCONTAINER
 	DWORD				dwNumAttrGroups;
 	LPD3DXBUFFER		pBufBoneCombos;
 
+	/*vector<LPDIRECT3DTEXTURE9>	vecTextureNormal;
+	vector<LPDIRECT3DTEXTURE9>	vecTextureSpecular;
+	vector<LPDIRECT3DTEXTURE9>	vecTextureMask;
+	vector<LPDIRECT3DTEXTURE9>	vecTextureEmission;*/
+
 	ST_BONE_MESH() : pOrigMesh(NULL), pWorkingMesh(NULL) {}
 };
 

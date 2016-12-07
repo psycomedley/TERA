@@ -51,3 +51,24 @@ bool cCollision::Collision(cBoundingSphere* pSphere1, cBoundingSphere* pSphere2)
 		return true;
 	return false;
 }
+
+
+bool cCollision::Collision(cBoundingBox* pBox1, cBoundingBox* pBox2)
+{
+	D3DXVECTOR3 vMax1 = pBox1->GetvMax();
+	D3DXVECTOR3 vMin1 = pBox1->GetvMin();
+	D3DXVECTOR3 vMax2 = pBox2->GetvMax();
+	D3DXVECTOR3 vMin2 = pBox2->GetvMin();
+	if ((vMax1.x > vMin2.x && vMin1.x < vMax2.x) &&
+		(vMax1.y > vMin2.y && vMin1.y < vMax2.y) &&
+		(vMax1.z > vMin2.z && vMin1.z < vMax2.z))
+		return true;
+
+	return false;
+}
+
+
+bool cCollision::CollisionOBB(cBoundingBox* pBox1, cBoundingBox* pBox2)
+{
+	return false;
+}

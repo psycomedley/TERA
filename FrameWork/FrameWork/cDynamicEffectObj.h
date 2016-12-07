@@ -1,6 +1,7 @@
 #pragma once
 #include "cGameObject.h"
 #include "cDynamicMesh.h"
+
 class cDynamicEffectObj : public cGameObject
 {
 protected:
