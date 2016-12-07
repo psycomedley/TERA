@@ -71,12 +71,14 @@ HRESULT cMainGame::Setup()
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
+	pPlayer->SetRevisionAngle(D3DX_PI / 2);
 	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
+	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
