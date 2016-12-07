@@ -11,6 +11,7 @@
 #include "cGrid.h"
 #include "cEffect.h"
 #include "cStaticMeshEffect.h"
+#include "cDynamicMeshEffect.h"
 
 //임시
 
@@ -29,6 +30,7 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
+	SAFE_RELEASE(m_pDynamicMeshEffect);
 	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
@@ -110,7 +112,12 @@ HRESULT cMainGame::Setup()
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 
 	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
-
+	m_pStaticMeshEffect->Setup();
+	
+	//임시 세팅 (비정상 동작중)
+	/*m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
+	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(20, 0, 0));
+	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));*/
 
 	m_cObjectTree = new cStaticObj("Object","tree4.x");
 
@@ -161,6 +168,10 @@ void cMainGame::Update()
 	}
 	if (m_pMap)
 		m_pMap->Update();
+
+	CHAR str[16];
+	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
+	SetWindowText(g_hWnd, str);
 
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
@@ -254,6 +265,9 @@ void cMainGame::Render()
 
 	if (m_pStaticMeshEffect)
 		m_pStaticMeshEffect->Render();
+
+	if (m_pDynamicMeshEffect)
+		m_pDynamicMeshEffect->Render();
 
 	if (m_pEffect)
 		m_pEffect->Render();

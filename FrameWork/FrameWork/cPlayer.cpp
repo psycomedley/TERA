@@ -306,20 +306,21 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	CheckControl();
 	m_pState->Update();
 	cDynamicObj::UpdateAndRender(pmat);
-	GetBox();
+//	GetBox();
 //	m_pArm->UpdateAndRender();
 	
 	if (m_pRightWeapon)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-//		m_pRightWeapon->Bounding_Render();
+		m_pRightWeapon->Bounding_Render();
+		m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-//		m_pLeftWeapon->Bounding_Render();
+		m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -353,6 +354,6 @@ void cPlayer::dlatl()
 void cPlayer::SetScale(D3DXVECTOR3 vScale)
 {
 	cGameObject::SetScale(vScale);
-	m_pLeftWeapon->SetScale(vScale);
-	m_pRightWeapon->SetScale(vScale);
+//	m_pLeftWeapon->SetScale(vScale);
+//	m_pRightWeapon->SetScale(vScale);
 }
