@@ -88,7 +88,7 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
-	m_pMap = new cMap("Map","Map.x");
+	m_pMap = new cMap("Map","fieldmap1.x");
 
 	///////////////юс╫ц////////////////
 

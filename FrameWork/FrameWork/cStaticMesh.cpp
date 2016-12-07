@@ -80,22 +80,22 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	SetupBounding(m_vMin, m_vMax);
 
 	//스테틱매쉬 버텍스및 인덱스 얻기
-	vector<ST_PPPNT_VERTEX>		m_vecPNTVertaxies;
+	vector<ST_PNT_VERTEX>		m_vecPNTVertaxies;
 	vector<WORD>				m_vecIndecies;
 	WORD* index;
 
-	ST_PPPNT_VERTEX* vertices;
+	ST_PNT_VERTEX* vertices;
 	m_pMesh->GetVertexBuffer(&m_VB);
 	
 	int a = m_pMesh->GetNumBytesPerVertex();
-	int b = sizeof(ST_PPPNT_VERTEX);
+	int b = sizeof(ST_PNT_VERTEX);
 
-	vertices = new ST_PPPNT_VERTEX[m_pMesh->GetNumVertices()];
+	vertices = new ST_PNT_VERTEX[m_pMesh->GetNumVertices()];
 	m_vecPNTVertaxies.resize(m_pMesh->GetNumVertices());
 
 	void* pVerties;
 	m_VB->Lock(0, 0, (void**)&pVerties, 0);
-	memcpy(vertices, pVerties, sizeof(ST_PPPNT_VERTEX)*m_pMesh->GetNumVertices());
+	memcpy(vertices, pVerties, sizeof(ST_PNT_VERTEX)*m_pMesh->GetNumVertices());
 
 	for (int i = 0; i < m_pMesh->GetNumVertices(); ++i)
 	{
