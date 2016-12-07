@@ -45,14 +45,14 @@ void cObjMgr::Render()
 {
 	if (m_pPlayer)
 		m_pPlayer->UpdateAndRender();
-	m_pPlayer->Bounding_Render();
+//	m_pPlayer->Bounding_Render();
 
 	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
 	{
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
 			(*iter2)->UpdateAndRender();
-			(*iter2)->Bounding_Render();
+//			(*iter2)->Bounding_Render();
 		}
 	}
 }
