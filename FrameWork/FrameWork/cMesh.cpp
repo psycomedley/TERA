@@ -27,10 +27,10 @@ void cMesh::Render()
 
 void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale)
 {
-	if (m_pBox)
-		m_pBox->Render(vPos, vScale);
-//	if (m_pSphere)
-//		m_pSphere->Render(vPos, vScale);
+//	if (m_pBox)
+//		m_pBox->Render(vPos, vScale);
+	if (m_pSphere)
+		m_pSphere->Render(vPos, vScale);
 }
 
 

@@ -2,7 +2,7 @@
 #include "cDynamicMeshEffect.h"
 
 
-cDynamicMeshEffect::cDynamicMeshEffect()
+cDynamicMeshEffect::cDynamicMeshEffect(char* szFolder, char* szFilename)
 {
 }
 
