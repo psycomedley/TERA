@@ -1,14 +1,17 @@
 #pragma once
-class cStaticMeshEffect
+#include "cStaticObj.h"
+class cStaticMeshEffect : public cStaticObj
 {
 private:
 
 public:
-	cStaticMeshEffect();
+	cStaticMeshEffect(char* szFolder, char* szFilename);
 	~cStaticMeshEffect();
 
 	HRESULT Setup();
 	void Update();
 	void Render();
+
+
 };
 

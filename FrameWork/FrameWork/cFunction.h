@@ -18,4 +18,8 @@ namespace MY_FUNCTION
 	int GetWindowWidth();
 	int GetWindowHeight();
 	void LockMouse();
+	void FixMouse();
+
+	POINT GetCursorPosition();
+	bool IsActive();
 }

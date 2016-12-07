@@ -4,13 +4,13 @@
 
 
 cCamera::cCamera(void)
-	: m_vEye(0, 0, -5)
+	: m_vEye(0, 0, -6)
 	, m_vLookAt(0, 0, 0)
 	, m_vUp(0, 1, 0)
 	, m_fCamRotX(0.0f)
 	, m_fCamRotY(0.0f)
 	, m_fCamDist(5)
-	, m_fPrevDist(5)
+	, m_fPrevDist(6)
 	, m_bUse(false)
 	, m_bControl(true)
 {
@@ -41,10 +41,15 @@ void cCamera::Update()
 	{
 		m_bControl = !m_bControl;
 		ShowCursor(!m_bControl);
+
+		MOUSE->SetFixPos(GetCursorPosition());
 	}
 
 	if (m_bControl)
+	{
 		CameraMove();
+		FixMouse();
+	}
 
 	D3DXMATRIXA16 matR, matRX, matRY;
 	D3DXMatrixRotationX(&matRX, m_fCamRotY);
@@ -117,16 +122,16 @@ void cCamera::CameraMove()
 		if (m_fCamRotY >= 0)
 		{
 			m_fCamDist -= var;
-			if (m_fCamDist < 5)
-				m_fCamDist = 5;
+			if (m_fCamDist < 6)
+				m_fCamDist = 6;
 			else if (m_fCamDist > 30)
 				m_fCamDist = 30;
 		}
 		else
 		{
 			m_fPrevDist -= var;
-			if (m_fPrevDist < 5)
-				m_fPrevDist = 5;
+			if (m_fPrevDist < 6)
+				m_fPrevDist = 6;
 			else if (m_fPrevDist > 30)
 				m_fPrevDist = 30;
 		}
@@ -139,8 +144,6 @@ void cCamera::CameraMove()
 //	m_fCamRotY += (movePoint.y / 300.f);
 	m_fCamRotX += (movePoint.x / 300.f);
 
-	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
-		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
 	/*if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
 		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;*/
 
@@ -192,6 +195,8 @@ void cCamera::CameraMove()
 			m_fCamRotY += (movePoint.y / 300.f);
 		}
 	}
+	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
+		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
 }
 
 

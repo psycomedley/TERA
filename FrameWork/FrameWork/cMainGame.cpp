@@ -35,6 +35,8 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
+	SAFE_RELEASE(m_pStaticMeshEffect);
+
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -45,12 +47,12 @@ cMainGame::~cMainGame()
 HRESULT cMainGame::Setup()
 {
 	ShowCursor(false);
-	POINT pWinPos;
+	/*POINT pWinPos;
 	pWinPos.x = GetWindowWidth() / 2;
 	pWinPos.y = GetWindowHeight() / 2;
 	ClientToScreen(g_hWnd, &pWinPos);
 
-	SetCursorPos(pWinPos.x, pWinPos.y);
+	SetCursorPos(pWinPos.x, pWinPos.y);*/
 
 	if (FAILED(GETSINGLE(cDevice)->Setup()))
 	{
@@ -103,7 +105,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 
-	m_pStaticMeshEffect = new cStaticMeshEffect;
+	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
 
 
 	SetLighting();
@@ -117,35 +119,40 @@ HRESULT cMainGame::Setup()
 
 void cMainGame::Update()
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
-		m_bLockMouse = !m_bLockMouse;
-		
-	GETSINGLE(cInput)->Update();
+	if (IsActive())
+	{
+		if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
+			m_bLockMouse = !m_bLockMouse;
 
-	if (m_bLockMouse)
-		LockMouse();
+		GETSINGLE(cInput)->Update();
 
-	
+		if (m_bLockMouse)
+			LockMouse();
+		/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
-	GETSINGLE(cCameraMgr)->Update();
 
-	GETSINGLE(cTextMgr)->Update();
+		GETSINGLE(cCameraMgr)->Update();
 
-	
+		GETSINGLE(cTextMgr)->Update();
+	}
+
+
 
 	///////////////юс╫ц////////////////
 
-	if (KEYBOARD->IsOnceKeyDown(DIK_E))
+	if (IsActive())
 	{
-		if (m_pEffect->GetProcess())
-			m_pEffect->Stop();
-		else
-			m_pEffect->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_E))
+		{
+			if (m_pEffect->GetProcess())
+				m_pEffect->Stop();
+			else
+				m_pEffect->Start();
+		}
+
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+			m_pEffect2->Start();
 	}
-
-	if (KEYBOARD->IsOnceKeyDown(DIK_R))
-		m_pEffect2->Start();
-
 	if (m_pMap)
 		m_pMap->Update();
 
@@ -165,15 +172,12 @@ void cMainGame::Update()
 
 
 	///////////////////////////////////
-
 }
 
 
 void cMainGame::Render()
 {
 	GETSINGLE(cDevice)->BeginRender();
-
-
 
 	POINT pos = MOUSE->GetWindowPos();
 //	POINT pos;
