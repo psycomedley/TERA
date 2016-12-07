@@ -25,12 +25,12 @@ void cMesh::Render()
 }
 
 
-void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale)
+void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle /*= 0*/, D3DXMATRIXA16* matRevision /*= NULL*/)
 {
 	if (m_pBox)
-		m_pBox->Render(vPos);
-	if (m_pSphere)
-		m_pSphere->Render(vPos, vScale);
+		m_pBox->Render(vPos, vScale, fAngle, matRevision);
+//	if (m_pSphere)
+//		m_pSphere->Render(vPos, vScale);
 }
 
 
@@ -58,14 +58,48 @@ HRESULT cMesh::SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
 }
 
 
-cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition)
+cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*= 0*/)
 {
 	cBoundingBox box;
+	D3DXMATRIXA16 matR;
+	D3DXMatrixRotationY(&matR, fAngle);
+	D3DXVECTOR3	vMin = m_pBox->GetvMin() * fScale;
+	D3DXVECTOR3	vMax = m_pBox->GetvMax() * fScale;
+
+	D3DXVec3TransformCoord(&vMin, &vMin, &matR);
+	D3DXVec3TransformCoord(&vMax, &vMax, &matR);
+
+	vMin += vPosition;
+	vMax += vPosition;
+
+	box.SetvMin(vMin);
+	box.SetvMax(vMax);
 	//임시
-	D3DXVECTOR3 vPos = m_pBox->GetPosition();
+	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
 	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,
 		((m_pBox->GetvMax().y + m_pBox->GetvMin().y) / 2) + vPosition.y,
-		vPosition.z));
+		vPosition.z));*/
+
+	return box;
+}
+
+
+cBoundingBox cMesh::GetBox(D3DXMATRIXA16* mat)
+{
+	cBoundingBox box;
+	D3DXVECTOR3	vMin = m_pBox->GetvMin();
+	D3DXVECTOR3	vMax = m_pBox->GetvMax();
+
+	D3DXVec3TransformCoord(&vMin, &vMin, mat);
+	D3DXVec3TransformCoord(&vMax, &vMax, mat);
+
+	box.SetvMin(vMin);
+	box.SetvMax(vMax);
+	//임시
+	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
+	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,
+	((m_pBox->GetvMax().y + m_pBox->GetvMin().y) / 2) + vPosition.y,
+	vPosition.z));*/
 
 	return box;
 }
@@ -80,7 +114,7 @@ cBoundingSphere cMesh::GetSphere(D3DXVECTOR3 vPosition, float fScale)
 		vPosition.z));
 
 	m_pSphere->SetRadius(m_pSphere->GetOriginalRadius() * fScale);*/
-
+	
 	sphere.SetCenter(D3DXVECTOR3(vPosition.x,
 		(m_pSphere->GetOriginalY() * fScale) + vPosition.y,
 		vPosition.z));

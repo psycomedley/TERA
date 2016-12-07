@@ -14,6 +14,7 @@ public:
 
 	map<string, vector<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
 	vector<cDynamicObj*>* GetMonsterList(string sKey);
+	vector<cDynamicObj*> GetALLMonsterList();
 
 public:
 	cDynamicObj* GetPlayer() { return m_pPlayer; }

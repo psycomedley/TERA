@@ -45,6 +45,7 @@ void cObjMgr::Render()
 {
 	if (m_pPlayer)
 		m_pPlayer->UpdateAndRender();
+//	m_pPlayer->Bounding_Render();
 
 	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
 	{
@@ -81,4 +82,19 @@ vector<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
 	if (iter == m_mapMonster.end())
 		return NULL;
 	return &m_mapMonster[sKey];
+}
+vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
+{
+
+	vector<cDynamicObj*> pVecAllMonster;
+
+	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
+	{
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
+		{
+			pVecAllMonster.push_back(*iter2);
+		}
+	}
+
+	return pVecAllMonster;
 }

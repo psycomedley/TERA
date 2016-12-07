@@ -102,7 +102,7 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 		pMeshData->pMesh->LockVertexBuffer(0, &pV);
 		D3DXComputeBoundingBox((D3DXVECTOR3*)pV,
 			pMeshData->pMesh->GetNumVertices(),
-			D3DXGetFVFVertexSize(pMeshData->pMesh->GetFVF()),
+			D3DXGetFVFVertexSize(ST_PNT_VERTEX::FVF),
 			&vMin,
 			&vMax);
 		D3DXVec3Minimize(&m_vMin, &m_vMin, &vMin);

@@ -73,12 +73,14 @@ HRESULT cMainGame::Setup()
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
+	pPlayer->SetRevisionAngle(D3DX_PI / 2);
 	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
+	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
@@ -135,7 +137,6 @@ void cMainGame::Update()
 
 		if (m_bLockMouse)
 			LockMouse();
-
 		/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
 
@@ -144,15 +145,7 @@ void cMainGame::Update()
 		GETSINGLE(cTextMgr)->Update();
 	}
 
-	//지형 충돌 
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	
-	if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
-	{
-		float y = playerPos.y;
-		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
-	}
+
 
 	///////////////임시////////////////
 
@@ -169,7 +162,12 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect2->Start();
 	}
-	//	m_pMap->Update();
+	if (m_pMap)
+		m_pMap->Update();
+
+	CHAR str[16];
+	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
+	SetWindowText(g_hWnd, str);
 
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
