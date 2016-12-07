@@ -314,6 +314,7 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
 		m_pRightWeapon->Bounding_Render();
+		m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
@@ -353,6 +354,6 @@ void cPlayer::dlatl()
 void cPlayer::SetScale(D3DXVECTOR3 vScale)
 {
 	cGameObject::SetScale(vScale);
-	m_pLeftWeapon->SetScale(vScale);
-	m_pRightWeapon->SetScale(vScale);
+//	m_pLeftWeapon->SetScale(vScale);
+//	m_pRightWeapon->SetScale(vScale);
 }

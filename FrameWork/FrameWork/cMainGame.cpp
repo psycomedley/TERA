@@ -158,6 +158,10 @@ void cMainGame::Update()
 	if (m_pMap)
 		m_pMap->Update();
 
+	CHAR str[16];
+	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
+	SetWindowText(g_hWnd, str);
+
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
 	{

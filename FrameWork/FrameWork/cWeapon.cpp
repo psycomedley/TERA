@@ -67,9 +67,11 @@ void cWeapon::SetWorldMat()
 	D3DXMatrixRotationX(&matR, -D3DX_PI / 2);
 	m_matWorld = matR * *m_matParent;
 
-	m_vPosition.x = m_matWorld._41;
-	m_vPosition.y = m_matWorld._42;
-	m_vPosition.z = m_matWorld._43;
+//	m_vPosition.x = m_matWorld._41;
+//	m_vPosition.y = m_matWorld._42;
+//	m_vPosition.z = m_matWorld._43;
+
+	m_matRevision = m_matWorld;
 
 	//float angleX = asinf(m_matParent->_23);
 	//float angleY = asinf(m_matParent->_31);
@@ -89,8 +91,14 @@ void cWeapon::SetWorldMat()
 	//m_matWorld._12 = -sinf(angleZ);
 	//m_matWorld._21 = sinf(angleZ);
 	//m_matWorld._22 = cosf(angleZ);
-
+	
 	//m_matWorld._41 = m_matParent->_41;
 	//m_matWorld._42 = m_matParent->_42;
 	//m_matWorld._43 = m_matParent->_43;
+}
+
+
+cBoundingBox cWeapon::GetBox()
+{
+	return m_pMesh->GetBox(&m_matRevision);
 }
