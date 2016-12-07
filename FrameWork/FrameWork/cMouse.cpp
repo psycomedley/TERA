@@ -3,7 +3,15 @@
 
 
 cMouse::cMouse()
+	: m_lWheelVariation(0)
 {
+	POINT pWinPos;
+	pWinPos.x = GetWindowWidth() / 2;
+	pWinPos.y = GetWindowHeight() / 2;
+	ClientToScreen(g_hWnd, &pWinPos);
+
+	SetCursorPos(pWinPos.x, pWinPos.y);
+	m_FixPos = pWinPos;
 }
 
 

@@ -45,12 +45,12 @@ cMainGame::~cMainGame()
 HRESULT cMainGame::Setup()
 {
 	ShowCursor(false);
-	POINT pWinPos;
+	/*POINT pWinPos;
 	pWinPos.x = GetWindowWidth() / 2;
 	pWinPos.y = GetWindowHeight() / 2;
 	ClientToScreen(g_hWnd, &pWinPos);
 
-	SetCursorPos(pWinPos.x, pWinPos.y);
+	SetCursorPos(pWinPos.x, pWinPos.y);*/
 
 	if (FAILED(GETSINGLE(cDevice)->Setup()))
 	{

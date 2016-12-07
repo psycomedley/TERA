@@ -9,6 +9,8 @@ private:
 
 	long					m_lWheelVariation;
 
+	POINT					m_FixPos;
+
 public:
 	bitset<MOUSEBTN_END> GetKeyDown() { return m_MouseDown; }
 	bitset<MOUSEBTN_END> GetKeyUp() { return m_MouseUp; }
@@ -27,6 +29,9 @@ public:
 	bool			IsOnceKeyUp(MOUSEBUTTON key);
 	int				GetWheelVariation();
 	long			GetWheelCount();
+
+	POINT			GetFixPos() { return m_FixPos; }
+	void			SetFixPos(POINT _fixPos){ m_FixPos = _fixPos; }
 
 	DIMOUSESTATE*	GetMouseState() { return &m_MouseState; }
 	POINT			GetMouseVariation();

@@ -39,8 +39,6 @@ namespace MY_FUNCTION
 		GetClientRect(g_hWnd, &rect);
 		return (rect.bottom - rect.top);
 	}
-
-
 	void LockMouse()
 	{
 		POINT pWinPos = MOUSE->GetWindowPos();
@@ -59,5 +57,17 @@ namespace MY_FUNCTION
 		ClientToScreen(g_hWnd, &pWinPos);
 		
 		SetCursorPos(pWinPos.x, pWinPos.y);
+	}
+	void FixMouse()
+	{
+		POINT fixPos = MOUSE->GetFixPos();
+		SetCursorPos(fixPos.x, fixPos.y);
+	}
+
+	POINT GetCursorPosition()
+	{
+		POINT pos;
+		GetCursorPos(&pos);
+		return pos;
 	}
 }
