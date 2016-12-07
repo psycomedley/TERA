@@ -35,6 +35,8 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
+	SAFE_RELEASE(m_pStaticMeshEffect);
+
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -103,7 +105,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 
-	m_pStaticMeshEffect = new cStaticMeshEffect;
+	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
 
 
 	SetLighting();
@@ -126,7 +128,6 @@ void cMainGame::Update()
 
 		if (m_bLockMouse)
 			LockMouse();
-
 		/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
 
@@ -135,15 +136,7 @@ void cMainGame::Update()
 		GETSINGLE(cTextMgr)->Update();
 	}
 
-	//지형 충돌 
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	
-	if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
-	{
-		float y = playerPos.y;
-		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
-	}
+
 
 	///////////////임시////////////////
 
@@ -160,7 +153,8 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect2->Start();
 	}
-	//	m_pMap->Update();
+	if (m_pMap)
+		m_pMap->Update();
 
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))

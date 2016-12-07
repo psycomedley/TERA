@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "cMap.h"
+#include "cPlayer.h"
+#include "cOrca.h"
 
 
 cMap::cMap(char* szFolder, char* szFilename)
@@ -18,7 +20,26 @@ cMap::~cMap()
 }
 void cMap::Update()
 {
-	
+	//지형 충돌 
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
+
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z))
+	{
+		float y = playerPos.y;
+		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
+	}
+
+	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
+	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
+	{
+		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
+		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
+		{
+			float y = MonsterPos.y;
+			pVecAllMonster[i]->SetPosition(D3DXVECTOR3(MonsterPos.x, MonsterPos.y, MonsterPos.z));
+		}
+	}
 }
 void cMap::Render()
 {
