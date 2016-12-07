@@ -125,33 +125,13 @@ void cMainGame::Update()
 	if (m_bLockMouse)
 		LockMouse();
 
-	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 	
 
 	GETSINGLE(cCameraMgr)->Update();
 
 	GETSINGLE(cTextMgr)->Update();
 
-	//지형 충돌 
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 	
-	if (m_pMap->GetHeight(playerPos.x, playerPos.y, playerPos.z))
-	{
-		float y = playerPos.y;
-		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
-	}
-
-	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
-	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
-	{
-		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
-		if (m_pMap->GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
-		{
-			float y = MonsterPos.y;
-			pVecAllMonster[i]->SetPosition(D3DXVECTOR3(MonsterPos.x, MonsterPos.y, MonsterPos.z));
-		}
-	}
 
 	///////////////임시////////////////
 
@@ -166,7 +146,8 @@ void cMainGame::Update()
 	if (KEYBOARD->IsOnceKeyDown(DIK_R))
 		m_pEffect2->Start();
 
-	//	m_pMap->Update();
+	if (m_pMap)
+		m_pMap->Update();
 
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
