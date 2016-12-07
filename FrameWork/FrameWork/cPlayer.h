@@ -35,6 +35,7 @@ public:
 	void CheckControl();
 	void CheckState();
 
+	virtual void SetScale(D3DXVECTOR3 vScale) override;
 
 	//юс╫ц
 	void dlatl();

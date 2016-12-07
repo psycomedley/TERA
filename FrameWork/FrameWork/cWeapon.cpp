@@ -67,6 +67,10 @@ void cWeapon::SetWorldMat()
 	D3DXMatrixRotationX(&matR, -D3DX_PI / 2);
 	m_matWorld = matR * *m_matParent;
 
+	m_vPosition.x = m_matWorld._41;
+	m_vPosition.y = m_matWorld._42;
+	m_vPosition.z = m_matWorld._43;
+
 	//float angleX = asinf(m_matParent->_23);
 	//float angleY = asinf(m_matParent->_31);
 	//float angleZ = asinf(m_matParent->_12);

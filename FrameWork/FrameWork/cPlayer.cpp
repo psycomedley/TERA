@@ -312,11 +312,13 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
+//		m_pRightWeapon->Bounding_Render();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
+//		m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -344,4 +346,12 @@ void cPlayer::dlatl()
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");
 	m_pRightWeapon->SetParentMat();
+}
+
+
+void cPlayer::SetScale(D3DXVECTOR3 vScale)
+{
+	cGameObject::SetScale(vScale);
+	m_pLeftWeapon->SetScale(vScale);
+	m_pRightWeapon->SetScale(vScale);
 }

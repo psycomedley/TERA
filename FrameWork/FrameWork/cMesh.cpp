@@ -28,9 +28,9 @@ void cMesh::Render()
 void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale)
 {
 	if (m_pBox)
-		m_pBox->Render(vPos);
-	if (m_pSphere)
-		m_pSphere->Render(vPos, vScale);
+		m_pBox->Render(vPos, vScale);
+//	if (m_pSphere)
+//		m_pSphere->Render(vPos, vScale);
 }
 
 
@@ -58,14 +58,16 @@ HRESULT cMesh::SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
 }
 
 
-cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition)
+cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale)
 {
 	cBoundingBox box;
+	box.SetvMin(m_pBox->GetvMin() * fScale);
+	box.SetvMax(m_pBox->GetvMax() * fScale);
 	//юс╫ц
-	D3DXVECTOR3 vPos = m_pBox->GetPosition();
+	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
 	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,
 		((m_pBox->GetvMax().y + m_pBox->GetvMin().y) / 2) + vPosition.y,
-		vPosition.z));
+		vPosition.z));*/
 
 	return box;
 }
@@ -80,7 +82,7 @@ cBoundingSphere cMesh::GetSphere(D3DXVECTOR3 vPosition, float fScale)
 		vPosition.z));
 
 	m_pSphere->SetRadius(m_pSphere->GetOriginalRadius() * fScale);*/
-
+	
 	sphere.SetCenter(D3DXVECTOR3(vPosition.x,
 		(m_pSphere->GetOriginalY() * fScale) + vPosition.y,
 		vPosition.z));
