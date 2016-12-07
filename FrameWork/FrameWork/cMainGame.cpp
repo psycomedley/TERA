@@ -17,6 +17,7 @@
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
+	, m_cObjectTree(NULL)
 {
 }
 
@@ -28,7 +29,7 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-
+	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////
@@ -91,6 +92,7 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	m_pMap = new cMap("Map","fieldmap1.x");
+	
 
 	///////////////юс╫ц////////////////
 
@@ -109,6 +111,8 @@ HRESULT cMainGame::Setup()
 
 	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
 
+
+	m_cObjectTree = new cStaticObj("Object","tree4.x");
 
 	SetLighting();
 
@@ -256,6 +260,22 @@ void cMainGame::Render()
 	if (m_pEffect2)
 		m_pEffect2->Render();
 
+
+
+	D3DXMATRIXA16	mat, matS, matT;
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixIdentity(&matS);
+	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
+	mat = matS;
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	if (m_cObjectTree)
+		m_cObjectTree->Render();
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 
 
 	///////////////////////////////////

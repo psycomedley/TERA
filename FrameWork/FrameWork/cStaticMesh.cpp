@@ -87,8 +87,8 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	ST_PNT_VERTEX* vertices;
 	m_pMesh->GetVertexBuffer(&m_VB);
 	
-	int a = m_pMesh->GetNumBytesPerVertex();
-	int b = sizeof(ST_PNT_VERTEX);
+	/*int a = m_pMesh->GetNumBytesPerVertex();
+	int b = sizeof(ST_PNT_VERTEX);*/
 
 	vertices = new ST_PNT_VERTEX[m_pMesh->GetNumVertices()];
 	m_vecPNTVertaxies.resize(m_pMesh->GetNumVertices());
@@ -107,7 +107,6 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	m_pMesh->GetIndexBuffer(&m_IB);
 	index = new WORD[m_pMesh->GetNumFaces()*3];
 
-	//m_vecIndecies.resize(m_pMesh->GetNumFaces() * 3);
 	//int c = m_pMesh->GetNumFaces();
 	//int d = sizeof(index)*m_pMesh->GetNumVertices();
 	void* pInedex;

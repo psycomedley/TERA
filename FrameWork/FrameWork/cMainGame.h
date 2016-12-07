@@ -21,6 +21,8 @@ private:
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	
+	cStaticObj*			m_cObjectTree;
+
 	bool				m_bLockMouse;
 
 
