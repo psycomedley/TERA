@@ -1,5 +1,6 @@
 #pragma once
-<<<<<<< HEAD#include "cDynamicEffectObj.h"
+
+#include "cDynamicEffectObj.h"
 #include "cDynamicObj.h"
 class cDynamicMeshEffect : public cDynamicEffectObj
 {

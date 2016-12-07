@@ -23,7 +23,6 @@ cDynamicMeshEffect::cDynamicMeshEffect(char* szFolder, char* szFilename)
 
 cDynamicMeshEffect::~cDynamicMeshEffect()
 {
-{
 }
 HRESULT cDynamicMeshEffect::Setup()
 {
