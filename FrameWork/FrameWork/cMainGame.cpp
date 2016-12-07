@@ -35,6 +35,8 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
+	SAFE_RELEASE(m_pStaticMeshEffect);
+
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -103,7 +105,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 
-	m_pStaticMeshEffect = new cStaticMeshEffect;
+	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
 
 
 	SetLighting();

@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "cStaticMeshEffect.h"
-#include "cStaticObj.h"
+#include "cStaticMesh.h"
 
 
-cStaticMeshEffect::cStaticMeshEffect()
+cStaticMeshEffect::cStaticMeshEffect(char* szFolder, char* szFilename)
 {
+	m_pMesh = new cStaticMesh(szFolder, szFilename);
 }
 
 
@@ -14,7 +15,6 @@ cStaticMeshEffect::~cStaticMeshEffect()
 
 HRESULT cStaticMeshEffect::Setup()
 {
-
 	return S_OK;
 }
 
@@ -32,10 +32,13 @@ void cStaticMeshEffect::Render()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixInverse(&matWorld, 0, &matView);
 
-	cStaticObj* Crosshair = new cStaticObj("Effect", "Crosshair1.x");
-	Crosshair->SetWorldTM(matWorld);
+	//cStaticObj* Crosshair = new cStaticObj("Effect", "Crosshair1.x");
+	//Crosshair->SetWorldTM(matWorld);
 
-	Crosshair->Render();
-	Crosshair->Release();
+	//Crosshair->Render();
+	//Crosshair->Release();
+
+	m_pMesh->Render();
 
 }
+

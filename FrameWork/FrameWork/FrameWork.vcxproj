@@ -97,6 +97,7 @@
     <ClInclude Include="cCube.h" />
     <ClInclude Include="cDevice.h" />
     <ClInclude Include="cDynamicMesh.h" />
+    <ClInclude Include="cDynamicMeshEffect.h" />
     <ClInclude Include="cDynamicObj.h" />
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectMgr.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="cCube.cpp" />
     <ClCompile Include="cDevice.cpp" />
     <ClCompile Include="cDynamicMesh.cpp" />
+    <ClCompile Include="cDynamicMeshEffect.cpp" />
     <ClCompile Include="cDynamicObj.cpp" />
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectMgr.cpp" />
