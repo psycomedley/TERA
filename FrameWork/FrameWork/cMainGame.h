@@ -11,6 +11,7 @@ class cGrid;
 class cMap;
 class cEffect;
 class cStaticMeshEffect;
+class cDynamicMeshEffect;
 class cMainGame
 {
 private:
@@ -34,6 +35,7 @@ private:
 	cEffect*			m_pEffect2;
 
 	cStaticMeshEffect*	m_pStaticMeshEffect;
+	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
 	void SetLighting();
 
