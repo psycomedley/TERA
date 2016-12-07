@@ -11,6 +11,8 @@ private:
 	SYNTHESIZE(D3DXMATRIXA16*, m_matParent, MatParent);
 	D3DXMATRIXA16 m_matWorld;
 
+//	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
+
 public:
 	string GetHolderKey() { return m_sHolderKey; }
 	void SetHolderKey(char* szFolder, char* szFilename) { m_sHolderKey = string(szFolder) + string("/") + string(szFilename); }

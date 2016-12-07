@@ -71,7 +71,7 @@ void cGameObject::Move(float fSpeed)
 
 cBoundingBox cGameObject::GetBox()
 {
-	return m_pMesh->GetBox(m_vPosition);
+	return m_pMesh->GetBox(m_vPosition, m_vScale.x);
 }
 
 
