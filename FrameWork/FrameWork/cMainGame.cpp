@@ -11,12 +11,14 @@
 #include "cGrid.h"
 #include "cEffect.h"
 #include "cStaticMeshEffect.h"
+#include "cDynamicMeshEffect.h"
 
 //임시
 
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
+	, m_cObjectTree(NULL)
 {
 }
 
@@ -28,7 +30,8 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-
+	SAFE_RELEASE(m_pDynamicMeshEffect);
+	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
 	///////////////////////////////////
@@ -71,12 +74,14 @@ HRESULT cMainGame::Setup()
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
+	pPlayer->SetRevisionAngle(D3DX_PI / 2);
 	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
+	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
@@ -88,7 +93,8 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
-	m_pMap = new cMap("Map","Map.x");
+	m_pMap = new cMap("Map","fieldmap1.x");
+	
 
 	///////////////임시////////////////
 
@@ -106,7 +112,14 @@ HRESULT cMainGame::Setup()
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 
 	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
+	m_pStaticMeshEffect->Setup();
+	
+	//임시 세팅 (비정상 동작중)
+	/*m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
+	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(20, 0, 0));
+	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));*/
 
+	m_cObjectTree = new cStaticObj("Object","tree4.x");
 
 	SetLighting();
 
@@ -155,6 +168,10 @@ void cMainGame::Update()
 	}
 	if (m_pMap)
 		m_pMap->Update();
+
+	CHAR str[16];
+	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
+	SetWindowText(g_hWnd, str);
 
 
 	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
@@ -249,11 +266,30 @@ void cMainGame::Render()
 	if (m_pStaticMeshEffect)
 		m_pStaticMeshEffect->Render();
 
+	if (m_pDynamicMeshEffect)
+		m_pDynamicMeshEffect->Render();
+
 	if (m_pEffect)
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
 
+
+
+	D3DXMATRIXA16	mat, matS, matT;
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixIdentity(&matS);
+	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
+	mat = matS;
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	if (m_cObjectTree)
+		m_cObjectTree->Render();
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 
 
 	///////////////////////////////////

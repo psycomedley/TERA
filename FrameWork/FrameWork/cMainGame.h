@@ -11,6 +11,7 @@ class cGrid;
 class cMap;
 class cEffect;
 class cStaticMeshEffect;
+class cDynamicMeshEffect;
 class cMainGame
 {
 private:
@@ -21,6 +22,8 @@ private:
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	
+	cStaticObj*			m_cObjectTree;
+
 	bool				m_bLockMouse;
 
 
@@ -34,6 +37,7 @@ private:
 	cEffect*			m_pEffect2;
 
 	cStaticMeshEffect*	m_pStaticMeshEffect;
+	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
 	void SetLighting();
 

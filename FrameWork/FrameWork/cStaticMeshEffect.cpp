@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cStaticMeshEffect.h"
 #include "cStaticMesh.h"
+#include "cPlayer.h"
 
 
 cStaticMeshEffect::cStaticMeshEffect(char* szFolder, char* szFilename)
@@ -15,6 +16,9 @@ cStaticMeshEffect::~cStaticMeshEffect()
 
 HRESULT cStaticMeshEffect::Setup()
 {
+	D3DXMatrixIdentity(&matWorld);
+	m_fAngle = 0;
+	
 	return S_OK;
 }
 
@@ -25,12 +29,23 @@ void cStaticMeshEffect::Update()
 
 void cStaticMeshEffect::Render()
 {
+	//m_fAngle += 0.1f;
+	D3DXMatrixIdentity(&matS);
+	//D3DXMatrixIdentity(&matR);
+	D3DXMatrixIdentity(&matT);
+	//D3DXMatrixTranslation(
+	D3DXMatrixRotationY(&matR, m_fAngle);
+	//D3DXMatrixScaling(&matS, 0.03f, 0.03f, 0.03f)
+	matWorld = matS * matR * matT;
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+
+	
+
+	cStaticObj::Render();
 
 
+	
 
-	D3DXMATRIXA16 matWorld, matView;
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixInverse(&matWorld, 0, &matView);
 
 	//cStaticObj* Crosshair = new cStaticObj("Effect", "Crosshair1.x");
 	//Crosshair->SetWorldTM(matWorld);
@@ -38,7 +53,7 @@ void cStaticMeshEffect::Render()
 	//Crosshair->Render();
 	//Crosshair->Release();
 
-	m_pMesh->Render();
+	//m_pMesh->Render();
 
 }
 

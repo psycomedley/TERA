@@ -333,6 +333,9 @@
     <ClInclude Include="cDynamicMeshEffect.h">
       <Filter>소스 파일\19.Effect</Filter>
     </ClInclude>
+    <ClInclude Include="cDynamicEffectObj.h">
+      <Filter>소스 파일\19.Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -525,6 +528,9 @@
       <Filter>소스 파일\19.Effect</Filter>
     </ClCompile>
     <ClCompile Include="cDynamicMeshEffect.cpp">
+      <Filter>소스 파일\19.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="cDynamicEffectObj.cpp">
       <Filter>소스 파일\19.Effect</Filter>
     </ClCompile>
   </ItemGroup>

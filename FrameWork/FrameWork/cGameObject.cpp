@@ -13,6 +13,7 @@ cGameObject::cGameObject(void)
 	, m_vDirection(0, 0, 1)
 	, m_pAction(NULL)
 	, m_vPrevPosition(0, 0, 0)
+	, m_fRevisionAngle(0.f)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matRevision);
@@ -43,7 +44,7 @@ void cGameObject::Render()
 
 void cGameObject::Bounding_Render()
 {
-	m_pMesh->Bounding_Render(m_vPosition, m_vScale);
+	m_pMesh->Bounding_Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
 }
 
 
@@ -71,7 +72,7 @@ void cGameObject::Move(float fSpeed)
 
 cBoundingBox cGameObject::GetBox()
 {
-	return m_pMesh->GetBox(m_vPosition, m_vScale.x);
+	return m_pMesh->GetBox(m_vPosition, m_vScale.x, m_fAngle + m_fRevisionAngle);
 }
 
 
