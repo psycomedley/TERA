@@ -144,8 +144,6 @@ void cCamera::CameraMove()
 //	m_fCamRotY += (movePoint.y / 300.f);
 	m_fCamRotX += (movePoint.x / 300.f);
 
-	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
-		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
 	/*if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
 		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;*/
 
@@ -197,6 +195,8 @@ void cCamera::CameraMove()
 			m_fCamRotY += (movePoint.y / 300.f);
 		}
 	}
+	if (m_fCamRotY > D3DX_PI / 2.0f - 0.0001f)
+		m_fCamRotY = D3DX_PI / 2.0f - 0.0001f;
 }
 
 

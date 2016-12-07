@@ -178,15 +178,12 @@ void cMainGame::Update()
 
 
 	///////////////////////////////////
-
 }
 
 
 void cMainGame::Render()
 {
 	GETSINGLE(cDevice)->BeginRender();
-
-
 
 	POINT pos = MOUSE->GetWindowPos();
 //	POINT pos;
