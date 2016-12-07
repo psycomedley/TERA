@@ -21,4 +21,5 @@ namespace MY_FUNCTION
 	void FixMouse();
 
 	POINT GetCursorPosition();
+	bool IsActive();
 }

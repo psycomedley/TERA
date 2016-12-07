@@ -70,4 +70,9 @@ namespace MY_FUNCTION
 		GetCursorPos(&pos);
 		return pos;
 	}
+	bool IsActive()
+	{
+		if (GetActiveWindow())
+			return true;
+	}
 }

@@ -117,20 +117,23 @@ HRESULT cMainGame::Setup()
 
 void cMainGame::Update()
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
-		m_bLockMouse = !m_bLockMouse;
-		
-	GETSINGLE(cInput)->Update();
+	if (IsActive())
+	{
+		if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
+			m_bLockMouse = !m_bLockMouse;
 
-	if (m_bLockMouse)
-		LockMouse();
+		GETSINGLE(cInput)->Update();
 
-	/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
-	
+		if (m_bLockMouse)
+			LockMouse();
 
-	GETSINGLE(cCameraMgr)->Update();
+		/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
-	GETSINGLE(cTextMgr)->Update();
+
+		GETSINGLE(cCameraMgr)->Update();
+
+		GETSINGLE(cTextMgr)->Update();
+	}
 
 	//지형 충돌 
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
@@ -144,17 +147,19 @@ void cMainGame::Update()
 
 	///////////////임시////////////////
 
-	if (KEYBOARD->IsOnceKeyDown(DIK_E))
+	if (IsActive())
 	{
-		if (m_pEffect->GetProcess())
-			m_pEffect->Stop();
-		else
-			m_pEffect->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_E))
+		{
+			if (m_pEffect->GetProcess())
+				m_pEffect->Stop();
+			else
+				m_pEffect->Start();
+		}
+
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+			m_pEffect2->Start();
 	}
-
-	if (KEYBOARD->IsOnceKeyDown(DIK_R))
-		m_pEffect2->Start();
-
 	//	m_pMap->Update();
 
 
