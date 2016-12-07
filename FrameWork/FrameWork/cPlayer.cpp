@@ -306,6 +306,7 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	CheckControl();
 	m_pState->Update();
 	cDynamicObj::UpdateAndRender(pmat);
+	GetBox();
 //	m_pArm->UpdateAndRender();
 	
 	if (m_pRightWeapon)

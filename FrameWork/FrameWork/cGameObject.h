@@ -19,6 +19,7 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matWorld, WorldTM);
 
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRevision, Revision);
+	SYNTHESIZE(float, m_fRevisionAngle, RevisionAngle);
 
 public:
 	void Move(float fSpeed);
