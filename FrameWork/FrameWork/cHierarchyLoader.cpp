@@ -56,6 +56,9 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 	// 이름 무시
 	pBoneMesh->Name = NULL;
 
+	// 재질 개수
+	pBoneMesh->NumMaterials = NumMaterials;
+
 	// 재질, 텍스쳐 정보 복사
 	for (DWORD i = 0; i < NumMaterials; ++i)
 	{
@@ -65,10 +68,32 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 		// 텍스쳐 정보 저장.
 		if (pMaterials[i].pTextureFilename)
 		{
-			std::string sFilename(pMaterials[i].pTextureFilename);
-			std::string sFullPath = m_sDirectory + string("/") + sFilename;
-			LPDIRECT3DTEXTURE9 pTex = GETSINGLE(cTextureMgr)->GetTexture(sFullPath);
-			pBoneMesh->vecTexture.push_back(pTex);
+			string sFilename(pMaterials[i].pTextureFilename);
+			string sFullPath = m_sDirectory + string("/") + sFilename;
+//			LPDIRECT3DTEXTURE9 pTex = GETSINGLE(cTextureMgr)->GetTexture(sFullPath);
+
+			string filename, extension;
+			DevideFilename(sFullPath, filename, extension);
+			
+			//Diff
+			pBoneMesh->vecTexture.push_back(
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_diff" + extension));
+			
+			//Normal
+			pBoneMesh->vecTextureNormal.push_back(
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_norm" + extension));
+
+			//Specular
+			pBoneMesh->vecTextureSpecular.push_back(
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_spec" + extension));
+
+			//Mask
+			pBoneMesh->vecTextureMask.push_back(
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_diff" + extension));
+
+			//Emission
+			pBoneMesh->vecTextureEmission.push_back(
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_Mask" + extension));
 		}
 		else
 			pBoneMesh->vecTexture.push_back(NULL);

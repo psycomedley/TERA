@@ -3,7 +3,7 @@
 class cHierarchyLoader : public ID3DXAllocateHierarchy
 {
 protected:
-	SYNTHESIZE(std::string, m_sDirectory, Directory);
+	SYNTHESIZE(string, m_sDirectory, Directory);
 
 	SYNTHESIZE(D3DXVECTOR3, m_vMin, vMin);
 	SYNTHESIZE(D3DXVECTOR3, m_vMax, vMax);

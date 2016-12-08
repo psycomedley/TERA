@@ -61,7 +61,7 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 	cHierarchyLoader ah;
 	ah.SetDirectory(szFolder);
 	ah.SetDefaultPaletteSize(nPaletteSize);
-
+	
 	std::string sFullPath(szFolder);
 	sFullPath += std::string("/");
 	sFullPath += std::string(szFile);
