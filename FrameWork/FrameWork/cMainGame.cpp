@@ -119,7 +119,7 @@ HRESULT cMainGame::Setup()
 	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(20, 0, 0));
 	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));*/
 
-	m_cObjectTree = new cStaticObj("Object","tree4.x");
+	m_cObjectTree = new cStaticObj("Object","tree1.x");
 
 	SetLighting();
 
