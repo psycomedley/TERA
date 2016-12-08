@@ -141,3 +141,12 @@ struct ST_PCT_VERTEX
 
 	enum {FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1,};
 };
+
+struct ST_SIZE
+{
+	float	fWidth;
+	float	fHeight;
+	
+	ST_SIZE() : fWidth(0), fHeight(0) {}
+	ST_SIZE(float _fWidth, float _fHeight) : fWidth(_fWidth), fHeight(_fHeight) {}
+};

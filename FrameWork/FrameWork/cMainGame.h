@@ -12,6 +12,7 @@ class cMap;
 class cEffect;
 class cStaticMeshEffect;
 class cDynamicMeshEffect;
+class cUIImageView;
 class cMainGame
 {
 private:
@@ -38,6 +39,8 @@ private:
 
 	cStaticMeshEffect*	m_pStaticMeshEffect;
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
+
+	cUIImageView*		m_pUIImage;
 
 	void SetLighting();
 
