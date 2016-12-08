@@ -12,6 +12,7 @@
 #include "cEffect.h"
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
+#include "cUIImageView.h"
 
 //юс╫ц
 
@@ -34,6 +35,7 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
+	SAFE_RELEASE(m_pUIImage);
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
@@ -110,7 +112,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
-
+	
 	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
 	m_pStaticMeshEffect->Setup();
 	
@@ -122,6 +124,19 @@ HRESULT cMainGame::Setup()
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 
 	SetLighting();
+
+	
+	
+	LPD3DXSPRITE				pSprite;
+	D3DXCreateSprite(g_pD3DDevice, &pSprite);
+	m_pUIImage = new cUIImageView;
+	m_pUIImage->SetSize(ST_SIZE(5, 5));
+	m_pUIImage->SetTexture("UI/normalBg.tga", 8, 4);
+	m_pUIImage->SetCurrentFrame(8);
+	m_pUIImage->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
+	
+	m_pUIImage->SetSprite(pSprite);
+	SAFE_RELEASE(pSprite);
 
 
 	///////////////////////////////////
@@ -187,6 +202,7 @@ void cMainGame::Update()
 	if (m_pEffect2)
 		m_pEffect2->Update();
 
+	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
 }
@@ -252,6 +268,8 @@ void cMainGame::Render()
 		/*m_pBoss2->UpdateAndRender();
 		m_pBoss2->Bounding_Render();*/
 	}
+
+	m_pUIImage->Render();
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/

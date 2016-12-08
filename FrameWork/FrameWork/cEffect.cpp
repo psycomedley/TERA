@@ -196,7 +196,7 @@ void cEffect::UpdateUV()
 	float fRatioY = 1 / (float)m_nMaxFrameY;
 
 	// 1¦¡2  4
-	// |/  /|
+	// | / / |
 	// 0  3¦¡5
 	
 	m_vecVertex[0].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
