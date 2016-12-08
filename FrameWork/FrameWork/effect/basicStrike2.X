@@ -147,7 +147,7 @@ Material Material__28 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "basicStrike.tga";
+  "basicStrike_diff.tga";
  }
 }
 

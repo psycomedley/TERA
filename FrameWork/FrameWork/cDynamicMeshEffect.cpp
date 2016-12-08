@@ -46,5 +46,6 @@ void cDynamicMeshEffect::Render()
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	UpdateAndRender();
+
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 }
