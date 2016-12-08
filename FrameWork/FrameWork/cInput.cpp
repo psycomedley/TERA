@@ -79,3 +79,10 @@ void cInput::Release()
 
 	cSingleton::Release();
 }
+
+
+void cInput::EndFrame()
+{
+	m_pMouse->EndFrame();
+	m_pKeyboard->EndFrame();
+}

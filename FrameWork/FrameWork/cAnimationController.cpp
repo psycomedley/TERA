@@ -180,16 +180,18 @@ void cAnimationController::AnimationStart()
 }
 
 
-void cAnimationController::AnimationNext()
+bool cAnimationController::AnimationNext()
 {
 	if (m_vecAnimation.size() <= m_nCurrentIdx + 1)
-		return;
+		return false;
 
 	m_stPrevAnimation = m_vecAnimation[m_nCurrentIdx++];
 	if (m_stPrevAnimation.bBlend)
 		SetAnimationIdxBlend(m_vecAnimation[m_nCurrentIdx].nIndex, m_vecAnimation[m_nCurrentIdx].bPlayOnce);
 	else
 		SetAnimationIdx(m_vecAnimation[m_nCurrentIdx].nIndex, m_vecAnimation[m_nCurrentIdx].bPlayOnce);
+
+	return true;
 }
 
 

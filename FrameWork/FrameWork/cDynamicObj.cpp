@@ -82,10 +82,10 @@ void cDynamicObj::AnimationStart()
 }
 
 
-void cDynamicObj::AnimationNext()
+bool cDynamicObj::AnimationNext()
 {
 	if (m_pMesh)
-		((cDynamicMesh*)m_pMesh)->AnimationNext();
+		return ((cDynamicMesh*)m_pMesh)->AnimationNext();
 }
 
 

@@ -77,10 +77,10 @@ void cDynamicEffectObj::AnimationStart()
 		((cDynamicMesh*)m_pMesh)->AnimationStart();
 }
 
-void cDynamicEffectObj::AnimationNext()
+bool cDynamicEffectObj::AnimationNext()
 {
 	if (m_pMesh)
-		((cDynamicMesh*)m_pMesh)->AnimationNext();
+		return ((cDynamicMesh*)m_pMesh)->AnimationNext();
 }
 
 void cDynamicEffectObj::AnimationRemove()

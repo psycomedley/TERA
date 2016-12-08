@@ -41,7 +41,16 @@ namespace MY_FUNCTION
 	}
 	void LockMouse()
 	{
-		POINT pWinPos = MOUSE->GetWindowPos();
+		RECT rect;
+		GetClientRect(g_hWnd, &rect);
+
+		POINT pos = { 0, 0 };
+		ClientToScreen(g_hWnd, &pos);
+		rect = RectMake(pos.x, pos.y, rect.right - rect.left, rect.bottom - rect.top);
+
+		ClipCursor(&rect);
+
+		/*POINT pWinPos = MOUSE->GetWindowPos();
 
 		int nWidth = GetWindowWidth();
 		int nHeight = GetWindowHeight();
@@ -56,7 +65,7 @@ namespace MY_FUNCTION
 			pWinPos.y = nHeight - 1;
 		ClientToScreen(g_hWnd, &pWinPos);
 		
-		SetCursorPos(pWinPos.x, pWinPos.y);
+		SetCursorPos(pWinPos.x, pWinPos.y);*/
 	}
 	void FixMouse()
 	{
@@ -74,5 +83,13 @@ namespace MY_FUNCTION
 	{
 		if (GetActiveWindow())
 			return true;
+	}
+
+	void DevideFilename(string szFile, string& filename, string& extension)
+	{
+		int dotIdx = szFile.find_last_of(".");
+		int underlineIdx = szFile.find_last_of("_");
+		filename = szFile.substr(0, underlineIdx);
+		extension = szFile.substr(dotIdx, szFile.length());
 	}
 }

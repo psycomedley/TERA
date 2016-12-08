@@ -69,6 +69,12 @@ void cMouse::Release()
 }
 
 
+void cMouse::EndFrame()
+{
+	m_bSameFrame = false;
+}
+
+
 POINT cMouse::GetWindowPos()
 {
 	POINT ptPosition;

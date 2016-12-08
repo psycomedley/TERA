@@ -22,4 +22,6 @@ namespace MY_FUNCTION
 
 	POINT GetCursorPosition();
 	bool IsActive();
+
+	void DevideFilename(string szFile, string& filename, string& extension);
 }

@@ -29,7 +29,7 @@ public:
 	void SetAnimationIdxBlend(int nIdx, bool bPlayOnce = false);
 
 	void AnimationStart();
-	void AnimationNext();
+	bool AnimationNext();
 	void AnimationRemove();
 
 public:
