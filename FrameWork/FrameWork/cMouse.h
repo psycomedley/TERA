@@ -10,6 +10,7 @@ private:
 	long					m_lWheelVariation;
 
 	POINT					m_FixPos;
+	bool					m_bSameFrame;
 
 public:
 	bitset<MOUSEBTN_END> GetKeyDown() { return m_MouseDown; }
@@ -21,6 +22,7 @@ public:
 	HRESULT			Setup(LPDIRECTINPUT8 pInput);
 	void			Update();
 	void			Release();
+	void			EndFrame();
 
 public:
 	POINT			GetWindowPos();

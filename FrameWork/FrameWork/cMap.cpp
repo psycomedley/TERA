@@ -2,11 +2,9 @@
 #include "cMap.h"
 #include "cPlayer.h"
 #include "cOrca.h"
-#include "cFrustum.h"
 
 
 cMap::cMap(char* szFolder, char* szFilename)
-	:m_cFrustum(NULL)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 	D3DXMatrixIdentity(&m_matWorld);
@@ -18,25 +16,19 @@ cMap::cMap(char* szFolder, char* szFilename)
 	D3DXMatrixTranslation(&matT, -210, -153.7f, -210);
 	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
 	m_matWorld = matS*matT;
-
-	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
-
-	m_cFrustum = new cFrustum;
-	m_cFrustum->Setup();
 }
 
 
 cMap::cMap()
-	:m_cFrustum(NULL)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 }
 cMap::~cMap()
 {
-	SAFE_DELETE(m_cFrustum);
 }
 void cMap::Update()
 {
+
 	//m_cFrustum->Update();
 
 	//m_vecCullingVertexies = *FindCullingVertex();
@@ -45,7 +37,7 @@ void cMap::Update()
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-	if (GetHeight(playerPos.x, playerPos.y, playerPos.z, m_vecVertex))
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
@@ -55,7 +47,7 @@ void cMap::Update()
 	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
 	{
 		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
-		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z, m_vecCullingVertexies))
+		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
 		{
 			float y = MonsterPos.y;
 			pVecAllMonster[i]->SetPosition(D3DXVECTOR3(MonsterPos.x, MonsterPos.y, MonsterPos.z));
@@ -64,29 +56,21 @@ void cMap::Update()
 }
 void cMap::Render()
 {
+
+
 	
-	
-	
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 	cStaticObj::Render();
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
-bool cMap::GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3> pVecVertex)
+bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 {
-	
+
 	D3DXVECTOR3 rayPos(x, 1000, z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float u, v, d;
 	D3DXVECTOR3 p1;
 	D3DXVECTOR3 p2;
 	D3DXVECTOR3 p3;
-	int a = 0;
-	int b = 0;
-
-	D3DXVECTOR3 objPos(x,0,z);
-
-	vector<D3DXVECTOR3> vecVertex = pVecVertex;
 
 	for (int i = 0; i < vecVertex.size(); i += 3)
 	{
@@ -106,7 +90,7 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3
 	}
 	y = 0;
 	return false;
-}
+
 vector<D3DXVECTOR3>* cMap::FindCullingVertex()
 {
 	vector<D3DXVECTOR3> vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();

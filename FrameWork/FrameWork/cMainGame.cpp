@@ -117,9 +117,9 @@ HRESULT cMainGame::Setup()
 	m_pStaticMeshEffect->Setup();
 	
 	//임시 세팅 (비정상 동작중)
-	/*m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
-	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(20, 0, 0));
-	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));*/
+	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "basicStrike2.X");
+	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 
@@ -180,6 +180,8 @@ void cMainGame::Update()
 
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect2->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+			m_pEffect->Start();
 	}
 	if (m_pMap)
 		m_pMap->Update();
@@ -196,6 +198,8 @@ void cMainGame::Update()
 
 	/*if (m_pBoss)
 		m_pBoss->Update();*/
+	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
+		m_pDynamicMeshEffect->Setup();
 
 	if (m_pEffect)
 		m_pEffect->Update();
@@ -205,6 +209,8 @@ void cMainGame::Update()
 	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
+
+	GETSINGLE(cInput)->EndFrame();
 }
 
 
@@ -283,9 +289,11 @@ void cMainGame::Render()
 
 	if (m_pStaticMeshEffect)
 		m_pStaticMeshEffect->Render();
+	
 
 	if (m_pDynamicMeshEffect)
 		m_pDynamicMeshEffect->Render();
+
 
 	if (m_pEffect)
 		m_pEffect->Render();
