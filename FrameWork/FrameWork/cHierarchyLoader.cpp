@@ -89,11 +89,11 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 
 			//Mask
 			pBoneMesh->vecTextureMask.push_back(
-				GETSINGLE(cTextureMgr)->GetTexture(filename + "_diff" + extension));
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_Mask" + extension));
 
 			//Emission
 			pBoneMesh->vecTextureEmission.push_back(
-				GETSINGLE(cTextureMgr)->GetTexture(filename + "_Mask" + extension));
+				GETSINGLE(cTextureMgr)->GetTexture(filename + "_rage" + extension));
 		}
 		else
 			pBoneMesh->vecTexture.push_back(NULL);
