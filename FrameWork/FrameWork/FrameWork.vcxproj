@@ -140,6 +140,11 @@
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="cTimeMgr.h" />
     <ClInclude Include="cTimer.h" />
+    <ClInclude Include="cUIButton.h" />
+    <ClInclude Include="cUIImageView.h" />
+    <ClInclude Include="cUIMgr.h" />
+    <ClInclude Include="cUIObject.h" />
+    <ClInclude Include="cUITextView.h" />
     <ClInclude Include="cWeapon.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="FrameWork.h" />
@@ -214,6 +219,11 @@
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cTimeMgr.cpp" />
     <ClCompile Include="cTimer.cpp" />
+    <ClCompile Include="cUIButton.cpp" />
+    <ClCompile Include="cUIImageView.cpp" />
+    <ClCompile Include="cUIMgr.cpp" />
+    <ClCompile Include="cUIObject.cpp" />
+    <ClCompile Include="cUITextView.cpp" />
     <ClCompile Include="cWeapon.cpp" />
     <ClCompile Include="FrameWork.cpp" />
     <ClCompile Include="iAnimationDelegate.cpp" />

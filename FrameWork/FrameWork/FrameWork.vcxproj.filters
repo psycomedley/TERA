@@ -121,6 +121,9 @@
     <Filter Include="소스 파일\19.Effect">
       <UniqueIdentifier>{5b8ad642-bad7-4002-8720-0d67f075296e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\20. UI">
+      <UniqueIdentifier>{c4c0094e-1e50-4690-8e69-73e28a3d62a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -336,6 +339,21 @@
     <ClInclude Include="cDynamicEffectObj.h">
       <Filter>소스 파일\19.Effect</Filter>
     </ClInclude>
+    <ClInclude Include="cUIMgr.h">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIButton.h">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageView.h">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObject.h">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUITextView.h">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -532,6 +550,21 @@
     </ClCompile>
     <ClCompile Include="cDynamicEffectObj.cpp">
       <Filter>소스 파일\19.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMgr.cpp">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIButton.cpp">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageView.cpp">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIObject.cpp">
+      <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUITextView.cpp">
+      <Filter>소스 파일\20. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

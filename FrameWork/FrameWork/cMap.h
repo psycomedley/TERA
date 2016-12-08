@@ -2,7 +2,7 @@
 #include"cStaticMesh.h"
 #include"cStaticObj.h"
 
-class cMap:public cStaticObj
+class cMap :public cStaticObj
 {
 private:
 	D3DXMATRIXA16			m_matWorld;

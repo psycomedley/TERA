@@ -51,15 +51,15 @@ void cMap::Update()
 }
 void cMap::Render()
 {
-	
-	
+
+
 	//m_matWorld = m_matWorld* mat;
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 	cStaticObj::Render();
 }
 bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 {
-	
+
 	D3DXVECTOR3 rayPos(x, 1000, z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float u, v, d;
