@@ -66,3 +66,20 @@ bool cFrustum::IsinFrustum(cBoundingSphere* pSphere)
 
 	return true;
 }
+bool cFrustum::IsinFrustum(D3DXVECTOR3* v)
+{
+	bool  In[6] = { false, };
+	
+	for (int i = 0; i < m_vecPlane.size(); i++)
+	{
+		if (D3DXPlaneDotCoord(&m_vecPlane[i], v) <= 0.0f)
+		{
+			In[i] = true;
+		}
+
+	}
+	if (In[0] && In[1] && In[2] && In[3] && In[4] && In[5])
+		return true;
+	else
+		return false;
+}
