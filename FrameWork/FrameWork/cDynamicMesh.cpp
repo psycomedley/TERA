@@ -196,7 +196,12 @@ void cDynamicMesh::Render(ST_BONE* pBone /*= NULL*/)
 
 			// we're pretty much ignoring the materials we got from the x-file; just set
 			// the texture here
+			//diff Texture
 			m_pEffect->SetTexture("g_txScene", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+
+			m_pEffect->SetTexture("g_txDiff", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+			m_pEffect->SetTexture("g_txSpec", pBoneMesh->vecTextureSpecular[pBoneCombos[dwAttrib].AttribId]);
+			m_pEffect->SetTexture("g_txNorm", pBoneMesh->vecTextureNormal[pBoneCombos[dwAttrib].AttribId]);
 
 			// set the current number of bones; this tells the effect which shader to use
 			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);

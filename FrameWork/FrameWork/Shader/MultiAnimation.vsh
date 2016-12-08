@@ -49,6 +49,8 @@ struct VS_SKIN_INPUT
     float3      vBlendWeights;
     float4      vBlendIndices;
     float3      vNor;
+//	float3		vTangent;
+//	float3		vBinormal;
 };
 
 // return skinned position and normal
@@ -56,6 +58,8 @@ struct VS_SKIN_OUTPUT
 {
     float4 vPos;
     float3 vNor;
+//	float3 vTangent;
+//	float3 vBinormal;
 };
 
 // call this function to skin VB position and normal
@@ -74,10 +78,14 @@ VS_SKIN_OUTPUT VS_Skin( const VS_SKIN_INPUT vInput, int iNumBones )
         fLastWeight -= fWeight;
         vOutput.vPos.xyz += mul( vInput.vPos, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
         vOutput.vNor     += mul( vInput.vNor, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
+//       vOutput.vTangent     += mul( vInput.vTangent, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
+//       vOutput.vBinormal     += mul( vInput.vBinormal, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
     }
     
     vOutput.vPos.xyz += mul( vInput.vPos, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
     vOutput.vNor     += mul( vInput.vNor, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
+//    vOutput.vTangent     += mul( vInput.vTangent, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
+//    vOutput.vBinormal     += mul( vInput.vBinormal, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
 
     return vOutput;
 }

@@ -223,9 +223,11 @@ void cMainGame::Render()
 //	GetCursorPos(&pos);
 	char msg[128];
 
+	POINT ptPosition;
+	GetCursorPos(&ptPosition);
 	
-	OutputInteger(msg, "x", pos.x);
-	OutputInteger(msg, "y", pos.y);
+	OutputInteger(msg, "x", ptPosition.x);
+	OutputInteger(msg, "y", ptPosition.y);
 
 //	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //	{
