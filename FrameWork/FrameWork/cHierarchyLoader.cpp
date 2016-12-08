@@ -52,7 +52,7 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 
 	// 메쉬 컨테이너 생성
 	ST_BONE_MESH* pBoneMesh = new ST_BONE_MESH;
-
+	
 	// 이름 무시
 	pBoneMesh->Name = NULL;
 
@@ -118,7 +118,7 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 	// pMeshData->pMesh를 원본 메쉬에 복사
 	if (pMeshData && pMeshData->pMesh)
 	{
-		/////////////////////////임시///////////////////////////
+		/////////////////////////임시//////////////////////////
 
 		D3DXVECTOR3 vMin(FLT_MAX, FLT_MAX, FLT_MAX);
 		D3DXVECTOR3 vMax(FLT_MIN, FLT_MIN, FLT_MIN);
