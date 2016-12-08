@@ -61,7 +61,7 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 	cHierarchyLoader ah;
 	ah.SetDirectory(szFolder);
 	ah.SetDefaultPaletteSize(nPaletteSize);
-
+	
 	std::string sFullPath(szFolder);
 	sFullPath += std::string("/");
 	sFullPath += std::string(szFile);
@@ -427,9 +427,9 @@ void cDynamicMesh::AnimationStart()
 }
 
 
-void cDynamicMesh::AnimationNext()
+bool cDynamicMesh::AnimationNext()
 {
-	m_pAnimController->AnimationNext();
+	return m_pAnimController->AnimationNext();
 }
 
 

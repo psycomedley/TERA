@@ -10,6 +10,8 @@ private:
 	UINT8		 			m_KeyboardState[KEYMAX];
 	bitset<KEYMAX>			m_bKeyDown;
 	bitset<KEYMAX>			m_bKeyUp;
+	
+	bool					m_bSameFrame;
 
 public:
 	bitset<KEYMAX> GetKeyDown() { return m_bKeyDown; }
@@ -26,6 +28,7 @@ public:
 	HRESULT		Setup(LPDIRECTINPUT8 pInput);
 	void		Update();
 	void		Release();
+	void		EndFrame();
 
 public:
 	cKeyBoard();

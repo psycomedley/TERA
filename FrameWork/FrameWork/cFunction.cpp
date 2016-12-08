@@ -75,4 +75,12 @@ namespace MY_FUNCTION
 		if (GetActiveWindow())
 			return true;
 	}
+
+	void DevideFilename(string szFile, string& filename, string& extension)
+	{
+		int dotIdx = szFile.find_last_of(".");
+		int underlineIdx = szFile.find_last_of("_");
+		filename = szFile.substr(0, underlineIdx);
+		extension = szFile.substr(dotIdx, szFile.length());
+	}
 }

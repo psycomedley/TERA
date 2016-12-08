@@ -3,6 +3,7 @@
 
 
 cKeyBoard::cKeyBoard()
+	: m_bSameFrame(false)
 {
 }
 
@@ -58,6 +59,12 @@ void cKeyBoard::Release()
 }
 
 
+void cKeyBoard::EndFrame()
+{
+	m_bSameFrame = false;
+}
+
+
 bool cKeyBoard::IsOnceKeyDown(int key)
 {
 	if (KEYDOWN(m_KeyboardState, key))
@@ -65,8 +72,11 @@ bool cKeyBoard::IsOnceKeyDown(int key)
 		if (!this->GetKeyDown()[key])
 		{
 			this->SetKeyDown(key, true);
+			m_bSameFrame = true;
 			return true;
 		}
+		else if (m_bSameFrame)
+			return true;
 	}
 	else
 	{
