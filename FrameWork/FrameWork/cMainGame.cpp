@@ -202,7 +202,7 @@ void cMainGame::Update()
 	if (m_pEffect2)
 		m_pEffect2->Update();
 
-	m_pUIImage->Update(NULL);
+	m_pUIImage->Update();
 
 	///////////////////////////////////
 }
