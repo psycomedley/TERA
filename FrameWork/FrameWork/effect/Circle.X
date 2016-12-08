@@ -154,7 +154,7 @@ Material Material__149 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "circle.tga";
+  "circle_diff.tga";
  }
 }
 
@@ -165,7 +165,7 @@ Material Material__161 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "empty.tga";
+  "empty_diff.tga";
  }
 }
 
