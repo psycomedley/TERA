@@ -11,7 +11,7 @@ public:
 	void Setup();
 	void Update();
 	bool IsinFrustum(cBoundingSphere* pSphere);
-
+	bool IsinFrustum(D3DXVECTOR3* v);
 public:
 	cFrustum();
 	~cFrustum();

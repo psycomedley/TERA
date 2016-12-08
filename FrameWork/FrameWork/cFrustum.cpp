@@ -65,7 +65,7 @@ bool cFrustum::IsinFrustum(cBoundingSphere* pSphere)
 			return false;
 
 	return true;
-
+}
 bool cFrustum::IsinFrustum(D3DXVECTOR3* v)
 {
 	bool  In[6] = { false, };
