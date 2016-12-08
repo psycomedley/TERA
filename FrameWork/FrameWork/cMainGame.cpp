@@ -180,6 +180,8 @@ void cMainGame::Update()
 
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect2->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+			m_pEffect->Start();
 	}
 	if (m_pMap)
 		m_pMap->Update();
@@ -207,6 +209,8 @@ void cMainGame::Update()
 	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
+
+	GETSINGLE(cInput)->EndFrame();
 }
 
 

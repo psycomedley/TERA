@@ -17,9 +17,10 @@ public:
 	cKeyBoard*	GetKeyBoard() { return m_pKeyboard; }
 
 public:
-	HRESULT Setup(HINSTANCE hInst);
-	void Update();
-	void Release();
+	HRESULT		Setup(HINSTANCE hInst);
+	void		Update();
+	void		Release();
+	void		EndFrame();
 
 public:
 	cInput();

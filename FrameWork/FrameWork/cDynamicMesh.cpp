@@ -427,9 +427,9 @@ void cDynamicMesh::AnimationStart()
 }
 
 
-void cDynamicMesh::AnimationNext()
+bool cDynamicMesh::AnimationNext()
 {
-	m_pAnimController->AnimationNext();
+	return m_pAnimController->AnimationNext();
 }
 
 

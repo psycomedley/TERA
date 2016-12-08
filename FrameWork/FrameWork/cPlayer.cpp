@@ -303,8 +303,8 @@ void cPlayer::CheckControl()
 void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	CheckState();
-	CheckControl();
 	m_pState->Update();
+	CheckControl();
 	cDynamicObj::UpdateAndRender(pmat);
 //	GetBox();
 //	m_pArm->UpdateAndRender();
