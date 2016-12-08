@@ -117,7 +117,7 @@ HRESULT cMainGame::Setup()
 	m_pStaticMeshEffect->Setup();
 	
 	//임시 세팅 (비정상 동작중)
-	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "basicStrike2.X");
+	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
 	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
