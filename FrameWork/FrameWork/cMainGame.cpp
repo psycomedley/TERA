@@ -34,10 +34,11 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect2);
 
 
-	SAFE_RELEASE(m_pCircleEffect);
+	//SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
 	SAFE_RELEASE(m_pUIImage);
+	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
@@ -125,10 +126,10 @@ HRESULT cMainGame::Setup()
 
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 	
-	m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
-	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-	m_pCircleEffect->Setup(60000, 0.15f, true);
-	m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+	//m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
+	////m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
+	//m_pCircleEffect->Setup(60000, 0.15f, true);
+	//m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 
 
 
@@ -215,11 +216,11 @@ void cMainGame::Update()
 //		m_pEffect->Update();
 //	if (m_pEffect2)
 //		m_pEffect2->Update();
-	if (m_pCircleEffect)
-	{
-		m_pCircleEffect->Update();
-		m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
-	}
+	//if (m_pCircleEffect)
+	//{
+	//	m_pCircleEffect->Update();
+	//	m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
+	//}
 	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
@@ -304,14 +305,14 @@ void cMainGame::Render()
 	//}
 
 
-	if (m_pStaticMeshEffect)
-	{
-		m_pStaticMeshEffect->Render();
-	}
-	if (m_pCircleEffect)
-	{
-		m_pCircleEffect->Render();
-	}
+	//if (m_pStaticMeshEffect)
+	//{
+	//	m_pStaticMeshEffect->Render();
+	//}
+	//if (m_pCircleEffect)
+	//{
+	//	m_pCircleEffect->Render();
+	//}
 
 
 
