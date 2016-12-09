@@ -12,6 +12,7 @@ private:
 	cFrustum*				m_cFrustum;
 
 	vector<D3DXVECTOR3>	m_vecVertex;
+	vector<float> m_vecHeight;
 
 public:
 	cMap(char* szFolder, char* szFilename);
@@ -20,7 +21,9 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	vector<D3DXVECTOR3>* GetVertexies(){ return &m_vecVertex; }
 	bool GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3>	pVecVertex);
+	bool GetHeight(IN float x, OUT float& y, IN float z);
 	vector<D3DXVECTOR3>* cMap::FindCullingVertex();
 private:
 	cMap();

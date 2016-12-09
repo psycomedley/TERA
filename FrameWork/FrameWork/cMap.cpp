@@ -21,8 +21,6 @@ cMap::cMap(char* szFolder, char* szFilename)
 
 	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
 }
-
-
 cMap::cMap()
 	:m_cFrustum(NULL)
 {
@@ -96,6 +94,10 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3
 	}
 	y = 0;
 	return false;
+}
+bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
+{
+	return true;
 }
 vector<D3DXVECTOR3>* cMap::FindCullingVertex()
 {
