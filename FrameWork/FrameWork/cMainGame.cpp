@@ -192,8 +192,8 @@ void cMainGame::Update()
 			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
-		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-			m_pCircleEffect->Start();
+//		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+//			m_pCircleEffect->Start();
 	}
 
 

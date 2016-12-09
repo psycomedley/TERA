@@ -72,7 +72,7 @@ void cOrca::SetupStatus()
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
-	m_skillBackAtk.SetInfo(0.0f, 25);
+	m_skillBackAtk.SetInfo(2.0f, 25);
 }
 
 
@@ -140,6 +140,7 @@ void cOrca::Update()
 {
 	cMonster::Update();
 
+	//비전투
 	if (!m_bIsBattle)
 	{
 		D3DXVECTOR3 distance = m_vPosition - GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
@@ -150,12 +151,15 @@ void cOrca::Update()
 			ChangeState(E_STATE_WAIT);
 		}
 	}
+	//전투
 	else
 	{
 		float fElapsedTime = GETSINGLE(cTimeMgr)->getElapsedTime();
 		m_skillHeavyAtk.fPassedTime += fElapsedTime;
 		m_skillLongMove.fPassedTime += fElapsedTime;
 		m_skillAttack.fPassedTime += fElapsedTime;
+		m_skillHeavyAtk2.fPassedTime += fElapsedTime;
+		m_skillBackAtk.fPassedTime += fElapsedTime;
 
 		if (IsMoveAble())
 		{
@@ -174,15 +178,19 @@ void cOrca::Update()
 			}
 			if (IsBehind())
 			{
-				if (m_skillBackAtk.fPassedTime >= m_skillBackAtk.fCoolTime)
+				if (IsTargetCollision())
 				{
-					m_skillBackAtk.fPassedTime = 0.0f;
-			//		LookTarget();
-					ChangeState(E_STATE_SKILL, E_BOSS_BACKATK);
+					if (m_skillBackAtk.fPassedTime >= m_skillBackAtk.fCoolTime)
+					{
+						m_skillBackAtk.fPassedTime = 0.0f;
+						ChangeState(E_STATE_SKILL, E_BOSS_BACKATK);
+						return;
+					}
 				}
 			}
 			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
 			{
+				//나중에 일정 체력 이하일 때로 변경 50%, 25%
 				LongMove();
 			}
 			else if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
@@ -295,8 +303,12 @@ void cOrca::LongMove()
 
 bool cOrca::IsBehind()
 {
-	D3DXVECTOR3 vec = m_pTarget->GetPosition() - m_vPosition;
-	if (vec.x * m_vDirection.x + vec.z * m_vDirection.z >= 0)
+//	D3DXVECTOR3 vec = m_pTarget->GetPosition() - m_vPosition;
+	D3DXVECTOR2 vec(m_pTarget->GetPosition().x - m_vPosition.x, m_pTarget->GetPosition().z - m_vPosition.z);
+	D3DXVECTOR2 vec2(m_vDirection.x, m_vDirection.z);
+	D3DXVec2Normalize(&vec, &vec);
+	D3DXVec2Normalize(&vec2, &vec2);
+	if (vec.x * vec2.x + vec.y * vec2.y >= sqrt(2) / 2)
 		return true;
 	return false;
 }

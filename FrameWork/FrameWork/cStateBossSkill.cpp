@@ -61,18 +61,18 @@ void cStateBossSkill::Update()
 	{
 		m_pParent->Move(0.2f);
 	}
-	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_ATK1)
+	{
+		m_pParent->Move(0.01f);
+	}
+	/*else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{
 		m_pParent->Move(0.2f);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{
 		m_pParent->Move(0.2f);
-	}
-	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
-	{
-		m_pParent->Move(0.2f);
-	}
+	}*/
 }
 
 
@@ -88,7 +88,9 @@ void cStateBossSkill::OnAnimationFinish(cAnimationController* pController, ST_AN
 	if (animInfo.nIndex == E_BOSS_HEAVYATK_END ||
 		animInfo.nIndex == E_BOSS_LONGMOVE_END ||
 		animInfo.nIndex == E_BOSS_ATK1 ||
-		animInfo.nIndex == E_BOSS_ATK2)
+		animInfo.nIndex == E_BOSS_ATK2 ||
+		animInfo.nIndex == E_BOSS_HEAVYATK2 ||
+		animInfo.nIndex == E_BOSS_BACKATK)
 	{
 		End();
 	}
