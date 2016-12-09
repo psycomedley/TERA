@@ -12,6 +12,7 @@ class cMap;
 class cEffect;
 class cStaticMeshEffect;
 class cDynamicMeshEffect;
+class cCircleEffect;
 class cUIImageView;
 class cMainGame
 {
@@ -39,6 +40,8 @@ private:
 
 	cStaticMeshEffect*	m_pStaticMeshEffect;
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
+
+	cCircleEffect*		m_pCircleEffect;
 
 	cUIImageView*		m_pUIImage;
 

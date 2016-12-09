@@ -124,6 +124,9 @@
     <Filter Include="소스 파일\20. UI">
       <UniqueIdentifier>{c4c0094e-1e50-4690-8e69-73e28a3d62a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\19.Effect\CircleEffect">
+      <UniqueIdentifier>{8ab310ab-fc76-4d00-832b-32f8c17dbb59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -354,6 +357,9 @@
     <ClInclude Include="cUITextView.h">
       <Filter>소스 파일\20. UI</Filter>
     </ClInclude>
+    <ClInclude Include="cCircleEffect.h">
+      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -565,6 +571,9 @@
     </ClCompile>
     <ClCompile Include="cUITextView.cpp">
       <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cCircleEffect.cpp">
+      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

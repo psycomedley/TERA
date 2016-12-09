@@ -5,7 +5,6 @@ class cStaticMeshEffect : public cStaticObj
 private:
 
 	D3DXMATRIXA16 matWorld, matS, matR, matT;
-	float m_fAngle;
 
 public:
 	cStaticMeshEffect(char* szFolder, char* szFilename);

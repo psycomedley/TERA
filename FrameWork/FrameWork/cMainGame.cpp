@@ -12,6 +12,7 @@
 #include "cEffect.h"
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
+#include "cCircleEffect.h"
 #include "cUIImageView.h"
 
 //юс╫ц
@@ -32,6 +33,7 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
+	SAFE_RELEASE(m_pCircleEffect);
 	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
@@ -121,6 +123,13 @@ HRESULT cMainGame::Setup()
 	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
+	
+	m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
+	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
+	m_pCircleEffect->Setup(60000, 0.15f, true);
+	m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+
+
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 
 	SetLighting();
@@ -182,7 +191,10 @@ void cMainGame::Update()
 			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+			m_pCircleEffect->Start();
 	}
+
 	if (m_pMap)
 		m_pMap->Update();
 
@@ -205,7 +217,11 @@ void cMainGame::Update()
 		m_pEffect->Update();
 	if (m_pEffect2)
 		m_pEffect2->Update();
-
+	if (m_pCircleEffect)
+	{
+		m_pCircleEffect->Update();
+		m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
+	}
 	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
@@ -290,11 +306,16 @@ void cMainGame::Render()
 	//}
 
 	if (m_pStaticMeshEffect)
+	{
 		m_pStaticMeshEffect->Render();
-	
+	}
+	if (m_pCircleEffect)
+	{
+		m_pCircleEffect->Render();
+	}
 
-	if (m_pDynamicMeshEffect)
-		m_pDynamicMeshEffect->Render();
+	//if (m_pDynamicMeshEffect)
+	//	m_pDynamicMeshEffect->Render();
 
 
 	if (m_pEffect)
