@@ -38,8 +38,8 @@ private:
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 
-	cStaticMeshEffect*	m_pStaticMeshEffect;
-	cDynamicMeshEffect*	m_pDynamicMeshEffect;
+//	cStaticMeshEffect*	m_pStaticMeshEffect;
+//	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
 	cCircleEffect*		m_pCircleEffect;
 

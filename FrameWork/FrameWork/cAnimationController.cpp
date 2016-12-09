@@ -119,7 +119,7 @@ void cAnimationController::SetAnimationIdx(int nIdx, bool bPlayOnce)
 	m_pController->GetAnimationSet(nIdx, &pAnimationSet);
 	m_pController->SetTrackAnimationSet(0, pAnimationSet);
 	SAFE_RELEASE(pAnimationSet);
-
+	
 	m_pController->SetTrackPosition(0, 0.0f);
 	m_pController->ResetTime();
 	m_pController->AdvanceTime(0, NULL);

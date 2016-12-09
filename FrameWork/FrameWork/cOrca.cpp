@@ -63,11 +63,16 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(30.0f, 100);
-//	m_skillLongMove.sSpeech = "어디 한 번 나의 속도를 느껴보아라!!";
+	m_skillLongMove.SetInfo(35.0f, 100);
 	m_skillLongMove.sSpeech = "나의 속도를 쬐끔만 느껴보아라!!";
-	m_skillHeavyAtk.SetInfo(15.0f, 100);
+	
+	m_skillHeavyAtk.SetInfo(20.0f, 100);
+	
+	m_skillHeavyAtk2.SetInfo(30.0f, 100);
+
 	m_skillAttack.SetInfo(3.0f, 10);
+
+	m_skillBackAtk.SetInfo(0.0f, 25);
 }
 
 
@@ -167,6 +172,15 @@ void cOrca::Update()
 
 				return;
 			}
+			if (IsBehind())
+			{
+				if (m_skillBackAtk.fPassedTime >= m_skillBackAtk.fCoolTime)
+				{
+					m_skillBackAtk.fPassedTime = 0.0f;
+			//		LookTarget();
+					ChangeState(E_STATE_SKILL, E_BOSS_BACKATK);
+				}
+			}
 			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
 			{
 				LongMove();
@@ -176,6 +190,15 @@ void cOrca::Update()
 				m_skillHeavyAtk.fPassedTime = 0.0f;
 				LookTarget();
 				ChangeState(E_STATE_SKILL, E_BOSS_HEAVYATK_START);
+			}
+			else if (m_skillHeavyAtk2.fPassedTime >= m_skillHeavyAtk2.fCoolTime)
+			{
+				if (IsTargetCollision())
+				{
+					m_skillHeavyAtk2.fPassedTime = 0.0f;
+					LookTarget();
+					ChangeState(E_STATE_SKILL, E_BOSS_HEAVYATK2);
+				}
 			}
 			else if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
 			{
@@ -267,4 +290,13 @@ void cOrca::LongMove()
 		}
 	}
 	ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
+}
+
+
+bool cOrca::IsBehind()
+{
+	D3DXVECTOR3 vec = m_pTarget->GetPosition() - m_vPosition;
+	if (vec.x * m_vDirection.x + vec.z * m_vDirection.z >= 0)
+		return true;
+	return false;
 }
