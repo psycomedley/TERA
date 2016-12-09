@@ -113,8 +113,9 @@ struct ST_SKILL_INFO
 	float	fPassedTime;
 	float	fValue;
 	string	sSpeech;
+	bool	bUseAble;
 
-	void SetInfo(float _fCoolTime, float _fValue, string _sSpeech = "") { fCoolTime = _fCoolTime; fPassedTime = 0; fValue = _fValue; sSpeech = _sSpeech; }
+	void SetInfo(float _fCoolTime, float _fValue, bool _bUseAble = true, string _sSpeech = "") { fCoolTime = _fCoolTime; fPassedTime = 0; fValue = _fValue; sSpeech = _sSpeech; bUseAble = _bUseAble; }
 };
 
 

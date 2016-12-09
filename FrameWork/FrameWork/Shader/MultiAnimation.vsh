@@ -76,16 +76,15 @@ VS_SKIN_OUTPUT VS_Skin( const VS_SKIN_INPUT vInput, int iNumBones )
     {
         fWeight = afBlendWeights[ iBone ];
         fLastWeight -= fWeight;
-        vOutput.vPos.xyz += mul( vInput.vPos, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
-        vOutput.vNor     += mul( vInput.vNor, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
-//       vOutput.vTangent     += mul( vInput.vTangent, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
-//       vOutput.vBinormal     += mul( vInput.vBinormal, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
+        vOutput.vPos.xyz	+= mul( vInput.vPos, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
+        vOutput.vNor		+= mul( vInput.vNor, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
+//        vOutput.vTangent	+= mul( vInput.vTangent, amPalette[ aiIndices[ iBone ] ] ) * fWeight;
     }
     
     vOutput.vPos.xyz += mul( vInput.vPos, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
     vOutput.vNor     += mul( vInput.vNor, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
-//    vOutput.vTangent     += mul( vInput.vTangent, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
-//    vOutput.vBinormal     += mul( vInput.vBinormal, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
+  //  vOutput.vTangent     += mul( vInput.vTangent, amPalette[ aiIndices[ iNumBones - 1 ] ] ) * fLastWeight;
+ //   vOutput.vBinormal	+= cross(vOutput.vTangent, vOutput.vNor);
 
     return vOutput;
 }

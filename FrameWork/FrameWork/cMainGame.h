@@ -37,8 +37,8 @@ private:
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 
-	cStaticMeshEffect*	m_pStaticMeshEffect;
-	cDynamicMeshEffect*	m_pDynamicMeshEffect;
+//	cStaticMeshEffect*	m_pStaticMeshEffect;
+//	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
 	cUIImageView*		m_pUIImage;
 

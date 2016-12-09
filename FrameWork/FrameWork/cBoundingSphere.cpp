@@ -33,7 +33,7 @@ HRESULT cBoundingSphere::Setup(D3DXVECTOR3* pCenter, float fRadius, UINT nSlices
 }
 
 
-void cBoundingSphere::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale)
+void cBoundingSphere::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, D3DXMATRIXA16* matRevision /*= NULL*/)
 {
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	D3DXMATRIXA16 matS, matT, mat;
@@ -42,7 +42,7 @@ void cBoundingSphere::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale)
 		vPos.x,
 		vPos.y + m_fOriginalY * vScale.y,
 		vPos.z);
-	mat = matS * matT;
+	mat = *matRevision * matS * matT;
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	m_pSphereMesh->DrawSubset(0);
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

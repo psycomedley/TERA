@@ -19,7 +19,7 @@
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
-	, m_cObjectTree(NULL)
+//	, m_cObjectTree(NULL)
 {
 }
 
@@ -31,8 +31,8 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_RELEASE(m_cObjectTree);
+//	SAFE_RELEASE(m_pDynamicMeshEffect);
+//	SAFE_RELEASE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pBoss2);
 	SAFE_RELEASE(m_pUIImage);
@@ -40,7 +40,7 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
-	SAFE_RELEASE(m_pStaticMeshEffect);
+//	SAFE_RELEASE(m_pStaticMeshEffect);
 
 	Release();
 
@@ -113,15 +113,15 @@ HRESULT cMainGame::Setup()
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 	
-	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
-	m_pStaticMeshEffect->Setup();
+//	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
+//	m_pStaticMeshEffect->Setup();
 	
 	//임시 세팅 (비정상 동작중)
-	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
-	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
-	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+//	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
+//	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+//	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStaticObj("Object","tree1.x");
+//	m_cObjectTree = new cStaticObj("Object","tree1.x");
 
 	SetLighting();
 
@@ -183,8 +183,8 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
 	}
-	if (m_pMap)
-		m_pMap->Update();
+//	if (m_pMap)
+//		m_pMap->Update();
 
 	CHAR str[16];
 	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
@@ -198,15 +198,15 @@ void cMainGame::Update()
 
 	/*if (m_pBoss)
 		m_pBoss->Update();*/
-	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
-		m_pDynamicMeshEffect->Setup();
+//	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
+//m_pDynamicMeshEffect->Setup();
 
-	if (m_pEffect)
-		m_pEffect->Update();
-	if (m_pEffect2)
-		m_pEffect2->Update();
+//	if (m_pEffect)
+//		m_pEffect->Update();
+//	if (m_pEffect2)
+//		m_pEffect2->Update();
 
-	m_pUIImage->Update();
+	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
 
@@ -263,8 +263,8 @@ void cMainGame::Render()
 	GETSINGLE(cTextMgr)->Render();
 
 
-	if (m_pMap)
-		m_pMap->Render();
+//	if (m_pMap)
+//		m_pMap->Render();
 
 	///////////////임시////////////////
 	
@@ -289,22 +289,22 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
-	if (m_pStaticMeshEffect)
-		m_pStaticMeshEffect->Render();
+//	if (m_pStaticMeshEffect)
+//		m_pStaticMeshEffect->Render();
 	
 
-	if (m_pDynamicMeshEffect)
-		m_pDynamicMeshEffect->Render();
+//	if (m_pDynamicMeshEffect)
+//		m_pDynamicMeshEffect->Render();
 
 
-	if (m_pEffect)
-		m_pEffect->Render();
-	if (m_pEffect2)
-		m_pEffect2->Render();
+//	if (m_pEffect)
+//		m_pEffect->Render();
+//	if (m_pEffect2)
+//		m_pEffect2->Render();
 
 
 
-	D3DXMATRIXA16	mat, matS, matT;
+	/*D3DXMATRIXA16	mat, matS, matT;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixIdentity(&matS);
 	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
@@ -317,7 +317,7 @@ void cMainGame::Render()
 
 	if (m_cObjectTree)
 		m_cObjectTree->Render();
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);*/
 
 
 	///////////////////////////////////

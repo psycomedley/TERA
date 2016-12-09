@@ -57,7 +57,19 @@ void cStateBossSkill::Update()
 	{
 		m_pParent->Move(1.0f);
 	}
-	if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
+	{
+		m_pParent->Move(0.2f);
+	}
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
+	{
+		m_pParent->Move(0.2f);
+	}
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
+	{
+		m_pParent->Move(0.2f);
+	}
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{
 		m_pParent->Move(0.2f);
 	}
