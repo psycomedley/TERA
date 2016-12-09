@@ -34,7 +34,7 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect2);
 
 
-	//SAFE_RELEASE(m_pCircleEffect);
+	SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
 	SAFE_RELEASE(m_pUIImage);
@@ -43,7 +43,7 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
-//	SAFE_RELEASE(m_pStaticMeshEffect);
+	SAFE_RELEASE(m_pStaticMeshEffect);
 
 	Release();
 
@@ -116,8 +116,9 @@ HRESULT cMainGame::Setup()
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
 	
-//	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
-//	m_pStaticMeshEffect->Setup();
+	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
+	m_pStaticMeshEffect->Setup();
+	m_pStaticMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	
 	//임시 세팅 (비정상 동작중)
 //	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
@@ -126,10 +127,10 @@ HRESULT cMainGame::Setup()
 
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 	
-	//m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
-	////m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-	//m_pCircleEffect->Setup(60000, 0.15f, true);
-	//m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+	m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
+	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
+	m_pCircleEffect->Setup(20, 0.15f, true);
+	m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 
 
 
@@ -216,11 +217,11 @@ void cMainGame::Update()
 //		m_pEffect->Update();
 //	if (m_pEffect2)
 //		m_pEffect2->Update();
-	//if (m_pCircleEffect)
-	//{
-	//	m_pCircleEffect->Update();
-	//	m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
-	//}
+	if (m_pCircleEffect)
+	{
+		m_pCircleEffect->Update();
+		//m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
+	}
 	m_pUIImage->Update(NULL);
 
 	///////////////////////////////////
@@ -305,14 +306,14 @@ void cMainGame::Render()
 	//}
 
 
-	//if (m_pStaticMeshEffect)
-	//{
-	//	m_pStaticMeshEffect->Render();
-	//}
-	//if (m_pCircleEffect)
-	//{
-	//	m_pCircleEffect->Render();
-	//}
+	if (m_pStaticMeshEffect)
+	{
+		m_pStaticMeshEffect->Render();
+	}
+	if (m_pCircleEffect)
+	{
+		m_pCircleEffect->Render();
+	}
 
 
 
