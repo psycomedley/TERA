@@ -48,6 +48,7 @@ private:
 	cCircleEffect*		m_pCircleEffect;
 
 	cUIImageView*		m_pUIImage;
+	cUIImageView*		m_pUIImage2;
 
 	void SetLighting();
 

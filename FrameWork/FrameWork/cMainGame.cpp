@@ -38,6 +38,7 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pBoss2);
 	SAFE_RELEASE(m_pUIImage);
+	SAFE_RELEASE(m_pUIImage2);
 	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
 
@@ -142,14 +143,20 @@ HRESULT cMainGame::Setup()
 	LPD3DXSPRITE				pSprite;
 	D3DXCreateSprite(g_pD3DDevice, &pSprite);
 	m_pUIImage = new cUIImageView;
-	m_pUIImage->SetSize(ST_SIZE(5, 5));
+//	m_pUIImage->SetSize(ST_SIZE(1, 1));
 	m_pUIImage->SetTexture("UI/normalBg.tga", 8, 4);
 	m_pUIImage->SetCurrentFrame(8);
 	m_pUIImage->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
 	
 	m_pUIImage->SetSprite(pSprite);
-	SAFE_RELEASE(pSprite);
 
+	m_pUIImage2 = new cUIImageView;
+	m_pUIImage2->SetTexture("UI/GageBoss.tga", 1, 1);
+//	m_pUIImage->SetPosition()
+	m_pUIImage2->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, 32, 0));
+	m_pUIImage2->SetSprite(pSprite);
+
+	SAFE_RELEASE(pSprite);
 
 	///////////////////////////////////
 
@@ -227,6 +234,7 @@ void cMainGame::Update()
 		//m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
 	}
 	m_pUIImage->Update(NULL);
+	m_pUIImage2->Update(NULL);
 
 	///////////////////////////////////
 
@@ -299,6 +307,7 @@ void cMainGame::Render()
 	}
 
 	m_pUIImage->Render();
+	m_pUIImage2->Render();
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/

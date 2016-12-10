@@ -63,6 +63,10 @@ void cTextMgr::Render()
 
 void cTextMgr::Release()
 {
+	m_listText.clear();
+
+	for each(auto p in m_mapText)
+		SAFE_DELETE(p.second);
 
 	cSingleton::Release();
 }
