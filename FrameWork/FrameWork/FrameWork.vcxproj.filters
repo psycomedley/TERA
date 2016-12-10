@@ -363,6 +363,9 @@
     <ClInclude Include="cText.h">
       <Filter>소스 파일\18. Font</Filter>
     </ClInclude>
+    <ClInclude Include="cAlphaText.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -580,6 +583,9 @@
     </ClCompile>
     <ClCompile Include="cText.cpp">
       <Filter>소스 파일\18. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="cAlphaText.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

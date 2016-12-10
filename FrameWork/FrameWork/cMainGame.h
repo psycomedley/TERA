@@ -14,6 +14,8 @@ class cStaticMeshEffect;
 class cDynamicMeshEffect;
 class cCircleEffect;
 class cUIImageView;
+class cText;
+class cAlphaText;
 class cMainGame
 {
 private:
@@ -35,7 +37,7 @@ private:
 	int a = 0;
 	float b = 0.1;
 
-	LPD3DXFONT m_pFont;
+	cText*		m_pText;
 
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;

@@ -14,6 +14,10 @@ public:
 		D3DXVECTOR2 vPosition, ST_SIZE stSize,
 		D3DCOLOR dwColor = XWHITE,
 		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
+	void AddAlphaText(E_FONT_TYPE eType, string sText, float fShowTime,
+		D3DXVECTOR2 vPosition, ST_SIZE stSize,
+		D3DCOLOR dwColor = XWHITE, int nAlpha = 255, float fAlphaTime = 0.0f,
+		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
 	void AddList(string key);
 	cText* GetText(string key);
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cTextMgr.h"
 #include "cText.h"
+#include "cAlphaText.h"
 
 
 cTextMgr::cTextMgr()
@@ -85,6 +86,17 @@ void cTextMgr::AddText(E_FONT_TYPE eType, string sText, float fShowTime,
 	//ST_TEXT stText(eFontType, sText, fShowTime, _rect);
 	//D3DXCreateSprite(g_pD3DDevice, &stText.pSprite);
 	//m_listText.push_back(stText);
+}
+
+
+void cTextMgr::AddAlphaText(E_FONT_TYPE eType, string sText, float fShowTime,
+	D3DXVECTOR2 vPosition, ST_SIZE stSize,
+	D3DCOLOR dwColor /*= XWHITE*/, int nAlpha /*= 255*/, float fAlphaTime /*= 0.0f*/,
+	DWORD dwFormat /*= DT_VCENTER | DT_CENTER | DT_WORDBREAK*/)
+{
+	cText* pText = new cAlphaText;
+	((cAlphaText*)pText)->Setup(eType, sText, fShowTime, vPosition, stSize, dwColor, nAlpha, fAlphaTime, dwFormat);
+	m_mapText[sText] = pText;
 }
 
 

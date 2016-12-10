@@ -86,6 +86,7 @@
     <ClInclude Include="cActionMoveToAttack.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
+    <ClInclude Include="cAlphaText.h" />
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
     <ClInclude Include="cBounding.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="cActionMoveToAttack.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />
+    <ClCompile Include="cAlphaText.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
     <ClCompile Include="cBounding.cpp" />

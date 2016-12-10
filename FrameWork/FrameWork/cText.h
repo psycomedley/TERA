@@ -15,16 +15,16 @@ protected:
 	D3DCOLOR		m_dwColor;
 
 public:
-	void ResetTime();
+	virtual void ResetTime();
 
 public:
-	HRESULT Setup(E_FONT_TYPE eType, string sText, float fShowTime,
+	virtual HRESULT Setup(E_FONT_TYPE eType, string sText, float fShowTime,
 		D3DXVECTOR2 vPosition, ST_SIZE stSize,
 		D3DCOLOR dwColor = XWHITE,
 		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
 
-	bool Update(float fPassedTime);
-	void Render();
+	virtual bool Update(float fPassedTime);
+	virtual void Render();
 
 public:
 	cText();

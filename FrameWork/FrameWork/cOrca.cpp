@@ -65,7 +65,7 @@ void cOrca::SetupStatus()
 
 	m_skillLongMove.SetInfo(0, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
-	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50));
+	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
 	m_skillHeavyAtk.SetInfo(20.0f, 100);
 	
