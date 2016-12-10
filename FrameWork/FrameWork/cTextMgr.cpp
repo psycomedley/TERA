@@ -36,7 +36,7 @@ void cTextMgr::Update()
 
 void cTextMgr::Render()
 {
-	for each (auto text in m_mapText)
+	/*for each (auto text in m_mapText)
 	{
 		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.second.eFontType);
 
@@ -49,13 +49,13 @@ void cTextMgr::Render()
 				DT_CENTER | DT_VCENTER | DT_WORDBREAK,
 				D3DCOLOR_XRGB(255, 255, 255));
 		}
-	}
+	}*/
 
 	for each (auto text in m_listText)
 	{
 		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.eFontType);
 	//	pFont->DrawText(NULL, text.sText.c_str(), text.sText.size(), &text.rect, DT_NOCLIP, D3DCOLOR_XRGB(255, 255, 255));
-		pFont->DrawTextA(NULL,
+		pFont->DrawTextA(text.pSprite,
 			text.sText.c_str(),
 			text.sText.size(),
 			&text.rect,
@@ -67,6 +67,7 @@ void cTextMgr::Render()
 
 void cTextMgr::Release()
 {
+
 	cSingleton::Release();
 }
 
