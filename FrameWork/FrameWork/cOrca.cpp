@@ -63,16 +63,17 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(35.0f, 100);
+	m_skillLongMove.SetInfo(0, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
-	
+	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50));
+
 	m_skillHeavyAtk.SetInfo(20.0f, 100);
 	
 	m_skillHeavyAtk2.SetInfo(30.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
-	m_skillBackAtk.SetInfo(2.0f, 25);
+	m_skillBackAtk.SetInfo(5.0f, 25);
 }
 
 
@@ -241,8 +242,9 @@ void cOrca::Update()
 
 void cOrca::LongMove()
 {
-	RECT rect = RectMakeCenter(GetWindowWidth() / 2, 150, 500, 50);
-	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, rect);
+//	RECT rect = RectMakeCenter(GetWindowWidth() / 2, 150, 500, 50);
+//	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, rect);
+	GETSINGLE(cTextMgr)->AddList(m_skillLongMove.sSpeech);
 	if (m_pAction)
 		SAFE_RELEASE(m_pAction);
 	m_skillLongMove.fPassedTime = 0.0f;

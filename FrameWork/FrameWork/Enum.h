@@ -6,6 +6,20 @@
 #define	DIRECTION_UP	(1 << 2)
 #define	DIRECTION_DOWN	(1 << 3)
 
+#define XWHITE		D3DCOLOR_XRGB(255, 255, 255)
+#define XBLACK		D3DCOLOR_XRGB(0, 0, 0)
+#define XRED		D3DCOLOR_XRGB(255, 0, 0)
+#define XGREEN		D3DCOLOR_XRGB(0, 255, 0)
+#define XBLUE		D3DCOLOR_XRGB(0, 0, 255)
+#define XYELLOW		D3DCOLOR_XRGB(255, 255, 0)
+
+#define AWHITE(a)	D3DCOLOR_ARGB(a, 255, 255, 255)
+#define ABLACK(a)	D3DCOLOR_ARGB(a, 0, 0, 0)
+#define ARED(a)		D3DCOLOR_ARGB(a, 255, 0, 0)
+#define AGREEN(a)	D3DCOLOR_ARGB(a, 0, 255, 0)
+#define ABLUE(a)	D3DCOLOR_ARGB(a, 0, 0, 255)
+#define AYELLOW(a)	D3DCOLOR_ARGB(a, 255, 255, 0)
+
 //enum E_DIRECTION
 //{
 //	E_NONE = 0,

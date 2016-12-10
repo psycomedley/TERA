@@ -136,7 +136,8 @@ HRESULT cMainGame::Setup()
 
 	SetLighting();
 
-	
+	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, "±×¾Æ¾Æ¾Ñ", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50));
+
 	
 	LPD3DXSPRITE				pSprite;
 	D3DXCreateSprite(g_pD3DDevice, &pSprite);
@@ -195,6 +196,9 @@ void cMainGame::Update()
 			m_pEffect->Start();
 //		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 //			m_pCircleEffect->Start();
+
+		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+			GETSINGLE(cTextMgr)->AddList("±×¾Æ¾Æ¾Ñ");
 	}
 
 
@@ -277,6 +281,19 @@ void cMainGame::Render()
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();
+
+	//m_pFont = GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS);
+	//string m_sText("±×¾Æ¾Æ¾Ñ");
+	//RECT m_rect = RectMakeCenter(GetWindowWidth() / 2, 150, 500, 50);
+	//DWORD m_dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK;
+	//DWORD m_dwColor = XWHITE;
+
+	//m_pFont->DrawTextA(NULL,
+	//	m_sText.c_str(),
+	//	m_sText.size(),
+	//	&m_rect,
+	//	m_dwFormat,
+	//	m_dwColor);
 
 
 //	if (m_pMap)

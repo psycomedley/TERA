@@ -137,6 +137,7 @@
     <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cStaticMeshEffect.h" />
     <ClInclude Include="cStaticObj.h" />
+    <ClInclude Include="cText.h" />
     <ClInclude Include="cTextMgr.h" />
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="cTimeMgr.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cStaticMeshEffect.cpp" />
     <ClCompile Include="cStaticObj.cpp" />
+    <ClCompile Include="cText.cpp" />
     <ClCompile Include="cTextMgr.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cTimeMgr.cpp" />

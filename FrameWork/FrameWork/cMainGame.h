@@ -35,6 +35,8 @@ private:
 	int a = 0;
 	float b = 0.1;
 
+	LPD3DXFONT m_pFont;
+
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 

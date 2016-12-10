@@ -360,6 +360,9 @@
     <ClInclude Include="cCircleEffect.h">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>
     </ClInclude>
+    <ClInclude Include="cText.h">
+      <Filter>소스 파일\18. Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -574,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="cCircleEffect.cpp">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="cText.cpp">
+      <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

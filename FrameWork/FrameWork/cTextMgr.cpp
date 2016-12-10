@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cTextMgr.h"
+#include "cText.h"
 
 
 cTextMgr::cTextMgr()
@@ -16,11 +17,12 @@ void cTextMgr::Update()
 {
 	float fPassedTime = GETSINGLE(cTimeMgr)->getElapsedTime();
 
-	for each (auto text in m_mapText)
+	for (auto iter = m_listText.begin(); iter != m_listText.end();)
 	{
-		text.second.fPassedTime += fPassedTime;
-		if (text.second.fPassedTime >= text.second.fShowTime)
-			text.second.bRender = false;
+		if ((*iter)->Update(fPassedTime))
+			m_listText.erase(iter++);
+		else
+			iter++;
 	}
 	//auto iter = m_listText.begin();
 	//while (iter != m_listText.end())
@@ -36,32 +38,25 @@ void cTextMgr::Update()
 
 void cTextMgr::Render()
 {
-	/*for each (auto text in m_mapText)
-	{
-		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.second.eFontType);
-
-		if (text.second.bRender)
-		{
-			pFont->DrawTextA(NULL,
-				text.second.sText.c_str(),
-				text.second.sText.size(),
-				&text.second.rect,
-				DT_CENTER | DT_VCENTER | DT_WORDBREAK,
-				D3DCOLOR_XRGB(255, 255, 255));
-		}
-	}*/
-
 	for each (auto text in m_listText)
 	{
-		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.eFontType);
-	//	pFont->DrawText(NULL, text.sText.c_str(), text.sText.size(), &text.rect, DT_NOCLIP, D3DCOLOR_XRGB(255, 255, 255));
-		pFont->DrawTextA(text.pSprite,
-			text.sText.c_str(),
-			text.sText.size(),
-			&text.rect,
-			DT_CENTER | DT_VCENTER | DT_WORDBREAK,
-			D3DCOLOR_XRGB(255, 255, 255));
+		text->Render();
 	}
+	/*for each (auto text in m_mapText)
+	{
+	LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.second.eFontType);
+
+	if (text.second.bRender)
+	{
+	pFont->DrawTextA(NULL,
+	text.second.sText.c_str(),
+	text.second.sText.size(),
+	&text.second.rect,
+	DT_CENTER | DT_VCENTER | DT_WORDBREAK,
+	D3DCOLOR_XRGB(255, 255, 255));
+	}
+	}*/
+
 }
 
 
@@ -72,15 +67,40 @@ void cTextMgr::Release()
 }
 
 
-void cTextMgr::AddText(ST_TEXT stText)
+void cTextMgr::AddText(cText* stText)
 {
-	m_listText.push_back(stText);
+	m_mapText[stText->GetText()] = stText;
 }
 
 
-void cTextMgr::AddText(E_FONT_TYPE eFontType, string sText, float fShowTime, RECT _rect)
+void cTextMgr::AddText(E_FONT_TYPE eType, string sText, float fShowTime,
+	D3DXVECTOR2 vPosition, ST_SIZE stSize,
+	D3DCOLOR dwColor /*= XWHITE*/,
+	DWORD dwFormat /*= DT_VCENTER | DT_CENTER | DT_WORDBREAK*/)
 {
-	ST_TEXT stText(eFontType, sText, fShowTime, _rect);
-	D3DXCreateSprite(g_pD3DDevice, &stText.pSprite);
-	m_listText.push_back(stText);
+	cText* pText = new cText;
+	pText->Setup(eType, sText, fShowTime, vPosition, stSize, dwColor, dwFormat);
+	m_mapText[sText] = pText;
+
+	//ST_TEXT stText(eFontType, sText, fShowTime, _rect);
+	//D3DXCreateSprite(g_pD3DDevice, &stText.pSprite);
+	//m_listText.push_back(stText);
+}
+
+
+void cTextMgr::AddList(string key)
+{
+	if (m_mapText[key])
+	{
+		m_listText.push_back(m_mapText[key]);
+		m_listText.back()->ResetTime();
+	}
+}
+
+
+cText* cTextMgr::GetText(string key)
+{
+	if (m_mapText.find(key) == m_mapText.end())
+		return NULL;
+	return m_mapText[key];
 }
