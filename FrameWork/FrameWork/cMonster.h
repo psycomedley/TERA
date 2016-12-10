@@ -10,6 +10,15 @@ protected:
 	float			m_fDetectRange;
 
 public:
+	void SetName(string sName) { m_stInfo.sName = sName; }
+	void SetMaxHp(int nMaxHp) { m_stInfo.nMaxHp = nMaxHp; }
+	void SetHp(int nHp) { m_stInfo.nHp = nHp; }
+	void SetMaxMp(int nMaxMp) { m_stInfo.nMaxMp = nMaxMp; }
+	void SetMp(int nMp) { m_stInfo.nMp = nMp; }
+	void SetDamage(int fDamage) { m_stInfo.fDamage = fDamage; }
+	void SetDefence(int fDefence) { m_stInfo.fDefence = fDefence; }
+
+public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL) override;
 
 public:

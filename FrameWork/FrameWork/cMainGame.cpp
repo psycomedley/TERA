@@ -14,6 +14,7 @@
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
 #include "cUIImageView.h"
+#include "cUITextView.h"
 
 //юс╫ц
 
@@ -150,13 +151,31 @@ HRESULT cMainGame::Setup()
 	
 	m_pUIImage->SetSprite(pSprite);
 
-	m_pUIImage2 = new cUIImageView;
-	m_pUIImage2->SetTexture("UI/GageBoss.tga", 1, 1);
+	cUIImageView* ui = new cUIImageView;
+	ui->SetTexture("UI/GageBoss.tga", 1, 1);
 //	m_pUIImage->SetPosition()
-	m_pUIImage2->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, 32, 0));
-	m_pUIImage2->SetSprite(pSprite);
+	ui->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2 + 223, 32, 0));
+	ui->SetSprite(pSprite);
+
+	cUIImageView* ui2 = new cUIImageView;
+	ui2->SetTexture("UI/GageBoss_IB1.tga", 1, 1);
+	ui2->SetPosition(D3DXVECTOR3(49, 17, 0));
+	ui2->SetColor(XRED);
+	ui2->SetScaleX(0.5f);
+	ui2->SetSprite(pSprite);
+	ui->AddChild(ui2);
+
+	cUITextView* ui3 = new cUITextView;
+	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS));
+	CHAR str[16];
+	wsprintf(str, TEXT("%d"), ((cOrca*)pBoss)->GetInfo().nMaxHp);
+	ui3->SetText(str);
+	ui3->SetSize(ST_SIZE(100, 64));
+	ui->AddChild(ui3);
 
 	SAFE_RELEASE(pSprite);
+
+	m_pUIImage2 = ui;
 
 	///////////////////////////////////
 

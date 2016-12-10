@@ -4,7 +4,7 @@
 
 cUITextView::cUITextView()
 	: pFont(NULL)
-	, m_dwFormat(DT_VCENTER | DT_CENTER)
+	, m_dwFormat(DT_VCENTER | DT_CENTER | DT_WORDBREAK)
 	, m_dwColor(D3DCOLOR_XRGB(255, 255, 255))
 {
 }

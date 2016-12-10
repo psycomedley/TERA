@@ -16,6 +16,7 @@ class cCircleEffect;
 class cUIImageView;
 class cText;
 class cAlphaText;
+class cUIObject;
 class cMainGame
 {
 private:
@@ -48,7 +49,7 @@ private:
 	cCircleEffect*		m_pCircleEffect;
 
 	cUIImageView*		m_pUIImage;
-	cUIImageView*		m_pUIImage2;
+	cUIObject*			m_pUIImage2;
 
 	void SetLighting();
 
