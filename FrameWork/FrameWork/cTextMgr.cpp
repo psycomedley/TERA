@@ -16,20 +16,41 @@ void cTextMgr::Update()
 {
 	float fPassedTime = GETSINGLE(cTimeMgr)->getElapsedTime();
 
-	auto iter = m_listText.begin();
-	while (iter != m_listText.end())
+	for each (auto text in m_mapText)
 	{
-		iter->fPassedTime += fPassedTime;
-		if (iter->fPassedTime >= iter->fShowTime)
-			m_listText.erase(iter++);
-		else
-			iter++;
+		text.second.fPassedTime += fPassedTime;
+		if (text.second.fPassedTime >= text.second.fShowTime)
+			text.second.bRender = false;
 	}
+	//auto iter = m_listText.begin();
+	//while (iter != m_listText.end())
+	//{
+	//	iter->fPassedTime += fPassedTime;
+	//	if (iter->fPassedTime >= iter->fShowTime)
+	//		iter->bRender = false;
+	//	else
+	//		iter++;
+	//}
 }
 
 
 void cTextMgr::Render()
 {
+	for each (auto text in m_mapText)
+	{
+		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.second.eFontType);
+
+		if (text.second.bRender)
+		{
+			pFont->DrawTextA(NULL,
+				text.second.sText.c_str(),
+				text.second.sText.size(),
+				&text.second.rect,
+				DT_CENTER | DT_VCENTER | DT_WORDBREAK,
+				D3DCOLOR_XRGB(255, 255, 255));
+		}
+	}
+
 	for each (auto text in m_listText)
 	{
 		LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.eFontType);
@@ -59,5 +80,6 @@ void cTextMgr::AddText(ST_TEXT stText)
 void cTextMgr::AddText(E_FONT_TYPE eFontType, string sText, float fShowTime, RECT _rect)
 {
 	ST_TEXT stText(eFontType, sText, fShowTime, _rect);
+	D3DXCreateSprite(g_pD3DDevice, &stText.pSprite);
 	m_listText.push_back(stText);
 }
