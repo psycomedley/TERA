@@ -8,10 +8,10 @@ private:
 	D3DXVECTOR3		m_vLookAt;
 	D3DXVECTOR3		m_vUp;
 
-	SYNTHESIZE(float, m_fCamRotX, CamRotX);
-	SYNTHESIZE(float, m_fCamRotY, CamRotY);
 	float			m_fCamDist;
 	float			m_fPrevDist;
+	SYNTHESIZE(float, m_fCamRotX, CamRotX);
+	SYNTHESIZE(float, m_fCamRotY, CamRotY);
 
 	SYNTHESIZE(bool, m_bUse, Use);
 	SYNTHESIZE(bool, m_bControl, Control);

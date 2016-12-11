@@ -6,14 +6,14 @@ class cGameObject : public cObject
 {
 protected:
 	cMesh* m_pMesh;
-	
+	D3DXVECTOR3 m_vScale;
+	D3DXVECTOR3	m_vPrevPosition;
+
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vPosition, Position);
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vCameraFocus, CameraFocus);
 	SYNTHESIZE(float, m_fAngle, Angle);
 //	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
-	D3DXVECTOR3 m_vScale;
 
-	D3DXVECTOR3	m_vPrevPosition;
 	SYNTHESIZE_ADD_REF(cAction*, m_pAction, Action);
 	SYNTHESIZE(D3DXVECTOR3, m_vDirection, Direction);
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matWorld, WorldTM);

@@ -584,14 +584,14 @@
     <ClCompile Include="cText.cpp">
       <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
-    <ClCompile Include="cUITextView.cpp">
-      <Filter>소스 파일\14. State</Filter>
-    </ClCompile>
     <ClCompile Include="cStateDeath.cpp">
       <Filter>소스 파일\14. State</Filter>
     </ClCompile>
     <ClCompile Include="cAlphaText.cpp">
       <Filter>소스 파일\18. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="cUITextView.cpp">
+      <Filter>소스 파일\20. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
