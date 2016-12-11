@@ -8,6 +8,7 @@
 #include "cStateWait.h"
 #include "cStateCombo.h"
 #include "cStateSkill.h"
+#include "cStateDeath.h"
 #include "cAnimationController.h"
 #include "cCamera.h"
 
@@ -141,6 +142,8 @@ void cPlayer::SetupState()
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
+	m_aStates[E_STATE_DEATH] = new cStateDeath;
+	m_aStates[E_STATE_DEATH]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 

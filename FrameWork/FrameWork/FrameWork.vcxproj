@@ -130,6 +130,7 @@
     <ClInclude Include="cSingleton.h" />
     <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
+    <ClInclude Include="cStateDeath.h" />
     <ClInclude Include="cStateDefence.h" />
     <ClInclude Include="cStateIdle.h" />
     <ClInclude Include="cStateRun.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="cSingleton.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
+    <ClCompile Include="cStateDeath.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
     <ClCompile Include="cStateIdle.cpp" />
     <ClCompile Include="cStateRun.cpp" />

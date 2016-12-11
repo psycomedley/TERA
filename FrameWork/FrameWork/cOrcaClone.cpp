@@ -3,6 +3,7 @@
 #include "iState.h"
 #include "cStateWait.h"
 #include "cStateBossSkill.h"
+#include "cStateDeath.h"
 
 
 cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
@@ -34,6 +35,8 @@ void cOrcaClone::SetupState()
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateBossSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
+	m_aStates[E_STATE_DEATH] = new cStateDeath;
+	m_aStates[E_STATE_DEATH]->SetParent(this);
 	ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
 }
 
@@ -60,6 +63,8 @@ void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	if (m_bActive == false)
 		return;
+	if (GetCurrentAnimInfo().nIndex == E_ANI_DEATHWAIT)
+		m_bActive = false;
 	if (m_pState == m_aStates[E_STATE_WAIT])
 		m_bMoveEnd = true;
 
