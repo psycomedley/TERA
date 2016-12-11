@@ -57,7 +57,7 @@ void cCircleEffect::Render()
 	if (start)
 	{
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-		g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
+		g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000044);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 		D3DXMatrixRotationY(&matR, m_fAngle);

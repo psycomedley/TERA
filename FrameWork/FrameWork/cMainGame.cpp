@@ -129,9 +129,9 @@ HRESULT cMainGame::Setup()
 
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 	
-	m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
+	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-	m_pCircleEffect->Setup(2, 0.2f, true, D3DXVECTOR3(0.1f,0.1f,0.1f),D3DXVECTOR3(20,1,0));
+	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
 
 
