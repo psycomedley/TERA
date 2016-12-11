@@ -316,6 +316,7 @@ void cMainGame::Update()
 	m_pUIBossHp->Update(NULL);
 	m_pUIPlayerHp->Update(NULL);
 
+	m_pMap->Update();
 	///////////////////////////////////
 
 	GETSINGLE(cInput)->EndFrame();
@@ -372,8 +373,8 @@ void cMainGame::Render()
 
 
 
-//	if (m_pMap)
-//		m_pMap->Render();
+	if (m_pMap)
+		m_pMap->Render();
 
 	///////////////юс╫ц////////////////
 	

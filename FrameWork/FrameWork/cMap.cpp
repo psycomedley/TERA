@@ -58,7 +58,7 @@ void cMap::Update()
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-	if (GetHeight(playerPos.x, playerPos.y, playerPos.z, m_vecVertex))
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
@@ -184,7 +184,7 @@ void cMap::SetupHeight()
 	float startZ = MinZ;
 	float endZ = MaxZ;
 
-	 int g = 0;
+	 /*int g = 0;
 	 for (float z = startZ; z <= endZ; z += tileSpacing)
 	 {
 		 int h = 0;
@@ -196,8 +196,17 @@ void cMap::SetupHeight()
 			 h++;
 		 }
 		 g++;
-	 }
-	
+	 }*/
+	int index;
+	for (size_t i = 0; i < NumTile; i++)
+	{
+		for (size_t j = 0; j < NumTile; j++)
+		{
+			index = i*NumTile + j;
+			m_vecTerrainVertex.push_back(D3DXVECTOR3(j, ((float)m_vecHeight[index]), i));
+		}
+	}
+
 	for (int i = 0; i < m_vecPNTVertex.size(); ++i)
 	{
 		cBoundingSphere* BoundingSphere = new cBoundingSphere;
@@ -218,13 +227,15 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	return false;
 	}
 
-	int nX = x;
-	int nZ = z;
+
 
 	float fDeltaX;
 	float fDeltaZ;
 	float fMinx = MinX*(-1);
 	float fMinz = MinZ*(-1);
+
+	int nX = x ;
+	int nZ = z ;
 
 	if (nX >= 0)
 	{
@@ -232,7 +243,8 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	}
 	else if (nX < 0)
 	{
-		fDeltaX = (x*(-1)) + nX;
+		nX *= -1;
+		fDeltaX = (x*(-1)) - nX;
 	}
 	
 	if (nZ >= 0)
@@ -241,17 +253,18 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	}
 	else if (nZ < 0)
 	{
-		fDeltaZ = (z*(-1)) + nZ;
+		nZ *= -1;
+		fDeltaZ = (z*(-1)) - nZ;
 	}
 	//		1--3
 	//		|\ |
 	//		| \|
 	//		0--2
 
-	int _0 = ((nZ+fMinz) + 0) * (NumTile) + (nX+fMinx);
-	int _1 = ((nZ+fMinz) + 1) * (NumTile) + (nX+fMinx);
-	int _2 = ((nZ+fMinz) + 0) * (NumTile) + (nX+fMinx) + 1;
-	int _3 = ((nZ+fMinz) + 1) * (NumTile) + (nX+fMinx) + 1;
+	int _0 = ((nZ) + 0) * (NumTile)+(nX);
+	int _1 = ((nZ) + 1) * (NumTile)+(nX);
+	int _2 = ((nZ) + 0) * (NumTile)+(nX) + 1;
+	int _3 = ((nZ) + 1) * (NumTile)+(nX) + 1;
 
 	if (fDeltaX + fDeltaZ < 1)
 	{
