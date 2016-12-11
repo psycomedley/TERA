@@ -76,7 +76,7 @@ void cOrca::SetupStatus()
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
-	m_skillBackAtk.SetInfo(10.0f, 25);
+	m_skillBackAtk.SetInfo(5.0f, 25);
 }
 
 
@@ -150,7 +150,8 @@ void cOrca::Update()
 		D3DXVECTOR3 distance = m_vPosition - GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
 		if (D3DXVec3Length(&distance) < m_fDetectRange)
 		{
-			GETSINGLE(cUIMgr)->AddList("BossHp");
+			GETSINGLE(cUIMgr)->AddList("Orca");
+			m_pUIHp = GETSINGLE(cUIMgr)->GetUIInList("Orca");
 			m_bIsBattle = true;
 			m_pTarget = GETSINGLE(cObjMgr)->GetPlayer();
 			ChangeState(E_STATE_WAIT);

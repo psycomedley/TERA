@@ -40,7 +40,7 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_pBoss2);
 //	SAFE_RELEASE(m_pUICross);
 //	SAFE_RELEASE(m_pUIBossHp);
-	SAFE_RELEASE(m_pUIPlayerHp);
+//	SAFE_RELEASE(m_pUIPlayerHp);
 	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
 
@@ -184,7 +184,7 @@ HRESULT cMainGame::Setup()
 	ui->AddChild(ui3);
 
 //	m_pUIBossHp = ui;
-	GETSINGLE(cUIMgr)->AddUI("BossHp", ui);
+	GETSINGLE(cUIMgr)->AddUI("Orca", ui);
 
 	//////////////////////////////////////////////////////////
 	//						Player Hp						//
@@ -226,7 +226,9 @@ HRESULT cMainGame::Setup()
 
 
 
-	m_pUIPlayerHp = pUI;
+//	m_pUIPlayerHp = pUI;
+	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
+	GETSINGLE(cUIMgr)->AddList("Player");
 
 	SAFE_RELEASE(pSprite);
 
@@ -278,11 +280,11 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 			m_pCircleEffect->Start();
 
-		//if (KEYBOARD->IsOnceKeyDown(DIK_T))
-		//{
-		//	auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
-		//	((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
-
+		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+		{
+			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
+			((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
+		}
 		//	char szStr[16] = { '\0', };
 		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
 		//	((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
@@ -316,7 +318,7 @@ void cMainGame::Update()
 	}
 //	m_pUICross->Update(NULL);
 //	m_pUIBossHp->Update(NULL);
-	m_pUIPlayerHp->Update(NULL);
+//	m_pUIPlayerHp->Update(NULL);
 
 	///////////////////////////////////
 
@@ -390,7 +392,7 @@ void cMainGame::Render()
 
 //	m_pUICross->Render();		//Cross
 //	m_pUIBossHp->Render();		//Boss Hp
-	m_pUIPlayerHp->Render();
+//	m_pUIPlayerHp->Render();
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/

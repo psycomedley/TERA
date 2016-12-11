@@ -47,7 +47,7 @@ private:
 
 //	cUIImageView*		m_pUICross;
 //	cUIObject*			m_pUIBossHp;
-	cUIObject*			m_pUIPlayerHp;
+//	cUIObject*			m_pUIPlayerHp;
 
 	void SetLighting();
 

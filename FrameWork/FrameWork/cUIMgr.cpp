@@ -64,13 +64,15 @@ void cUIMgr::RemoveList(string sKey)
 }
 
 
-cUIObject* GetUIInList(string sKey)
+cUIObject* cUIMgr::GetUIInList(string sKey)
 {
-	
+	for (auto iter = m_listUI.begin(); iter != m_listUI.end(); iter++)
+		if (*iter == m_mapUI[sKey])
+			return *iter;
 }
 
 
-cUIObject* GetUIInMap(string sKey)
+cUIObject* cUIMgr::GetUIInMap(string sKey)
 {
-
+	return m_mapUI[sKey];
 }

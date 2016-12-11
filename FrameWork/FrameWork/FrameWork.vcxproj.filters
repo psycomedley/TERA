@@ -363,11 +363,11 @@
     <ClInclude Include="cText.h">
       <Filter>소스 파일\18. Font</Filter>
     </ClInclude>
-    <ClInclude Include="cAlphaText.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="cStateDeath.h">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cAlphaText.h">
+      <Filter>소스 파일\18. Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -584,14 +584,14 @@
     <ClCompile Include="cText.cpp">
       <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
-    <ClCompile Include="cAlphaText.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="cStateDeath.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="cUITextView.cpp">
       <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateDeath.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cAlphaText.cpp">
+      <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
