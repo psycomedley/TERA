@@ -11,12 +11,12 @@ protected:
 
 public:
 	void SetName(string sName) { m_stInfo.sName = sName; }
-	void SetMaxHp(int nMaxHp) { m_stInfo.nMaxHp = nMaxHp; }
-	void SetHp(int nHp) { m_stInfo.nHp = nHp; }
-	void SetMaxMp(int nMaxMp) { m_stInfo.nMaxMp = nMaxMp; }
-	void SetMp(int nMp) { m_stInfo.nMp = nMp; }
-	void SetDamage(int fDamage) { m_stInfo.fDamage = fDamage; }
-	void SetDefence(int fDefence) { m_stInfo.fDefence = fDefence; }
+	void SetMaxHp(float fMaxHp) { m_stInfo.fMaxHp = fMaxHp; }
+	void SetHp(float fHp) { m_stInfo.fHp = fHp; }
+	void SetMaxMp(float fMaxMp) { m_stInfo.fMaxMp = fMaxMp; }
+	void SetMp(float fMp) { m_stInfo.fMp = fMp; }
+	void SetDamage(float fDamage) { m_stInfo.fDamage = fDamage; }
+	void SetDefence(float fDefence) { m_stInfo.fDefence = fDefence; }
 
 public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL) override;

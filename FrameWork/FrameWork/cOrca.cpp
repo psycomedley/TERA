@@ -53,10 +53,10 @@ void cOrca::SetupStatus()
 {
 	m_stInfo.sName = "Orca";
 
-	m_stInfo.nMaxHp = 100;
-	m_stInfo.nHp = m_stInfo.nMaxHp;
-	m_stInfo.nMaxMp = 100;
-	m_stInfo.nMp = m_stInfo.nMaxMp;
+	m_stInfo.fMaxHp = 100;
+	m_stInfo.fHp = m_stInfo.fMaxHp;
+	m_stInfo.fMaxMp = 100;
+	m_stInfo.fMp = m_stInfo.fMaxMp;
 
 	m_stInfo.fDamage = 100.0f;
 	m_stInfo.fDefence = 100.0f;
@@ -171,8 +171,18 @@ void cOrca::Update()
 	
 				for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
 				{
-					if (!((cOrcaClone*)(*iter))->GetActive())
+					if (!((cOrcaClone*)(*iter))->GetMoveEnd())
 						m_nNumClone--;
+
+//					if (!((cOrcaClone*)(*iter))->GetActive())
+//					m_nNumClone--;
+				}
+				if (m_nNumClone == 0)
+				{
+					for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
+					{
+						((cOrcaClone*)(*iter))->SetActive(false);
+					}
 				}
 
 				return;
@@ -248,14 +258,31 @@ void cOrca::LongMove()
 	if (m_pAction)
 		SAFE_RELEASE(m_pAction);
 	m_skillLongMove.fPassedTime = 0.0f;
-	m_nNumClone = 3;
+	m_nNumClone = 0;
 
 	//º»Ã¼
 	D3DXVECTOR3 vEnemyPos = m_pTarget->GetPosition();
 	int nRealOrca = GetInt(4);
-	int nSign = pow(-1, (nRealOrca % 2));
-	int nX = nSign * (nRealOrca / 2) * 15;
-	D3DXVECTOR3 vPos(nX, 0, (15 - abs(nX)) * nSign);
+
+	D3DXVECTOR3 vPos(0, 0, 0);
+	switch (nRealOrca)
+	{
+	case 0:
+		vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+		break;
+	case 1:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+		break;
+	case 2:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+		break;
+	case 3:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+		break;
+	}
+
 	SetPosition(vEnemyPos + vPos);
 	LookTarget();
 
@@ -268,10 +295,28 @@ void cOrca::LongMove()
 		{
 			if (i == nRealOrca)
 				continue;
-			int sign = pow(-1, (i % 2));
-			int x = sign * (i / 2) * 15;
-			D3DXVECTOR3 vPos(x, 0, ((15 - abs(x))) * sign);
+
+			D3DXVECTOR3 vPos(0, 0, 0);
+			switch (i)
+			{
+			case 0:
+				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+				break;
+			case 1:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+				break;
+			case 2:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+				break;
+			case 3:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+				break;
+			}
+
 			((cOrcaClone*)(*iter))->SetActive(true);
+			((cOrcaClone*)(*iter))->SetMoveEnd(false);
 			(*iter)->SetPosition(vEnemyPos + vPos);
 			(*iter)->LookTarget();
 			(*iter)->ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
@@ -287,9 +332,25 @@ void cOrca::LongMove()
 		{
 			if (i == nRealOrca)
 				continue;
-			int sign = pow(-1, (i % 2));
-			int x = sign * (i / 2) * 15;
-			D3DXVECTOR3 vPos(x, 0, ((15 - abs(x))) * sign);
+
+			switch (i)
+			{
+			case 0:
+				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+				break;
+			case 1:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+				break;
+			case 2:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+				break;
+			case 3:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+				break;
+			}
+
 			cDynamicObj* clone = new cOrcaClone("Monster", "Orca.X");
 			clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 			clone->SetRevision(matR);

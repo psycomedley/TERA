@@ -7,6 +7,7 @@ class cOrcaClone : public cMonster
 private:
 	ST_SKILL_INFO	m_skillLongMove;
 	SYNTHESIZE(bool, m_bActive, Active);
+	SYNTHESIZE(bool, m_bMoveEnd, MoveEnd);
 
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
