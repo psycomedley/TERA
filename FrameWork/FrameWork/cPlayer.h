@@ -6,14 +6,13 @@ class iState;
 class cPlayer : public cDynamicObj
 {
 private:
-	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
-
 	cWeapon*		m_pRightWeapon;
 	cWeapon*		m_pLeftWeapon;
 
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
 
+	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(int, m_nKeyDir, KeyDir);
 	SYNTHESIZE(float, m_fTempAngle, TempAngle);
 

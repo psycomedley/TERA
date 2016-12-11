@@ -38,9 +38,6 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
-	SAFE_RELEASE(m_pUICross);
-	SAFE_RELEASE(m_pUIBossHp);
-	SAFE_RELEASE(m_pUIPlayerHp);
 	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
 
@@ -134,99 +131,7 @@ HRESULT cMainGame::Setup()
 
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "±×¾Æ¾Æ¾Ñ", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
-	//////////////////////////////////////////////////////////
-	//						CrossHair						//
-	//////////////////////////////////////////////////////////
-	
-	LPD3DXSPRITE				pSprite;
-	D3DXCreateSprite(g_pD3DDevice, &pSprite);
-	m_pUICross = new cUIImageView;
-//	m_pUIImage->SetSize(ST_SIZE(1, 1));
-	m_pUICross->SetTexture("UI/normalBg.tga", 8, 4);
-	m_pUICross->SetCurrentFrame(8);
-	m_pUICross->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
-	
-	m_pUICross->SetSprite(pSprite);
-
-	//////////////////////////////////////////////////////////
-	//						Boss Hp							//
-	//////////////////////////////////////////////////////////
-
-	cUIImageView* ui = new cUIImageView;
-	ui->SetTexture("UI/GageBoss.tga", 1, 1);
-//	m_pUIImage->SetPosition()
-	ui->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2 + 223, 32, 0));
-	ui->SetSprite(pSprite);
-
-	cUIImageView* ui2 = new cUIImageView;
-	ui2->SetTexture("UI/GageBoss_IB1.tga", 1, 1);
-	ui2->SetPosition(D3DXVECTOR3(49, 17, 0));
-	ui2->SetColor(XRED);
-//	ui2->SetScaleX(0.5f);
-	ui2->SetSprite(pSprite);
-	ui2->SetTag(1);
-	ui->AddChild(ui2);
-
-	cUITextView* ui3 = new cUITextView;
-	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
-
-	char szStr[16] = { '\0', };
-	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)pBoss)->GetInfo().fHp / ((cOrca*)pBoss)->GetInfo().fMaxHp * 100);
-	//CHAR str[16];
-	//wsprintf(str, TEXT("%f%%"), ((cOrca*)pBoss)->GetInfo().fHp / ((cOrca*)pBoss)->GetInfo().fMaxHp);
-	ui3->SetText(szStr);
-	ui3->SetSize(ST_SIZE(100, 56));
-	ui3->SetPosition(D3DXVECTOR3(223, 0, 0));
-	ui3->SetTag(2);
-	ui->AddChild(ui3);
-
-
-	m_pUIBossHp = ui;
-
-
-	//////////////////////////////////////////////////////////
-	//						Player Hp						//
-	//////////////////////////////////////////////////////////
-
-	//HP
-	cUIImageView* pUI = new cUIImageView;
-	pUI->SetTexture("UI/GageBar_I3.tga", 1, 1);
-//	m_pUIImage->SetPosition()
-	pUI->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2 + 20 , GetWindowHeight() - 100, 0));
-	pUI->SetScaleX(1.5);
-	pUI->SetScaleY(1.5);
-	pUI->SetSprite(pSprite);
-
-	cUIImageView* pUI2 = new cUIImageView;
-	pUI2->SetTexture("UI/GageBar_I3.tga", 1, 1);
-	pUI2->SetPosition(D3DXVECTOR3(0, pUI->GetSize().fHeight, 0));
-	pUI2->SetScaleX(1.5);
-	pUI2->SetScaleY(1.5);
-	pUI2->SetSprite(pSprite);
-	pUI->AddChild(pUI2);
-
-	//MP
-	cUIImageView* pUI3 = new cUIImageView;
-	pUI3->SetTexture("UI/GageBar_IC.tga", 1, 1);
-	pUI3->SetPosition(D3DXVECTOR3(6, 13, 0));
-	pUI3->SetScaleX(1.5);
-	pUI3->SetScaleY(1.5);
-	pUI3->SetSprite(pSprite);
-	pUI->AddChild(pUI3);
-
-	cUIImageView* pUI4 = new cUIImageView;
-	pUI4->SetTexture("UI/GageBar_IF.tga", 1, 1);
-	pUI4->SetPosition(D3DXVECTOR3(6, pUI->GetSize().fHeight + 13, 0));
-	pUI4->SetScaleX(1.5);
-	pUI4->SetScaleY(1.5);
-	pUI4->SetSprite(pSprite);
-	pUI->AddChild(pUI4);
-
-
-
-	m_pUIPlayerHp = pUI;
-
-	SAFE_RELEASE(pSprite);
+	SetUI();
 
 	///////////////////////////////////
 
@@ -251,6 +156,8 @@ void cMainGame::Update()
 		GETSINGLE(cCameraMgr)->Update();
 
 		GETSINGLE(cTextMgr)->Update();
+
+		GETSINGLE(cUIMgr)->Update();
 	}
 
 
@@ -278,14 +185,12 @@ void cMainGame::Update()
 		{
 			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
 			((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
-
-			char szStr[16] = { '\0', };
-			sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
-			//CHAR str[16];
-			//wsprintf(str, TEXT("%f%%"), ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
-			((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
-			((cUIImageView*)m_pUIBossHp->FindChildByTag(1))->SetScaleX(((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
 		}
+		//	char szStr[16] = { '\0', };
+		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
+		//	((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
+		//	((cUIImageView*)m_pUIBossHp->FindChildByTag(1))->SetScaleX(((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
+		//}
 	}
 
 
@@ -312,9 +217,6 @@ void cMainGame::Update()
 	{
 		m_pCircleEffect->Update();
 	}
-	m_pUICross->Update(NULL);
-	m_pUIBossHp->Update(NULL);
-	m_pUIPlayerHp->Update(NULL);
 
 	m_pMap->Update();
 	///////////////////////////////////
@@ -371,7 +273,7 @@ void cMainGame::Render()
 
 	GETSINGLE(cTextMgr)->Render();
 
-
+	GETSINGLE(cUIMgr)->Render();
 
 	if (m_pMap)
 		m_pMap->Render();
@@ -386,10 +288,6 @@ void cMainGame::Render()
 		/*m_pBoss2->UpdateAndRender();
 		m_pBoss2->Bounding_Render();*/
 	}
-
-	m_pUICross->Render();		//Cross
-	m_pUIBossHp->Render();		//Boss Hp
-	m_pUIPlayerHp->Render();
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/
@@ -454,6 +352,7 @@ void cMainGame::Release()
 	GETSINGLE(cFontMgr)->Release();
 	GETSINGLE(cTextMgr)->Release();
 	GETSINGLE(cCameraMgr)->Release();
+	GETSINGLE(cUIMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
@@ -473,4 +372,112 @@ void cMainGame::SetLighting()
 	g_pD3DDevice->LightEnable(0, true);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+}
+
+
+void cMainGame::SetUI()
+{
+	//////////////////////////////////////////////////////////
+	//						CrossHair						//
+	//////////////////////////////////////////////////////////
+
+	LPD3DXSPRITE				pSprite;
+	D3DXCreateSprite(g_pD3DDevice, &pSprite);
+	cUIImageView* pCrossHair = new cUIImageView;
+	//	m_pUIImage->SetSize(ST_SIZE(1, 1));
+	pCrossHair->SetTexture("UI/normalBg.tga", 8, 4);
+	pCrossHair->SetCurrentFrame(8);
+	pCrossHair->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
+
+	pCrossHair->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("CrossHair", pCrossHair);
+	GETSINGLE(cUIMgr)->AddList("CrossHair");
+
+	//////////////////////////////////////////////////////////
+	//						Boss Hp							//
+	//////////////////////////////////////////////////////////
+
+	cUIImageView* ui = new cUIImageView;
+	ui->SetTexture("UI/GageBoss.tga", 1, 1);
+	//	m_pUIImage->SetPosition()
+	ui->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2 + 223, 32, 0));
+	ui->SetSprite(pSprite);
+
+	cUIImageView* ui2 = new cUIImageView;
+	ui2->SetTexture("UI/GageBoss_IB1.tga", 1, 1);
+	ui2->SetPosition(D3DXVECTOR3(49, 17, 0));
+	ui2->SetColor(XRED);
+	//	ui2->SetScaleX(0.5f);
+	ui2->SetSprite(pSprite);
+	ui2->SetTag(1);
+	ui->AddChild(ui2);
+
+	cUITextView* ui3 = new cUITextView;
+	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	ui3->SetSize(ST_SIZE(100, 56));
+	ui3->SetPosition(D3DXVECTOR3(223, 0, 0));
+	ui3->SetTag(2);
+	ui->AddChild(ui3);
+
+	//	m_pUIBossHp = ui;
+	GETSINGLE(cUIMgr)->AddUI("Orca", ui);
+
+	//////////////////////////////////////////////////////////
+	//						Player Hp						//
+	//////////////////////////////////////////////////////////
+
+	//HPbg
+	cUIImageView* pUI = new cUIImageView;
+	pUI->SetTexture("UI/GageBar_I3.tga", 1, 1);
+	//	m_pUIImage->SetPosition()
+	pUI->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2 + 20, GetWindowHeight() - 100, 0));
+	pUI->SetScaleX(1.5);
+	pUI->SetScaleY(1.5);
+	pUI->SetSprite(pSprite);
+
+	//MPbg
+	cUIImageView* pUI2 = new cUIImageView;
+	pUI2->SetTexture("UI/GageBar_I3.tga", 1, 1);
+	pUI2->SetPosition(D3DXVECTOR3(0, pUI->GetSize().fHeight, 0));
+	pUI2->SetScaleX(1.5);
+	pUI2->SetScaleY(1.5);
+	pUI2->SetSprite(pSprite);
+	pUI->AddChild(pUI2);
+
+	//HP
+	cUIImageView* pUI3 = new cUIImageView;
+	pUI3->SetTexture("UI/GageBar_IC.tga", 1, 1);
+	pUI3->SetPosition(D3DXVECTOR3(6, 13, 0));
+	pUI3->SetScaleX(1.5);
+	pUI3->SetScaleY(1.5);
+	pUI3->SetTag(1);
+	pUI3->SetSprite(pSprite);
+	pUI->AddChild(pUI3);
+
+	////HP Text
+	//cUITextView* pUI4 = new cUITextView;
+	//pUI4->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	//pUI4->SetSize(ST_SIZE(100, 56));
+	//pUI4->SetPosition(D3DXVECTOR3(20, 0, 0));
+	//pUI4->SetTag(2);
+	//pUI->AddChild(pUI4);
+
+	//MP
+	cUIImageView* pUI5 = new cUIImageView;
+	pUI5->SetTexture("UI/GageBar_IF.tga", 1, 1);
+	pUI5->SetPosition(D3DXVECTOR3(6, pUI->GetSize().fHeight + 13, 0));
+	pUI5->SetScaleX(1.5);
+	pUI5->SetScaleY(1.5);
+	pUI5->SetTag(3);
+	pUI5->SetSprite(pSprite);
+	pUI->AddChild(pUI5);
+
+
+
+	//	m_pUIPlayerHp = pUI;
+	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
+	GETSINGLE(cUIMgr)->AddList("Player");
+
+	SAFE_RELEASE(pSprite);
 }

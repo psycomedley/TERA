@@ -63,7 +63,8 @@ void cStateBossSkill::Update()
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_ATK1)
 	{
-		m_pParent->Move(0.01f);
+		if (m_pParent->GetCurrentAnimPosition() <= 0.7f)
+			m_pParent->Move(0.01f);
 	}
 	/*else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{

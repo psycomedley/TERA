@@ -45,11 +45,8 @@ private:
 
 	cCircleEffect*		m_pCircleEffect;
 
-	cUIImageView*		m_pUICross;
-	cUIObject*			m_pUIBossHp;
-	cUIObject*			m_pUIPlayerHp;
-
 	void SetLighting();
+	void SetUI();
 
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;

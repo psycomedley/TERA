@@ -4,7 +4,6 @@ class cText
 protected:
 	LPD3DXFONT		m_pFont;
 	E_FONT_TYPE		m_eFontType;
-	SYNTHESIZE(string, m_sText, Text);
 	float			m_fShowTime;
 	float			m_fPassedTime;
 	RECT			m_rect;
@@ -13,6 +12,7 @@ protected:
 	ST_SIZE			m_stSize;
 	D3DXVECTOR2		m_vPosition;
 	D3DCOLOR		m_dwColor;
+	SYNTHESIZE(string, m_sText, Text);
 
 public:
 	virtual void ResetTime();

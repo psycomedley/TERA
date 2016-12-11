@@ -7,9 +7,9 @@ class iState;
 class cDynamicObj : public cGameObject
 {
 protected:
-	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
 	iState*			m_pState;
 	iState*			m_aStates[E_STATE_END];
+	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }
