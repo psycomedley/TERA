@@ -12,7 +12,11 @@ class cMap;
 class cEffect;
 class cStaticMeshEffect;
 class cDynamicMeshEffect;
+class cCircleEffect;
 class cUIImageView;
+class cText;
+class cAlphaText;
+class cUIObject;
 class cMainGame
 {
 private:
@@ -34,13 +38,19 @@ private:
 	int a = 0;
 	float b = 0.1;
 
+	cText*		m_pText;
+
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 
 	cStaticMeshEffect*	m_pStaticMeshEffect;
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
-	cUIImageView*		m_pUIImage;
+	cCircleEffect*		m_pCircleEffect;
+
+	cUIImageView*		m_pUICross;
+	cUIObject*			m_pUIBossHp;
+	cUIObject*			m_pUIPlayerHp;
 
 	void SetLighting();
 

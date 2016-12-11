@@ -7,6 +7,9 @@ cUIObject::cUIObject()
 	, m_vPosition(0, 0, 0)
 	, m_stSize(0, 0)
 	, m_nTag(-1)
+	, m_dwColor(XWHITE)
+	, m_fScaleX(1.0f)
+	, m_fScaleY(1.0f)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 }
@@ -25,7 +28,11 @@ void cUIObject::AddChild(cUIObject* pChild)
 
 void cUIObject::Update(D3DXMATRIXA16* pParent)
 {
-	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMATRIXA16 matS;
+	D3DXMatrixScaling(&matS, m_fScaleX, m_fScaleY, 1);
+//	D3DXMatrixIdentity(&m_matWorld);
+	m_matWorld = matS;
+
 	m_matWorld._41 = m_vPosition.x;
 	m_matWorld._42 = m_vPosition.y;
 	m_matWorld._43 = m_vPosition.z;

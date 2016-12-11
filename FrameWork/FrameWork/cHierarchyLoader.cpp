@@ -96,7 +96,13 @@ STDMETHODIMP cHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 				GETSINGLE(cTextureMgr)->GetTexture(filename + "_rage" + extension));
 		}
 		else
+		{
 			pBoneMesh->vecTexture.push_back(NULL);
+			pBoneMesh->vecTextureNormal.push_back(NULL);
+			pBoneMesh->vecTextureSpecular.push_back(NULL);
+			pBoneMesh->vecTextureMask.push_back(NULL);
+			pBoneMesh->vecTextureEmission.push_back(NULL);
+		}
 
 	}
 

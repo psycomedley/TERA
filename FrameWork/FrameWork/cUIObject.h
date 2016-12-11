@@ -10,6 +10,9 @@ protected:
 	//SYNTHESIZE(float, m_fWidth, Width);
 	//SYNTHESIZE(float, m_fHeight, Height);
 	SYNTHESIZE(int, m_nTag, Tag);
+	SYNTHESIZE(D3DCOLOR, m_dwColor, Color);
+	SYNTHESIZE(float, m_fScaleX, ScaleX);
+	SYNTHESIZE(float, m_fScaleY, ScaleY);
 
 public:
 	cUIObject* FindChildByTag(int nTag);

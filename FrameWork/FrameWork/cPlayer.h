@@ -6,6 +6,8 @@ class iState;
 class cPlayer : public cDynamicObj
 {
 private:
+	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
+
 	cWeapon*		m_pRightWeapon;
 	cWeapon*		m_pLeftWeapon;
 

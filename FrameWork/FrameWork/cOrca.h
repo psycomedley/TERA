@@ -8,6 +8,8 @@ private:
 	ST_SKILL_INFO	m_skillLongMove;
 	ST_SKILL_INFO	m_skillHeavyAtk;
 	ST_SKILL_INFO	m_skillAttack;
+	ST_SKILL_INFO	m_skillHeavyAtk2;
+	ST_SKILL_INFO	m_skillBackAtk;
 
 	int				m_nNumClone;
 
@@ -19,6 +21,7 @@ public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 
 	virtual bool IsMoveAble() override;
+	bool IsBehind();
 
 public:
 	cOrca(char* szFolder, char* szFilename);

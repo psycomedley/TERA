@@ -46,7 +46,7 @@ void cUIImageView::Render()
 		&m_rect,
 		&D3DXVECTOR3(0, 0, 0),
 		&D3DXVECTOR3(0, 0, 0),
-		D3DCOLOR_XRGB(255, 255, 255));
+		m_dwColor);
 	m_pSprite->End();
 
 	cUIObject::Render();
