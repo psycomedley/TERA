@@ -166,11 +166,12 @@ HRESULT cMainGame::Setup()
 	ui->AddChild(ui2);
 
 	cUITextView* ui3 = new cUITextView;
-	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS));
+	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
 	CHAR str[16];
 	wsprintf(str, TEXT("%d"), ((cOrca*)pBoss)->GetInfo().nMaxHp);
 	ui3->SetText(str);
 	ui3->SetSize(ST_SIZE(100, 64));
+//	ui3->SetPosition(D3DXVECTOR3())
 	ui->AddChild(ui3);
 
 	SAFE_RELEASE(pSprite);
