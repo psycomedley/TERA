@@ -62,3 +62,15 @@ void cUIMgr::RemoveList(string sKey)
 		}
 	}
 }
+
+
+cUIObject* GetUIInList(string sKey)
+{
+	
+}
+
+
+cUIObject* GetUIInMap(string sKey)
+{
+
+}

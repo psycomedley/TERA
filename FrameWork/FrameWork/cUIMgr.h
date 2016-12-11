@@ -11,6 +11,8 @@ public:
 	void AddUI(string sKey, cUIObject* pUI);
 	void AddList(string sKey);
 	void RemoveList(string sKey);
+	cUIObject* GetUIInList(string sKey);
+	cUIObject* GetUIInMap(string sKey);
 
 public:
 	void Update();
