@@ -307,8 +307,9 @@ void cMainGame::Render()
 	D3DXMATRIXA16	mat, matS, matT;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixIdentity(&matS);
+	D3DXMatrixTranslation(&matT, 10.0f, 0.0f, 10.0f);
 	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
-	mat = matS;
+	mat = matS*matT;
 
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
