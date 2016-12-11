@@ -39,8 +39,13 @@ cMap::cMap()
 cMap::~cMap()
 {
 	SAFE_DELETE(m_cFrustum);
+
+	for each (auto p in m_vecBoundingSphere)
+	{
+		p->Release();
+	}
 	
-	m_cBoundingSphere->Release();
+//	m_cBoundingSphere->Release();
 }
 void cMap::Update()
 {

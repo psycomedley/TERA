@@ -38,12 +38,9 @@ private:
 	int a = 0;
 	float b = 0.1;
 
-	cText*		m_pText;
-
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 
-	cStaticMeshEffect*	m_pStaticMeshEffect;
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 
 	cCircleEffect*		m_pCircleEffect;

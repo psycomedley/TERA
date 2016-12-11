@@ -46,8 +46,6 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 
-	SAFE_RELEASE(m_pStaticMeshEffect);
-
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -118,11 +116,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
 	m_pEffect2 = new cEffect;
 	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
-	
-	m_pStaticMeshEffect = new cStaticMeshEffect("Effect","Crosshair1.X");
-	m_pStaticMeshEffect->Setup();
-	m_pStaticMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
-	
+		
 	//임시 세팅 (비정상 동작중)
 	//m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
@@ -406,11 +400,6 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
-
-	if (m_pStaticMeshEffect)
-	{
-		m_pStaticMeshEffect->Render();
-	}
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Render();
