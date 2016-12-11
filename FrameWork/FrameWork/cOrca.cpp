@@ -7,6 +7,7 @@
 #include "cStateWait.h"
 #include "cStateCombo.h"
 #include "cStateBossSkill.h"
+#include "cStateDeath.h"
 #include "cAnimationController.h"
 #include "cActionMoveToAttack.h"
 #include "cOrcaClone.h"
@@ -45,6 +46,8 @@ void cOrca::SetupState()
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateBossSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
+	m_aStates[E_STATE_DEATH] = new cStateDeath;
+	m_aStates[E_STATE_DEATH]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 
@@ -63,17 +66,17 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(0, 100);
+	m_skillLongMove.SetInfo(50.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
-	m_skillHeavyAtk.SetInfo(20.0f, 100);
+	m_skillHeavyAtk.SetInfo(35.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(30.0f, 100);
+	m_skillHeavyAtk2.SetInfo(20.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
-	m_skillBackAtk.SetInfo(5.0f, 25);
+	m_skillBackAtk.SetInfo(10.0f, 25);
 }
 
 
@@ -171,7 +174,7 @@ void cOrca::Update()
 	
 				for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
 				{
-					if (!((cOrcaClone*)(*iter))->GetMoveEnd())
+					if (((cOrcaClone*)(*iter))->GetMoveEnd())
 						m_nNumClone--;
 
 //					if (!((cOrcaClone*)(*iter))->GetActive())
@@ -181,7 +184,8 @@ void cOrca::Update()
 				{
 					for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
 					{
-						((cOrcaClone*)(*iter))->SetActive(false);
+//						((cOrcaClone*)(*iter))->SetActive(false);
+						((cOrcaClone*)(*iter))->ChangeState(E_STATE_DEATH);
 					}
 				}
 
@@ -258,7 +262,7 @@ void cOrca::LongMove()
 	if (m_pAction)
 		SAFE_RELEASE(m_pAction);
 	m_skillLongMove.fPassedTime = 0.0f;
-	m_nNumClone = 0;
+	m_nNumClone = 3;
 
 	//º»Ã¼
 	D3DXVECTOR3 vEnemyPos = m_pTarget->GetPosition();
