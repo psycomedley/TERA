@@ -123,16 +123,15 @@ HRESULT cMainGame::Setup()
 	m_pStaticMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	
 	//임시 세팅 (비정상 동작중)
-//	m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
-//	m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
-//	m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	//m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
+	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
 	m_cObjectTree = new cStaticObj("Object","tree1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "staticCircleEffect.x");
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-	m_pCircleEffect->Setup(20, 0.15f, true);
-	m_pCircleEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
+	m_pCircleEffect->Setup(2, 0.2f, true, D3DXVECTOR3(0.1f,0.1f,0.1f),D3DXVECTOR3(20,1,0));
 
 
 
@@ -221,8 +220,8 @@ void cMainGame::Update()
 			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
-//		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-//			m_pCircleEffect->Start();
+		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
+			m_pCircleEffect->Start();
 
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 			GETSINGLE(cTextMgr)->AddList("그아아앗");
@@ -251,7 +250,6 @@ void cMainGame::Update()
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
-		//m_pCircleEffect->SetPosition(D3DXVECTOR3(30,0,0));
 	}
 	m_pUIImage->Update(NULL);
 	m_pUIImage2->Update(NULL);
