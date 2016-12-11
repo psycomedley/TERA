@@ -7,6 +7,7 @@
 #include "cStateWait.h"
 #include "cStateCombo.h"
 #include "cStateBossSkill.h"
+#include "cStateDeath.h"
 #include "cAnimationController.h"
 #include "cActionMoveToAttack.h"
 #include "cOrcaClone.h"
@@ -45,6 +46,8 @@ void cOrca::SetupState()
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateBossSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
+	m_aStates[E_STATE_DEATH] = new cStateDeath;
+	m_aStates[E_STATE_DEATH]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 
@@ -53,27 +56,27 @@ void cOrca::SetupStatus()
 {
 	m_stInfo.sName = "Orca";
 
-	m_stInfo.nMaxHp = 100;
-	m_stInfo.nHp = m_stInfo.nMaxHp;
-	m_stInfo.nMaxMp = 100;
-	m_stInfo.nMp = m_stInfo.nMaxMp;
+	m_stInfo.fMaxHp = 100;
+	m_stInfo.fHp = m_stInfo.fMaxHp;
+	m_stInfo.fMaxMp = 100;
+	m_stInfo.fMp = m_stInfo.fMaxMp;
 
 	m_stInfo.fDamage = 100.0f;
 	m_stInfo.fDefence = 100.0f;
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(0, 100);
+	m_skillLongMove.SetInfo(50.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
-	m_skillHeavyAtk.SetInfo(20.0f, 100);
+	m_skillHeavyAtk.SetInfo(35.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(30.0f, 100);
+	m_skillHeavyAtk2.SetInfo(20.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
-	m_skillBackAtk.SetInfo(5.0f, 25);
+	m_skillBackAtk.SetInfo(10.0f, 25);
 }
 
 
@@ -171,8 +174,19 @@ void cOrca::Update()
 	
 				for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
 				{
-					if (!((cOrcaClone*)(*iter))->GetActive())
+					if (((cOrcaClone*)(*iter))->GetMoveEnd())
 						m_nNumClone--;
+
+//					if (!((cOrcaClone*)(*iter))->GetActive())
+//					m_nNumClone--;
+				}
+				if (m_nNumClone == 0)
+				{
+					for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
+					{
+//						((cOrcaClone*)(*iter))->SetActive(false);
+						((cOrcaClone*)(*iter))->ChangeState(E_STATE_DEATH);
+					}
 				}
 
 				return;
@@ -253,9 +267,26 @@ void cOrca::LongMove()
 	//º»Ã¼
 	D3DXVECTOR3 vEnemyPos = m_pTarget->GetPosition();
 	int nRealOrca = GetInt(4);
-	int nSign = pow(-1, (nRealOrca % 2));
-	int nX = nSign * (nRealOrca / 2) * 15;
-	D3DXVECTOR3 vPos(nX, 0, (15 - abs(nX)) * nSign);
+
+	D3DXVECTOR3 vPos(0, 0, 0);
+	switch (nRealOrca)
+	{
+	case 0:
+		vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+		break;
+	case 1:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+		break;
+	case 2:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+		break;
+	case 3:
+		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+		break;
+	}
+
 	SetPosition(vEnemyPos + vPos);
 	LookTarget();
 
@@ -268,10 +299,28 @@ void cOrca::LongMove()
 		{
 			if (i == nRealOrca)
 				continue;
-			int sign = pow(-1, (i % 2));
-			int x = sign * (i / 2) * 15;
-			D3DXVECTOR3 vPos(x, 0, ((15 - abs(x))) * sign);
+
+			D3DXVECTOR3 vPos(0, 0, 0);
+			switch (i)
+			{
+			case 0:
+				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+				break;
+			case 1:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+				break;
+			case 2:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+				break;
+			case 3:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+				break;
+			}
+
 			((cOrcaClone*)(*iter))->SetActive(true);
+			((cOrcaClone*)(*iter))->SetMoveEnd(false);
 			(*iter)->SetPosition(vEnemyPos + vPos);
 			(*iter)->LookTarget();
 			(*iter)->ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
@@ -287,9 +336,25 @@ void cOrca::LongMove()
 		{
 			if (i == nRealOrca)
 				continue;
-			int sign = pow(-1, (i % 2));
-			int x = sign * (i / 2) * 15;
-			D3DXVECTOR3 vPos(x, 0, ((15 - abs(x))) * sign);
+
+			switch (i)
+			{
+			case 0:
+				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
+				break;
+			case 1:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 2), 0, 30 * sinf(D3DX_PI / 2));
+				break;
+			case 2:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
+				break;
+			case 3:
+				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
+				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
+				break;
+			}
+
 			cDynamicObj* clone = new cOrcaClone("Monster", "Orca.X");
 			clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 			clone->SetRevision(matR);

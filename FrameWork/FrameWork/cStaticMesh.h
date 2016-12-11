@@ -18,6 +18,7 @@ protected:
 	LPDIRECT3DINDEXBUFFER9		m_IB;
 
 	vector<D3DXVECTOR3>			m_vecVertaxies;
+	vector<ST_PNT_VERTEX>		m_vecPNTVertaxies;
 	
 
 public:
@@ -30,7 +31,7 @@ public:
 	~cStaticMesh();
 
 	vector<D3DXVECTOR3>* GetVecVertaxies(){ return &m_vecVertaxies; }
-
+	vector<ST_PNT_VERTEX>* GetVecPNTVertaxies(){ return &m_vecPNTVertaxies; }
 protected:
 	cStaticMesh();
 	virtual HRESULT Load(char* szDirectory, char* szFilename) override;

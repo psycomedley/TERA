@@ -17,6 +17,7 @@ cStaticMesh::cStaticMesh(char* szFolder, char* szFilename)
 	m_pSphere = pStaticdMesh->m_pSphere;
 
 	m_vecVertaxies = pStaticdMesh->m_vecVertaxies;
+	m_vecPNTVertaxies = pStaticdMesh->m_vecPNTVertaxies;
 }
 
 
@@ -81,7 +82,7 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	SetupBounding(m_vMin, m_vMax);
 
 	//스테틱매쉬 버텍스및 인덱스 얻기
-	vector<ST_PNT_VERTEX>		m_vecPNTVertaxies;
+	
 	vector<WORD>				m_vecIndecies;
 	WORD* index;
 

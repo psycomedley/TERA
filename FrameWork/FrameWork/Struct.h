@@ -97,10 +97,10 @@ struct ST_UNIT_INFO
 {
 	string	sName;
 
-	int		nMaxHp;
-	int		nHp;
-	int		nMaxMp;
-	int		nMp;
+	float	fMaxHp;
+	float	fHp;
+	float	fMaxMp;
+	float	fMp;
 
 	float	fDamage;
 	float	fDefence;
