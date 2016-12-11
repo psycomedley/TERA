@@ -38,8 +38,8 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
-	SAFE_RELEASE(m_pUICross);
-	SAFE_RELEASE(m_pUIBossHp);
+//	SAFE_RELEASE(m_pUICross);
+//	SAFE_RELEASE(m_pUIBossHp);
 	SAFE_RELEASE(m_pUIPlayerHp);
 	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
@@ -140,13 +140,16 @@ HRESULT cMainGame::Setup()
 	
 	LPD3DXSPRITE				pSprite;
 	D3DXCreateSprite(g_pD3DDevice, &pSprite);
-	m_pUICross = new cUIImageView;
+	cUIImageView* pCrossHair = new cUIImageView;
 //	m_pUIImage->SetSize(ST_SIZE(1, 1));
-	m_pUICross->SetTexture("UI/normalBg.tga", 8, 4);
-	m_pUICross->SetCurrentFrame(8);
-	m_pUICross->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
+	pCrossHair ->SetTexture("UI/normalBg.tga", 8, 4);
+	pCrossHair ->SetCurrentFrame(8);
+	pCrossHair ->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
 	
-	m_pUICross->SetSprite(pSprite);
+	pCrossHair->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("CrossHair", pCrossHair);
+	GETSINGLE(cUIMgr)->AddList("CrossHair");
 
 	//////////////////////////////////////////////////////////
 	//						Boss Hp							//
@@ -180,9 +183,8 @@ HRESULT cMainGame::Setup()
 	ui3->SetTag(2);
 	ui->AddChild(ui3);
 
-
-	m_pUIBossHp = ui;
-
+//	m_pUIBossHp = ui;
+	GETSINGLE(cUIMgr)->AddUI("BossHp", ui);
 
 	//////////////////////////////////////////////////////////
 	//						Player Hp						//
@@ -251,6 +253,8 @@ void cMainGame::Update()
 		GETSINGLE(cCameraMgr)->Update();
 
 		GETSINGLE(cTextMgr)->Update();
+
+		GETSINGLE(cUIMgr)->Update();
 	}
 
 
@@ -274,18 +278,16 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 			m_pCircleEffect->Start();
 
-		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-		{
-			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
-			((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
+		//if (KEYBOARD->IsOnceKeyDown(DIK_T))
+		//{
+		//	auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
+		//	((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
 
-			char szStr[16] = { '\0', };
-			sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
-			//CHAR str[16];
-			//wsprintf(str, TEXT("%f%%"), ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
-			((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
-			((cUIImageView*)m_pUIBossHp->FindChildByTag(1))->SetScaleX(((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
-		}
+		//	char szStr[16] = { '\0', };
+		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
+		//	((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
+		//	((cUIImageView*)m_pUIBossHp->FindChildByTag(1))->SetScaleX(((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
+		//}
 	}
 
 
@@ -312,8 +314,8 @@ void cMainGame::Update()
 	{
 		m_pCircleEffect->Update();
 	}
-	m_pUICross->Update(NULL);
-	m_pUIBossHp->Update(NULL);
+//	m_pUICross->Update(NULL);
+//	m_pUIBossHp->Update(NULL);
 	m_pUIPlayerHp->Update(NULL);
 
 	///////////////////////////////////
@@ -370,7 +372,7 @@ void cMainGame::Render()
 
 	GETSINGLE(cTextMgr)->Render();
 
-
+	GETSINGLE(cUIMgr)->Render();
 
 //	if (m_pMap)
 //		m_pMap->Render();
@@ -386,8 +388,8 @@ void cMainGame::Render()
 		m_pBoss2->Bounding_Render();*/
 	}
 
-	m_pUICross->Render();		//Cross
-	m_pUIBossHp->Render();		//Boss Hp
+//	m_pUICross->Render();		//Cross
+//	m_pUIBossHp->Render();		//Boss Hp
 	m_pUIPlayerHp->Render();
 
 	/*if (m_pPlayer)
@@ -453,6 +455,7 @@ void cMainGame::Release()
 	GETSINGLE(cFontMgr)->Release();
 	GETSINGLE(cTextMgr)->Release();
 	GETSINGLE(cCameraMgr)->Release();
+	GETSINGLE(cUIMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }

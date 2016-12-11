@@ -12,3 +12,4 @@
 #include "cShaderMgr.h"
 #include "cTextMgr.h"
 #include "cCameraMgr.h"
+#include "cUIMgr.h"

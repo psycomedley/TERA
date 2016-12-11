@@ -150,6 +150,7 @@ void cOrca::Update()
 		D3DXVECTOR3 distance = m_vPosition - GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
 		if (D3DXVec3Length(&distance) < m_fDetectRange)
 		{
+			GETSINGLE(cUIMgr)->AddList("BossHp");
 			m_bIsBattle = true;
 			m_pTarget = GETSINGLE(cObjMgr)->GetPlayer();
 			ChangeState(E_STATE_WAIT);

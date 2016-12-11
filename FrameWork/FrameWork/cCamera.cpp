@@ -43,6 +43,10 @@ void cCamera::Update()
 		ShowCursor(!m_bControl);
 
 		MOUSE->SetFixPos(GetCursorPosition());
+		if (m_bControl)
+			GETSINGLE(cUIMgr)->AddList("CrossHair");
+		else
+			GETSINGLE(cUIMgr)->RemoveList("CrossHair");
 	}
 
 	if (m_bControl)

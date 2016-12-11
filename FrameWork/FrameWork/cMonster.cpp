@@ -26,7 +26,7 @@ cMonster::~cMonster()
 
 void cMonster::Update()
 {
-
+	m_fHpRatio = m_stInfo.fHp / m_stInfo.fMaxHp;
 }
 
 

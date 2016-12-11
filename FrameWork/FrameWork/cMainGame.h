@@ -45,8 +45,8 @@ private:
 
 	cCircleEffect*		m_pCircleEffect;
 
-	cUIImageView*		m_pUICross;
-	cUIObject*			m_pUIBossHp;
+//	cUIImageView*		m_pUICross;
+//	cUIObject*			m_pUIBossHp;
 	cUIObject*			m_pUIPlayerHp;
 
 	void SetLighting();
