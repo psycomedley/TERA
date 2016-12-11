@@ -58,7 +58,7 @@ void cMap::Update()
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-	if (GetHeight(playerPos.x, playerPos.y, playerPos.z))
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z, m_vecVertex))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
@@ -83,10 +83,10 @@ void cMap::Render()
 		m_vecBoundingSphere[i]->Render(m_CoodVecVertex[i], D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	}*/
 	
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 	cStaticObj::Render();
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 
 }
