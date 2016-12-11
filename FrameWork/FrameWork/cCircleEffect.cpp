@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cCircleEffect.h"
 #include "cStaticMesh.h"
+#include "cPlayer.h"
 
 
 cCircleEffect::cCircleEffect(char* szFolder, char* szFilename)
@@ -13,8 +14,10 @@ cCircleEffect::~cCircleEffect()
 {
 }
 
-HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left)
+HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
+	D3DXVECTOR3 s, D3DXVECTOR3 t)
 {
+
 	start = false;
 	m_fAngle = 0;
 	needWheels = Wheels;
@@ -25,6 +28,11 @@ HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left)
 	D3DXMatrixIdentity(&matS);
 	D3DXMatrixIdentity(&matR);
 	D3DXMatrixIdentity(&matT);
+
+	D3DXMatrixScaling(&matS,s.x,s.y,s.z);
+	D3DXMatrixTranslation(&matT, t.x,t.y,t.z);
+
+
 	return S_OK;
 }
 
@@ -36,7 +44,7 @@ void cCircleEffect::Update()
 			m_fAngle += m_fRotationSpeed;
 		else
 			m_fAngle -= m_fRotationSpeed;
-		nowWheels = m_fAngle / (D3DX_PI * 2);
+		nowWheels = m_fAngle / (D3DX_PI);
 		if (abs(nowWheels) >= needWheels)
 		{
 			Stop();
@@ -51,7 +59,7 @@ void cCircleEffect::Render()
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-		D3DXMatrixTranslation(&matT,((cGameObject*)m_pMesh)->GetPosition().x, ((cGameObject*)m_pMesh)->GetPosition().y, ((cGameObject*)m_pMesh)->GetPosition().z);
+
 		D3DXMatrixRotationY(&matR, m_fAngle);
 		matWorld = matS * matR * matT;
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
