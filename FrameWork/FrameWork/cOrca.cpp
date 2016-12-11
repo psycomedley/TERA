@@ -221,9 +221,10 @@ void cOrca::Update()
 					m_skillHeavyAtk2.fPassedTime = 0.0f;
 					LookTarget();
 					ChangeState(E_STATE_SKILL, E_BOSS_HEAVYATK2);
+					return;
 				}
 			}
-			else if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
+			if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
 			{
 				if (IsTargetCollision())
 				{
