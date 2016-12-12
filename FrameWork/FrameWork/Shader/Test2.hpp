@@ -1,4 +1,4 @@
-#include "MultiAnimation.vsh"
+#include "MultiAnimationTest.vsh"
 
 
 float4		vLightDiffuse;		// = { 1.0f, 1.0f, 1.0f, 1.0f };   // Light Diffuse
@@ -58,7 +58,7 @@ struct VS_INPUT
 	float3  mNormal			: NORMAL;
 	float2  mUV				: TEXCOORD0;
 	float3	mTangent		: TANGENT;
-	float3	mBinormal		: BINORMAL;
+//	float3	mBinormal		: BINORMAL;
 	float3  mBlendWeights	: BLENDWEIGHT;
 	float4  mBlendIndices	: BLENDINDICES;
 };
@@ -69,9 +69,9 @@ struct VS_OUTPUT
 	float2 mUV			: TEXCOORD0;
 	float3 mLightDir	: TEXCOORD1;
 	float3 mViewDir		: TEXCOORD2;
-	float3 T			: TEXCOORD3;
-	float3 B			: TEXCOORD4;
-	float3 N			: TEXCOORD5;
+//	float3 T			: TEXCOORD3;
+//	float3 B			: TEXCOORD4;
+//	float3 N			: TEXCOORD5;
 //	float4 Diffuse		: COLOR0;
 //	float3 mReflection	: TEXCOORD3;
 //	float3 mDiffuse		: TEXCOORD1;
@@ -99,7 +99,7 @@ VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
 	float	LastWeight	= 0.0f;
 
 	// skin VB inputs
-	VS_SKIN_INPUT vsi = { Input.mPosition, Input.mBlendWeights, Input.mBlendIndices, Input.mNormal, Input.mTangent, Input.mBinormal };
+	VS_SKIN_INPUT vsi = { Input.mPosition, Input.mBlendWeights, Input.mBlendIndices, Input.mNormal, Input.mTangent/*, Input.mBinormal*/ };
 	VS_SKIN_OUTPUT vso = VS_Skin(vsi, nNumBones);
 
 	// transform position from world space into view and then projection space
@@ -117,14 +117,14 @@ VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
 //	Output.N = worldNormal;
 
 
-//	float3 worldNormal = mul(Input.mNormal, (float3x3)g_mWorld);
-//	Output.N = normalize(worldNormal);
+	float3 worldNormal = mul(vso.vNor, (float3x3)g_mWorld);
+	Output.N = normalize(worldNormal);
 
-//	float3 worldTangent = mul(Input.mTangent, (float3x3)g_mWorld);
-//	Output.T = normalize(worldTangent);
+	float3 worldTangent = mul(vso.vTangent, (float3x3)g_mWorld);
+	Output.T = normalize(worldTangent);
 
-//	float3 worldBinormal = mul(Input.mBinormal, (float3x3)g_mWorld);
-//	Output.B = normalize(worldBinormal);
+	float3 worldBinormal = cross(worldTangent, worldNormal);
+	Output.B = normalize(worldBinormal);
 
 
 
@@ -132,29 +132,40 @@ VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
 
 
 	// normalize normals
-	Normal = normalize(vso.vNor);
-	float3 worldNormal = normalize(Normal);
-	Output.N = worldNormal;
+	//Normal = normalize(vso.vNor);
+	//float3 worldNormal = normalize(Normal);
+	//Output.N = worldNormal;
 
-	float3 Tangent = normalize(vso.vTangent);
-	float3 worldTangent = normalize(Tangent);
-	Output.T = worldTangent;
+	//float3 Tangent = normalize(vso.vTangent);
+	//float3 worldTangent = normalize(Tangent);
+	//Output.T = worldTangent;
 
-	float3 Bitangent = normalize(vso.vBinormal);
-	float3 worldBiTangent = normalize(Bitangent);
-	Output.B = worldBiTangent;
+	//float3 Bitangent = cross(worldTangent, worldNormal);
+	//float3 worldBiTangent = normalize(Bitangent);
+	//Output.B = worldBiTangent;
 
 
-	// Shade (Ambient + etc.)
-//	Output.Diffuse = float4(vMaterialAmbient.xyz + saturate(dot(Normal, lightDir.xyz)) * vMaterialDiffuse.xyz, 1.0);
-//	Output.mReflection = reflect(lightDir, worldNormal);
+	//float3 Bitangent = normalize(vso.vBinormal);
+	//float3 worldBiTangent = normalize(Bitangent);
+	//Output.B = worldBiTangent;
 
 	return Output;
 }
 
 
-float4 PixScene(PS_INPUT Input) : COLOR
+float4 PixScene(VS_OUTPUT Input) : COLOR
 {
+	float3 color = 0.0;
+
+	float3 view = normalize(Input.mViewDir);
+	float3 light = normalize(Input.mLightDir);
+	float3 half = normalize(light + view);
+
+
+
+	float3x3 toTangentSpace = float3x3(Input.T, Input.B, Input.N);
+	float3 world_pos = mul(float4())
+
 	float3 tangentNormal = tex2D(NormalSampler, Input.mUV).xyz;
 	tangentNormal = normalize(tangentNormal * 2 - 1);
 

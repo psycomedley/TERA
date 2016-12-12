@@ -40,6 +40,7 @@ void cUIImageView::Render()
 //	SetRect(&rc, 0, 0, m_stSize.fWidth, m_stSize.fHeight); //이미지의 크기만한 박스를 만듬
 
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	
 	m_pSprite->SetTransform(&m_matWorld);
 	m_pSprite->Draw(
 		m_pTexture,

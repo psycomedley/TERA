@@ -6,7 +6,7 @@ private:
 	map<E_EFFECT_TYPE, LPD3DXEFFECT>	m_mapEffect;
 
 public:
-	HRESULT AddEffect(E_EFFECT_TYPE eType, string sFilename);
+	HRESULT AddEffect(E_EFFECT_TYPE eType, string sFilename, D3DXMACRO* pDefine = NULL);
 
 public:
 	LPD3DXEFFECT GetEffect(E_EFFECT_TYPE eType);

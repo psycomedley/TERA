@@ -12,16 +12,16 @@ cShaderMgr::~cShaderMgr()
 }
 
 
-HRESULT cShaderMgr::AddEffect(E_EFFECT_TYPE eType, string sFilename)
+HRESULT cShaderMgr::AddEffect(E_EFFECT_TYPE eType, string sFilename, D3DXMACRO* pDefine /*= NULL*/)
 {
-	if (m_mapEffect.find(eType) == m_mapEffect.end())
-		return E_FAIL;
+//	if (m_mapEffect.find(eType) == m_mapEffect.end())
+//		return E_FAIL;
 
 	string sFullPath = "Shader/";
 	sFullPath += sFilename;
 
 	LPD3DXBUFFER pErrBuf = NULL;
-	if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice, sFullPath.c_str(), NULL, NULL, D3DXSHADER_DEBUG
+	if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice, sFullPath.c_str(), pDefine, NULL, D3DXSHADER_DEBUG
 		, NULL, &m_mapEffect[eType], &pErrBuf)))
 	{
 		MSGBOX((char*)pErrBuf->GetBufferPointer());
