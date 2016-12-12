@@ -22,8 +22,23 @@ void cUIMgr::Update()
 
 void cUIMgr::Render()
 {
-	for each (auto ui in m_listUI)
-		ui->Render();
+	/*LPD3DXEFFECT effect;
+	effect = GETSINGLE(cShaderMgr)->GetEffect(E_EFFECT_UI);
+	D3DXMATRIXA16 matWorld, matView, matProj;
+	g_pD3DDevice->GetTransform(D3DTS_WORLD, &matWorld);
+	
+	effect->SetMatrix("gWorldMatrix", &matWorld);
+
+	UINT uiPasses, uiPass;
+	effect->Begin(&uiPasses, 0);
+	for (uiPass = 0; uiPass < uiPasses; ++uiPass)
+	{
+		effect->BeginPass(uiPass);*/
+		for each (auto ui in m_listUI)
+			ui->Render();
+	//	effect->EndPass();
+	//}
+	//effect->End();
 }
 
 
