@@ -58,7 +58,7 @@ void cMap::Update()
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-	if (GetHeight(playerPos.x, playerPos.y, playerPos.z, m_vecVertex))
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z ,m_vecVertex))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
@@ -177,14 +177,14 @@ void cMap::SetupHeight()
 	 MapSize = m_vecHeight.size();
 	 IndexX = sqrt(MapSize); // x√‡ ¿Œµ¶Ω∫ √—ºˆ
 	 Indexy = IndexX;		// y√‡ ¿Œµ¶Ω∫ √—ºˆ
-	 NumTile = IndexX - 1; // «— ¡Ÿ¥Á ≈∏¿œ ∞πºˆ00
-	 float tileSpacing = m_CoodVecVertex[0].x*(-1) + m_CoodVecVertex[1].x;
+	 NumTile = IndexX; // «— ¡Ÿ¥Á ≈∏¿œ ∞πºˆ00
+	 tileSpacing = m_CoodVecVertex[0].x*(-1) + m_CoodVecVertex[1].x;
 	float startX = MinX;
 	float endX = MaxX+1;
 	float startZ = MinZ;
 	float endZ = MaxZ;
 
-	 /*int g = 0;
+	 int g = 0;
 	 for (float z = startZ; z <= endZ; z += tileSpacing)
 	 {
 		 int h = 0;
@@ -196,8 +196,23 @@ void cMap::SetupHeight()
 			 h++;
 		 }
 		 g++;
-	 }*/
-	int index;
+	 }
+
+	 for (int i = 0; i < m_vecTerrainVertex.size(); ++i)
+	 {
+		 for (int j = 0; j < m_CoodVecVertex.size(); ++j)
+		 {
+			 if (fabs(m_vecTerrainVertex[i].x - m_CoodVecVertex[j].x) < M_EPSILON&&
+				 fabs(m_vecTerrainVertex[i].z - m_CoodVecVertex[j].z) < M_EPSILON)
+			 {
+				 m_vecTerrainVertex[i].y = m_CoodVecVertex[j].y;
+				 break;
+			 }
+		 }
+		 
+	 }
+	 int c = 0;
+	/*int index;
 	for (size_t i = 0; i < NumTile; i++)
 	{
 		for (size_t j = 0; j < NumTile; j++)
@@ -205,7 +220,7 @@ void cMap::SetupHeight()
 			index = i*NumTile + j;
 			m_vecTerrainVertex.push_back(D3DXVECTOR3(j, ((float)m_vecHeight[index]), i));
 		}
-	}
+	}*/
 
 	for (int i = 0; i < m_vecPNTVertex.size(); ++i)
 	{
@@ -234,10 +249,13 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	float fMinx = MinX*(-1);
 	float fMinz = MinZ*(-1);
 
-	int nX = x ;
-	int nZ = z ;
-
-	if (nX >= 0)
+	float nX = x;
+	float nZ = z;
+	int intX = x;
+	int intZ = z;
+	fDeltaX = x - intX;
+	fDeltaZ = z - intZ;
+	/*if (nX >= 0)
 	{
 		fDeltaX = x - nX;
 	}
@@ -255,16 +273,24 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	{
 		nZ *= -1;
 		fDeltaZ = (z*(-1)) - nZ;
-	}
+	}*/
 	//		1--3
 	//		|\ |
 	//		| \|
 	//		0--2
+	int Ze, Xe;
+	int ze = (((nZ + fMinz) / tileSpacing) + 0);
+	int num = NumTile;
+	int xe = ((nX + fMinx) / tileSpacing);
 
-	int _0 = ((nZ) + 0) * (NumTile)+(nX);
-	int _1 = ((nZ) + 1) * (NumTile)+(nX);
-	int _2 = ((nZ) + 0) * (NumTile)+(nX) + 1;
-	int _3 = ((nZ) + 1) * (NumTile)+(nX) + 1;
+	int _0 = ze*num + xe;
+	int _1 = (ze+1)*num + xe;
+	int _2 = ze*num + xe+1;
+	int _3 = (ze+1)*num + xe+1;
+
+	//int _1 = (((nZ + fMinz) / tileSpacing) + 1) * (NumTile)+((nX + fMinx) / tileSpacing);
+	//int _2 = (((nZ + fMinz) / tileSpacing) + 0) * (NumTile)+((nX + fMinx) / tileSpacing) + 1;
+	//int _3 = (((nZ + fMinz) / tileSpacing) + 1) * (NumTile)+((nX + fMinx) / tileSpacing) + 1;
 
 	if (fDeltaX + fDeltaZ < 1)
 	{

@@ -1,4 +1,6 @@
 #pragma once
+#define M_EPSILON 0.001
+
 #include"cStaticMesh.h"
 #include"cStaticObj.h"
 
@@ -27,6 +29,7 @@ private:
 	int IndexX;
 	int Indexy; 
 	int NumTile;
+	float tileSpacing;
 
 	float MaxX = FLT_MIN;
 	float MinX = FLT_MAX;
