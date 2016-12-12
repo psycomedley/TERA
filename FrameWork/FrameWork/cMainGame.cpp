@@ -211,10 +211,10 @@ void cMainGame::Update()
 //	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //m_pDynamicMeshEffect->Setup();
 
-//	if (m_pEffect)
-//		m_pEffect->Update();
-//	if (m_pEffect2)
-//		m_pEffect2->Update();
+	if (m_pEffect)
+		m_pEffect->Update();
+	if (m_pEffect2)
+		m_pEffect2->Update();
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
@@ -309,10 +309,10 @@ void cMainGame::Render()
 
 
 
-//	if (m_pEffect)
-//		m_pEffect->Render();
-//	if (m_pEffect2)
-//		m_pEffect2->Render();
+	if (m_pEffect)
+		m_pEffect->Render();
+	if (m_pEffect2)
+		m_pEffect2->Render();
 
 
 
@@ -518,5 +518,5 @@ void cMainGame::SetShader()
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
 		pmac = mac;*/
 
-	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_UI, "Test2.hpp", pmac);
+	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_UI, "Effect.hpp");
 }

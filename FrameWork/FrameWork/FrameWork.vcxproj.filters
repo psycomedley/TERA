@@ -127,6 +127,15 @@
     <Filter Include="소스 파일\19.Effect\CircleEffect">
       <UniqueIdentifier>{8ab310ab-fc76-4d00-832b-32f8c17dbb59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\17. Shader\Test">
+      <UniqueIdentifier>{ab043413-e26b-4dfd-97fb-ebd5079bf236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\17. Shader\MultiAnimation">
+      <UniqueIdentifier>{70b90705-eb7f-4cff-bb1c-b25de617e094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\17. Shader\Effect">
+      <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -368,6 +377,15 @@
     </ClInclude>
     <ClInclude Include="cAlphaText.h">
       <Filter>소스 파일\18. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\MultiAnimation.hpp">
+      <Filter>소스 파일\17. Shader\MultiAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\Test2.hpp">
+      <Filter>소스 파일\17. Shader\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.hpp">
+      <Filter>소스 파일\17. Shader\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -611,5 +629,13 @@
     <Text Include="ReadMe.txt">
       <Filter>헤더 파일\99. Etc</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\MultiAnimation.vsh">
+      <Filter>소스 파일\17. Shader\MultiAnimation</Filter>
+    </None>
+    <None Include="Shader\MultiAnimationTest.vsh">
+      <Filter>소스 파일\17. Shader\Test</Filter>
+    </None>
   </ItemGroup>
 </Project>

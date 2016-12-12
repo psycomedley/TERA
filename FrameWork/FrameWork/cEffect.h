@@ -3,18 +3,21 @@ class cPlayer;
 class cEffect
 {
 private:
-	vector<ST_PCT_VERTEX>	m_vecVertex;
-	LPDIRECT3DTEXTURE9		m_pTexture;
+	vector<ST_PCT_VERTEX>		m_vecVertex;
+	LPDIRECT3DTEXTURE9			m_pTexture;
 
-	int						m_nFrame;
-	float					m_fPassedTime;
-	float					m_fNextTime;
+	LPD3DXEFFECT				m_pEffect;
+	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
-	int						m_nMaxFrameX;
-	int						m_nMaxFrameY;
-	int						m_nMaxFrame;
+	int							m_nFrame;
+	float						m_fPassedTime;
+	float						m_fNextTime;
 
-	bool					m_bLoop;
+	int							m_nMaxFrameX;
+	int							m_nMaxFrameY;
+	int							m_nMaxFrame;
+
+	bool						m_bLoop;
 	SYNTHESIZE(bool, m_bProcess, Process);
 
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire
