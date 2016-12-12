@@ -72,6 +72,8 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 
+	SetShader();
+
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
 	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;
@@ -353,6 +355,7 @@ void cMainGame::Release()
 	GETSINGLE(cTextMgr)->Release();
 	GETSINGLE(cCameraMgr)->Release();
 	GETSINGLE(cUIMgr)->Release();
+	GETSINGLE(cShaderMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
@@ -480,4 +483,40 @@ void cMainGame::SetUI()
 	GETSINGLE(cUIMgr)->AddList("Player");
 
 	SAFE_RELEASE(pSprite);
+}
+
+
+void cMainGame::SetShader()
+{
+	//MultiAnimation
+	D3DXMACRO mac[2] =
+	{
+		{ "MATRIX_PALETTE_SIZE_DEFAULT", "35" },
+		{ NULL, NULL }
+	};
+
+	D3DCAPS9 caps;
+	D3DXMACRO *pmac = NULL;
+	g_pD3DDevice->GetDeviceCaps(&caps);
+	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
+		pmac = mac;
+
+	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_DYNAMICMESH, "MultiAnimation.hpp", pmac);
+
+	///////////////////////////////////////////////////////////////
+
+	//Test
+	/*D3DXMACRO mac[2] =
+	{
+		{ "MATRIX_PALETTE_SIZE_DEFAULT", "35" },
+		{ NULL, NULL }
+	};
+
+	D3DCAPS9 caps;
+	D3DXMACRO *pmac = NULL;
+	g_pD3DDevice->GetDeviceCaps(&caps);
+	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
+		pmac = mac;*/
+
+	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_UI, "Test2.hpp", pmac);
 }

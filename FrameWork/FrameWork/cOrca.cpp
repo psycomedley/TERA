@@ -66,7 +66,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(50.0f, 100);
+	m_skillLongMove.SetInfo(10, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
@@ -226,7 +226,7 @@ void cOrca::Update()
 					return;
 				}
 			}
-			if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
+			else if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
 			{
 				if (IsTargetCollision())
 				{

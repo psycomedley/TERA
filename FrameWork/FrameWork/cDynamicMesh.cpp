@@ -53,7 +53,8 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 {
 	m_pAnimController = new cAnimationController;
 
-	m_pEffect = LoadEffect("Shader/MultiAnimation.hpp");
+	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_EFFECT_UI);
+//	m_pEffect = LoadEffect("Shader/MultiAnimation.hpp");
 
 	int nPaletteSize = 0;
 	m_pEffect->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
@@ -348,7 +349,7 @@ void cDynamicMesh::Release()
 	cHierarchyLoader ah;
 	D3DXFrameDestroy((LPD3DXFRAME)m_pRootFrame, &ah);
 	SAFE_DELETE_ARRAY(m_pmWorkingPalette);
-	SAFE_RELEASE(m_pEffect);
+//	SAFE_RELEASE(m_pEffect);
 
 	cMesh::Release();
 }
