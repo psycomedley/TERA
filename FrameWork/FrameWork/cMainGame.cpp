@@ -316,7 +316,7 @@ void cMainGame::Render()
 
 
 
-	/*D3DXMATRIXA16	mat, matS, matT;
+	D3DXMATRIXA16	mat, matS, matT;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixIdentity(&matS);
 	D3DXMatrixTranslation(&matT, 10.0f, 0.0f, 10.0f);
@@ -325,12 +325,13 @@ void cMainGame::Render()
 
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000000);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	if (m_cObjectTree)
 		m_cObjectTree->Render();
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);*/
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 
 
 	///////////////////////////////////
