@@ -3,12 +3,10 @@
 #include "cPlayer.h"
 #include "cOrca.h"
 #include "cFrustum.h"
-#include "cBoundingSphere.h"
 
 
 cMap::cMap(char* szFolder, char* szFilename)
 	:m_cFrustum(NULL)
-	, m_cBoundingSphere(NULL)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 	D3DXMatrixIdentity(&m_matWorld);
@@ -24,11 +22,6 @@ cMap::cMap(char* szFolder, char* szFilename)
 	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
 	m_vecPNTVertex = *((cStaticMesh*)m_pMesh)->GetVecPNTVertaxies();
 
-	/*for (int i = 0; i < m_vecPNTVertex.size(); ++i)
-	{
-		m_vecTerrainVertex.push_back(m_vecPNTVertex[i].p);
-	}*/
-
 	SetupHeight();
 }
 cMap::cMap()
@@ -40,12 +33,6 @@ cMap::~cMap()
 {
 	SAFE_DELETE(m_cFrustum);
 
-	for each (auto p in m_vecBoundingSphere)
-	{
-		p->Release();
-	}
-	
-//	m_cBoundingSphere->Release();
 }
 void cMap::Update()
 {
@@ -58,7 +45,7 @@ void cMap::Update()
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-	if (GetHeight(playerPos.x, playerPos.y, playerPos.z ,m_vecVertex))
+	if (GetHeight(playerPos.x, playerPos.y, playerPos.z))
 	{
 		float y = playerPos.y;
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
@@ -68,7 +55,7 @@ void cMap::Update()
 	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
 	{
 		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
-		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z, m_vecVertex))
+		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
 		{
 			float y = MonsterPos.y;
 			pVecAllMonster[i]->SetPosition(D3DXVECTOR3(MonsterPos.x, MonsterPos.y, MonsterPos.z));
@@ -77,16 +64,10 @@ void cMap::Update()
 }
 void cMap::Render()
 {
-
-	/*for (int i = 0; i <m_vecTerrainVertex.size(); ++i)
-	{
-		m_vecBoundingSphere[i]->Render(m_CoodVecVertex[i], D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	}*/
-	
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 	cStaticObj::Render();
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 
 }
@@ -123,10 +104,6 @@ void cMap::SetupHeight()
 {
 	D3DXVECTOR3			coodVertex1;
 
-	
-	float _x, _z;
-	int b, a;
-
 	for (size_t i = 0; i < m_vecPNTVertex.size(); ++i)
 	{
 		D3DXVECTOR3 p1 = m_vecPNTVertex[i].p;
@@ -136,18 +113,8 @@ void cMap::SetupHeight()
 
 	for (size_t i = 0; i < m_CoodVecVertex.size(); ++i)
 	{
-		//D3DXVec3TransformCoord(&coodVertex1, &m_CoodVecVertex[i], &m_matWorld);
 		coodVertex1 = m_CoodVecVertex[i];
-		if (coodVertex1.x < 10 && coodVertex1.x > 0)
-		{
-			_x = coodVertex1.x;
-			a = i;
-		}
-		if (coodVertex1.z < 10 && coodVertex1.z > 0)
-		{
-			_z = coodVertex1.z;
-			b= i;
-		}
+
 		if (MaxX < coodVertex1.x)
 		{
 			MaxX = coodVertex1.x;
@@ -179,6 +146,7 @@ void cMap::SetupHeight()
 	 Indexy = IndexX;		// yÃà ÀÎµ¦½º ÃÑ¼ö
 	 NumTile = IndexX; // ÇÑ ÁÙ´ç Å¸ÀÏ °¹¼ö00
 	 tileSpacing = m_CoodVecVertex[0].x*(-1) + m_CoodVecVertex[1].x;
+
 	float startX = MinX;
 	float endX = MaxX+1;
 	float startZ = MinZ;
@@ -192,7 +160,7 @@ void cMap::SetupHeight()
 		 {
 			 int index = g *NumTile + h;
 			 D3DXVECTOR3 p(x, m_vecHeight[index], z);
-			 m_vecTerrainVertex.push_back(p);
+			 m_vecTerrainVertex.push_back(p);	
 			 h++;
 		 }
 		 g++;
@@ -211,38 +179,15 @@ void cMap::SetupHeight()
 		 }
 		 
 	 }
-	 int c = 0;
-	/*int index;
-	for (size_t i = 0; i < NumTile; i++)
-	{
-		for (size_t j = 0; j < NumTile; j++)
-		{
-			index = i*NumTile + j;
-			m_vecTerrainVertex.push_back(D3DXVECTOR3(j, ((float)m_vecHeight[index]), i));
-		}
-	}*/
-
-	for (int i = 0; i < m_vecPNTVertex.size(); ++i)
-	{
-		cBoundingSphere* BoundingSphere = new cBoundingSphere;
-		BoundingSphere->Setup(&D3DXVECTOR3(0, 0, 0), 3.0f, 20, 20);
-		m_vecBoundingSphere.push_back(BoundingSphere);
-	}
 
 }
 bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 {
-	/*if (x < 0 || z < 0 || x > NumTile + 1 || z > NumTile + 1)
-	{
-		return false;
-	}*/
 
 	if (x < -210 || z < -210 || x > 558|| z > 558)
 	{
 	return false;
 	}
-
-
 
 	float fDeltaX;
 	float fDeltaZ;
@@ -251,47 +196,34 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 
 	float nX = x;
 	float nZ = z;
-	int intX = x;
-	int intZ = z;
-	fDeltaX = x - intX;
-	fDeltaZ = z - intZ;
-	/*if (nX >= 0)
-	{
-		fDeltaX = x - nX;
-	}
-	else if (nX < 0)
-	{
-		nX *= -1;
-		fDeltaX = (x*(-1)) - nX;
-	}
-	
-	if (nZ >= 0)
-	{
-		fDeltaZ = z - nZ;
-	}
-	else if (nZ < 0)
-	{
-		nZ *= -1;
-		fDeltaZ = (z*(-1)) - nZ;
-	}*/
-	//		1--3
-	//		|\ |
-	//		| \|
-	//		0--2
+
 	int Ze, Xe;
 	int ze = (((nZ + fMinz) / tileSpacing) + 0);
 	int num = NumTile;
 	int xe = ((nX + fMinx) / tileSpacing);
 
+	//		1--3
+	//		|\ |
+	//		| \|
+	//		0--2
 	int _0 = ze*num + xe;
-	int _1 = (ze+1)*num + xe;
-	int _2 = ze*num + xe+1;
-	int _3 = (ze+1)*num + xe+1;
+	int _1 = (ze + 1)*num + xe;
+	int _2 = ze*num + xe + 1;
+	int _3 = (ze + 1)*num + xe + 1;
 
-	//int _1 = (((nZ + fMinz) / tileSpacing) + 1) * (NumTile)+((nX + fMinx) / tileSpacing);
-	//int _2 = (((nZ + fMinz) / tileSpacing) + 0) * (NumTile)+((nX + fMinx) / tileSpacing) + 1;
-	//int _3 = (((nZ + fMinz) / tileSpacing) + 1) * (NumTile)+((nX + fMinx) / tileSpacing) + 1;
 
+	int intX = x;
+	int intZ = z;
+
+	fDeltaX = (nX - m_vecTerrainVertex[_0].x) / tileSpacing;
+	fDeltaZ = (nZ - m_vecTerrainVertex[_0].z) / tileSpacing;
+
+	if (fDeltaX < 0)
+		fDeltaX *= -1;
+	if (fDeltaZ < 0)
+		fDeltaZ *= -1;
+
+	
 	if (fDeltaX + fDeltaZ < 1)
 	{
 		D3DXVECTOR3 v01 = m_vecTerrainVertex[_1] - m_vecTerrainVertex[_0];

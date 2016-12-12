@@ -5,14 +5,10 @@
 #include"cStaticObj.h"
 
 class cFrustum;
-class cBoundingSphere;
 
 class cMap :public cStaticObj
 {
 private:
-	vector<cBoundingSphere*> m_vecBoundingSphere;
-	cBoundingSphere*		m_cBoundingSphere;
-
 	D3DXMATRIXA16			m_matWorld;
 
 	cFrustum*				m_cFrustum;
