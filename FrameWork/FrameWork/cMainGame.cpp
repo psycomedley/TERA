@@ -112,9 +112,9 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
-	m_pEffect2 = new cEffect;
-	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
+	m_pEffect->Setup("Effect/A_TileFire001_emis.tga", 20, 20, 1, 1, 0.01f, true);
+//	m_pEffect2 = new cEffect;
+//	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 1);
 		
 	//임시 세팅 (비정상 동작중)
 	//m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
@@ -176,8 +176,8 @@ void cMainGame::Update()
 				m_pEffect->Start();
 		}
 
-		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-			m_pEffect2->Start();
+//		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+//			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
@@ -316,7 +316,7 @@ void cMainGame::Render()
 
 
 
-	D3DXMATRIXA16	mat, matS, matT;
+	/*D3DXMATRIXA16	mat, matS, matT;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixIdentity(&matS);
 	D3DXMatrixTranslation(&matT, 10.0f, 0.0f, 10.0f);
@@ -331,7 +331,7 @@ void cMainGame::Render()
 	if (m_cObjectTree)
 		m_cObjectTree->Render();
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);*/
 
 
 	///////////////////////////////////
@@ -502,7 +502,7 @@ void cMainGame::SetShader()
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
 		pmac = mac;
 
-	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_DYNAMICMESH, "MultiAnimation.hpp", pmac);
+	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_DYNAMICMESH, "MultiAnimation.hpp", pmac);
 
 	///////////////////////////////////////////////////////////////
 
@@ -519,5 +519,5 @@ void cMainGame::SetShader()
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
 		pmac = mac;*/
 
-	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_UI, "Effect.hpp");
+	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
 }

@@ -9,6 +9,9 @@ private:
 	LPD3DXEFFECT				m_pEffect;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
+	float						m_fAlpha;
+
+
 	int							m_nFrame;
 	float						m_fPassedTime;
 	float						m_fNextTime;
@@ -16,6 +19,8 @@ private:
 	int							m_nMaxFrameX;
 	int							m_nMaxFrameY;
 	int							m_nMaxFrame;
+
+	bool						m_bBillBoarding;
 
 	bool						m_bLoop;
 	SYNTHESIZE(bool, m_bProcess, Process);
@@ -37,8 +42,8 @@ public:
 
 public:
 	HRESULT	Setup(string sPath, float fWidth, float fHeight,
-		int nMaxFrameX, int nMaxFrameY, float fNextTime = 0.1f,
-		bool bLoop = false, int nAlpha = 255, int nMaxFrame = 0);
+		int nMaxFrameX = 1, int nMaxFrameY = 1, float fNextTime = 0.1f,
+		bool bLoop = false, float fAlpha = 1.0f, int nMaxFrame = 0);
 	void	Update();
 	void	Render();
 

@@ -12,7 +12,7 @@ cShaderMgr::~cShaderMgr()
 }
 
 
-HRESULT cShaderMgr::AddEffect(E_EFFECT_TYPE eType, string sFilename, D3DXMACRO* pDefine /*= NULL*/)
+HRESULT cShaderMgr::AddEffect(E_SHADER_TYPE eType, string sFilename, D3DXMACRO* pDefine /*= NULL*/)
 {
 //	if (m_mapEffect.find(eType) == m_mapEffect.end())
 //		return E_FAIL;
@@ -33,7 +33,7 @@ HRESULT cShaderMgr::AddEffect(E_EFFECT_TYPE eType, string sFilename, D3DXMACRO* 
 
 
 
-LPD3DXEFFECT cShaderMgr::GetEffect(E_EFFECT_TYPE eType)
+LPD3DXEFFECT cShaderMgr::GetEffect(E_SHADER_TYPE eType)
 {
 	auto iter = m_mapEffect.find(eType);
 	if (iter == m_mapEffect.end())
