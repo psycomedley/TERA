@@ -153,7 +153,7 @@ void cEffect::Render()
 		mat = matWorld * matView * matProj;
 		m_pEffect->SetMatrix("gMatWVP", &mat);
 		m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
-
+		m_pEffect->SetTechnique("ColorTest");
 
 		UINT uiPasses, uiPass;
 		m_pEffect->Begin(&uiPasses, 0);

@@ -20,30 +20,37 @@
 //--------------------------------------------------------------//
 // Pass 0
 //--------------------------------------------------------------//
-float4x4 gWorldMatrix : World;
-float4x4 gViewMatrix : View;
-float4x4 gProjectionMatrix : Projection;
-
+float4x4 gMatWVP : WorldViewProjection; 
+texture DiffuseMap_Tex;
 
 struct VS_INPUT
 {
-	float4 mPosition : POSITION;
+	float4 mPosition	: POSITION;
+	float2 mUV			: TEXCOORD0;
 
 };
 
 struct VS_OUTPUT
 {
-	float4 mPosition : POSITION;
+	float4 mPosition	: POSITION;
+	float2 mUV			: TEXCOORD0;
 };
 
+sampler2D DiffuseSampler = sampler_state
+{
+	Texture = <DiffuseMap_Tex>;
+};
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
 	VS_OUTPUT Output;
 
-	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
-	Output.mPosition = mul(Output.mPosition, gViewMatrix);
-	Output.mPosition = mul(Output.mPosition, gProjectionMatrix);
+//	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
+//	Output.mPosition = mul(Output.mPosition, gViewMatrix);
+//	Output.mPosition = mul(Output.mPosition, gProjectionMatrix);
+	Output.mPosition = mul(Input.mPosition, gMatWVP);
+
+	Output.mUV = Input.mUV;
 
 	return Output;
 }
@@ -51,9 +58,19 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 
 
 
-float4 ps_main() : COLOR
+float4 ps_main(VS_OUTPUT Input) : COLOR
 {
-	return float4(1.0f, 0.0f, 0.0f, 1.0f);
+	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
+	albedo = albedo * float4(1.0f, 0.0f, 1.0f, 1.0f);
+	return albedo;
+}
+
+
+float4 ps_color(VS_OUTPUT Input) : COLOR
+{
+	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
+	albedo = albedo * float4(0.0f, 0.0f, 1.0f, 1.0f);
+	return albedo;
 }
 
 
@@ -67,6 +84,14 @@ technique ColorShader
 		VertexShader = compile vs_2_0 vs_main();
 		PixelShader = compile ps_2_0 ps_main();
 	}
-
 }
 
+
+technique ColorTest
+	{
+		pass Pass_0
+		{
+			VertexShader = compile vs_2_0 vs_main();
+			PixelShader = compile ps_2_0 ps_color();
+		}
+	}

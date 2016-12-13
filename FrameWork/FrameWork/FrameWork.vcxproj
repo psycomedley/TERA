@@ -150,7 +150,6 @@
     <ClInclude Include="cUIObject.h" />
     <ClInclude Include="cUITextView.h" />
     <ClInclude Include="cWeapon.h" />
-    <ClInclude Include="Effect.hpp" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="iAnimationDelegate.h" />
@@ -158,6 +157,7 @@
     <ClInclude Include="iState.h" />
     <ClInclude Include="MacroFunc.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Shader\Effect.hpp" />
     <ClInclude Include="Shader\MultiAnimation.hpp" />
     <ClInclude Include="Shader\Test2.hpp" />
     <ClInclude Include="stdafx.h" />
