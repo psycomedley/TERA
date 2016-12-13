@@ -64,7 +64,7 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 			vecTexture[i] = pTex;
 		}
 	}
-
+	
 	void*		pVtx = NULL;
 	m_pMesh->LockVertexBuffer(0, &pVtx);
 	DWORD dwVtxCnt = m_pMesh->GetNumVertices();

@@ -15,6 +15,7 @@
 #include "cCircleEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
+#include "cStuff.h"
 
 //ÀÓ½Ã
 
@@ -33,16 +34,16 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-
+	
 
 	SAFE_RELEASE(m_pCircleEffect);
 
 	SAFE_RELEASE(m_pBoss2);
-	SAFE_RELEASE(m_cObjectTree);
+	
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
-
+	SAFE_RELEASE(m_cObjectTree);
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -121,7 +122,7 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStaticObj("Object","tree1.x");
+	m_cObjectTree = new cStuff("Object/³ª¹µÀÙ","Leaf1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
@@ -316,22 +317,10 @@ void cMainGame::Render()
 
 
 
-	D3DXMATRIXA16	mat, matS, matT;
-	D3DXMatrixIdentity(&mat);
-	D3DXMatrixIdentity(&matS);
-	D3DXMatrixTranslation(&matT, 10.0f, 0.0f, 10.0f);
-	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
-	mat = matS*matT;
-
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000000);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	if (m_cObjectTree)
 		m_cObjectTree->Render();
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	
 
 
 	///////////////////////////////////
