@@ -61,7 +61,7 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 float4 ps_main(VS_OUTPUT Input) : COLOR
 {
 	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
-	albedo = albedo * float4(1.0f, 1.0f, 0.0f, 1.0f);
+	albedo = albedo * float4(0.0f, 0.0f, 1.0f, 1.0f);
 	return albedo;
 }
 
