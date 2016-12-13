@@ -33,7 +33,7 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-
+	SAFE_RELEASE(m_pDynamicMeshEffect);
 
 	SAFE_RELEASE(m_pCircleEffect);
 
@@ -272,8 +272,10 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 			m_pEffect->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
+		{
+			//m_pDynamicMeshEffect->Start();
 			m_pCircleEffect->Start();
-
+		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
 			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
@@ -404,6 +406,10 @@ void cMainGame::Render()
 	{
 		m_pCircleEffect->Render();
 	}
+	//if (m_pDynamicMeshEffect)
+	//{
+	//	m_pDynamicMeshEffect->Render();
+	//}
 
 
 
