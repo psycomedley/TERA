@@ -1,82 +1,94 @@
-//**************************************************************//
-//  Effect File exported by RenderMonkey 1.6
-//
-//  - Although many improvements were made to RenderMonkey FX  
-//    file export, there are still situations that may cause   
-//    compilation problems once the file is exported, such as  
-//    occasional naming conflicts for methods, since FX format 
-//    does not support any notions of name spaces. You need to 
-//    try to create workspaces in such a way as to minimize    
-//    potential naming conflicts on export.                    
-//    
-//  - Note that to minimize resulting name collisions in the FX 
-//    file, RenderMonkey will mangle names for passes, shaders  
-//    and function names as necessary to reduce name conflicts. 
-//**************************************************************//
-
-//--------------------------------------------------------------//
-// ColorShader
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
-// Pass 0
-//--------------------------------------------------------------//
-float4x4 gMatWVP : WorldViewProjection; 
-texture DiffuseMap_Tex;
-
-struct VS_INPUT
-{
-	float4 mPosition	: POSITION;
-	float2 mUV			: TEXCOORD0;
-
-};
-
-struct VS_OUTPUT
-{
-	float4 mPosition	: POSITION;
-	float2 mUV			: TEXCOORD0;
-};
+float4x4	g_matWVP : WorldViewProjection;
+texture		DiffuseMap_Tex;
+float		g_fTime;
 
 sampler2D DiffuseSampler = sampler_state
 {
 	Texture = <DiffuseMap_Tex>;
 };
 
+//--------------------------------------------------------------//
+// Structure
+//--------------------------------------------------------------//
+
+struct VS_INPUT
+{
+	float4 mPosition : POSITION;
+	float2 mUV : TEXCOORD0;
+
+};
+
+struct VS_OUTPUT
+{
+	float4 mPosition : POSITION;
+	float2 mUV : TEXCOORD0;
+};
+
+//--------------------------------------------------------------//
+// Vertex Shader
+//--------------------------------------------------------------//
+
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
 	VS_OUTPUT Output;
 
-//	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
-//	Output.mPosition = mul(Output.mPosition, gViewMatrix);
-//	Output.mPosition = mul(Output.mPosition, gProjectionMatrix);
-	Output.mPosition = mul(Input.mPosition, gMatWVP);
+	//	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
+	//	Output.mPosition = mul(Output.mPosition, gViewMatrix);
+	//	Output.mPosition = mul(Output.mPosition, gProjectionMatrix);
+	Output.mPosition = mul(Input.mPosition, g_matWVP);
 
 	Output.mUV = Input.mUV;
 
 	return Output;
 }
 
+//--------------------------------------------------------------//
+// Frame Add Shader
+//--------------------------------------------------------------//
 
+VS_OUTPUT vs_frameMoveX(VS_INPUT Input)
+{
+	VS_OUTPUT Output;
 
+	Output.mPosition = mul(Input.mPosition, g_matWVP);
+	Output.mUV = float2(Input.mUV.x + g_fTime, Input.mUV.y);;
+
+	return Output;
+}
+
+VS_OUTPUT vs_frameMoveY(VS_INPUT Input)
+{
+	VS_OUTPUT Output;
+
+	Output.mPosition = mul(Input.mPosition, g_matWVP);
+	Output.mUV = float2(Input.mUV.x, Input.mUV.y + g_fTime);;
+
+	return Output;
+}
+
+//--------------------------------------------------------------//
+// Pixel Shader
+//--------------------------------------------------------------//
+
+//--------------------------------------------------------------//
+// Test Shader
+//--------------------------------------------------------------//
 
 float4 ps_main(VS_OUTPUT Input) : COLOR
 {
 	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
-	albedo = albedo * float4(1.0f, 0.0f, 1.0f, 1.0f);
+//	albedo.a = 0.5;
+//	albedo = albedo * float4(0.0f, 1.0f, 1.0f, 0.5f);
 	return albedo;
 }
 
 
-float4 ps_color(VS_OUTPUT Input) : COLOR
-{
-	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
-	albedo = albedo * float4(0.0f, 0.0f, 1.0f, 1.0f);
-	return albedo;
-}
 
 
 //--------------------------------------------------------------//
 // Technique Section for ColorShader
 //--------------------------------------------------------------//
+
 technique ColorShader
 {
 	pass Pass_0
@@ -86,12 +98,26 @@ technique ColorShader
 	}
 }
 
-
-technique ColorTest
+//--------------------------------------------------------------//
+// Frame MoveX
+//--------------------------------------------------------------//
+technique FrameMoveX
 	{
 		pass Pass_0
 		{
-			VertexShader = compile vs_2_0 vs_main();
-			PixelShader = compile ps_2_0 ps_color();
+			VertexShader = compile vs_2_0 vs_frameMoveX();
+			PixelShader = compile ps_2_0 ps_main();
 		}
 	}
+
+	//--------------------------------------------------------------//
+	// Frame MoveY
+	//--------------------------------------------------------------//
+	technique FrameMoveY
+		{
+			pass Pass_0
+			{
+				VertexShader = compile vs_2_0 vs_frameMoveY();
+				PixelShader = compile ps_2_0 ps_main();
+			}
+		}

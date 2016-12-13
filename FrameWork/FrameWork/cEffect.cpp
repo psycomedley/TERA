@@ -15,6 +15,7 @@ cEffect::cEffect()
 	, m_nMaxFrame(0)
 	, m_bLoop(false)
 	, m_bProcess(false)
+	, m_bBillBoarding(false)
 {
 }
 
@@ -26,8 +27,8 @@ cEffect::~cEffect()
 
 
 HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
-	int nMaxFrameX, int nMaxFrameY, float fNextTime /*= 0.1f*/,
-	bool bLoop /*= false*/, int nAlpha /*= 255*/, int nMaxFrame /*= 0*/)
+	int nMaxFrameX /*= 1*/, int nMaxFrameY /*= 1*/, float fNextTime /*= 0.1f*/,
+	bool bLoop /*= false*/, float fAlpha /*= 1.0f*/, int nMaxFrame /*= 0*/)
 {
 	m_vecVertex.resize(6);
 	m_fNextTime = fNextTime;
@@ -46,28 +47,34 @@ HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
 		m_nMaxFrame = nMaxFrame;
 
 	m_vecVertex[0].p = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0);
-	m_vecVertex[0].t = D3DXVECTOR2(0, 0.25);
-	m_vecVertex[0].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[0].t = D3DXVECTOR2(0, 1);
+	m_vecVertex[0].c = XWHITE;
+//	m_vecVertex[0].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	m_vecVertex[1].p = D3DXVECTOR3(-fHalfWidth, fHalfHeight, 0);
 	m_vecVertex[1].t = D3DXVECTOR2(0, 0);
-	m_vecVertex[1].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[1].c = XWHITE;
+//	m_vecVertex[1].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	m_vecVertex[2].p = D3DXVECTOR3(fHalfWidth, fHalfHeight, 0);
-	m_vecVertex[2].t = D3DXVECTOR2(0.25, 0);
-	m_vecVertex[2].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[2].t = D3DXVECTOR2(1, 0);
+	m_vecVertex[2].c = XWHITE;
+//	m_vecVertex[2].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	m_vecVertex[3].p = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0);
-	m_vecVertex[3].t = D3DXVECTOR2(0, 0.25);
-	m_vecVertex[3].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[3].t = D3DXVECTOR2(0, 1);
+	m_vecVertex[3].c = XWHITE;
+//	m_vecVertex[3].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	m_vecVertex[4].p = D3DXVECTOR3(fHalfWidth, fHalfHeight, 0);
-	m_vecVertex[4].t = D3DXVECTOR2(0.25, 0);
-	m_vecVertex[4].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[4].t = D3DXVECTOR2(1, 0);
+	m_vecVertex[4].c = XWHITE;
+//	m_vecVertex[4].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	m_vecVertex[5].p = D3DXVECTOR3(fHalfWidth, -fHalfHeight, 0);
-	m_vecVertex[5].t = D3DXVECTOR2(0.25, 0.25);
-	m_vecVertex[5].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
+	m_vecVertex[5].t = D3DXVECTOR2(1, 1);
+	m_vecVertex[5].c = XWHITE;
+//	m_vecVertex[5].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
 
 	if (FAILED(g_pD3DDevice->CreateVertexBuffer(
 		m_vecVertex.size() * sizeof(ST_PCT_VERTEX),
@@ -86,7 +93,7 @@ HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
 	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PCT_VERTEX));
 	m_pVB->Unlock();
 
-	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_EFFECT_UI);
+	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_EFFECT);
 
 	return S_OK;
 
@@ -109,7 +116,7 @@ void cEffect::Update()
 {
 	if (m_bProcess)
 	{
-		/*m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
 		if (m_fPassedTime >= m_fNextTime)
 		{
@@ -118,7 +125,7 @@ void cEffect::Update()
 			UpdateUV();
 			if (m_nFrame > m_nMaxFrame && !m_bLoop)
 				Stop();
-		}*/
+		}
 	}
 }
 
@@ -142,18 +149,24 @@ void cEffect::Render()
 		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
 
 
-		D3DXMatrixInverse(&matWorld, 0, &matView);
-		matWorld._41 = 0;
-		matWorld._42 = 0;
-		matWorld._43 = 1;
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+
+		if (m_bBillBoarding)
+		{
+			D3DXMatrixInverse(&matWorld, 0, &matView);
+			matWorld._41 = 0;
+			matWorld._42 = 0;
+			matWorld._43 = 1;
+		}
+		
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
 
 		mat = matWorld * matView * matProj;
-		m_pEffect->SetMatrix("gMatWVP", &mat);
+		m_pEffect->SetMatrix("g_matWVP", &mat);
 		m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
-		m_pEffect->SetTechnique("ColorTest");
+		m_pEffect->SetTechnique("ColorShader");
+		m_pEffect->SetFloat("g_fTime", m_fPassedTime);
 
 		UINT uiPasses, uiPass;
 		m_pEffect->Begin(&uiPasses, 0);
@@ -215,119 +228,3 @@ void cEffect::Pause()
 {
 	m_bProcess = false;
 }
-
-//
-//void cEffect::attackEffectFrame()
-//{
-//	attackFrameTimer++;
-//	if (attackFrameTimer > 3)
-//	{
-//		attackFrameTimer = 0;
-//		attackFrameNumber++;
-//		if (attackFrameNumber > 3)
-//		{
-//			attackFrameNumber = 0;
-//			//m_vecVertex2[0].p.x = -1;
-//			//m_vecVertex2[1].p.x = -1;
-//			//m_vecVertex2[2].p.x = 1;
-//			//m_vecVertex2[3].p.x = -1;
-//			//m_vecVertex2[4].p.x = 1;
-//			//m_vecVertex2[5].p.x = 1;
-//			//m_vecVertex2[0].p.y = -1;
-//			//m_vecVertex2[1].p.y = 1;
-//			//m_vecVertex2[2].p.y = 1;
-//			//m_vecVertex2[3].p.y = -1;
-//			//m_vecVertex2[4].p.y = 1;
-//			//m_vecVertex2[5].p.y = -1;
-//
-//			m_vecVertex2[0].p.x = 0;
-//			m_vecVertex2[1].p.x = 0;
-//			m_vecVertex2[2].p.x = 0;
-//			m_vecVertex2[3].p.x = 0;
-//			m_vecVertex2[4].p.x = 0;
-//			m_vecVertex2[5].p.x = 0;
-//			m_vecVertex2[0].p.y = 0;
-//			m_vecVertex2[1].p.y = 0;
-//			m_vecVertex2[2].p.y = 0;
-//			m_vecVertex2[3].p.y = 0;
-//			m_vecVertex2[4].p.y = 0;
-//			m_vecVertex2[5].p.y = 0;
-//			startAttackEffect = false;
-//		}
-//		m_vecVertex2[0].p.x -= 1;
-//		m_vecVertex2[1].p.x -= 1;
-//		m_vecVertex2[2].p.x += 1;
-//		m_vecVertex2[3].p.x -= 1;
-//		m_vecVertex2[4].p.x += 1;
-//		m_vecVertex2[5].p.x += 1;
-//		m_vecVertex2[0].p.y -= 1;
-//		m_vecVertex2[1].p.y += 1;
-//		m_vecVertex2[2].p.y += 1;
-//		m_vecVertex2[3].p.y -= 1;
-//		m_vecVertex2[4].p.y += 1;
-//		m_vecVertex2[5].p.y -= 1;
-//	}
-//
-//
-//
-//}
-//
-//
-//void cEffect::fireEffectSetup()
-//{
-//	m_vecVertex1.resize(6);
-//
-//	m_vecVertex1[0].p = D3DXVECTOR3(-10, -10, 0);
-//	m_vecVertex1[0].t = D3DXVECTOR2(0, 0.25);
-//	m_vecVertex1[0].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//
-//	m_vecVertex1[1].p = D3DXVECTOR3(-10, 10, 0);
-//	m_vecVertex1[1].t = D3DXVECTOR2(0, 0);
-//	m_vecVertex1[1].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//
-//	m_vecVertex1[2].p = D3DXVECTOR3(10, 10, 0);
-//	m_vecVertex1[2].t = D3DXVECTOR2(0.25, 0);
-//	m_vecVertex1[2].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//
-//	m_vecVertex1[3].p = D3DXVECTOR3(-10, -10, 0);
-//	m_vecVertex1[3].t = D3DXVECTOR2(0, 0.25);
-//	m_vecVertex1[3].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//
-//	m_vecVertex1[4].p = D3DXVECTOR3(10, 10, 0);
-//	m_vecVertex1[4].t = D3DXVECTOR2(0.25, 0);
-//	m_vecVertex1[4].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//
-//	m_vecVertex1[5].p = D3DXVECTOR3(10, -10, 0);
-//	m_vecVertex1[5].t = D3DXVECTOR2(0.25, 0.25);
-//	m_vecVertex1[5].c = D3DCOLOR_ARGB(192, 255, 255, 255);
-//}
-//
-//
-//void cEffect::attackEffectSetup()
-//{
-//	m_vecVertex2.resize(6);
-//
-//	m_vecVertex2[0].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[0].t = D3DXVECTOR2(0, 1);
-//	m_vecVertex2[0].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//
-//	m_vecVertex2[1].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[1].t = D3DXVECTOR2(0, 0);
-//	m_vecVertex2[1].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//
-//	m_vecVertex2[2].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[2].t = D3DXVECTOR2(1, 0);
-//	m_vecVertex2[2].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//
-//	m_vecVertex2[3].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[3].t = D3DXVECTOR2(0, 1);
-//	m_vecVertex2[3].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//
-//	m_vecVertex2[4].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[4].t = D3DXVECTOR2(1, 0);
-//	m_vecVertex2[4].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//
-//	m_vecVertex2[5].p = D3DXVECTOR3(0, 0, 0);
-//	m_vecVertex2[5].t = D3DXVECTOR2(1, 1);
-//	m_vecVertex2[5].c = D3DCOLOR_ARGB(255, 255, 255, 255);
-//}
