@@ -136,6 +136,9 @@
     <Filter Include="소스 파일\17. Shader\Effect">
       <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\21. ObjecTool">
+      <UniqueIdentifier>{3f2f415a-00ff-4a7f-ac70-4b34efb7c76d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -384,8 +387,14 @@
     <ClInclude Include="Shader\Test2.hpp">
       <Filter>소스 파일\17. Shader\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\Effect.hpp">
+    <ClInclude Include="Effect.hpp">
       <Filter>소스 파일\17. Shader\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjectTool.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cStuff.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -610,6 +619,12 @@
     </ClCompile>
     <ClCompile Include="cUITextView.cpp">
       <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cStuff.cpp">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjectTool.cpp">
+      <Filter>소스 파일\21. ObjecTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
