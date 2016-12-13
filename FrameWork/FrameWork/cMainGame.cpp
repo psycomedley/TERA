@@ -112,8 +112,12 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup("Effect/A_TileFire001_emis.tga", 20, 20, 1, 1, 0.01f, true);
-//	m_pEffect2 = new cEffect;
+//	m_pEffect->Setup("Effect/G_MagicArray002_Tex.tga", 20, 20, 1, 1, 0.01f, true);
+	m_pEffect->Setup(20, 20);
+	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", 0);
+	m_pEffect->SetPosition(D3DXVECTOR3(10, 5, 0));
+	m_pEffect->SetTechnique(E_TECH_BLUE);
+	//	m_pEffect2 = new cEffect;
 //	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 1);
 		
 	//임시 세팅 (비정상 동작중)

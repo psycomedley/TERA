@@ -5,23 +5,30 @@ class cEffect
 private:
 	vector<ST_PCT_VERTEX>		m_vecVertex;
 	LPDIRECT3DTEXTURE9			m_pTexture;
+	LPDIRECT3DTEXTURE9			m_pTexture2;
 
 	LPD3DXEFFECT				m_pEffect;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
-	float						m_fAlpha;
+	int							m_nOption;
 
+	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
-	int							m_nFrame;
-	float						m_fPassedTime;
-	float						m_fNextTime;
-
+protected:
 	int							m_nMaxFrameX;
 	int							m_nMaxFrameY;
 	int							m_nMaxFrame;
 
-	bool						m_bBillBoarding;
 
+
+	float						m_fAlpha;
+
+
+	int							m_nCurrentFrame;
+	float						m_fPassedTime;
+	float						m_fNextTime;
+	
 	bool						m_bLoop;
 	SYNTHESIZE(bool, m_bProcess, Process);
 
@@ -40,7 +47,12 @@ public:
 	void	Stop();
 	void	Pause();
 
+	void	SetTexture(string sKey, int nIdx);
+	void	SetTechnique(E_EFFECT_TECHNIQUE eTech);
+
 public:
+	HRESULT	Setup(float fWidth, float fHeight, float fAlpha = 1.0f,
+		int nOption = EFFECT_BILLBOARING | EFFECT_ALPHABLEND);
 	HRESULT	Setup(string sPath, float fWidth, float fHeight,
 		int nMaxFrameX = 1, int nMaxFrameY = 1, float fNextTime = 0.1f,
 		bool bLoop = false, float fAlpha = 1.0f, int nMaxFrame = 0);

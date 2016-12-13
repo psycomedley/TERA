@@ -7,7 +7,7 @@ cEffect::cEffect()
 	: m_pTexture(NULL)
 	, m_pEffect(NULL)
 	, m_pVB(NULL)
-	, m_nFrame(0)
+	, m_nCurrentFrame(0)
 	, m_fPassedTime(0.0f)
 	, m_fNextTime(0.1f)
 	, m_nMaxFrameX(0)
@@ -15,14 +15,74 @@ cEffect::cEffect()
 	, m_nMaxFrame(0)
 	, m_bLoop(false)
 	, m_bProcess(false)
-	, m_bBillBoarding(false)
+	, m_vPosition(0.0f, 0.0f, 0.0f)
+	, m_fAngle(0.0f)
 {
+	D3DXMatrixIdentity(&m_matScale);
 }
 
 
 cEffect::~cEffect()
 {
 	SAFE_RELEASE(m_pVB);
+}
+
+
+HRESULT cEffect::Setup(float fWidth, float fHeight, float fAlpha /*= 1.0f*/,
+	int nOption /*= EFFECT_BILLBOARING | EFFECT_ALPHABLEND*/)
+{
+	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_EFFECT);
+
+	m_vecVertex.resize(6);
+
+	float fHalfWidth = fWidth / 2;
+	float fHalfHeight = fHeight / 2;
+	m_fAlpha = fAlpha;
+
+	m_vecVertex[0].p = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0);
+	m_vecVertex[0].t = D3DXVECTOR2(0, 1);
+	m_vecVertex[0].c = XWHITE;
+
+	m_vecVertex[1].p = D3DXVECTOR3(-fHalfWidth, fHalfHeight, 0);
+	m_vecVertex[1].t = D3DXVECTOR2(0, 0);
+	m_vecVertex[1].c = XWHITE;
+
+	m_vecVertex[2].p = D3DXVECTOR3(fHalfWidth, fHalfHeight, 0);
+	m_vecVertex[2].t = D3DXVECTOR2(1, 0);
+	m_vecVertex[2].c = XWHITE;
+
+	m_vecVertex[3].p = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0);
+	m_vecVertex[3].t = D3DXVECTOR2(0, 1);
+	m_vecVertex[3].c = XWHITE;
+
+	m_vecVertex[4].p = D3DXVECTOR3(fHalfWidth, fHalfHeight, 0);
+	m_vecVertex[4].t = D3DXVECTOR2(1, 0);
+	m_vecVertex[4].c = XWHITE;
+
+	m_vecVertex[5].p = D3DXVECTOR3(fHalfWidth, -fHalfHeight, 0);
+	m_vecVertex[5].t = D3DXVECTOR2(1, 1);
+	m_vecVertex[5].c = XWHITE;
+
+	if (FAILED(g_pD3DDevice->CreateVertexBuffer(
+		m_vecVertex.size() * sizeof(ST_PCT_VERTEX),
+		0,
+		ST_PCT_VERTEX::FVF,
+		D3DPOOL_MANAGED,
+		&m_pVB,
+		0)))
+	{
+		MSGBOX("Effect VertexBuffer Make Fail");
+		return E_FAIL;
+	}
+
+	LPVOID pV;
+	m_pVB->Lock(0, 0, &pV, 0);
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PCT_VERTEX));
+	m_pVB->Unlock();
+
+	m_nOption = nOption;
+
+	return S_OK;
 }
 
 
@@ -34,6 +94,7 @@ HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
 	m_fNextTime = fNextTime;
 
 	m_pTexture = GETSINGLE(cTextureMgr)->GetTexture(sPath);
+	m_pTexture2 = GETSINGLE(cTextureMgr)->GetTexture("Effect/G_MagicArray002_Alpha_Tex.tga");
 	m_bLoop = bLoop;
 
 	float fHalfWidth = fWidth / 2;
@@ -95,20 +156,9 @@ HRESULT cEffect::Setup(string sPath, float fWidth, float fHeight,
 
 	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_EFFECT);
 
+	m_nOption = EFFECT_BILLBOARING | EFFECT_ALPHABLEND;
+
 	return S_OK;
-
-
-
-
-	/*fireFrameTimer = 0;
-	fireFrameNumber = 0;
-
-	startAttackEffect = false;
-	attackFrameTimer = 0;
-	attackFrameNumber = 0;*/
-
-//	fireEffectSetup();
-//	attackEffectSetup();
 }
 
 
@@ -118,14 +168,13 @@ void cEffect::Update()
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
-		if (m_fPassedTime >= m_fNextTime)
+		/*if (m_fPassedTime >= m_fNextTime)
 		{
 			m_fPassedTime -= m_fNextTime;
-			(++m_nFrame) % m_nFrame;
+			if (++m_nCurrentFrame >= m_nMaxFrame)
+				m_nCurrentFrame -= m_nMaxFrame;
 			UpdateUV();
-			if (m_nFrame > m_nMaxFrame && !m_bLoop)
-				Stop();
-		}
+		}*/
 	}
 }
 
@@ -134,39 +183,58 @@ void cEffect::Render()
 {
 	if (m_bProcess)
 	{
-		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
-		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-
-		g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-		g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-		g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-
 		D3DXMATRIXA16 matWorld, matView, matProj, mat;
 		D3DXMatrixIdentity(&matWorld);
-
-//		g_pD3DDevice->SetTexture(0, m_pTexture);
-		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
-
-
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-
-		if (m_bBillBoarding)
-		{
-			D3DXMatrixInverse(&matWorld, 0, &matView);
-			matWorld._41 = 0;
-			matWorld._42 = 0;
-			matWorld._43 = 1;
-		}
-		
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
 
+		if (m_nOption & EFFECT_ALPHABLEND)
+		{
+			g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
+			//설정하도록
+			g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+			g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+			g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		}
+		if (m_nOption & EFFECT_CUTTEDFRAME)
+		{
+			m_pEffect->SetFloat("g_fNextTime", m_fNextTime);
+		}
+		if (m_nOption & EFFECT_BILLBOARING)
+		{
+			D3DXMatrixInverse(&matWorld, 0, &matView);
+			matWorld._41 = m_vPosition.x;
+			matWorld._42 = m_vPosition.y;
+			matWorld._43 = m_vPosition.z;
+			
+			matWorld = matWorld * m_matScale;
+		}
+		else
+		{
+			D3DXMATRIXA16 matR, matT;
+			D3DXMatrixRotationX(&matR, m_fAngle);
+			D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+
+			matWorld = matWorld * matR * matT;
+		}
+
+		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+		
+		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
+		
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		mat = matWorld * matView * matProj;
+
 		m_pEffect->SetMatrix("g_matWVP", &mat);
-		m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
-		m_pEffect->SetTechnique("ColorShader");
-		m_pEffect->SetFloat("g_fTime", m_fPassedTime);
+		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
+		m_pEffect->SetFloat("g_fAlpha", m_fAlpha);
+
+		/*if (m_pTexture)
+			m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
+		if (m_pTexture2)
+			m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);*/
 
 		UINT uiPasses, uiPass;
 		m_pEffect->Begin(&uiPasses, 0);
@@ -182,8 +250,6 @@ void cEffect::Render()
 		}
 		m_pEffect->End();
 
-//		g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, &m_vecVertex[0], sizeof(ST_PCT_VERTEX));
-
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
@@ -192,8 +258,8 @@ void cEffect::Render()
 
 void cEffect::UpdateUV()
 {
-	int nX = m_nFrame % m_nMaxFrameX;
-	int nY = m_nFrame / m_nMaxFrameY;
+	int nX = m_nCurrentFrame % m_nMaxFrameX;
+	int nY = m_nCurrentFrame / m_nMaxFrameY;
 	float fRatioX = 1 / (float)m_nMaxFrameX;
 	float fRatioY = 1 / (float)m_nMaxFrameY;
 
@@ -220,11 +286,52 @@ void cEffect::Stop()
 {
 	m_bProcess = false;
 	m_fPassedTime = 0.0f;
-	m_nFrame = 0;
+	m_nCurrentFrame = 0;
 }
 
 
 void cEffect::Pause()
 {
 	m_bProcess = false;
+}
+
+
+void cEffect::SetTexture(string sKey, int nIdx)
+{
+	switch (nIdx)
+	{
+	case 0:
+		m_pTexture = GETSINGLE(cTextureMgr)->GetTexture(sKey);
+		m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
+		break;
+	case 1:
+		m_pTexture2 = GETSINGLE(cTextureMgr)->GetTexture(sKey);
+		m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
+		break;
+	}
+}
+
+
+void cEffect::SetTechnique(E_EFFECT_TECHNIQUE eTech)
+{
+	switch (eTech)
+	{
+	case E_TECH_NORMAL:
+		m_pEffect->SetTechnique("NormalShader");
+		break;
+	case E_TECH_BLUE:
+		m_pEffect->SetTechnique("BlueShader");
+		break;
+	case E_TECH_FRAMEMOVEX:
+		m_pEffect->SetTechnique("FrameMoveX");
+		break;
+	case E_TECH_FRAMEMOVEY:
+		m_pEffect->SetTechnique("FrameMoveY");
+		break;
+	case E_TECH_TEST:
+		m_pEffect->SetTechnique("Test");
+		break;
+	default:
+		break;
+	}
 }

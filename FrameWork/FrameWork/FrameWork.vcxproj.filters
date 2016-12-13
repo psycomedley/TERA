@@ -387,9 +387,6 @@
     <ClInclude Include="Shader\Test2.hpp">
       <Filter>소스 파일\17. Shader\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.hpp">
-      <Filter>소스 파일\17. Shader\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="cObjectTool.h">
       <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
