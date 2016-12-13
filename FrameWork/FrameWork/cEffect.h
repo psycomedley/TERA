@@ -12,6 +12,8 @@ private:
 
 	int							m_nOption;
 
+	float						m_fAngle;
+
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
