@@ -136,6 +136,9 @@
     <Filter Include="소스 파일\17. Shader\Effect">
       <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\19.Effect\RushEffect">
+      <UniqueIdentifier>{5d2f789f-9796-48d8-8392-306697e03c94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -387,6 +390,9 @@
     <ClInclude Include="Effect.hpp">
       <Filter>소스 파일\17. Shader\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="cRushEffect.h">
+      <Filter>소스 파일\19.Effect\RushEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -610,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="cUITextView.cpp">
       <Filter>소스 파일\20. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cRushEffect.cpp">
+      <Filter>소스 파일\19.Effect\RushEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

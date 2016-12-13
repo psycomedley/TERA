@@ -13,6 +13,7 @@ class cEffect;
 class cStaticMeshEffect;
 class cDynamicMeshEffect;
 class cCircleEffect;
+class cRushEffect;
 class cUIImageView;
 class cText;
 class cAlphaText;
@@ -42,8 +43,8 @@ private:
 	cEffect*			m_pEffect2;
 
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
-
 	cCircleEffect*		m_pCircleEffect;
+	cRushEffect*		m_pRushEffect;
 
 	void SetLighting();
 	void SetUI();

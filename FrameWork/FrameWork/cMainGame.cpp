@@ -13,6 +13,7 @@
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
+#include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
 
@@ -34,8 +35,8 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-
 	SAFE_RELEASE(m_pCircleEffect);
+	SAFE_RELEASE(m_pRushEffect);
 
 	SAFE_RELEASE(m_pBoss2);
 	SAFE_RELEASE(m_cObjectTree);
@@ -127,6 +128,9 @@ HRESULT cMainGame::Setup()
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
+	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
+	m_pRushEffect->Setup(16, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
+
 
 
 	SetLighting();
@@ -183,7 +187,8 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 		{
 			//m_pDynamicMeshEffect->Start();
-			m_pCircleEffect->Start();
+			//m_pCircleEffect->Start();
+			m_pRushEffect->Start();
 		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
@@ -220,6 +225,10 @@ void cMainGame::Update()
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
+	}
+	if (m_pRushEffect)
+	{
+		m_pRushEffect->Update();
 	}
 
 	m_pMap->Update();
@@ -306,6 +315,10 @@ void cMainGame::Render()
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Render();
+	}
+	if (m_pRushEffect)
+	{
+		m_pRushEffect->Render();
 	}
 	//if (m_pDynamicMeshEffect)
 	//{
