@@ -1,16 +1,14 @@
 #pragma once
+#define M_EPSILON 0.001
+
 #include"cStaticMesh.h"
 #include"cStaticObj.h"
 
 class cFrustum;
-class cBoundingSphere;
 
 class cMap :public cStaticObj
 {
 private:
-	vector<cBoundingSphere*> m_vecBoundingSphere;
-	cBoundingSphere*		m_cBoundingSphere;
-
 	D3DXMATRIXA16			m_matWorld;
 
 	cFrustum*				m_cFrustum;
@@ -27,6 +25,7 @@ private:
 	int IndexX;
 	int Indexy; 
 	int NumTile;
+	float tileSpacing;
 
 	float MaxX = FLT_MIN;
 	float MinX = FLT_MAX;

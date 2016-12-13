@@ -1,13 +1,15 @@
 #pragma once
 #include "cDynamicObj.h"
 
+class cUIObject;
 class cMonster : public cDynamicObj
 {
 protected:
-	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
-
 	bool			m_bIsBattle;
 	float			m_fDetectRange;
+//	float			m_fHpRatio;
+	cUIObject*		m_pUIHp;
+	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 
 public:
 	void SetName(string sName) { m_stInfo.sName = sName; }

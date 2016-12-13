@@ -7,9 +7,9 @@ class cWeapon : public cStaticObj
 private:
 //	SYNTHESIZE(string, m_sHolderKey, HolderKey);
 	string m_sHolderKey;
+	D3DXMATRIXA16 m_matWorld;
 	SYNTHESIZE(string, m_sParentKey, ParentKey);
 	SYNTHESIZE(D3DXMATRIXA16*, m_matParent, MatParent);
-	D3DXMATRIXA16 m_matWorld;
 
 //	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
 
