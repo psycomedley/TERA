@@ -136,8 +136,13 @@
     <Filter Include="소스 파일\17. Shader\Effect">
       <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="소스 파일\19.Effect\RushEffect">
       <UniqueIdentifier>{5d2f789f-9796-48d8-8392-306697e03c94}</UniqueIdentifier>
+=======
+    <Filter Include="소스 파일\21. ObjecTool">
+      <UniqueIdentifier>{3f2f415a-00ff-4a7f-ac70-4b34efb7c76d}</UniqueIdentifier>
+>>>>>>> 3559cb776a48bde22a42c86a47aaad83acc43564
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -387,8 +392,11 @@
     <ClInclude Include="Shader\Test2.hpp">
       <Filter>소스 파일\17. Shader\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\Effect.hpp">
-      <Filter>소스 파일\17. Shader\Effect</Filter>
+    <ClInclude Include="cObjectTool.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cStuff.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
     <ClInclude Include="cRushEffect.h">
       <Filter>소스 파일\19.Effect\RushEffect</Filter>
@@ -617,8 +625,16 @@
     <ClCompile Include="cUITextView.cpp">
       <Filter>소스 파일\20. UI</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="cRushEffect.cpp">
       <Filter>소스 파일\19.Effect\RushEffect</Filter>
+=======
+    <ClCompile Include="cStuff.cpp">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjectTool.cpp">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+>>>>>>> 3559cb776a48bde22a42c86a47aaad83acc43564
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

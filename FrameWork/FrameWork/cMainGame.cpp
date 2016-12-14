@@ -16,13 +16,15 @@
 #include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
+#include "cStuff.h"
 
 //임시
 
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
-//	, m_cObjectTree(NULL)
+	, m_cObjectTree(NULL)
+	, m_pEffect3(NULL)
 {
 }
 
@@ -34,16 +36,20 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
+<<<<<<< HEAD
 	SAFE_RELEASE(m_pDynamicMeshEffect);
+=======
+	SAFE_DELETE(m_pEffect3);
+	
+
+>>>>>>> 3559cb776a48bde22a42c86a47aaad83acc43564
 	SAFE_RELEASE(m_pCircleEffect);
 	SAFE_RELEASE(m_pRushEffect);
 
-	SAFE_RELEASE(m_pBoss2);
-	SAFE_RELEASE(m_cObjectTree);
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
-
+	SAFE_RELEASE(m_cObjectTree);
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -113,18 +119,57 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
 	m_pEffect = new cEffect;
-	m_pEffect->Setup("Effect/fire.tga", 20, 20, 4, 4, 0.01f, true);
+//	m_pEffect->Setup("Effect/G_MagicArray002_Tex.tga", 20, 20, 1, 1, 0.01f, true);
+	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
+	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
+	m_pEffect->SetTechnique(E_TECH_BLUE);
+	m_pEffect->SetAngle(D3DX_PI / 2);
+
 	m_pEffect2 = new cEffect;
-	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 128);
-		
+//	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 1);
+	//m_pEffect2->Setup(20, 20);
+	//m_pEffect2->SetTexture("Effect/A_Gr001_emis.tga", E_TEXTURE1);
+	//m_pEffect2->SetTexture("Effect/A_Gra001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/A_NorGr001_emis.tga", E_BUMPMAP);
+	//m_pEffect2->SetPosition(D3DXVECTOR3(10, 10, 10));
+	//m_pEffect2->SetTechnique(E_TECH_WAVE);
+
+	/*m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING);
+	m_pEffect2->SetTexture("Effect/attack2.tga", E_TEXTURE1);
+	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect2->SetTechnique(E_TECH_FRAMEADD);
+	m_pEffect2->SetTotalFrame(4, 4, 16);*/
+
+	m_pEffect2->Setup(10, 10, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	m_pEffect2->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
+	m_pEffect2->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
+	m_pEffect2->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
+	m_pEffect2->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
+	m_pEffect2->SetTotalFrame(4, 4, 16);
+	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect2->SetTechnique(E_TECH_Orca1);
+	m_pEffect2->SetLoop(true);
+
+	/*m_pEffect3 = new cEffect;
+	m_pEffect3->Setup(10, 10);
+	m_pEffect3->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE1);
+	m_pEffect3->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect3->SetTechnique(E_TECH_BLUE);*/
+
+
+
 	//임시 세팅 (비정상 동작중)
 	//m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStaticObj("Object","tree1.x");
+	m_cObjectTree = new cStuff("Object/나뭇잎","Leaf1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
+
+
+
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
@@ -179,11 +224,22 @@ void cMainGame::Update()
 			else
 				m_pEffect->Start();
 		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+		{
+			if (m_pEffect2->GetProcess())
+			{
+				m_pEffect2->Stop();
+		//		m_pEffect3->Stop();
+			}
+			else
+			{
+				m_pEffect2->Start();
+			//	m_pEffect3->Start();
+			}
+		}
 
-		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-			m_pEffect2->Start();
-		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-			m_pEffect->Start();
+//		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+//			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 		{
 			//m_pDynamicMeshEffect->Start();
@@ -222,6 +278,8 @@ void cMainGame::Update()
 		m_pEffect->Update();
 	if (m_pEffect2)
 		m_pEffect2->Update();
+	if (m_pEffect3)
+		m_pEffect3->Update();
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
@@ -296,11 +354,6 @@ void cMainGame::Render()
 	m_pGrid->Render();
 
 
-	if (m_pBoss2)
-	{	
-		/*m_pBoss2->UpdateAndRender();
-		m_pBoss2->Bounding_Render();*/
-	}
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/
@@ -332,26 +385,17 @@ void cMainGame::Render()
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
+	if (m_pEffect3)
+		m_pEffect3->Render();
 
 
 
-	D3DXMATRIXA16	mat, matS, matT;
-	D3DXMatrixIdentity(&mat);
-	D3DXMatrixIdentity(&matS);
-	D3DXMatrixTranslation(&matT, 10.0f, 0.0f, 10.0f);
-	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
-	mat = matS*matT;
 
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000000);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
+	
 	if (m_cObjectTree)
 		m_cObjectTree->Render();
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-
+	
 
 	///////////////////////////////////
 
@@ -521,7 +565,7 @@ void cMainGame::SetShader()
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
 		pmac = mac;
 
-	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_DYNAMICMESH, "MultiAnimation.hpp", pmac);
+	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_DYNAMICMESH, "MultiAnimation.hpp", pmac);
 
 	///////////////////////////////////////////////////////////////
 
@@ -538,5 +582,5 @@ void cMainGame::SetShader()
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
 		pmac = mac;*/
 
-	GETSINGLE(cShaderMgr)->AddEffect(E_EFFECT_UI, "Effect.hpp");
+	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
 }

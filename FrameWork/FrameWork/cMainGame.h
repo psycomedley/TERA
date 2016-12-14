@@ -18,17 +18,16 @@ class cUIImageView;
 class cText;
 class cAlphaText;
 class cUIObject;
+class cStuff;
 class cMainGame
 {
 private:
 	cCube*				cube;
 
-	cDynamicObj*		m_pBoss2;
-
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	
-	cStaticObj*			m_cObjectTree;
+	cStuff*				m_cObjectTree;
 
 	bool				m_bLockMouse;
 
@@ -41,6 +40,7 @@ private:
 
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
+	cEffect*			m_pEffect3;
 
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 	cCircleEffect*		m_pCircleEffect;
