@@ -23,6 +23,7 @@
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
 	, m_cObjectTree(NULL)
+	, m_pEffect3(NULL)
 {
 }
 
@@ -34,6 +35,7 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
+	SAFE_DELETE(m_pEffect3);
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
@@ -127,11 +129,28 @@ HRESULT cMainGame::Setup()
 	//m_pEffect2->SetPosition(D3DXVECTOR3(10, 10, 10));
 	//m_pEffect2->SetTechnique(E_TECH_WAVE);
 
-	m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
-	m_pEffect2->SetTexture("Effect/fire.tga", E_TEXTURE1);
+	/*m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING);
+	m_pEffect2->SetTexture("Effect/attack2.tga", E_TEXTURE1);
 	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
 	m_pEffect2->SetTechnique(E_TECH_FRAMEADD);
+	m_pEffect2->SetTotalFrame(4, 4, 16);*/
+
+	m_pEffect2->Setup(10, 10, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	m_pEffect2->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
+	m_pEffect2->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
+	m_pEffect2->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
+	m_pEffect2->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
 	m_pEffect2->SetTotalFrame(4, 4, 16);
+	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect2->SetTechnique(E_TECH_Orca1);
+	m_pEffect2->SetLoop(true);
+
+	/*m_pEffect3 = new cEffect;
+	m_pEffect3->Setup(10, 10);
+	m_pEffect3->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE1);
+	m_pEffect3->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect3->SetTechnique(E_TECH_BLUE);*/
+
 
 
 	//임시 세팅 (비정상 동작중)
@@ -199,9 +218,15 @@ void cMainGame::Update()
 		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 		{
 			if (m_pEffect2->GetProcess())
+			{
 				m_pEffect2->Stop();
+		//		m_pEffect3->Stop();
+			}
 			else
+			{
 				m_pEffect2->Start();
+			//	m_pEffect3->Start();
+			}
 		}
 
 //		if (KEYBOARD->IsOnceKeyDown(DIK_R))
@@ -241,6 +266,8 @@ void cMainGame::Update()
 		m_pEffect->Update();
 	if (m_pEffect2)
 		m_pEffect2->Update();
+	if (m_pEffect3)
+		m_pEffect3->Update();
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
@@ -334,6 +361,8 @@ void cMainGame::Render()
 		m_pEffect->Render();
 	if (m_pEffect2)
 		m_pEffect2->Render();
+	if (m_pEffect3)
+		m_pEffect3->Render();
 
 
 

@@ -39,6 +39,7 @@ private:
 
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
+	cEffect*			m_pEffect3;
 
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 

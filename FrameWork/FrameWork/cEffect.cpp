@@ -9,7 +9,7 @@ cEffect::cEffect()
 	, m_pVB(NULL)
 	, m_nCurrentFrame(0)
 	, m_fPassedTime(0.0f)
-	, m_fNextTime(0.1f)
+	, m_fNextTime(0.05f)
 	, m_nMaxFrameX(0)
 	, m_nMaxFrameY(0)
 	, m_nMaxFrame(0)
@@ -169,8 +169,6 @@ void cEffect::Update()
 	if (m_bProcess)
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
-
-		
 	}
 }
 
@@ -197,9 +195,14 @@ void cEffect::Render()
 		{
 			if (m_fPassedTime >= m_fNextTime)
 			{
-				m_fPassedTime -= m_fNextTime;
+			//	m_fPassedTime -= m_fNextTime;
 				if (++m_nCurrentFrame >= m_nMaxFrame)
-					m_nCurrentFrame -= m_nMaxFrame;
+				{
+					if (!m_bLoop)
+						Stop();
+					else
+						m_nCurrentFrame -= m_nMaxFrame;
+				}
 				UpdateUV();
 			}
 
@@ -319,6 +322,10 @@ void cEffect::SetTexture(string sKey, E_EFFECT_TEXTURE eTex)
 		m_pTexture2 = GETSINGLE(cTextureMgr)->GetTexture(sKey);
 		m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
 		break;
+	case E_TEXTURE3:
+		m_pTexture3 = GETSINGLE(cTextureMgr)->GetTexture(sKey);
+		m_pEffect->SetTexture("DiffuseMap_Tex3", m_pTexture3);
+		break;
 	case E_BUMPMAP:
 		m_pBumpMap = GETSINGLE(cTextureMgr)->GetTexture(sKey);
 		m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
@@ -362,6 +369,9 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 		break;
 	case E_TECH_FRAMEADD:
 		m_pEffect->SetTechnique("FrameAdd");
+		break;
+	case E_TECH_Orca1:
+		m_pEffect->SetTechnique("Orca1");
 		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");

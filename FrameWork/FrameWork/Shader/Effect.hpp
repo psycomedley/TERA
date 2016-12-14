@@ -1,6 +1,7 @@
 float4x4	g_matWVP : WorldViewProjection;
 texture		DiffuseMap_Tex;
 texture		DiffuseMap_Tex2;
+texture		DiffuseMap_Tex3;
 texture		BumpMap_Tex;
 float		g_fPassedTime;
 float		g_fAlpha;
@@ -18,15 +19,23 @@ sampler2D DiffuseSampler = sampler_state
 	MinFilter = Linear;
 	MagFilter = Linear;
 	MipFilter = Linear;
-	AddressU = wrap;
-	AddressV = wrap;
-	//border;
-	//border;
+	AddressU = border;
+	AddressV = border;
 };
 
 sampler2D DiffuseSampler2 = sampler_state
 {
 	Texture = <DiffuseMap_Tex2>;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Linear;
+	AddressU = border;
+	AddressV = border;
+};
+
+sampler2D DiffuseSampler3 = sampler_state
+{
+	Texture = <DiffuseMap_Tex3>;
 	MinFilter = Linear;
 	MagFilter = Linear;
 	MipFilter = Linear;
@@ -187,6 +196,52 @@ float4 ps_waveShader(VS_OUTPUT Input) : COLOR
 }
 
 //--------------------------------------------------------------//
+// Orca Skill1 Shader
+//--------------------------------------------------------------//
+
+float4 ps_orcaSkill1(VS_OUTPUT Input) : COLOR
+{
+	float2 uv = float2(Input.mUV.x + g_fPassedTime * 0.2, Input.mUV.y /*+ g_fPassedTime * 0.2*/);
+	float3 normal;
+
+	normal = tex2D(BumpSampler, uv);
+
+	float4 base = tex2D(DiffuseSampler, Input.mUV.xy + 0.03 * normal.xy);
+
+	base.r = base.r * 0.5;
+	base.g = base.g * 0.125;
+	base.b = base.b * 4;
+	
+	return base;
+}
+
+float4 ps_orcaSkill1_1(VS_OUTPUT Input) : COLOR
+{
+	float2 uv = float2(Input.mUV.x, Input.mUV.y /*+ g_fPassedTime * 0.2*/);
+
+	float4 base = tex2D(DiffuseSampler2, Input.mUV);
+
+	base.r = base.r * 0.5;
+	base.g = base.g * 0.5;
+	base.b = base.b * 2;
+
+	return base;
+}
+
+float4 ps_orcaSkill1_2(VS_OUTPUT Input) : COLOR
+{
+	float2 uv = float2(Input.mUV.x, Input.mUV.y /*+ g_fPassedTime * 0.2*/);
+
+	float4 base = tex2D(DiffuseSampler3, Input.mUV);
+
+//	base.r = base.r * 0.5;
+//	base.g = base.g * 0.25;
+//	base.b = base.b * 4;
+
+	return base;
+}
+
+//--------------------------------------------------------------//
 // Test Shader
 //--------------------------------------------------------------//
 
@@ -259,7 +314,7 @@ technique Wave
 		VertexShader = compile vs_2_0 vs_main();
 		PixelShader = compile ps_2_0 ps_waveShader();
 	}
-	}
+}
 
 //--------------------------------------------------------------//
 // Technique Section for Frame Add
@@ -270,6 +325,28 @@ technique FrameAdd
 	{
 		VertexShader = compile vs_2_0 vs_FrameAdd();
 		PixelShader = compile ps_2_0 ps_main();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for Orca Skill1
+//--------------------------------------------------------------//
+technique Orca1
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaSkill1();
+	}
+	pass Pass_1
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaSkill1_1();
+	}
+	pass Pass_2
+	{
+		VertexShader = compile vs_2_0 vs_FrameAdd();
+		PixelShader = compile ps_2_0 ps_orcaSkill1_2();
 	}
 }
 

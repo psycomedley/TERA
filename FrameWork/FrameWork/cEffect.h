@@ -6,20 +6,12 @@ private:
 	vector<ST_PCT_VERTEX>		m_vecVertex;
 	LPDIRECT3DTEXTURE9			m_pTexture;
 	LPDIRECT3DTEXTURE9			m_pTexture2;
+	LPDIRECT3DTEXTURE9			m_pTexture3;
 	LPDIRECT3DTEXTURE9			m_pBumpMap;
 
 	LPD3DXEFFECT				m_pEffect;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
-	int							m_nOption;
-	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
-
-	SYNTHESIZE(float, m_fAngle, Angle);
-
-	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
-	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
-
-protected:
 	int							m_nMaxFrameX;
 	int							m_nMaxFrameY;
 	int							m_nMaxFrame;
@@ -29,15 +21,22 @@ protected:
 	float						m_fRatioX;
 	float						m_fRatioY;
 
-
-	float						m_fAlpha;
-
+	int							m_nOption;
 
 	int							m_nCurrentFrame;
 	float						m_fPassedTime;
-	float						m_fNextTime;
-	
-	bool						m_bLoop;
+	SYNTHESIZE(float, m_fNextTime, NextTime);
+
+	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
+
+	SYNTHESIZE(float, m_fAngle, Angle);
+	SYNTHESIZE(float, m_fAlpha, Alpha);
+
+	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
+
+protected:
+	SYNTHESIZE(bool, m_bLoop, Loop);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire
