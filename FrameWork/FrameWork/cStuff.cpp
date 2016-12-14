@@ -36,7 +36,7 @@ void cStuff::Render()
 	mat = matS*matT;
 	
 	
-	g_pD3DDevice->SetFVF(((cStaticMesh*)m_pMesh)->GetStaticMeshFVF());
+
 	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matWorld, 0, &matView);
 
@@ -59,8 +59,8 @@ void cStuff::Render()
 	//matWorld._41 = 0;
 	//matWorld._42 = 0;
 	//matWorld._43 = 1;
-
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	g_pD3DDevice->SetFVF(((cStaticMesh*)m_pMesh)->GetStaticMeshFVF());
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	cStaticObj::Render();
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
