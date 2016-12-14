@@ -23,8 +23,6 @@ class cMainGame
 private:
 	cCube*				cube;
 
-	cDynamicObj*		m_pBoss2;
-
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	

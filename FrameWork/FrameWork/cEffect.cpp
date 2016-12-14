@@ -17,6 +17,8 @@ cEffect::cEffect()
 	, m_bProcess(false)
 	, m_vPosition(0.0f, 0.0f, 0.0f)
 	, m_fAngle(0.0f)
+	, m_nOffsetX(1)
+	, m_nOffsetY(1)
 {
 	D3DXMatrixIdentity(&m_matScale);
 }
@@ -168,13 +170,7 @@ void cEffect::Update()
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
-		/*if (m_fPassedTime >= m_fNextTime)
-		{
-			m_fPassedTime -= m_fNextTime;
-			if (++m_nCurrentFrame >= m_nMaxFrame)
-				m_nCurrentFrame -= m_nMaxFrame;
-			UpdateUV();
-		}*/
+		
 	}
 }
 
@@ -199,7 +195,16 @@ void cEffect::Render()
 		}
 		if (m_nOption & EFFECT_CUTTEDFRAME)
 		{
-			m_pEffect->SetFloat("g_fNextTime", m_fNextTime);
+			if (m_fPassedTime >= m_fNextTime)
+			{
+				m_fPassedTime -= m_fNextTime;
+				if (++m_nCurrentFrame >= m_nMaxFrame)
+					m_nCurrentFrame -= m_nMaxFrame;
+				UpdateUV();
+			}
+
+			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
 		}
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
@@ -231,10 +236,13 @@ void cEffect::Render()
 		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
 		m_pEffect->SetFloat("g_fAlpha", m_fAlpha);
 
-		/*if (m_pTexture)
-			m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
-		if (m_pTexture2)
-			m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);*/
+		//if (m_pTexture)
+		//	m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
+		//if (m_pTexture2)
+		//	m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
+		//if (m_pBumpMap)
+		//	m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
+		Setting();
 
 		UINT uiPasses, uiPass;
 		m_pEffect->Begin(&uiPasses, 0);
@@ -258,21 +266,24 @@ void cEffect::Render()
 
 void cEffect::UpdateUV()
 {
-	int nX = m_nCurrentFrame % m_nMaxFrameX;
-	int nY = m_nCurrentFrame / m_nMaxFrameY;
-	float fRatioX = 1 / (float)m_nMaxFrameX;
-	float fRatioY = 1 / (float)m_nMaxFrameY;
+	m_nOffsetX = m_nCurrentFrame % m_nMaxFrameX;
+	m_nOffsetY = m_nCurrentFrame / m_nMaxFrameX;
 
-	// 1式2  4
-	// | / / |
-	// 0  3式5
-	
-	m_vecVertex[0].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
-	m_vecVertex[1].t = D3DXVECTOR2(fRatioX * nX, fRatioY * nY);
-	m_vecVertex[2].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * nY);
-	m_vecVertex[3].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
-	m_vecVertex[4].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * nY);
-	m_vecVertex[5].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * (nY + 1));
+	//int nX = m_nCurrentFrame % m_nMaxFrameX;
+	//int nY = m_nCurrentFrame / m_nMaxFrameX;
+	//float fRatioX = 1 / (float)m_nMaxFrameX;
+	//float fRatioY = 1 / (float)m_nMaxFrameY;
+
+	//// 1式2  4
+	//// | / / |
+	//// 0  3式5
+	//
+	//m_vecVertex[0].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
+	//m_vecVertex[1].t = D3DXVECTOR2(fRatioX * nX, fRatioY * nY);
+	//m_vecVertex[2].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * nY);
+	//m_vecVertex[3].t = D3DXVECTOR2(fRatioX * nX, fRatioY * (nY + 1));
+	//m_vecVertex[4].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * nY);
+	//m_vecVertex[5].t = D3DXVECTOR2(fRatioX * (nX + 1), fRatioY * (nY + 1));
 }
 
 
@@ -296,23 +307,41 @@ void cEffect::Pause()
 }
 
 
-void cEffect::SetTexture(string sKey, int nIdx)
+void cEffect::SetTexture(string sKey, E_EFFECT_TEXTURE eTex)
 {
-	switch (nIdx)
+	switch (eTex)
 	{
-	case 0:
+	case E_TEXTURE1:
 		m_pTexture = GETSINGLE(cTextureMgr)->GetTexture(sKey);
 		m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
 		break;
-	case 1:
+	case E_TEXTURE2:
 		m_pTexture2 = GETSINGLE(cTextureMgr)->GetTexture(sKey);
 		m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
+		break;
+	case E_BUMPMAP:
+		m_pBumpMap = GETSINGLE(cTextureMgr)->GetTexture(sKey);
+		m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
 		break;
 	}
 }
 
 
-void cEffect::SetTechnique(E_EFFECT_TECHNIQUE eTech)
+void cEffect::SetTotalFrame(int nFrameX, int nFrameY, int nTotalFrame)
+{
+	m_nMaxFrameX = nFrameX;
+	m_nMaxFrameY = nFrameY;
+	m_nMaxFrame = nTotalFrame;
+
+	m_fRatioX = 1 / (float)m_nMaxFrameX;
+	m_fRatioY = 1 / (float)m_nMaxFrameY;
+
+	m_pEffect->SetFloat("g_fRatioX", m_fRatioX);
+	m_pEffect->SetFloat("g_fRatioY", m_fRatioY);
+}
+
+
+void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 {
 	switch (eTech)
 	{
@@ -328,10 +357,26 @@ void cEffect::SetTechnique(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_FRAMEMOVEY:
 		m_pEffect->SetTechnique("FrameMoveY");
 		break;
+	case E_TECH_WAVE:
+		m_pEffect->SetTechnique("Wave");
+		break;
+	case E_TECH_FRAMEADD:
+		m_pEffect->SetTechnique("FrameAdd");
+		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");
 		break;
 	default:
 		break;
 	}
+}
+
+
+void cEffect::Setting()
+{
+	m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
+	m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
+	m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
+
+	SetTech(m_eTechnique);
 }

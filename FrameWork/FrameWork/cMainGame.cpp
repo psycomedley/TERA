@@ -22,7 +22,7 @@
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
-//	, m_cObjectTree(NULL)
+	, m_cObjectTree(NULL)
 {
 }
 
@@ -38,8 +38,6 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pCircleEffect);
 
-	SAFE_RELEASE(m_pBoss2);
-	
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
@@ -114,13 +112,28 @@ HRESULT cMainGame::Setup()
 
 	m_pEffect = new cEffect;
 //	m_pEffect->Setup("Effect/G_MagicArray002_Tex.tga", 20, 20, 1, 1, 0.01f, true);
-	m_pEffect->Setup(20, 20);
-	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", 0);
-	m_pEffect->SetPosition(D3DXVECTOR3(10, 5, 0));
+	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
+	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
 	m_pEffect->SetTechnique(E_TECH_BLUE);
-	//	m_pEffect2 = new cEffect;
+	m_pEffect->SetAngle(D3DX_PI / 2);
+
+	m_pEffect2 = new cEffect;
 //	m_pEffect2->Setup("Effect/fire.tga", 10, 10, 4, 4, 0.01f , false, 1);
-		
+	//m_pEffect2->Setup(20, 20);
+	//m_pEffect2->SetTexture("Effect/A_Gr001_emis.tga", E_TEXTURE1);
+	//m_pEffect2->SetTexture("Effect/A_Gra001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/A_NorGr001_emis.tga", E_BUMPMAP);
+	//m_pEffect2->SetPosition(D3DXVECTOR3(10, 10, 10));
+	//m_pEffect2->SetTechnique(E_TECH_WAVE);
+
+	m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	m_pEffect2->SetTexture("Effect/fire.tga", E_TEXTURE1);
+	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
+	m_pEffect2->SetTechnique(E_TECH_FRAMEADD);
+	m_pEffect2->SetTotalFrame(4, 4, 16);
+
+
 	//임시 세팅 (비정상 동작중)
 	//m_pDynamicMeshEffect = new cDynamicMeshEffect("Effect", "Circle.X");
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
@@ -129,6 +142,9 @@ HRESULT cMainGame::Setup()
 	m_cObjectTree = new cStuff("Object/나뭇잎","Leaf1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
+
+
+
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
@@ -180,11 +196,16 @@ void cMainGame::Update()
 			else
 				m_pEffect->Start();
 		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_R))
+		{
+			if (m_pEffect2->GetProcess())
+				m_pEffect2->Stop();
+			else
+				m_pEffect2->Start();
+		}
 
 //		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 //			m_pEffect2->Start();
-		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-			m_pEffect->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 			m_pCircleEffect->Start();
 
@@ -290,11 +311,6 @@ void cMainGame::Render()
 	m_pGrid->Render();
 
 
-	if (m_pBoss2)
-	{	
-		/*m_pBoss2->UpdateAndRender();
-		m_pBoss2->Bounding_Render();*/
-	}
 
 	/*if (m_pPlayer)
 	m_pPlayer->UpdateAndRender();*/

@@ -6,13 +6,15 @@ private:
 	vector<ST_PCT_VERTEX>		m_vecVertex;
 	LPDIRECT3DTEXTURE9			m_pTexture;
 	LPDIRECT3DTEXTURE9			m_pTexture2;
+	LPDIRECT3DTEXTURE9			m_pBumpMap;
 
 	LPD3DXEFFECT				m_pEffect;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
 	int							m_nOption;
+	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
 
-	float						m_fAngle;
+	SYNTHESIZE(float, m_fAngle, Angle);
 
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
@@ -22,6 +24,10 @@ protected:
 	int							m_nMaxFrameY;
 	int							m_nMaxFrame;
 
+	int							m_nOffsetX;
+	int							m_nOffsetY;
+	float						m_fRatioX;
+	float						m_fRatioY;
 
 
 	float						m_fAlpha;
@@ -49,8 +55,8 @@ public:
 	void	Stop();
 	void	Pause();
 
-	void	SetTexture(string sKey, int nIdx);
-	void	SetTechnique(E_EFFECT_TECHNIQUE eTech);
+	void	SetTexture(string sKey, E_EFFECT_TEXTURE eTex);
+	void	SetTotalFrame(int nFrameX, int nFrameY, int nTotalFrame);
 
 public:
 	HRESULT	Setup(float fWidth, float fHeight, float fAlpha = 1.0f,
@@ -66,7 +72,11 @@ public:
 public:
 	cEffect();
 	~cEffect();
-//	void setFireFrame(int fn);
+
+protected:
+	void Setting();
+	void SetTech(E_EFFECT_TECHNIQUE eTech);
+	//	void setFireFrame(int fn);
 //	void attackEffectFrame();
 //	void fireEffectSetup();
 //	void attackEffectSetup();
