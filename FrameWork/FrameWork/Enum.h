@@ -6,6 +6,7 @@
 #define	DIRECTION_UP	(1 << 2)
 #define	DIRECTION_DOWN	(1 << 3)
 
+#define EFFECT_NONE			0
 #define EFFECT_BILLBOARING	(1 << 0)
 #define EFFECT_ALPHABLEND	(1 << 1)
 #define EFFECT_CUTTEDFRAME	(1 << 2)
@@ -156,8 +157,9 @@ enum E_EFFECT_TECHNIQUE
 	E_TECH_TEST,
 	E_TECH_WAVE,
 	E_TECH_FRAMEADD,
-	E_TECH_Orca1,
-	E_TECH_Orca1_Remove,
+	E_TECH_ORCA1,
+	E_TECH_ORCA1_Remove,
+	E_TECH_ORCA2,
 	E_TECH_END,
 };
 

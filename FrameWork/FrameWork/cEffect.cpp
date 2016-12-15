@@ -219,6 +219,15 @@ void cEffect::Render()
 			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
 			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
 		}
+		else if (!m_bLoop)
+		{
+			if (m_fPassedTime >= m_fRemoveTime)
+			{
+				Stop();
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+				return;
+			}
+		}
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
 			D3DXMatrixInverse(&matWorld, 0, &matView);
@@ -231,11 +240,13 @@ void cEffect::Render()
 		else
 		{
 			D3DXMATRIXA16 matR, matT;
-			D3DXMatrixRotationX(&matR, m_fAngle);
+	//		D3DXMatrixRotationX(&matR, m_fAngle);
 			D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
-			matWorld = matWorld * matR * matT;
+			matWorld = matWorld * m_matRotation * matT;
 		}
+
+		
 
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
@@ -274,6 +285,7 @@ void cEffect::Render()
 		}
 		m_pEffect->End();
 
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
@@ -385,12 +397,15 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_FRAMEADD:
 		m_pEffect->SetTechnique("FrameAdd");
 		break;
-	case E_TECH_Orca1:
+	case E_TECH_ORCA1:
 		m_pEffect->SetTechnique("Orca1");
 		break;
-	case E_TECH_Orca1_Remove:
+	case E_TECH_ORCA1_Remove:
 		m_bEnd = true;
 		m_pEffect->SetTechnique("Orca1_Remove");
+		break;
+	case E_TECH_ORCA2:
+		m_pEffect->SetTechnique("Orca2");
 		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");

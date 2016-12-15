@@ -35,6 +35,7 @@ private:
 	SYNTHESIZE(float, m_fAlpha, Alpha);
 
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRotation, MatRotation);
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
 	SYNTHESIZE(bool, m_bLoop, Loop);
