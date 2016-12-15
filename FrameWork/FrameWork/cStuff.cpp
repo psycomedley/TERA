@@ -5,6 +5,7 @@
 cStuff::cStuff(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
+	D3DXMatrixIdentity(&matWorld);
 }
 cStuff::cStuff()
 {
@@ -25,22 +26,22 @@ void cStuff::Render()
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000000);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
+	//g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-	D3DXMATRIXA16 matWorld, matView;
+	D3DXMATRIXA16 InvMatView,matView;
 	D3DXMATRIXA16	mat, matS, matT;
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixTranslation(&matT, -10.0f, -15.0f, 30.0f);
-	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
-	mat = matS*matT;
-	
-	
 
 	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixInverse(&matWorld, 0, &matView);
+	D3DXMatrixInverse(&InvMatView, 0, &matView);
 
-	matWorld = matWorld*mat;
+	D3DXMatrixTranslation(&matT, -200.0f, -150.0f, 200.0f);
+	D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.5f);
+	mat = matS * matT;
+
+
+	matWorld = InvMatView*mat;
+
 	////memset(&matView._41, 0, sizeof(D3DXVECTOR3));
 	//matWorld._11 = matView._11;
 	//matWorld._13 = matView._13;
@@ -60,7 +61,7 @@ void cStuff::Render()
 	//matWorld._42 = 0;
 	//matWorld._43 = 1;
 	g_pD3DDevice->SetFVF(((cStaticMesh*)m_pMesh)->GetStaticMeshFVF());
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 	cStaticObj::Render();
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
