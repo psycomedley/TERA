@@ -10,10 +10,13 @@ cEffect::cEffect()
 	, m_nCurrentFrame(0)
 	, m_fPassedTime(0.0f)
 	, m_fNextTime(0.05f)
+	, m_fRemoveTime(3.0f)
+	, m_fRemovePassedTime(0.0f)
 	, m_nMaxFrameX(0)
 	, m_nMaxFrameY(0)
 	, m_nMaxFrame(0)
 	, m_bLoop(false)
+	, m_bEnd(false)
 	, m_bProcess(false)
 	, m_vPosition(0.0f, 0.0f, 0.0f)
 	, m_fAngle(0.0f)
@@ -169,6 +172,13 @@ void cEffect::Update()
 	if (m_bProcess)
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+
+		if (m_bEnd)
+		{
+			m_fRemovePassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			if (m_fRemovePassedTime >= m_fRemoveTime)
+				Stop();
+		}
 	}
 }
 
@@ -236,8 +246,11 @@ void cEffect::Render()
 		mat = matWorld * matView * matProj;
 
 		m_pEffect->SetMatrix("g_matWVP", &mat);
-		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
 		m_pEffect->SetFloat("g_fAlpha", m_fAlpha);
+		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
+
+		if (m_bEnd)
+			m_pEffect->SetFloat("g_fRemoveRatio", m_fRemovePassedTime / m_fRemoveTime);
 
 		//if (m_pTexture)
 		//	m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
@@ -299,7 +312,9 @@ void cEffect::Start()
 void cEffect::Stop()
 {
 	m_bProcess = false;
+	m_bEnd = false;
 	m_fPassedTime = 0.0f;
+	m_fRemovePassedTime = 0.0f;
 	m_nCurrentFrame = 0;
 }
 
@@ -372,6 +387,10 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 		break;
 	case E_TECH_Orca1:
 		m_pEffect->SetTechnique("Orca1");
+		break;
+	case E_TECH_Orca1_Remove:
+		m_bEnd = true;
+		m_pEffect->SetTechnique("Orca1_Remove");
 		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");

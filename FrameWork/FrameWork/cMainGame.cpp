@@ -224,9 +224,14 @@ void cMainGame::Update()
 			}
 			else
 			{
+				m_pEffect2->SetTechnique(E_TECH_Orca1);
 				m_pEffect2->Start();
 			//	m_pEffect3->Start();
 			}
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+		{
+			m_pEffect2->SetTechnique(E_TECH_Orca1_Remove);
 		}
 
 //		if (KEYBOARD->IsOnceKeyDown(DIK_R))
