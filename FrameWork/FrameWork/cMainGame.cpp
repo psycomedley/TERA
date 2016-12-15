@@ -36,13 +36,10 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
-<<<<<<< HEAD
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-=======
 	SAFE_DELETE(m_pEffect3);
 	
 
->>>>>>> 3559cb776a48bde22a42c86a47aaad83acc43564
 	SAFE_RELEASE(m_pCircleEffect);
 	SAFE_RELEASE(m_pRushEffect);
 
