@@ -13,6 +13,7 @@
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
+#include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
 #include "cStuff.h"
@@ -35,10 +36,15 @@ cMainGame::~cMainGame()
 
 	SAFE_DELETE(m_pEffect);
 	SAFE_DELETE(m_pEffect2);
+<<<<<<< HEAD
+	SAFE_RELEASE(m_pDynamicMeshEffect);
+=======
 	SAFE_DELETE(m_pEffect3);
 	
 
+>>>>>>> 3559cb776a48bde22a42c86a47aaad83acc43564
 	SAFE_RELEASE(m_pCircleEffect);
+	SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
 
@@ -167,6 +173,9 @@ HRESULT cMainGame::Setup()
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
+	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
+	m_pRushEffect->Setup(16, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
+
 
 
 	SetLighting();
@@ -232,8 +241,11 @@ void cMainGame::Update()
 //		if (KEYBOARD->IsOnceKeyDown(DIK_R))
 //			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
-			m_pCircleEffect->Start();
-
+		{
+			//m_pDynamicMeshEffect->Start();
+			//m_pCircleEffect->Start();
+			m_pRushEffect->Start();
+		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
 			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
@@ -271,6 +283,10 @@ void cMainGame::Update()
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
+	}
+	if (m_pRushEffect)
+	{
+		m_pRushEffect->Update();
 	}
 
 	m_pMap->Update();
@@ -353,6 +369,14 @@ void cMainGame::Render()
 	{
 		m_pCircleEffect->Render();
 	}
+	if (m_pRushEffect)
+	{
+		m_pRushEffect->Render();
+	}
+	//if (m_pDynamicMeshEffect)
+	//{
+	//	m_pDynamicMeshEffect->Render();
+	//}
 
 
 

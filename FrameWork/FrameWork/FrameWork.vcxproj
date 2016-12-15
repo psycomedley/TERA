@@ -127,6 +127,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPyramid.h" />
     <ClInclude Include="cRay.h" />
+    <ClInclude Include="cRushEffect.h" />
     <ClInclude Include="cShaderMgr.h" />
     <ClInclude Include="cSingleton.h" />
     <ClInclude Include="cStateBossSkill.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPyramid.cpp" />
     <ClCompile Include="cRay.cpp" />
+    <ClCompile Include="cRushEffect.cpp" />
     <ClCompile Include="cShaderMgr.cpp" />
     <ClCompile Include="cSingleton.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
