@@ -138,7 +138,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect2->SetTechnique(E_TECH_FRAMEADD);
 	m_pEffect2->SetTotalFrame(4, 4, 16);*/
 
-	m_pEffect2->Setup(10, 10, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
 	m_pEffect2->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
 	m_pEffect2->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
 	m_pEffect2->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
@@ -230,9 +230,14 @@ void cMainGame::Update()
 			}
 			else
 			{
+				m_pEffect2->SetTechnique(E_TECH_Orca1);
 				m_pEffect2->Start();
 			//	m_pEffect3->Start();
 			}
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_T))
+		{
+			m_pEffect2->SetTechnique(E_TECH_Orca1_Remove);
 		}
 
 //		if (KEYBOARD->IsOnceKeyDown(DIK_R))
