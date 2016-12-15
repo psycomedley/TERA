@@ -7,6 +7,7 @@ class cStaticMesh : public cMesh
 
 protected:
 	LPD3DXMESH					m_pMesh;
+	LPD3DXEFFECT				m_pEffect;
 	LPD3DXBUFFER				m_pSubSetBuffer;
 	DWORD						m_dwSubSetCnt;
 

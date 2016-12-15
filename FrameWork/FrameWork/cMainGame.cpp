@@ -585,4 +585,6 @@ void cMainGame::SetShader()
 		pmac = mac;*/
 
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
+
+	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_MAP, "mapShader.fx");
 }
