@@ -5,6 +5,7 @@
 class cDynamicMeshEffect : public cDynamicEffectObj
 {
 private:
+	bool start;
 
 public:
 	//virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
@@ -18,5 +19,14 @@ public:
 	HRESULT Setup();
 	void Update();
 	void Render();
+
+	void Start()
+	{
+		start = true;
+	}
+	void Stop()
+	{
+		start = false;
+	}
 };
 

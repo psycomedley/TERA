@@ -139,6 +139,9 @@
     <Filter Include="소스 파일\21. ObjecTool">
       <UniqueIdentifier>{3f2f415a-00ff-4a7f-ac70-4b34efb7c76d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\19.Effect\RushEffect">
+      <UniqueIdentifier>{ffeee2b2-3580-44a2-8ec1-4d784e8400df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -393,6 +396,9 @@
     <ClInclude Include="cStuff.h">
       <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
+    <ClInclude Include="cRushEffect.h">
+      <Filter>소스 파일\19.Effect\RushEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -622,6 +628,9 @@
     </ClCompile>
     <ClCompile Include="cObjectTool.cpp">
       <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cRushEffect.cpp">
+      <Filter>소스 파일\19.Effect\RushEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

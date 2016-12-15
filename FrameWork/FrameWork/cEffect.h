@@ -82,4 +82,3 @@ protected:
 //	void fireEffectSetup();
 //	void attackEffectSetup();
 };
-
