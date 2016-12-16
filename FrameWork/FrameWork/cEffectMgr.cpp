@@ -26,14 +26,14 @@ void cEffectMgr::Update()
 		else
 			iter++;
 	}
-//	for each (auto ui in m_listEffect)
-//		ui->Update();
+//	for each (auto effect in m_listEffect)
+//		effect->Update();
 }
 
 
 void cEffectMgr::Render()
 {
-	for (auto iter = m_listEffect.begin(); iter != m_listEffect.end();)
+	/*for (auto iter = m_listEffect.begin(); iter != m_listEffect.end();)
 	{
 		(*iter)->Render();
 		if (!(*iter)->GetProcess())
@@ -43,9 +43,9 @@ void cEffectMgr::Render()
 		}
 		else
 			iter++;
-	}
-//	for each (auto ui in m_listEffect)
-//		ui->Render();
+	}*/
+	for each (auto effect in m_listEffect)
+		effect->Render();
 }
 
 
@@ -85,9 +85,9 @@ void cEffectMgr::AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matR
 		cEffect* pEffect = new cEffect(m_mapEffect[sKey].front());
 		pEffect->SetPosition(vPosition);
 		pEffect->SetMatRotation(matRotation);
+		pEffect->Start();
 		m_mapEffect[sKey].push_back(pEffect);
 		m_listEffect.push_back(pEffect);
-		pEffect->Start();
 	}
 }
 

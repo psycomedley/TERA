@@ -205,12 +205,12 @@ void cOrca::Update()
 					}
 				}
 			}
-			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
-			{
-				//나중에 일정 체력 이하일 때로 변경 50%, 25%
-				LongMove();
-			}
-			else if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
+			//if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
+			//{
+			//	//나중에 일정 체력 이하일 때로 변경 50%, 25%
+			//	LongMove();
+			//}
+			/*else*/ if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
 			{
 				m_skillHeavyAtk.fPassedTime = 0.0f;
 				LookTarget();
@@ -234,7 +234,7 @@ void cOrca::Update()
 						SAFE_RELEASE(m_pAction);
 					m_skillAttack.fPassedTime = 0.0f;
 					LookTarget();
-					ChangeState(E_STATE_SKILL, E_BOSS_ATK1);
+					ChangeState(E_STATE_SKILL, E_BOSS_ATK2);
 				}
 				else
 				{

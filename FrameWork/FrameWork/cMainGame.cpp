@@ -39,7 +39,7 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_pEffect2);
 	SAFE_RELEASE(m_pEffect3);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_DELETE(m_pEffect4);
+	SAFE_RELEASE(m_pEffect4);
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
@@ -122,16 +122,15 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
 	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
 	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
-<<<<<<< HEAD
+
 	//m_pEffect->SetTechnique(E_TECH_BLUE);
 	m_pEffect->SetAngle(D3DX_PI / 2);
-=======
+
 	m_pEffect->SetTechnique(E_TECH_BLUE);
 //	m_pEffect->SetAngle(D3DX_PI / 2);
 	D3DXMATRIXA16 ma;
 	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
 	m_pEffect->SetMatRotation(ma);
->>>>>>> bf711b12bc61295e90ad33de3ac135a3aa50e5e7
 
 	m_pEffect2 = new cEffect;
 	//오르카 스킬1
@@ -674,7 +673,7 @@ void cMainGame::SetEffect()
 {
 	D3DXMATRIXA16 m, m2, m3;
 	cEffect* pEffect = new cEffect;
-	//오르카 스킬1
+	//오르카 스킬1 (구체)
 	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
 	pEffect->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
@@ -688,7 +687,7 @@ void cMainGame::SetEffect()
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
-	//오르카 스킬2
+	//오르카 평타
 	pEffect = new cEffect;
 	pEffect->Setup(200, 200, 1, EFFECT_ALPHABLEND);
 	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
@@ -702,18 +701,18 @@ void cMainGame::SetEffect()
 	pEffect->SetMatRotation(m);
 
 	pEffect->SetLoop(false);
-	pEffect->SetRemoveTime(2.4);
+	pEffect->SetRemoveTime(2);
 	pEffect->SetName("orca2");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
-	//오르카 평타
+	//오르카 백어택
 	pEffect = new cEffect;
 	pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
 	pEffect->SetTexture("Effect/B_160Trail001_emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
-	pEffect->SetTechnique(E_TECH_TEST);
+	pEffect->SetTechnique(E_TECH_BACKATK);
 
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
 	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
@@ -722,7 +721,24 @@ void cMainGame::SetEffect()
 	//	m_pEffect2->SetAngle(D3DX_PI / 2);
 	//	m_pEffect2->SetLoop(false);
 	pEffect->SetRemoveTime(3);
-	pEffect->SetName("orcaAtk");
+	pEffect->SetName("orcaBackAtk");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//마법진
+	pEffect = new cEffect;
+	pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
+	pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
+
+	pEffect->SetAngle(D3DX_PI / 2);
+
+	pEffect->SetTechnique(E_TECH_MAGICARRAY);
+//	D3DXMATRIXA16 ma;
+//	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+	pEffect->SetRemoveTime(5);
+	pEffect->SetName("MagicArray");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 }
