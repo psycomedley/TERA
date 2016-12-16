@@ -2,7 +2,7 @@
 #include "cStaticMesh.h"
 
 
-cStaticMesh::cStaticMesh(char* szFolder, char* szFilename)
+cStaticMesh::cStaticMesh(char* szFolder, char* szFilename, E_SHADER_TYPE ShadeType)
 {
 	cStaticMesh* pStaticdMesh = GETSINGLE(cMeshMgr)->GetStaticMesh(szFolder, szFilename);
 
@@ -13,11 +13,23 @@ cStaticMesh::cStaticMesh(char* szFolder, char* szFilename)
 	vecTexture = pStaticdMesh->vecTexture;
 	vecMaterial = pStaticdMesh->vecMaterial;
 
+	m_ShadeType = ShadeType;
+
 	m_pBox = pStaticdMesh->m_pBox;
 	m_pSphere = pStaticdMesh->m_pSphere;
 
 	m_vecVertaxies = pStaticdMesh->m_vecVertaxies;
 	m_vecPNTVertaxies = pStaticdMesh->m_vecPNTVertaxies;
+
+	//if (m_ShadeType == E_SHADER_MAP)
+	//{
+	//	SetShaderTexture();
+	//	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
+	//}
+	//else
+	//{
+	//	m_pEffect = NULL;
+	//}
 }
 
 
@@ -33,7 +45,6 @@ cStaticMesh::~cStaticMesh()
 
 HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 {
-	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
 
 
 	std::string sFullPath(szFolder);
@@ -143,11 +154,51 @@ void cStaticMesh::Update()
 
 void cStaticMesh::Render()
 {
-	for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+	//if (m_ShadeType == E_SHADER_MAP)
+	//{
+	//	D3DXMATRIXA16 matView, mInvView, matProjection,matWorld;
+	//	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+	//	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+	//	D3DXMatrixIdentity(&matWorld);
+	//	D3DXMatrixInverse(&mInvView, 0, &matView);
+	//	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+	//	D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+	//	for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+	//	{
+	//		//m_pEffect->SetMatrix("gWorldMatrix", &matWorld);
+	//		m_pEffect->SetMatrix("gViewMatrix", &matView);
+	//		m_pEffect->SetMatrix("gProjectionMatrix", &matProjection);
+	//		m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
+	//		m_pEffect->SetVector("gWorldCameraPosition ", &D3DXVECTOR4(vEye, 1.0f));
+
+	//		m_pEffect->SetVector("gLightColor", &D3DXVECTOR4(0.7f, 0.7f, 1.0f, 1.0f));
+	//		m_pEffect->SetTexture("DiffuseMap_Tex", m_DiffuseTex);
+	//		m_pEffect->SetTexture("SpecularMap_Tex", m_SpecularTex);
+
+	//		UINT numPasses = 0;
+	//		m_pEffect->Begin(&numPasses, NULL);
+	//		for (INT j = 0; j < numPasses; ++j)
+	//		{
+	//			m_pEffect->BeginPass(j);
+	//			/*g_pD3DDevice->SetTexture(0, vecTexture[i]);
+	//			g_pD3DDevice->SetMaterial(&vecMaterial[i]);*/
+	//			m_pMesh->DrawSubset(i);
+	//			
+	//			m_pEffect->EndPass();
+	//		}
+	//		m_pEffect->End();
+	//
+	//	}
+	//}
+	//else
 	{
-		g_pD3DDevice->SetTexture(0, vecTexture[i]);
-		g_pD3DDevice->SetMaterial(&vecMaterial[i]);
-		m_pMesh->DrawSubset(i);
+		for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+		{
+			g_pD3DDevice->SetTexture(0, vecTexture[i]);
+			g_pD3DDevice->SetMaterial(&vecMaterial[i]);
+			m_pMesh->DrawSubset(i);
+		}
 	}
 }
 
@@ -158,5 +209,15 @@ void cStaticMesh::Release()
 	SAFE_RELEASE(m_pSubSetBuffer);
 	SAFE_RELEASE(m_VB);
 	SAFE_RELEASE(m_IB);
+	SAFE_RELEASE(m_pEffect);
+	SAFE_RELEASE(m_DiffuseTex);
+	SAFE_RELEASE(m_SpecularTex);
 	cMesh::Release();
+}
+
+void cStaticMesh::SetShaderTexture()
+{
+	m_DiffuseTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Diff.tga");
+
+	m_SpecularTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Spec.tga");
 }
