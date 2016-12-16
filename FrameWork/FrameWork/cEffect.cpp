@@ -10,10 +10,13 @@ cEffect::cEffect()
 	, m_nCurrentFrame(0)
 	, m_fPassedTime(0.0f)
 	, m_fNextTime(0.05f)
+	, m_fRemoveTime(3.0f)
+	, m_fRemovePassedTime(0.0f)
 	, m_nMaxFrameX(0)
 	, m_nMaxFrameY(0)
 	, m_nMaxFrame(0)
 	, m_bLoop(false)
+	, m_bEnd(false)
 	, m_bProcess(false)
 	, m_vPosition(0.0f, 0.0f, 0.0f)
 	, m_fAngle(0.0f)
@@ -169,6 +172,13 @@ void cEffect::Update()
 	if (m_bProcess)
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+
+		if (m_bEnd)
+		{
+			m_fRemovePassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			if (m_fRemovePassedTime >= m_fRemoveTime)
+				Stop();
+		}
 	}
 }
 
@@ -209,6 +219,15 @@ void cEffect::Render()
 			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
 			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
 		}
+		else if (!m_bLoop)
+		{
+			if (m_fPassedTime >= m_fRemoveTime)
+			{
+				Stop();
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+				return;
+			}
+		}
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
 			D3DXMatrixInverse(&matWorld, 0, &matView);
@@ -221,11 +240,13 @@ void cEffect::Render()
 		else
 		{
 			D3DXMATRIXA16 matR, matT;
-			D3DXMatrixRotationX(&matR, m_fAngle);
+	//		D3DXMatrixRotationX(&matR, m_fAngle);
 			D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
-			matWorld = matWorld * matR * matT;
+			matWorld = matWorld * m_matRotation * matT;
 		}
+
+		
 
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
@@ -236,8 +257,11 @@ void cEffect::Render()
 		mat = matWorld * matView * matProj;
 
 		m_pEffect->SetMatrix("g_matWVP", &mat);
-		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
 		m_pEffect->SetFloat("g_fAlpha", m_fAlpha);
+		m_pEffect->SetFloat("g_fPassedTime", m_fPassedTime);
+
+		if (m_bEnd)
+			m_pEffect->SetFloat("g_fRemoveRatio", m_fRemovePassedTime / m_fRemoveTime);
 
 		//if (m_pTexture)
 		//	m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
@@ -261,6 +285,7 @@ void cEffect::Render()
 		}
 		m_pEffect->End();
 
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
@@ -299,7 +324,9 @@ void cEffect::Start()
 void cEffect::Stop()
 {
 	m_bProcess = false;
+	m_bEnd = false;
 	m_fPassedTime = 0.0f;
+	m_fRemovePassedTime = 0.0f;
 	m_nCurrentFrame = 0;
 }
 
@@ -370,8 +397,15 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_FRAMEADD:
 		m_pEffect->SetTechnique("FrameAdd");
 		break;
-	case E_TECH_Orca1:
+	case E_TECH_ORCA1:
 		m_pEffect->SetTechnique("Orca1");
+		break;
+	case E_TECH_ORCA1_Remove:
+		m_bEnd = true;
+		m_pEffect->SetTechnique("Orca1_Remove");
+		break;
+	case E_TECH_ORCA2:
+		m_pEffect->SetTechnique("Orca2");
 		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");

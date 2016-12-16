@@ -5,7 +5,7 @@
 class cStuff :public cStaticObj
 {
 private:
-
+	D3DXMATRIXA16 matWorld;
 
 public:
 	cStuff(char* szFolder, char* szFilename);

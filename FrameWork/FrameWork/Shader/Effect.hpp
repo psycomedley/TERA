@@ -4,6 +4,7 @@ texture		DiffuseMap_Tex2;
 texture		DiffuseMap_Tex3;
 texture		BumpMap_Tex;
 float		g_fPassedTime;
+float		g_fRemoveRatio;
 float		g_fAlpha;
 
 
@@ -217,8 +218,6 @@ float4 ps_orcaSkill1(VS_OUTPUT Input) : COLOR
 
 float4 ps_orcaSkill1_1(VS_OUTPUT Input) : COLOR
 {
-	float2 uv = float2(Input.mUV.x, Input.mUV.y /*+ g_fPassedTime * 0.2*/);
-
 	float4 base = tex2D(DiffuseSampler2, Input.mUV);
 
 	base.r = base.r * 0.5;
@@ -230,8 +229,6 @@ float4 ps_orcaSkill1_1(VS_OUTPUT Input) : COLOR
 
 float4 ps_orcaSkill1_2(VS_OUTPUT Input) : COLOR
 {
-	float2 uv = float2(Input.mUV.x, Input.mUV.y /*+ g_fPassedTime * 0.2*/);
-
 	float4 base = tex2D(DiffuseSampler3, Input.mUV);
 
 //	base.r = base.r * 0.5;
@@ -241,18 +238,83 @@ float4 ps_orcaSkill1_2(VS_OUTPUT Input) : COLOR
 	return base;
 }
 
+float4 ps_orcaSkill1_Remove(VS_OUTPUT Input) : COLOR
+{
+	float2 uv = float2(Input.mUV.x + g_fPassedTime * 0.2, Input.mUV.y);
+	float3 normal;
+
+	normal = tex2D(BumpSampler, uv);
+
+	float4 base = tex2D(DiffuseSampler, Input.mUV.xy + 0.03 * normal.xy);
+
+	base.r = base.r * 0.5;
+	base.g = base.g * 0.125;
+	base.b = base.b * 4;
+
+	base.rgb = base.rgb - (base.rgb * g_fRemoveRatio);
+
+	return base;
+}
+
+float4 ps_orcaSkill1_Remove_1(VS_OUTPUT Input) : COLOR
+{
+	float4 base = tex2D(DiffuseSampler2, Input.mUV);
+
+	base.r = base.r * 0.5;
+	base.g = base.g * 0.5;
+	base.b = base.b * 2;
+
+	base.rgb = base.rgb - (base.rgb * g_fRemoveRatio);
+
+	return base;
+}
+
+float4 ps_orcaSkill1_Remove_2(VS_OUTPUT Input) : COLOR
+{
+	float4 base = tex2D(DiffuseSampler3, Input.mUV);
+
+	base.rgb = base.rgb - (base.rgb * g_fRemoveRatio);
+
+	return base;
+}
+
+//--------------------------------------------------------------//
+// Decrease Alpha Shader
+//--------------------------------------------------------------//
+
+float4 ps_DecAlpha(VS_OUTPUT Input) : COLOR
+{
+	float2 uv = float2(Input.mUV.x, Input.mUV.y);
+
+	float4 base = tex2D(DiffuseSampler, Input.mUV);
+
+	base.rgb = base.rgb - (base.rgb * g_fRemoveRatio);
+	return base;
+}
+
 //--------------------------------------------------------------//
 // Test Shader
 //--------------------------------------------------------------//
 
-float4 ps_test(VS_OUTPUT Input) : COLOR
+float4 ps_orcaSkill2(VS_OUTPUT Input) : COLOR
 {
-	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
-	float4 albedo2 = tex2D(DiffuseSampler2, Input.mUV);
+	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
+	float4 base;
+	float4 Output;
+	if (g_fPassedTime >= 1.2)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 6 + float2(0.5, 0.5));
+		Output.rgb = base2 - (g_fPassedTime - 1.2);
+	}
+	else
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (30 - g_fPassedTime * 20) + float2(0.5, 0.5));
+		Output.rgb = base2;
+	}
+	Output.a = base;
 
-	return ((albedo + albedo2) / 2);
+	return Output;
 }
-
 
 //--------------------------------------------------------------//
 // Technique Section for NormalShader
@@ -351,6 +413,74 @@ technique Orca1
 }
 
 //--------------------------------------------------------------//
+// Technique Section for Orca Skill1 Remove
+//--------------------------------------------------------------//
+technique Orca1_Remove
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaSkill1_Remove();
+	}
+	pass Pass_1
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaSkill1_Remove_1();
+	}
+	pass Pass_2
+	{
+		VertexShader = compile vs_2_0 vs_FrameAdd();
+		PixelShader = compile ps_2_0 ps_orcaSkill1_Remove_2();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for Orca Skill2
+//--------------------------------------------------------------//
+technique Orca2
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaSkill2();
+	}
+}
+
+
+
+//--------------------------------------------------------------//
+// Test Shader
+//--------------------------------------------------------------//
+
+float4 ps_test(VS_OUTPUT Input) : COLOR
+{
+	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
+	float4 base;
+	float4 Output;
+	if (g_fPassedTime >= 0.5)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 2 + float2(0.5, 0.5 - g_fPassedTime * 0.2));
+//		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 7 + float2(0.5, 0.5));
+		Output.rgb = base2 - (g_fPassedTime - 0.5);
+	}
+	else
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (3 - g_fPassedTime * 2) + float2(0.5, 0.5 - g_fPassedTime * 0.2));
+		Output.rgb = base2;
+	}
+
+
+	/*float4 base = tex2D(DiffuseSampler, Input.mUV);
+	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
+
+	float4 Output;
+	Output.rgb = base2;*/
+	Output.a = base;
+
+	return Output;
+}
+
+//--------------------------------------------------------------//
 // Technique Section for Test
 //--------------------------------------------------------------//
 technique Test
@@ -361,3 +491,7 @@ technique Test
 		PixelShader = compile ps_2_0 ps_test();
 	}
 }
+
+
+
+

@@ -26,6 +26,8 @@ private:
 	int							m_nCurrentFrame;
 	float						m_fPassedTime;
 	SYNTHESIZE(float, m_fNextTime, NextTime);
+	SYNTHESIZE(float, m_fRemoveTime, RemoveTime);
+	float						m_fRemovePassedTime;
 
 	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
 
@@ -33,10 +35,11 @@ private:
 	SYNTHESIZE(float, m_fAlpha, Alpha);
 
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRotation, MatRotation);
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
-protected:
 	SYNTHESIZE(bool, m_bLoop, Loop);
+	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire

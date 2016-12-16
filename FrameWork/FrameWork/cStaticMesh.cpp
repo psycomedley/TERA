@@ -33,6 +33,9 @@ cStaticMesh::~cStaticMesh()
 
 HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 {
+	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
+
+
 	std::string sFullPath(szFolder);
 	sFullPath += std::string("/");
 	sFullPath += std::string(szFile);
