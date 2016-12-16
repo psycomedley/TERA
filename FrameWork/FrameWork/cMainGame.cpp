@@ -414,6 +414,10 @@ void cMainGame::Render()
 ////		if (GETSINGLE())
 //	}
 
+	if (m_pMap)
+		m_pMap->Render();
+	m_pGrid->Render();
+
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();
@@ -422,12 +426,9 @@ void cMainGame::Render()
 
 	GETSINGLE(cUIMgr)->Render();
 
-//	if (m_pMap)
-//		m_pMap->Render();
 
 	///////////////юс╫ц////////////////
 	
-	m_pGrid->Render();
 
 
 

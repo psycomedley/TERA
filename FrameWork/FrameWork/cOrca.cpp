@@ -66,7 +66,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(10, 100);
+	m_skillLongMove.SetInfo(60, 100);
 	m_skillLongMove.sSpeech = "나의 속도를 쬐끔만 느껴보아라!!";
 	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
@@ -205,12 +205,12 @@ void cOrca::Update()
 					}
 				}
 			}
-			//if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
-			//{
-			//	//나중에 일정 체력 이하일 때로 변경 50%, 25%
-			//	LongMove();
-			//}
-			/*else*/ if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
+			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
+			{
+				//나중에 일정 체력 이하일 때로 변경 50%, 25%
+				LongMove();
+			}
+			else if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
 			{
 				m_skillHeavyAtk.fPassedTime = 0.0f;
 				LookTarget();
