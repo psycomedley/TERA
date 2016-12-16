@@ -24,12 +24,53 @@ cEffect::cEffect()
 	, m_nOffsetY(1)
 {
 	D3DXMatrixIdentity(&m_matScale);
+	D3DXMatrixIdentity(&m_matRotation);
 }
 
 
 cEffect::~cEffect()
 {
-	SAFE_RELEASE(m_pVB);
+}
+
+
+cEffect::cEffect(cEffect* pEffect)
+{
+	m_sName = pEffect->m_sName;
+	m_fWidth = pEffect->m_fWidth;
+	m_fHeight = pEffect->m_fHeight;
+	m_fAlpha = pEffect->m_fAlpha;
+	m_nOption = pEffect->m_nOption;
+
+	Setup(m_fWidth, m_fHeight, m_fAlpha, m_nOption);
+
+	m_pTexture = pEffect->m_pTexture;
+	m_pTexture2 = pEffect->m_pTexture2;
+	m_pTexture3 = pEffect->m_pTexture3;
+	m_pBumpMap = pEffect->m_pBumpMap;
+
+	m_nMaxFrameX = pEffect->m_nMaxFrameX;
+	m_nMaxFrameY = pEffect->m_nMaxFrameY;
+	m_nMaxFrame = pEffect->m_nMaxFrame;
+
+	m_nOffsetX = pEffect->m_nOffsetX;
+	m_nOffsetY = pEffect->m_nOffsetY;
+	m_fRatioX = pEffect->m_fRatioX;
+	m_fRatioY = pEffect->m_fRatioY;
+
+	m_nCurrentFrame = 0;
+	m_fPassedTime = 0.0f;
+	m_fRemovePassedTime = 0.0f;
+	m_fNextTime = pEffect->m_fNextTime;
+	m_fRemoveTime = pEffect->m_fRemoveTime;
+
+	m_eTechnique = pEffect->m_eTechnique;
+
+	m_fAngle = pEffect->m_fAngle;
+	m_matScale = pEffect->m_matScale;
+
+	m_bLoop = pEffect->m_bLoop;
+	m_bEnd = false;
+	m_bProcess = true;
 }
 
 
@@ -289,6 +330,12 @@ void cEffect::Render()
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
+}
+
+
+void cEffect::Release()
+{
+	SAFE_RELEASE(m_pVB);
 }
 
 

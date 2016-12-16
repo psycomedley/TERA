@@ -13,3 +13,4 @@
 #include "cTextMgr.h"
 #include "cCameraMgr.h"
 #include "cUIMgr.h"
+#include "cEffectMgr.h"

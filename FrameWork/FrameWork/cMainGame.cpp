@@ -34,10 +34,10 @@ cMainGame::~cMainGame()
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
 
-	SAFE_DELETE(m_pEffect);
-	SAFE_DELETE(m_pEffect2);
+	SAFE_RELEASE(m_pEffect);
+	SAFE_RELEASE(m_pEffect2);
+	SAFE_RELEASE(m_pEffect3);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_DELETE(m_pEffect3);
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
@@ -217,6 +217,7 @@ HRESULT cMainGame::Setup()
 
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "그아아앗", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
+	SetEffect();
 	SetUI();
 
 	///////////////////////////////////
@@ -242,6 +243,7 @@ void cMainGame::Update()
 		GETSINGLE(cCameraMgr)->Update();
 
 		GETSINGLE(cTextMgr)->Update();
+
 
 		GETSINGLE(cUIMgr)->Update();
 	}
@@ -275,6 +277,13 @@ void cMainGame::Update()
 		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
+			D3DXVECTOR3 pos = D3DXVECTOR3(20, 2, 10);
+			D3DXMATRIXA16 m, m2, rot;
+			D3DXMatrixRotationX(&m, D3DX_PI / 2);
+			D3DXMatrixRotationY(&m2, D3DX_PI / 4);
+			rot = m * m2;
+//			D3DXMatrixIdentity(&rot);
+			GETSINGLE(cEffectMgr)->AddList("orcaAtk", pos, rot);
 		//	m_pEffect2->SetTechnique(E_TECH_Orca1_Remove);
 		}
 
@@ -314,6 +323,7 @@ void cMainGame::Update()
 //	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //m_pDynamicMeshEffect->Setup();
 
+	GETSINGLE(cEffectMgr)->Update();
 	if (m_pEffect)
 		m_pEffect->Update();
 	if (m_pEffect2)
@@ -384,10 +394,12 @@ void cMainGame::Render()
 
 	GETSINGLE(cTextMgr)->Render();
 
+	GETSINGLE(cEffectMgr)->Render();
+
 	GETSINGLE(cUIMgr)->Render();
 
-	if (m_pMap)
-		m_pMap->Render();
+//	if (m_pMap)
+//		m_pMap->Render();
 
 	///////////////임시////////////////
 	
@@ -460,6 +472,7 @@ void cMainGame::Release()
 	GETSINGLE(cCameraMgr)->Release();
 	GETSINGLE(cUIMgr)->Release();
 	GETSINGLE(cShaderMgr)->Release();
+	GETSINGLE(cEffectMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
@@ -625,4 +638,62 @@ void cMainGame::SetShader()
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
 
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_MAP, "mapShader.fx");
+}
+
+
+void cMainGame::SetEffect()
+{
+	D3DXMATRIXA16 m, m2, m3;
+	cEffect* pEffect = new cEffect;
+	//오르카 스킬1
+	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	pEffect->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
+	pEffect->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
+	pEffect->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
+	pEffect->SetTotalFrame(4, 4, 16);
+	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
+	pEffect->SetTechnique(E_TECH_ORCA1);
+	pEffect->SetLoop(true);
+	pEffect->SetName("orca1");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//오르카 스킬2
+	pEffect = new cEffect;
+	pEffect->Setup(200, 200, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
+	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
+	pEffect->SetTechnique(E_TECH_ORCA2);
+
+	//m_pEffect2->SetAngle(D3DX_PI / 2);
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+
+	pEffect->SetLoop(false);
+	pEffect->SetRemoveTime(2.4);
+	pEffect->SetName("orca2");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//오르카 평타
+	pEffect = new cEffect;
+	pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/B_160Trail001_emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
+	pEffect->SetTechnique(E_TECH_TEST);
+
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
+	m3 = m * m2;
+	pEffect->SetMatRotation(m3);
+	//	m_pEffect2->SetAngle(D3DX_PI / 2);
+	//	m_pEffect2->SetLoop(false);
+	pEffect->SetRemoveTime(3);
+	pEffect->SetName("orcaAtk");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 }

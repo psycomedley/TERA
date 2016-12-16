@@ -3,6 +3,7 @@ class cPlayer;
 class cEffect
 {
 private:
+	SYNTHESIZE(string, m_sName, Name);
 	vector<ST_PCT_VERTEX>		m_vecVertex;
 	LPDIRECT3DTEXTURE9			m_pTexture;
 	LPDIRECT3DTEXTURE9			m_pTexture2;
@@ -42,6 +43,10 @@ private:
 	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
+private:
+	float m_fWidth;
+	float m_fHeight;
+
 	//std::vector<ST_PCT_VERTEX> m_vecVertex1;	//fire
 	//std::vector<ST_PCT_VERTEX> m_vecVertex2;	//attack
 
@@ -68,11 +73,13 @@ public:
 		bool bLoop = false, float fAlpha = 1.0f, int nMaxFrame = 0);
 	void	Update();
 	void	Render();
+	void	Release();
 
 	void	UpdateUV();
 
 public:
 	cEffect();
+	cEffect(cEffect* pEffect);
 	~cEffect();
 
 protected:
