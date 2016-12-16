@@ -142,6 +142,9 @@
     <Filter Include="소스 파일\19.Effect\RushEffect">
       <UniqueIdentifier>{ffeee2b2-3580-44a2-8ec1-4d784e8400df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\19.Effect\StraightEffect">
+      <UniqueIdentifier>{a5b76a47-e5d1-465c-a486-aa0aa3842ad5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -399,6 +402,9 @@
     <ClInclude Include="cRushEffect.h">
       <Filter>소스 파일\19.Effect\RushEffect</Filter>
     </ClInclude>
+    <ClInclude Include="cStraightEffect.h">
+      <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -631,6 +637,9 @@
     </ClCompile>
     <ClCompile Include="cRushEffect.cpp">
       <Filter>소스 파일\19.Effect\RushEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="cStraightEffect.cpp">
+      <Filter>소스 파일\19.Effect\StraightEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
