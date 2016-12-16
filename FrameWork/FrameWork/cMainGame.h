@@ -41,6 +41,7 @@ private:
 	cEffect*			m_pEffect;
 	cEffect*			m_pEffect2;
 	cEffect*			m_pEffect3;
+	cEffect*			m_pEffect4;
 
 	cDynamicMeshEffect*	m_pDynamicMeshEffect;
 	cCircleEffect*		m_pCircleEffect;
