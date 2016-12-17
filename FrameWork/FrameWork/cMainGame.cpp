@@ -79,6 +79,9 @@ HRESULT cMainGame::Setup()
 	}
 
 	SetShader();
+	SetEffect();
+	SetUI();
+	SetLighting();
 
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
 	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
@@ -227,12 +230,10 @@ HRESULT cMainGame::Setup()
 
 
 
-	SetLighting();
+
 
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "±×¾Æ¾Æ¾Ñ", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
-	SetEffect();
-	SetUI();
 
 	///////////////////////////////////
 
@@ -562,14 +563,14 @@ void cMainGame::SetUI()
 	ui2->SetColor(XRED);
 	//	ui2->SetScaleX(0.5f);
 	ui2->SetSprite(pSprite);
-	ui2->SetTag(1);
+	ui2->SetTag(E_UITAG_HP);
 	ui->AddChild(ui2);
 
 	cUITextView* ui3 = new cUITextView;
 	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
 	ui3->SetSize(ST_SIZE(100, 56));
 	ui3->SetPosition(D3DXVECTOR3(223, 0, 0));
-	ui3->SetTag(2);
+	ui3->SetTag(E_UITAG_HPTEXT);
 	ui->AddChild(ui3);
 
 	//	m_pUIBossHp = ui;
@@ -603,17 +604,17 @@ void cMainGame::SetUI()
 	pUI3->SetPosition(D3DXVECTOR3(6, 13, 0));
 	pUI3->SetScaleX(1.5);
 	pUI3->SetScaleY(1.5);
-	pUI3->SetTag(1);
+	pUI3->SetTag(E_UITAG_HP);
 	pUI3->SetSprite(pSprite);
 	pUI->AddChild(pUI3);
 
-	////HP Text
-	//cUITextView* pUI4 = new cUITextView;
-	//pUI4->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
-	//pUI4->SetSize(ST_SIZE(100, 56));
-	//pUI4->SetPosition(D3DXVECTOR3(20, 0, 0));
-	//pUI4->SetTag(2);
-	//pUI->AddChild(pUI4);
+	//HP Text
+	cUITextView* pUI4 = new cUITextView;
+	pUI4->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI4->SetSize(ST_SIZE(400, 56));
+	pUI4->SetPosition(D3DXVECTOR3(36, -3, 0));
+	pUI4->SetTag(E_UITAG_HPTEXT);
+	pUI->AddChild(pUI4);
 
 	//MP
 	cUIImageView* pUI5 = new cUIImageView;
@@ -621,15 +622,35 @@ void cMainGame::SetUI()
 	pUI5->SetPosition(D3DXVECTOR3(6, pUI->GetSize().fHeight + 13, 0));
 	pUI5->SetScaleX(1.5);
 	pUI5->SetScaleY(1.5);
-	pUI5->SetTag(3);
+	pUI5->SetTag(E_UITAG_MP);
 	pUI5->SetSprite(pSprite);
 	pUI->AddChild(pUI5);
 
+	//MP Text
+	cUITextView* pUI6 = new cUITextView;
+	pUI6->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI6->SetSize(ST_SIZE(400, 56));
+	pUI6->SetPosition(D3DXVECTOR3(36, 29, 0));
+	pUI6->SetTag(E_UITAG_MPTEXT);
+	pUI->AddChild(pUI6);
 
+	//Text
+	cUITextView* pUI7 = new cUITextView;
+	pUI7->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI7->SetSize(ST_SIZE(55, 56));
+	pUI7->SetText("HP");
+	pUI7->SetPosition(D3DXVECTOR3(0, -3, 0));
+	pUI->AddChild(pUI7);
+
+	pUI7 = new cUITextView;
+	pUI7->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI7->SetSize(ST_SIZE(55, 56));
+	pUI7->SetText("MP");
+	pUI7->SetPosition(D3DXVECTOR3(0, 29, 0));
+	pUI->AddChild(pUI7);
 
 	//	m_pUIPlayerHp = pUI;
 	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
-	GETSINGLE(cUIMgr)->AddList("Player");
 
 	SAFE_RELEASE(pSprite);
 }

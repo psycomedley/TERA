@@ -11,6 +11,8 @@
 #include "cStateDeath.h"
 #include "cAnimationController.h"
 #include "cCamera.h"
+#include "cUITextView.h"
+#include "cUIImageView.h"
 
 
 cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, szFilename)
@@ -30,6 +32,11 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	//Head
 
 	SetBoundingPos();
+	SetupStatus();
+
+	GETSINGLE(cUIMgr)->AddList("Player");
+	m_pUIHp = GETSINGLE(cUIMgr)->GetUIInList("Player");
+
 	//юс╫ц
 	SetupBaseWeapon();
 	SetupState();
@@ -47,6 +54,9 @@ cPlayer::cPlayer()
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
 {
+	SetupStatus();
+	GETSINGLE(cUIMgr)->AddList("Player");
+	m_pUIHp = GETSINGLE(cUIMgr)->GetUIInList("Player");
 }
 
 
@@ -306,6 +316,7 @@ void cPlayer::CheckControl()
 
 void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
+	UpdateUI();
 	CheckState();
 	m_pState->Update();
 	CheckControl();
@@ -360,4 +371,35 @@ void cPlayer::SetScale(D3DXVECTOR3 vScale)
 	cGameObject::SetScale(vScale);
 //	m_pLeftWeapon->SetScale(vScale);
 //	m_pRightWeapon->SetScale(vScale);
+}
+
+
+void cPlayer::UpdateUI()
+{
+	float fHpRatio = m_stInfo.fHp / m_stInfo.fMaxHp;
+	float fMpRatio = m_stInfo.fMp / m_stInfo.fMaxMp;
+
+	char szStr[16] = { '\0', };
+	//HP
+	sprintf_s(szStr, sizeof(szStr), "%.0f / %.0f", m_stInfo.fHp, m_stInfo.fMaxHp);
+	((cUITextView*)m_pUIHp->FindChildByTag(E_UITAG_HPTEXT))->SetText(szStr);
+	((cUIImageView*)m_pUIHp->FindChildByTag(E_UITAG_HP))->SetScaleX(fHpRatio * 1.5f);
+	//MP
+	sprintf_s(szStr, sizeof(szStr), "%.0f / %.0f", m_stInfo.fMp, m_stInfo.fMaxMp);
+	((cUITextView*)m_pUIHp->FindChildByTag(E_UITAG_MPTEXT))->SetText(szStr);
+	((cUIImageView*)m_pUIHp->FindChildByTag(E_UITAG_MP))->SetScaleX(fMpRatio * 1.5f);
+}
+
+
+void cPlayer::SetupStatus()
+{
+	m_stInfo.sName = "Player";
+
+	m_stInfo.fMaxHp = 2438;
+	m_stInfo.fHp = m_stInfo.fMaxHp;
+	m_stInfo.fMaxMp = 1100;
+	m_stInfo.fMp = m_stInfo.fMaxMp;
+
+	m_stInfo.fDamage = 10.0f;
+	m_stInfo.fDefence = 10.0f;
 }

@@ -549,30 +549,13 @@ technique MagicArray
 
 float4 ps_test(VS_OUTPUT Input) : COLOR
 {
-	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
-	float4 base;
-	float4 Output;
-	if (g_fPassedTime >= 0.5)
-	{
-		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 2 + float2(0.5, 0.5 - g_fPassedTime * 0.2));
-//		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 7 + float2(0.5, 0.5));
-		Output.rgb = base2 - (g_fPassedTime - 0.5);
-	}
-	else
-	{
-		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (3 - g_fPassedTime * 2) + float2(0.5, 0.5 - g_fPassedTime * 0.2));
-		Output.rgb = base2;
-	}
+	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
 
-
-	/*float4 base = tex2D(DiffuseSampler, Input.mUV);
-	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
-
-	float4 Output;
-	Output.rgb = base2;*/
-	Output.a = base;
-
-	return Output;
+//	albedo.r = albedo.r * 0.5;
+//	albedo.g = albedo.g * 0.5;
+//	albedo.b = albedo.b * 2;
+//	albedo = 1;
+	return albedo;
 }
 
 //--------------------------------------------------------------//
