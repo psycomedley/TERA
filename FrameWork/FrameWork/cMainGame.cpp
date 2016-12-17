@@ -213,7 +213,7 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStuff("Object/³ª¹µÀÙ","Leaf1.x");
+	m_cObjectTree = new cStuff("Object","tree1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
@@ -414,11 +414,12 @@ void cMainGame::Render()
 //		}
 ////		if (GETSINGLE())
 //	}
-
+	
 	if (m_pMap)
 		m_pMap->Render();
 	m_pGrid->Render();
-
+	if (m_cObjectTree)
+		m_cObjectTree->Render();
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();
@@ -475,8 +476,7 @@ void cMainGame::Render()
 
 
 	
-//	if (m_cObjectTree)
-//		m_cObjectTree->Render();
+
 	
 
 	///////////////////////////////////
