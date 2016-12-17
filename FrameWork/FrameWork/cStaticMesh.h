@@ -32,7 +32,7 @@ public:
 
 	vector<D3DXVECTOR3>* GetVecVertaxies(){ return &m_vecVertaxies; }
 	vector<ST_PNT_VERTEX>* GetVecPNTVertaxies(){ return &m_vecPNTVertaxies; }
-	DWORD GetStaticMeshFVF(){ return m_pMesh->GetFVF(); }
+	
 protected:
 	cStaticMesh();
 	virtual HRESULT Load(char* szDirectory, char* szFilename) override;

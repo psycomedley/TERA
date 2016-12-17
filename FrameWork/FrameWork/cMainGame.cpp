@@ -418,16 +418,18 @@ void cMainGame::Render()
 	if (m_pMap)
 		m_pMap->Render();
 	m_pGrid->Render();
-	if (m_cObjectTree)
-		m_cObjectTree->Render();
+	
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();
 
 	GETSINGLE(cEffectMgr)->Render();
 
-	GETSINGLE(cUIMgr)->Render();
+	if (m_cObjectTree)
+		m_cObjectTree->Render();
 
+	GETSINGLE(cUIMgr)->Render();
+	
 
 	///////////////юс╫ц////////////////
 	
