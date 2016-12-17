@@ -68,8 +68,8 @@ void cStateBossSkill::Update()
 		{
 		case 0:
 		{
-			D3DXVECTOR3 vec = m_pParent->GetDirection();
-			vec.y = 0.1f;
+			D3DXVECTOR3 vec = m_pParent->GetPosition();
+//			vec.y = 0.1f;
 			D3DXMATRIXA16 matR;
 			D3DXMatrixRotationX(&matR, D3DX_PI / 2);
 			GETSINGLE(cEffectMgr)->AddList("MagicArray", vec, matR);

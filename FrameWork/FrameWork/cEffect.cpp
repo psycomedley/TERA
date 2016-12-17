@@ -298,7 +298,8 @@ void cEffect::Render()
 
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-		
+		g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, false);
+
 		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
 		
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
@@ -333,6 +334,7 @@ void cEffect::Render()
 		}
 		m_pEffect->End();
 
+		g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
