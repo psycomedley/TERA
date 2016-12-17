@@ -10,11 +10,6 @@ protected:
 	LPD3DXBUFFER				m_pSubSetBuffer;
 	DWORD						m_dwSubSetCnt;
 
-	LPD3DXEFFECT				m_pEffect;
-	LPDIRECT3DTEXTURE9			m_DiffuseTex;
-	LPDIRECT3DTEXTURE9			m_SpecularTex;
-	E_SHADER_TYPE				m_ShadeType;
-
 	LPD3DXMATERIAL				m_pMaterials;
 	vector<LPDIRECT3DTEXTURE9>	vecTexture;
 	vector<D3DMATERIAL9>		vecMaterial;
@@ -32,14 +27,12 @@ public:
 	virtual void Release();
 
 public:
-	cStaticMesh(char* szFolder, char* szFilename, E_SHADER_TYPE ShadeType = E_SHADER_TYPE_END);
+	cStaticMesh(char* szFolder, char* szFilename);
 	~cStaticMesh();
 
 	vector<D3DXVECTOR3>* GetVecVertaxies(){ return &m_vecVertaxies; }
 	vector<ST_PNT_VERTEX>* GetVecPNTVertaxies(){ return &m_vecPNTVertaxies; }
 	DWORD GetStaticMeshFVF(){ return m_pMesh->GetFVF(); }
-
-	void SetShaderTexture();
 protected:
 	cStaticMesh();
 	virtual HRESULT Load(char* szDirectory, char* szFilename) override;

@@ -78,11 +78,11 @@ void cMap::Render()
 	m_pEffect->SetMatrix("gWorldMatrix", &m_matWorld);
 	m_pEffect->SetMatrix("gViewMatrix", &matView);
 	m_pEffect->SetMatrix("gProjectionMatrix", &matProjection);
-	m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
-	m_pEffect->SetVector("gWorldCameraPosition ", &D3DXVECTOR4(0,-100,200.0f, 1.0f));
+	m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(-1500, 1000.0f, 1500.0f, 1.0f));
+	m_pEffect->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
 
-	m_pEffect->SetVector("gLightColor", &D3DXVECTOR4(0.7f, 0.7f, 1.0f, 1.0f));
-	//m_pEffect->SetTexture("DiffuseMap_Tex", m_DiffuseTex);
+	m_pEffect->SetVector("gLightColor", &D3DXVECTOR4(0.7f, 0.7f, 0.7f, 1.0f));
+	m_pEffect->SetTexture("DiffuseMap_Tex", m_DiffuseTex);
 	m_pEffect->SetTexture("SpecularMap_Tex", m_SpecularTex);
 
 	UINT numPasses = 0;

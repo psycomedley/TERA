@@ -39,7 +39,7 @@ cMainGame::~cMainGame()
 	SAFE_RELEASE(m_pEffect2);
 	SAFE_RELEASE(m_pEffect3);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_DELETE(m_pEffect4);
+	SAFE_RELEASE(m_pEffect4);
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
@@ -122,16 +122,16 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
 	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
 	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
-<<<<<<< HEAD
+
 	//m_pEffect->SetTechnique(E_TECH_BLUE);
 	m_pEffect->SetAngle(D3DX_PI / 2);
-=======
+
 	m_pEffect->SetTechnique(E_TECH_BLUE);
 //	m_pEffect->SetAngle(D3DX_PI / 2);
 	D3DXMATRIXA16 ma;
 	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
 	m_pEffect->SetMatRotation(ma);
->>>>>>> bf711b12bc61295e90ad33de3ac135a3aa50e5e7
+
 
 	m_pEffect2 = new cEffect;
 	//오르카 스킬1
@@ -423,8 +423,8 @@ void cMainGame::Render()
 
 	GETSINGLE(cUIMgr)->Render();
 
-//	if (m_pMap)
-//		m_pMap->Render();
+	if (m_pMap)
+		m_pMap->Render();
 
 	///////////////임시////////////////
 	
