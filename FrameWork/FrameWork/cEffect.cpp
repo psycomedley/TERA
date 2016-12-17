@@ -81,6 +81,8 @@ HRESULT cEffect::Setup(float fWidth, float fHeight, float fAlpha /*= 1.0f*/,
 
 	m_vecVertex.resize(6);
 
+	m_fWidth = fWidth;
+	m_fHeight = fHeight;
 	float fHalfWidth = fWidth / 2;
 	float fHalfHeight = fHeight / 2;
 	m_fAlpha = fAlpha;
@@ -218,7 +220,38 @@ void cEffect::Update()
 		{
 			m_fRemovePassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 			if (m_fRemovePassedTime >= m_fRemoveTime)
+			{
 				Stop();
+				return;
+			}
+		}
+
+		if (m_nOption & EFFECT_CUTTEDFRAME)
+		{
+			if (m_fPassedTime >= m_fNextTime)
+			{
+				//	m_fPassedTime -= m_fNextTime;
+				if (++m_nCurrentFrame >= m_nMaxFrame)
+				{
+					if (!m_bLoop)
+						Stop();
+					else
+						m_nCurrentFrame -= m_nMaxFrame;
+				}
+				UpdateUV();
+			}
+
+			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
+		}
+		else if (!m_bLoop)
+		{
+			if (m_fPassedTime >= m_fRemoveTime)
+			{
+				Stop();
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+				return;
+			}
 		}
 	}
 }
@@ -242,33 +275,7 @@ void cEffect::Render()
 			g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 			g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		}
-		if (m_nOption & EFFECT_CUTTEDFRAME)
-		{
-			if (m_fPassedTime >= m_fNextTime)
-			{
-			//	m_fPassedTime -= m_fNextTime;
-				if (++m_nCurrentFrame >= m_nMaxFrame)
-				{
-					if (!m_bLoop)
-						Stop();
-					else
-						m_nCurrentFrame -= m_nMaxFrame;
-				}
-				UpdateUV();
-			}
-
-			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
-			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
-		}
-		else if (!m_bLoop)
-		{
-			if (m_fPassedTime >= m_fRemoveTime)
-			{
-				Stop();
-				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-				return;
-			}
-		}
+		
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
 			D3DXMatrixInverse(&matWorld, 0, &matView);
@@ -454,9 +461,14 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_ORCA2:
 		m_pEffect->SetTechnique("Orca2");
 		break;
+	case E_TECH_BACKATK:
+		m_pEffect->SetTechnique("OrcaBackAtk");
+		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");
 		break;
+	case E_TECH_MAGICARRAY:
+		m_pEffect->SetTechnique("MagicArray");
 	default:
 		break;
 	}
