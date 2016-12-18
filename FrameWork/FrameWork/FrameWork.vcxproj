@@ -104,6 +104,7 @@
     <ClInclude Include="cDynamicObj.h" />
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectMgr.h" />
+    <ClInclude Include="cEffectThunderGlobe.h" />
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cFrustum.h" />
     <ClInclude Include="cGameObject.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="cDynamicObj.cpp" />
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectMgr.cpp" />
+    <ClCompile Include="cEffectThunderGlobe.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cFrustum.cpp" />
     <ClCompile Include="cFunction.cpp" />

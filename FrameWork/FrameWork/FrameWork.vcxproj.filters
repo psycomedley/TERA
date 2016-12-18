@@ -405,6 +405,9 @@
     <ClInclude Include="cStraightEffect.h">
       <Filter>소스 파일\19.Effect\StraightEffect</Filter>
     </ClInclude>
+    <ClInclude Include="cEffectThunderGlobe.h">
+      <Filter>소스 파일\19.Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -640,6 +643,9 @@
     </ClCompile>
     <ClCompile Include="cStraightEffect.cpp">
       <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="cEffectThunderGlobe.cpp">
+      <Filter>소스 파일\19.Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

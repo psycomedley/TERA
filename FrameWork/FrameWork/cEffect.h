@@ -2,7 +2,7 @@
 class cPlayer;
 class cEffect
 {
-private:
+protected:
 	SYNTHESIZE(string, m_sName, Name);
 	vector<ST_PCT_VERTEX>		m_vecVertex;
 	LPDIRECT3DTEXTURE9			m_pTexture;
@@ -44,7 +44,7 @@ private:
 	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
-private:
+protected:
 	float m_fWidth;
 	float m_fHeight;
 
