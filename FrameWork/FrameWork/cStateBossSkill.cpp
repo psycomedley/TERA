@@ -181,12 +181,18 @@ void cStateBossSkill::End()
 void cStateBossSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
 	if (animInfo.nIndex == E_BOSS_HEAVYATK_END ||
-		animInfo.nIndex == E_BOSS_LONGMOVE_END ||
 		animInfo.nIndex == E_BOSS_ATK1 ||
 		animInfo.nIndex == E_BOSS_ATK2 ||
 		animInfo.nIndex == E_BOSS_HEAVYATK2 ||
 		animInfo.nIndex == E_BOSS_BACKATK)
 	{
+		End();
+	}
+	else if (animInfo.nIndex == E_BOSS_LONGMOVE_END)
+	{
+//		D3DXVECTOR3 dir = m_pParent->GetDirection();
+		float angle = m_pParent->GetAngle();
+		m_pParent->SetPosition(m_pParent->GetPosition());
 		End();
 	}
 	else
