@@ -25,7 +25,6 @@
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
 	, m_cObjectTree(NULL)
-	, m_pEffect3(NULL)
 {
 }
 
@@ -36,9 +35,6 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pGrid);
 	SAFE_DELETE(m_cObjectTree);
 
-	SAFE_RELEASE(m_pEffect);
-	SAFE_RELEASE(m_pEffect2);
-	SAFE_RELEASE(m_pEffect3);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
 	SAFE_RELEASE(m_pEffect4);
 	
@@ -116,92 +112,8 @@ HRESULT cMainGame::Setup()
 	m_pGrid = new cGrid;
 	m_pGrid->Setup(30);
 
-	/*m_pBoss2 = new cMonster("Monster", "Orca.X");
-	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	m_pBoss2->SetRevision(matR);
-	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));*/
 
-	m_pEffect = new cEffect;
-//	m_pEffect->Setup("Effect/G_MagicArray002_Tex.tga", 20, 20, 1, 1, 0.01f, true);
-	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
-	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
-	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
-
-	//m_pEffect->SetTechnique(E_TECH_BLUE);
-	m_pEffect->SetAngle(D3DX_PI / 2);
-
-	m_pEffect->SetTechnique(E_TECH_BLUE);
-//	m_pEffect->SetAngle(D3DX_PI / 2);
-	D3DXMATRIXA16 ma;
-	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
-	m_pEffect->SetMatRotation(ma);
-
-
-	m_pEffect2 = new cEffect;
-	//오르카 스킬1
-	/*m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
-	m_pEffect2->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
-	m_pEffect2->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
-	m_pEffect2->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
-	m_pEffect2->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
-	m_pEffect2->SetTotalFrame(4, 4, 16);
-	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
-	m_pEffect2->SetTechnique(E_TECH_ORCA1);
-	m_pEffect2->SetLoop(true);*/
-
-	//오르카 스킬2
-	/*m_pEffect2->Setup(200, 200, 1, EFFECT_ALPHABLEND);
-	m_pEffect2->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
-	m_pEffect2->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
-	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
-	m_pEffect2->SetPosition(D3DXVECTOR3(20, 2, 10));
-	m_pEffect2->SetTechnique(E_TECH_ORCA2);
-
-	//m_pEffect2->SetAngle(D3DX_PI / 2);
-	D3DXMATRIXA16 m;
-	D3DXMatrixRotationX(&m, D3DX_PI / 2);
-	m_pEffect->SetMatRotation(m);
-
-	m_pEffect2->SetLoop(false);
-	m_pEffect2->SetRemoveTime(2.4);*/
-
-	//오르카 평타
-	m_pEffect2->Setup(20, 20, 1, EFFECT_ALPHABLEND);
-	m_pEffect2->SetTexture("Effect/B_160Trail001_emis.tga", E_TEXTURE1);
-	m_pEffect2->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
-	m_pEffect2->SetPosition(D3DXVECTOR3(20, 2, 10));
-	m_pEffect2->SetTechnique(E_TECH_TEST);
-
-	D3DXMATRIXA16 m, m2, m3;
-	D3DXMatrixRotationX(&m, D3DX_PI / 2);
-	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
-	m3 = m * m2;
-	m_pEffect2->SetMatRotation(m3);
-//	m_pEffect2->SetAngle(D3DX_PI / 2);
-//	m_pEffect2->SetLoop(false);
-	m_pEffect2->SetRemoveTime(200);
-
-	//m_pEffect2->Setup(20, 20);
-	//m_pEffect2->SetTexture("Effect/A_Gr001_emis.tga", E_TEXTURE1);
-	//m_pEffect2->SetTexture("Effect/A_Gra001_emis.tga", E_TEXTURE2);
-	//m_pEffect2->SetTexture("Effect/A_NorGr001_emis.tga", E_BUMPMAP);
-	//m_pEffect2->SetPosition(D3DXVECTOR3(10, 10, 10));
-	//m_pEffect2->SetTechnique(E_TECH_WAVE);
-
-
-	/*m_pEffect2->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING);
-	m_pEffect2->SetTexture("Effect/attack2.tga", E_TEXTURE1);
-	m_pEffect2->SetPosition(D3DXVECTOR3(20, 5, 10));
-	m_pEffect2->SetTechnique(E_TECH_FRAMEADD);
-	m_pEffect2->SetTotalFrame(4, 4, 16);*/
-
-
-
-	/*m_pEffect3 = new cEffect;
-	m_pEffect3->Setup(10, 10);
-	m_pEffect3->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE1);
-	m_pEffect3->SetPosition(D3DXVECTOR3(20, 5, 10));
-	m_pEffect3->SetTechnique(E_TECH_BLUE);*/
+	
 
 	m_pEffect4 = new cEffect;
 	m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
@@ -273,41 +185,6 @@ void cMainGame::Update()
 
 	if (IsActive())
 	{
-		if (KEYBOARD->IsOnceKeyDown(DIK_E))
-		{
-			if (m_pEffect->GetProcess())
-				m_pEffect->Stop();
-			else
-				m_pEffect->Start();
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-		{
-			if (m_pEffect2->GetProcess())
-			{
-				m_pEffect2->Stop();
-		//		m_pEffect3->Stop();
-			}
-			else
-			{
-			//	m_pEffect2->SetTechnique(E_TECH_Orca1);
-				m_pEffect2->Start();
-			//	m_pEffect3->Start();
-			}
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-		{
-			D3DXVECTOR3 pos = D3DXVECTOR3(20, 2, 10);
-			D3DXMATRIXA16 m, m2, rot;
-			D3DXMatrixRotationX(&m, D3DX_PI / 2);
-			D3DXMatrixRotationY(&m2, D3DX_PI / 4);
-			rot = m * m2;
-//			D3DXMatrixIdentity(&rot);
-			GETSINGLE(cEffectMgr)->AddList("orcaAtk", pos, rot);
-		//	m_pEffect2->SetTechnique(E_TECH_Orca1_Remove);
-		}
-
-//		if (KEYBOARD->IsOnceKeyDown(DIK_R))
-//			m_pEffect2->Start();
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 		{
 			//m_pDynamicMeshEffect->Start();
@@ -340,10 +217,6 @@ void cMainGame::Update()
 	SetWindowText(g_hWnd, str);
 
 
-	/*if (KEYBOARD->IsStayKeyDown(DIK_I))
-	{
-		m_pBoss->SetPosition(m_pBoss->GetPosition() - m_pBoss->GetDirection() * 0.1);
-	}*/
 
 	/*if (m_pBoss)
 		m_pBoss->Update();*/
@@ -351,12 +224,6 @@ void cMainGame::Update()
 //m_pDynamicMeshEffect->Setup();
 
 	GETSINGLE(cEffectMgr)->Update();
-	if (m_pEffect)
-		m_pEffect->Update();
-	if (m_pEffect2)
-		m_pEffect2->Update();
-	if (m_pEffect3)
-		m_pEffect3->Update();
 	if (m_pCircleEffect)
 	{
 		m_pCircleEffect->Update();
@@ -467,18 +334,7 @@ void cMainGame::Render()
 
 
 
-
-	if (m_pEffect)
-		m_pEffect->Render();
-	if (m_pEffect2)
-		m_pEffect2->Render();
-	if (m_pEffect3)
-		m_pEffect3->Render();
-
-
-
-
-
+	
 	
 
 	
@@ -720,7 +576,7 @@ void cMainGame::SetEffect()
 
 	//오르카 평타
 	pEffect = new cEffect;
-	pEffect->Setup(100, 100, 1, EFFECT_ALPHABLEND);
+	pEffect->Setup(150, 150, 1, EFFECT_ALPHABLEND);
 	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
