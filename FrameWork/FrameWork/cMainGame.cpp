@@ -121,16 +121,16 @@ HRESULT cMainGame::Setup()
 	m_pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
 	m_pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
 	m_pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
-<<<<<<< HEAD
+
 	//m_pEffect->SetTechnique(E_TECH_BLUE);
 	m_pEffect->SetAngle(D3DX_PI / 2);
-=======
+
 	m_pEffect->SetTechnique(E_TECH_BLUE);
 //	m_pEffect->SetAngle(D3DX_PI / 2);
 	D3DXMATRIXA16 ma;
 	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
 	m_pEffect->SetMatRotation(ma);
->>>>>>> bf711b12bc61295e90ad33de3ac135a3aa50e5e7
+
 
 	m_pEffect2 = new cEffect;
 	//오르카 스킬1
@@ -221,8 +221,8 @@ HRESULT cMainGame::Setup()
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
-	m_pRushEffect = new cRushEffect("Effect", "doubleStraightEffect.x");
-	m_pRushEffect->Setup(40000, 0.03f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
+	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
+	m_pRushEffect->Setup(40, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
 
 
 
@@ -298,14 +298,14 @@ void cMainGame::Update()
 			//m_pDynamicMeshEffect->Start();
 			//m_pCircleEffect->Start();
 			m_pRushEffect->Start();
-			if (m_pEffect4->GetProcess())
+			/*if (m_pEffect4->GetProcess())
 			{
 				m_pEffect4->Stop();
 			}
 			else
 			{
 				m_pEffect4->Start();
-			}
+			}*/
 		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
