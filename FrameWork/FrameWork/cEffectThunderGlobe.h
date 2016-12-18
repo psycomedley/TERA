@@ -4,7 +4,10 @@
 class cEffectThunderGlobe : public cEffect
 {
 public:
+	virtual void Start() override;
 
+public:
+	virtual void Update() override;
 
 public:
 	cEffectThunderGlobe();

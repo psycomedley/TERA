@@ -10,6 +10,7 @@
 #include "cOrca.h"
 #include "cGrid.h"
 #include "cEffect.h"
+#include "cEffectThunderGlobe.h"
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
@@ -699,7 +700,7 @@ void cMainGame::SetEffect()
 	D3DXMATRIXA16 m, m2, m3;
 	cEffect* pEffect = new cEffect;
 	//오르카 스킬1 (구체)
-	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME /*| EFFECT_LOOPEDFRAME*/);
 	pEffect->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
 	pEffect->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
@@ -707,8 +708,11 @@ void cMainGame::SetEffect()
 	pEffect->SetTotalFrame(4, 4, 16);
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
 	pEffect->SetTechnique(E_TECH_ORCA1);
+	pEffect->SetNextTechnique(E_TECH_ORCA1_Remove);
 	pEffect->SetLoop(true);
-	//pEffect->SetLoopTimes(10);
+	pEffect->SetRemoveTime(30.0f);
+	pEffect->SetLoopTimes(30);
+	pEffect->SetLeftLoopTimes(300);
 	pEffect->SetName("orca1");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);

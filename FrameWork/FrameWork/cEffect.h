@@ -31,6 +31,7 @@ protected:
 	float						m_fRemovePassedTime;
 
 	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
+	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eNextTechnique, NextTechnique);
 
 	SYNTHESIZE(float, m_fAngle, Angle);
 	SYNTHESIZE(float, m_fAlpha, Alpha);
@@ -41,6 +42,7 @@ protected:
 
 	SYNTHESIZE(bool, m_bLoop, Loop);
 	SYNTHESIZE(int, m_nLoopTimes, LoopTimes);
+	SYNTHESIZE(int, m_nLeftLoopTimes, LeftLoopTimes);
 	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
@@ -65,8 +67,8 @@ public:
 	void SetCurrentFrame(int nFrame);
 
 public:
-	void	Start();
-	void	Stop();
+	virtual void Start();
+	virtual void Stop();
 	void	Pause();
 
 	void	SetTexture(string sKey, E_EFFECT_TEXTURE eTex);
@@ -78,9 +80,9 @@ public:
 	HRESULT	Setup(string sPath, float fWidth, float fHeight,
 		int nMaxFrameX = 1, int nMaxFrameY = 1, float fNextTime = 0.1f,
 		bool bLoop = false, float fAlpha = 1.0f, int nMaxFrame = 0);
-	void	Update();
-	void	Render();
-	void	Release();
+	virtual void Update();
+	virtual void Render();
+	virtual void Release();
 
 	void	UpdateUV();
 
