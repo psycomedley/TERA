@@ -10,7 +10,6 @@
 #include "cOrca.h"
 #include "cGrid.h"
 #include "cEffect.h"
-#include "cEffectThunderGlobe.h"
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
@@ -119,6 +118,7 @@ HRESULT cMainGame::Setup()
 	m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
 	m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
 	m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
+	m_pEffect4->AddTechList(E_TECH_NORMAL);
 	D3DXMATRIXA16 rotationMat;
 	D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
 	m_pEffect4->SetMatRotation(rotationMat);
