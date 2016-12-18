@@ -402,6 +402,15 @@
     <ClInclude Include="cStraightEffect.h">
       <Filter>소스 파일\19.Effect\StraightEffect</Filter>
     </ClInclude>
+    <ClInclude Include="cObjectToolMgr.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClInclude>
+    <ClInclude Include="IncludeMgr.h">
+      <Filter>헤더 파일\00. Include</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectThunderGlobe.h">
+      <Filter>소스 파일\19.Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
