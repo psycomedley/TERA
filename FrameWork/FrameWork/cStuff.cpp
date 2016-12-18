@@ -30,9 +30,6 @@ void cStuff::Render()
 	D3DXMATRIXA16 InvMatView,matView;
 	D3DXMATRIXA16	mat, matS, matT;
 
-	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixInverse(&InvMatView, 0, &matView);
-
 	D3DXMatrixTranslation(&matT, 0.0f, 0.0f, 10.0f);
 	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
 	mat = matS * matT;
