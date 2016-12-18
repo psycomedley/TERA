@@ -122,6 +122,7 @@
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectMgr.h" />
     <ClInclude Include="cObjectTool.h" />
+    <ClInclude Include="cObjectToolMgr.h" />
     <ClInclude Include="cObjMgr.h" />
     <ClInclude Include="cOrca.h" />
     <ClInclude Include="cOrcaClone.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectMgr.cpp" />
     <ClCompile Include="cObjectTool.cpp" />
+    <ClCompile Include="cObjectToolMgr.cpp" />
     <ClCompile Include="cObjMgr.cpp" />
     <ClCompile Include="cOrca.cpp" />
     <ClCompile Include="cOrcaClone.cpp" />

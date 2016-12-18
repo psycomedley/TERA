@@ -29,12 +29,15 @@ void cStaticObj::Update()
 
 void cStaticObj::Render()
 {
-	//D3DXMATRIXA16 matS, matT, matI, mat;
-	//D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
-	//D3DXMatrixScaling(&matS, m_vScale.x, m_vScale.y, m_vScale.z);
-	//mat = matS * matT;
-
-	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	/*D3DXMATRIXA16 matS, matT, matI, mat;
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixIdentity(&matT);
+	D3DXMatrixIdentity(&matS);
+	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	D3DXMatrixScaling(&matS, m_vScale.x, m_vScale.y, m_vScale.z);
+	mat = matS * matT;
+	m_matWorld = m_matWorld*mat;
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);*/
 
 	if (m_pMesh)
 		((cStaticMesh*)m_pMesh)->Render();

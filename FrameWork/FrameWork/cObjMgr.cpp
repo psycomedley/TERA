@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cObjMgr.h"
 #include "cDynamicObj.h"
+#include "cStaticObj.h"
 
 
 cObjMgr::cObjMgr()
@@ -27,7 +28,16 @@ void cObjMgr::AddMonster(string sKey, cDynamicObj* pMonster)
 	else
 		iter->second.push_back(pMonster);
 }
-
+void cObjMgr::AddStuff(string sKey, cStaticObj* pStuff)
+{
+	auto iter = m_mapStuff.find(sKey);
+	if (iter == m_mapStuff.end())
+	{
+		m_mapStuff.insert(make_pair(sKey, pStuff));
+	}
+	else
+		iter->second;
+}
 
 void cObjMgr::Update()
 {
@@ -55,6 +65,11 @@ void cObjMgr::Render()
 //			(*iter2)->Bounding_Render();
 		}
 	}
+
+	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
+	{
+		iter->second->Render();
+	}
 }
 
 
@@ -71,6 +86,11 @@ void cObjMgr::Release()
 		iter->second.clear();
 	}
 
+	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
+	{
+		SAFE_RELEASE(iter->second);
+	}
+
 	cSingleton::Release();
 }
 
@@ -82,6 +102,15 @@ vector<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
 	if (iter == m_mapMonster.end())
 		return NULL;
 	return &m_mapMonster[sKey];
+}
+
+cStaticObj* cObjMgr::GetStuffList(string sKey)
+{
+	auto iter = m_mapStuff.find(sKey);
+
+	if (iter == m_mapStuff.end())
+		return NULL;
+	return iter->second;
 }
 vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
 {
