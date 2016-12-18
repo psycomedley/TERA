@@ -23,6 +23,8 @@ cEffect::cEffect()
 	, m_nOffsetX(1)
 	, m_nOffsetY(1)
 	, m_nLoopTimes(1)
+	, m_nLeftLoopTimes(m_nLoopTimes)
+	, m_fTime(0.0f)
 {
 	D3DXMatrixIdentity(&m_matScale);
 	D3DXMatrixIdentity(&m_matRotation);
@@ -61,16 +63,19 @@ cEffect::cEffect(cEffect* pEffect)
 	m_nCurrentFrame = 0;
 	m_fPassedTime = 0.0f;
 	m_fRemovePassedTime = 0.0f;
+	m_fTime = 0.0f;
 	m_fNextTime = pEffect->m_fNextTime;
 	m_fRemoveTime = pEffect->m_fRemoveTime;
 
 	m_eTechnique = pEffect->m_eTechnique;
+	m_eNextTechnique = pEffect->m_eNextTechnique;
 
 	m_fAngle = pEffect->m_fAngle;
 	m_matScale = pEffect->m_matScale;
 
 	m_bLoop = pEffect->m_bLoop;
 	m_nLoopTimes = pEffect->m_nLoopTimes;
+	m_nLeftLoopTimes = m_nLoopTimes;
 	m_bEnd = false;
 	m_bProcess = true;
 }
@@ -230,13 +235,16 @@ void cEffect::Update()
 
 		if (m_nOption & EFFECT_CUTTEDFRAME)
 		{
-			if (m_fPassedTime >= m_fNextTime)
+		//	static float fTime = 0.0f;
+			m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			if (m_fTime >= m_fNextTime)
 			{
+				m_fTime -= m_fNextTime;
 				//	m_fPassedTime -= m_fNextTime;
 				if (++m_nCurrentFrame >= m_nMaxFrame)
 				{
-//					if (--m_nLoopTimes <= 0)
-//						Stop();
+					//					if (--m_nLoopTimes <= 0)
+					//						Stop();
 					if (!m_bLoop)
 						Stop();
 					else
@@ -247,6 +255,35 @@ void cEffect::Update()
 
 			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
 			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
+			//if (m_fPassedTime >= m_fNextTime)
+			//{
+			//	//	m_fPassedTime -= m_fNextTime;
+			//	if (++m_nCurrentFrame >= m_nMaxFrame)
+			//	{
+			//		if (!m_bLoop)
+			//		{
+			//			if (!m_bEnd)
+			//			{
+			//				if (--m_nLeftLoopTimes <= 0)
+			//				{
+			//					if (m_eNextTechnique != E_TECH_NONE)
+			//					{
+			//						SetTech(m_eNextTechnique);
+			//						m_eNextTechnique = E_TECH_NONE;
+			//					}
+			//					else
+			//						m_bEnd = true;
+			//				}
+			//			}
+			//		}
+			//		else
+			//			m_nCurrentFrame -= m_nMaxFrame;
+			//	}
+			//	UpdateUV();
+			//}
+
+			//m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			//m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
 		}
 		else if (!m_bLoop)
 		{
@@ -394,6 +431,7 @@ void cEffect::Stop()
 	m_fPassedTime = 0.0f;
 	m_fRemovePassedTime = 0.0f;
 	m_nCurrentFrame = 0;
+	m_nLeftLoopTimes = m_nLoopTimes;
 }
 
 
