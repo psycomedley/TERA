@@ -171,9 +171,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일\00. Include</Filter>
     </ClInclude>
-    <ClInclude Include="IncludeMgr.h">
-      <Filter>헤더 파일\00. Include</Filter>
-    </ClInclude>
     <ClInclude Include="cInput.h">
       <Filter>소스 파일\01. System\03. Input</Filter>
     </ClInclude>
@@ -404,6 +401,12 @@
     </ClInclude>
     <ClInclude Include="cStraightEffect.h">
       <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="IncludeMgr.h">
+      <Filter>헤더 파일\00. Include</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjectToolMgr.h">
+      <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +643,9 @@
     </ClCompile>
     <ClCompile Include="cStraightEffect.cpp">
       <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjectToolMgr.cpp">
+      <Filter>소스 파일\21. ObjecTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

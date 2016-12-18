@@ -55,6 +55,7 @@ HRESULT cWeapon::SetParentMat()
 		return E_FAIL;
 	}
 	m_matParent = GETSINGLE(cMeshMgr)->GetMatrix(m_sHolderKey, m_sParentKey);
+
 	return S_OK;
 }
 
@@ -62,11 +63,11 @@ HRESULT cWeapon::SetParentMat()
 void cWeapon::SetWorldMat()
 {
 //	m_matWorld = *m_matParent;
-
+	
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationX(&matR, -D3DX_PI / 2);
 	m_matWorld = matR * *m_matParent;
-
+	
 //	m_vPosition.x = m_matWorld._41;
 //	m_vPosition.y = m_matWorld._42;
 //	m_vPosition.z = m_matWorld._43;

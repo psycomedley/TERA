@@ -6,6 +6,7 @@ class cStuff :public cStaticObj
 {
 private:
 	D3DXMATRIXA16 matWorld;
+	SYNTHESIZE(int, a, ab);
 
 public:
 	cStuff(char* szFolder, char* szFilename);

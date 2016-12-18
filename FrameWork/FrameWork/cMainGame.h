@@ -18,7 +18,7 @@ class cUIImageView;
 class cText;
 class cAlphaText;
 class cUIObject;
-class cStuff;
+class cObjectToolMgr;
 class cMainGame
 {
 private:
@@ -27,7 +27,7 @@ private:
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	
-	cStuff*				m_cObjectTree;
+	cObjectToolMgr*		m_cObjectTree;
 
 	bool				m_bLockMouse;
 

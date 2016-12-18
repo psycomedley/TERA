@@ -5,15 +5,21 @@ class cDynamicObj;
 class cObjMgr : public cSingleton<cObjMgr>
 {
 private:
-	cDynamicObj* m_pPlayer;
+	cDynamicObj*							m_pPlayer;
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
 	map<string, vector<cDynamicObj*>>		m_mapMonster;
+	map<string, cStaticObj*>				m_mapStuff;
 
 public:
 	void AddMonster(string sKey, cDynamicObj* pMonster);
+	void AddStuff(string sKey, cStaticObj* pStuff);
 
+	
 	map<string, vector<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
+	map<string, cStaticObj*>* GetStuffMap() { return &m_mapStuff; }
 	vector<cDynamicObj*>* GetMonsterList(string sKey);
+	cStaticObj* GetStuffList(string sKey);
+
 	vector<cDynamicObj*> GetALLMonsterList();
 
 public:

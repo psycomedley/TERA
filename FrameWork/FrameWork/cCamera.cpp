@@ -133,7 +133,7 @@ void cCamera::CameraMove()
 		}
 		else
 		{
-			m_fPrevDist -= var;
+ 			m_fPrevDist -= var;
 			if (m_fPrevDist < 6)
 				m_fPrevDist = 6;
 			else if (m_fPrevDist > 30)

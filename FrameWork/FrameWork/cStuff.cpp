@@ -26,9 +26,9 @@ void cStuff::Render()
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
+	//g_pD3DDevice->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 	D3DXMATRIXA16 InvMatView,matView;
-	D3DXMATRIXA16	mat, matS, matT;
+	D3DXMATRIXA16	matI,mat, matS, matT;
 
 	D3DXMatrixTranslation(&matT, 0.0f, 0.0f, 10.0f);
 	D3DXMatrixScaling(&matS, 0.05f, 0.05f, 0.05f);
@@ -36,9 +36,12 @@ void cStuff::Render()
 
 
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	cStaticObj::Render();
+	m_pMesh->Render();
+	//cStaticObj::Render();
+	D3DXMatrixIdentity(&matI);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matI);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	//g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

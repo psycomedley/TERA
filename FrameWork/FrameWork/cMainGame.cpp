@@ -16,7 +16,7 @@
 #include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
-#include "cStuff.h"
+#include "cObjectToolMgr.h"
 
 //임시
 
@@ -33,7 +33,7 @@ cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
-
+	SAFE_DELETE(m_cObjectTree);
 
 	SAFE_RELEASE(m_pEffect);
 	SAFE_RELEASE(m_pEffect2);
@@ -48,7 +48,7 @@ cMainGame::~cMainGame()
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
-	SAFE_RELEASE(m_cObjectTree);
+	
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);
@@ -89,7 +89,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(20, 0, 0));
+	pPlayer->SetPosition(D3DXVECTOR3(20, 100, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -216,8 +216,9 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStuff("Object","tree1.x");
-	
+	m_cObjectTree = new cObjectToolMgr;
+	m_cObjectTree->Setup();
+
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
 
@@ -425,9 +426,6 @@ void cMainGame::Render()
 	GETSINGLE(cTextMgr)->Render();
 
 	GETSINGLE(cEffectMgr)->Render();
-
-	if (m_cObjectTree)
-		m_cObjectTree->Render();
 
 	GETSINGLE(cUIMgr)->Render();
 	
