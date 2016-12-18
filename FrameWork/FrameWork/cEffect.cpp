@@ -24,6 +24,7 @@ cEffect::cEffect()
 	, m_nOffsetY(1)
 	, m_nLoopTimes(1)
 	, m_nLeftLoopTimes(m_nLoopTimes)
+	, m_fTime(0.0f)
 {
 	D3DXMatrixIdentity(&m_matScale);
 	D3DXMatrixIdentity(&m_matRotation);
@@ -62,6 +63,7 @@ cEffect::cEffect(cEffect* pEffect)
 	m_nCurrentFrame = 0;
 	m_fPassedTime = 0.0f;
 	m_fRemovePassedTime = 0.0f;
+	m_fTime = 0.0f;
 	m_fNextTime = pEffect->m_fNextTime;
 	m_fRemoveTime = pEffect->m_fRemoveTime;
 
@@ -233,8 +235,11 @@ void cEffect::Update()
 
 		if (m_nOption & EFFECT_CUTTEDFRAME)
 		{
-			if (m_fPassedTime >= m_fNextTime)
+		//	static float fTime = 0.0f;
+			m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			if (m_fTime >= m_fNextTime)
 			{
+				m_fTime -= m_fNextTime;
 				//	m_fPassedTime -= m_fNextTime;
 				if (++m_nCurrentFrame >= m_nMaxFrame)
 				{

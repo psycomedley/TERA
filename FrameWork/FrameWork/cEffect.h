@@ -29,6 +29,7 @@ protected:
 	SYNTHESIZE(float, m_fNextTime, NextTime);
 	SYNTHESIZE(float, m_fRemoveTime, RemoveTime);
 	float						m_fRemovePassedTime;
+	float						m_fTime;
 
 	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
 	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eNextTechnique, NextTechnique);

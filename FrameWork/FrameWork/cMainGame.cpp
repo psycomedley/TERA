@@ -711,6 +711,7 @@ void cMainGame::SetEffect()
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
 	pEffect->SetTechnique(E_TECH_ORCA1);
 	pEffect->SetNextTechnique(E_TECH_ORCA1_Remove);
+	pEffect->SetNextTime(0.05);
 	pEffect->SetLoop(true);
 	pEffect->SetRemoveTime(30.0f);
 	pEffect->SetLoopTimes(30);
@@ -721,11 +722,11 @@ void cMainGame::SetEffect()
 
 	//오르카 평타
 	pEffect = new cEffect;
-	pEffect->Setup(200, 200, 1, EFFECT_ALPHABLEND);
+	pEffect->Setup(100, 100, 1, EFFECT_ALPHABLEND);
 	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
-	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
+	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
 	pEffect->SetTechnique(E_TECH_ORCA2);
 
 	//m_pEffect2->SetAngle(D3DX_PI / 2);
