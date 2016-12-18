@@ -206,8 +206,10 @@ HRESULT cMainGame::Setup()
 	m_pEffect4 = new cEffect;
 	m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
 	m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
-	m_pEffect4->SetPosition(D3DXVECTOR3(20, 0, 0));
-	m_pEffect4->SetAngle(D3DX_PI / 2);
+	m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
+	D3DXMATRIXA16 rotationMat;
+	D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
+	m_pEffect4->SetMatRotation(rotationMat);
 
 
 
@@ -226,8 +228,8 @@ HRESULT cMainGame::Setup()
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
-	m_pRushEffect = new cRushEffect("Effect", "doubleStraightEffect.x");
-	m_pRushEffect->Setup(40000, 0.03f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
+	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
+	m_pRushEffect->Setup(40, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
 
 
 
