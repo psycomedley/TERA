@@ -25,9 +25,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -46,6 +46,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -104,7 +106,6 @@
     <ClInclude Include="cDynamicObj.h" />
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectMgr.h" />
-    <ClInclude Include="cEffectThunderGlobe.h" />
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cFrustum.h" />
     <ClInclude Include="cGameObject.h" />
@@ -194,7 +195,6 @@
     <ClCompile Include="cDynamicObj.cpp" />
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectMgr.cpp" />
-    <ClCompile Include="cEffectThunderGlobe.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cFrustum.cpp" />
     <ClCompile Include="cFunction.cpp" />

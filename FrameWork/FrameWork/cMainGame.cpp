@@ -10,7 +10,6 @@
 #include "cOrca.h"
 #include "cGrid.h"
 #include "cEffect.h"
-#include "cEffectThunderGlobe.h"
 #include "cStaticMeshEffect.h"
 #include "cDynamicMeshEffect.h"
 #include "cCircleEffect.h"
