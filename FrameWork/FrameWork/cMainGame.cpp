@@ -426,8 +426,8 @@ void cMainGame::Render()
 
 	GETSINGLE(cEffectMgr)->Render();
 
-	if (m_cObjectTree)
-		m_cObjectTree->Render();
+//	if (m_cObjectTree)
+//		m_cObjectTree->Render();
 
 	GETSINGLE(cUIMgr)->Render();
 	
@@ -708,6 +708,7 @@ void cMainGame::SetEffect()
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
 	pEffect->SetTechnique(E_TECH_ORCA1);
 	pEffect->SetLoop(true);
+	//pEffect->SetLoopTimes(10);
 	pEffect->SetName("orca1");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);

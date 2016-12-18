@@ -72,7 +72,7 @@ void cOrca::SetupStatus()
 
 	m_skillHeavyAtk.SetInfo(35.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(20.0f, 100);
+	m_skillHeavyAtk2.SetInfo(3.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
@@ -193,12 +193,15 @@ void cOrca::Update()
 
 				return;
 			}
+
 			if (IsBehind())
 			{
 				if (IsTargetCollision())
 				{
 					if (m_skillBackAtk.fPassedTime >= m_skillBackAtk.fCoolTime)
 					{
+						if (m_pAction)
+							SAFE_RELEASE(m_pAction); 
 						m_skillBackAtk.fPassedTime = 0.0f;
 						ChangeState(E_STATE_SKILL, E_BOSS_BACKATK);
 						return;
@@ -208,25 +211,33 @@ void cOrca::Update()
 			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
 			{
 				//나중에 일정 체력 이하일 때로 변경 50%, 25%
+				if (m_pAction)
+					SAFE_RELEASE(m_pAction); 
 				LongMove();
+				return;
 			}
-			else if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
+			if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
 			{
+				if (m_pAction)
+					SAFE_RELEASE(m_pAction); 
 				m_skillHeavyAtk.fPassedTime = 0.0f;
 				LookTarget();
 				ChangeState(E_STATE_SKILL, E_BOSS_HEAVYATK_START);
+				return;
 			}
-			else if (m_skillHeavyAtk2.fPassedTime >= m_skillHeavyAtk2.fCoolTime)
+			if (m_skillHeavyAtk2.fPassedTime >= m_skillHeavyAtk2.fCoolTime)
 			{
 				if (IsTargetCollision())
 				{
+					if (m_pAction)
+						SAFE_RELEASE(m_pAction); 
 					m_skillHeavyAtk2.fPassedTime = 0.0f;
 					LookTarget();
 					ChangeState(E_STATE_SKILL, E_BOSS_HEAVYATK2);
 					return;
 				}
 			}
-			else if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
+			if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
 			{
 				if (IsTargetCollision())
 				{
@@ -235,6 +246,7 @@ void cOrca::Update()
 					m_skillAttack.fPassedTime = 0.0f;
 					LookTarget();
 					ChangeState(E_STATE_SKILL, E_BOSS_ATK2);
+					return;
 				}
 				else
 				{
@@ -246,12 +258,10 @@ void cOrca::Update()
 					pActionMove->SetTarget(this);
 					SetAction(pActionMove);
 					SAFE_RELEASE(pActionMove);
+					return;
 				}
 			}
-			else
-			{
-				LookTarget();
-			}
+			LookTarget();
 		}
 	}
 }

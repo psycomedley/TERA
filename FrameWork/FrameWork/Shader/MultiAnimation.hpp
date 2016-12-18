@@ -11,6 +11,8 @@ float4x4	g_mWorld			: WORLD;
 float4x4	g_mViewProj			: VIEWPROJECTION;
 texture		g_txScene;
 
+float		g_fPassedTime;
+
 //--------------------------------------------------------------------------------------
 // Texture samplers
 //--------------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ float4 PixScene(
 	}
 
 	float4 Color = tex2D( g_samScene, TexCoord ) * float4(color + specular, 1.0f);
-
+//	Color.a -= g_fPassedTime;
 	return Color;
 }
 

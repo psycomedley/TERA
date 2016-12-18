@@ -25,6 +25,8 @@ protected:
 	SYNTHESIZE(double, m_dPeriod, Period);
 	SYNTHESIZE(bool, m_bPlayOnce, PlayOnce);*/
 
+	float value = 0;
+
 public:
 //	bool IsExistAniController() { if (m_pAnimController) return true; return false; }
 //	LPD3DXANIMATIONCONTROLLER GetAniController() { return m_pAnimController; }

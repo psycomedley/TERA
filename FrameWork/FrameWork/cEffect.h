@@ -16,6 +16,7 @@ private:
 	int							m_nMaxFrameX;
 	int							m_nMaxFrameY;
 	int							m_nMaxFrame;
+	int							m_nCurrentFrame;
 
 	int							m_nOffsetX;
 	int							m_nOffsetY;
@@ -24,7 +25,6 @@ private:
 
 	int							m_nOption;
 
-	int							m_nCurrentFrame;
 	float						m_fPassedTime;
 	SYNTHESIZE(float, m_fNextTime, NextTime);
 	SYNTHESIZE(float, m_fRemoveTime, RemoveTime);
@@ -40,6 +40,7 @@ private:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
 	SYNTHESIZE(bool, m_bLoop, Loop);
+	SYNTHESIZE(int, m_nLoopTimes, LoopTimes);
 	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
 
@@ -56,6 +57,12 @@ private:
 	//bool startAttackEffect;
 	//int attackFrameTimer;
 	//int attackFrameNumber;
+
+public:
+	int GetMaxFrame() { return m_nMaxFrame; }
+	int GetCurrentFrame() { return m_nCurrentFrame; }
+
+	void SetCurrentFrame(int nFrame);
 
 public:
 	void	Start();
