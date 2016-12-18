@@ -22,6 +22,7 @@ cEffect::cEffect()
 	, m_fAngle(0.0f)
 	, m_nOffsetX(1)
 	, m_nOffsetY(1)
+	, m_nLoopTimes(1)
 {
 	D3DXMatrixIdentity(&m_matScale);
 	D3DXMatrixIdentity(&m_matRotation);
@@ -69,6 +70,7 @@ cEffect::cEffect(cEffect* pEffect)
 	m_matScale = pEffect->m_matScale;
 
 	m_bLoop = pEffect->m_bLoop;
+	m_nLoopTimes = pEffect->m_nLoopTimes;
 	m_bEnd = false;
 	m_bProcess = true;
 }
@@ -233,6 +235,8 @@ void cEffect::Update()
 				//	m_fPassedTime -= m_fNextTime;
 				if (++m_nCurrentFrame >= m_nMaxFrame)
 				{
+//					if (--m_nLoopTimes <= 0)
+//						Stop();
 					if (!m_bLoop)
 						Stop();
 					else
@@ -276,6 +280,12 @@ void cEffect::Render()
 			g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		}
 		
+		if (m_nOption & EFFECT_CUTTEDFRAME)
+		{
+			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
+		}
+
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
 			D3DXMatrixInverse(&matWorld, 0, &matView);
@@ -484,4 +494,12 @@ void cEffect::Setting()
 	m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
 
 	SetTech(m_eTechnique);
+}
+
+
+void cEffect::SetCurrentFrame(int nFrame)
+{
+	m_nCurrentFrame = nFrame;
+	m_nOffsetX = m_nCurrentFrame % m_nMaxFrameX;
+	m_nOffsetY = m_nCurrentFrame / m_nMaxFrameX;
 }

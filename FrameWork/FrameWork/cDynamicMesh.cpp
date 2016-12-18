@@ -30,6 +30,8 @@ cDynamicMesh::cDynamicMesh(char* szFolder, char* szFilename)
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumTracks(),
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumEvents(),
 		&m_pAnimController->m_pController);
+
+	m_pEffect->SetFloat("g_fPassedTime", 0);
 }
 
 
@@ -104,6 +106,11 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 
 void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
+	if (KEYBOARD->IsStayKeyDown(DIK_P))
+	{
+		value += (GETSINGLE(cTimeMgr)->getElapsedTime() * 0.1);
+		m_pEffect->SetFloat("g_fPassedTime", value);
+	}
 	if (m_pAnimController)
 	{
 		m_pAnimController->Update();
@@ -137,6 +144,11 @@ void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
 
 	if (m_pRootFrame)
 	{
+	//	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	//	g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	//	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	//	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+
 		Update(m_pRootFrame, pmat);
 		Render(m_pRootFrame);
 	}
