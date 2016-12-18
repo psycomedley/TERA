@@ -50,6 +50,7 @@ private:
 	void SetLighting();
 	void SetUI();
 	void SetShader();
+	void SetEffect();
 
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;

@@ -9,6 +9,9 @@ cMap::cMap(char* szFolder, char* szFilename)
 	:m_cFrustum(NULL)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
+	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
+	SetShaderTexture();
+
 	D3DXMatrixIdentity(&m_matWorld);
 
 	D3DXMATRIXA16	mat, matS, matT;
@@ -21,6 +24,7 @@ cMap::cMap(char* szFolder, char* szFilename)
 
 	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
 	m_vecPNTVertex = *((cStaticMesh*)m_pMesh)->GetVecPNTVertaxies();
+	
 
 	SetupHeight();
 }
@@ -64,10 +68,37 @@ void cMap::Update()
 }
 void cMap::Render()
 {
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
-	cStaticObj::Render();
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	D3DXMATRIXA16 matView, mInvView, matProjection;
+	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+	D3DXMatrixInverse(&mInvView, 0, &matView);
+	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+	D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+	m_pEffect->SetMatrix("gWorldMatrix", &m_matWorld);
+	m_pEffect->SetMatrix("gViewMatrix", &matView);
+	m_pEffect->SetMatrix("gProjectionMatrix", &matProjection);
+	m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(-1500, 1000.0f, 1500.0f, 1.0f));
+	m_pEffect->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+
+	m_pEffect->SetVector("gLightColor", &D3DXVECTOR4(0.7f, 0.7f, 0.7f, 1.0f));
+	m_pEffect->SetTexture("DiffuseMap_Tex", m_DiffuseTex);
+	m_pEffect->SetTexture("SpecularMap_Tex", m_SpecularTex);
+
+	UINT numPasses = 0;
+	m_pEffect->Begin(&numPasses, NULL);
+	for (INT i = 0; i < numPasses; ++i)
+	{
+		m_pEffect->BeginPass(i);
+
+		//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	
+		cStaticObj::Render();
+		//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		m_pEffect->EndPass();
+	}
+	m_pEffect->End();
+
 
 
 }
@@ -281,4 +312,11 @@ vector<D3DXVECTOR3>* cMap::FindCullingVertex()
 	}
 	
 	return &vecCullingVertex;
+}
+void cMap::SetShaderTexture()
+{
+	m_DiffuseTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Diff.tga");
+
+	m_SpecularTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Spec.tga");
+
 }

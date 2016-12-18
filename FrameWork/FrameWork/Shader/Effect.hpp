@@ -293,7 +293,7 @@ float4 ps_DecAlpha(VS_OUTPUT Input) : COLOR
 }
 
 //--------------------------------------------------------------//
-// Test Shader
+// Orca Skill2 Shader
 //--------------------------------------------------------------//
 
 float4 ps_orcaSkill2(VS_OUTPUT Input) : COLOR
@@ -301,17 +301,87 @@ float4 ps_orcaSkill2(VS_OUTPUT Input) : COLOR
 	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
 	float4 base;
 	float4 Output;
-	if (g_fPassedTime >= 1.2)
+	if (g_fPassedTime >= 0.5)
 	{
 		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 6 + float2(0.5, 0.5));
-		Output.rgb = base2 - (g_fPassedTime - 1.2);
+		Output.rgb = base2 - (g_fPassedTime - 0.5);
 	}
 	else
 	{
-		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (30 - g_fPassedTime * 20) + float2(0.5, 0.5));
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (30 - g_fPassedTime * 48) + float2(0.5, 0.5));
 		Output.rgb = base2;
 	}
 	Output.a = base;
+
+	return Output;
+}
+
+//--------------------------------------------------------------//
+// Orca BackAtk Shader
+//--------------------------------------------------------------//
+
+float4 ps_orcaBackAtk(VS_OUTPUT Input) : COLOR
+{
+	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
+	float4 base;
+	float4 Output;
+	if (g_fPassedTime >= 0.5)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 1.5 + float2(0.5, 0.5 - g_fPassedTime * 0.2));
+//		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 7 + float2(0.5, 0.5));
+		Output.rgb = base2 - (g_fPassedTime - 0.5);
+	}
+	else
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (4.5 - g_fPassedTime * 6) + float2(0.5, 0.5 - g_fPassedTime * 0.2));
+		Output.rgb = base2;
+	}
+
+	Output.a = base;
+
+	return Output;
+}
+
+//--------------------------------------------------------------//
+// MagicArray Shader
+//--------------------------------------------------------------//
+
+float4 ps_magicArrayShader(VS_OUTPUT Input) : COLOR
+{
+	/*float4 albedo = tex2D(DiffuseSampler, Input.mUV) * ((1 - Input.mUV.y) * 2);
+
+	albedo.r = albedo.r * 0.5;
+	albedo.g = albedo.g * 0.5;
+	albedo.b = albedo.b * 2;*/
+
+
+	float4 base;
+	float4 Output;
+	if (g_fPassedTime <= 1)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (11 - g_fPassedTime * 10) + float2(0.5, 0.5)) * ((1 - Input.mUV.y) * 2);
+		Output.r = base.r * 0.5;
+		Output.g = base.g * 0.5;
+		Output.b = base.b * 2;
+		Output.a = base.a;
+	}
+	else if (g_fPassedTime >= 4)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) + float2(0.5, 0.5)) * ((1 - Input.mUV.y) * 2);
+		Output.r = base.r * 0.5;
+		Output.g = base.g * 0.5;
+		Output.b = base.b * 2;
+		Output.rgb = Output.rgb - (Output.rgb * ((g_fPassedTime - 4) / 1));
+//		Output.a = base.a;
+	}
+	else
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) + float2(0.5, 0.5)) * ((1 - Input.mUV.y) * 2);
+		Output.r = base.r * 0.5;
+		Output.g = base.g * 0.5;
+		Output.b = base.b * 2;
+		Output.a = base.a;
+	}
 
 	return Output;
 }
@@ -446,6 +516,31 @@ technique Orca2
 	}
 }
 
+//--------------------------------------------------------------//
+// Technique Section for BackAtk
+//--------------------------------------------------------------//
+technique OrcaBackAtk
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_orcaBackAtk();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for MagicArray
+//--------------------------------------------------------------//
+
+technique MagicArray
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_Rotation();
+		PixelShader = compile ps_2_0 ps_magicArrayShader();
+	}
+}
+
 
 
 //--------------------------------------------------------------//
@@ -454,30 +549,13 @@ technique Orca2
 
 float4 ps_test(VS_OUTPUT Input) : COLOR
 {
-	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
-	float4 base;
-	float4 Output;
-	if (g_fPassedTime >= 0.5)
-	{
-		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 2 + float2(0.5, 0.5 - g_fPassedTime * 0.2));
-//		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 7 + float2(0.5, 0.5));
-		Output.rgb = base2 - (g_fPassedTime - 0.5);
-	}
-	else
-	{
-		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (3 - g_fPassedTime * 2) + float2(0.5, 0.5 - g_fPassedTime * 0.2));
-		Output.rgb = base2;
-	}
+	float4 albedo = tex2D(DiffuseSampler, Input.mUV);
 
-
-	/*float4 base = tex2D(DiffuseSampler, Input.mUV);
-	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
-
-	float4 Output;
-	Output.rgb = base2;*/
-	Output.a = base;
-
-	return Output;
+//	albedo.r = albedo.r * 0.5;
+//	albedo.g = albedo.g * 0.5;
+//	albedo.b = albedo.b * 2;
+//	albedo = 1;
+	return albedo;
 }
 
 //--------------------------------------------------------------//

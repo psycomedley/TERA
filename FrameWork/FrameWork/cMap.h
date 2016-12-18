@@ -9,6 +9,9 @@ class cFrustum;
 class cMap :public cStaticObj
 {
 private:
+	LPD3DXEFFECT			m_pEffect;
+	LPDIRECT3DTEXTURE9		m_DiffuseTex;
+	LPDIRECT3DTEXTURE9		m_SpecularTex;
 	D3DXMATRIXA16			m_matWorld;
 
 	cFrustum*				m_cFrustum;
@@ -44,6 +47,8 @@ public:
 	void SetupHeight();
 	bool GetHeight(IN float x, OUT float& y, IN float z);
 	vector<D3DXVECTOR3>* cMap::FindCullingVertex();
+
+	void SetShaderTexture();
 private:
 	cMap();
 };

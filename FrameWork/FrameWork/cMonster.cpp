@@ -36,8 +36,8 @@ void cMonster::Update()
 
 		char szStr[16] = { '\0', };
 		sprintf_s(szStr, sizeof(szStr), "%.0f%%", fHpRatio * 100);
-		((cUITextView*)m_pUIHp->FindChildByTag(2))->SetText(szStr);
-		((cUIImageView*)m_pUIHp->FindChildByTag(1))->SetScaleX(fHpRatio);
+		((cUITextView*)m_pUIHp->FindChildByTag(E_UITAG_HPTEXT))->SetText(szStr);
+		((cUIImageView*)m_pUIHp->FindChildByTag(E_UITAG_HP))->SetScaleX(fHpRatio);
 	}
 }
 

@@ -6,6 +6,7 @@ class cStateBossSkill : public iState
 {
 private:
 	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
+	int m_nEffect;
 
 public:
 	virtual void Start() override;

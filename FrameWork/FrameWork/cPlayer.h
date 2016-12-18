@@ -3,6 +3,7 @@
 #include "cWeapon.h"
 
 class iState;
+class cUIObject;
 class cPlayer : public cDynamicObj
 {
 private:
@@ -16,6 +17,8 @@ private:
 	SYNTHESIZE(int, m_nKeyDir, KeyDir);
 	SYNTHESIZE(float, m_fTempAngle, TempAngle);
 
+	cUIObject*		m_pUIHp;
+
 	//이후에 몸통 따로 구성
 	/*cDynamicObj*	m_pArm;
 	cDynamicObj*	m_pLeg;
@@ -28,10 +31,12 @@ public:
 	virtual void Attack() override;
 
 	bool IsMoveAble();
+	void UpdateUI();
 
 public:
 	void SetupBaseWeapon();
 	void SetupState();
+	void SetupStatus();
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 	void CheckControl();
 	void CheckState();

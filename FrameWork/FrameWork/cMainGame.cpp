@@ -34,11 +34,12 @@ cMainGame::~cMainGame()
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
 
-	SAFE_DELETE(m_pEffect);
-	SAFE_DELETE(m_pEffect2);
+
+	SAFE_RELEASE(m_pEffect);
+	SAFE_RELEASE(m_pEffect2);
+	SAFE_RELEASE(m_pEffect3);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_DELETE(m_pEffect3);
-	SAFE_DELETE(m_pEffect4);
+	SAFE_RELEASE(m_pEffect4);
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
@@ -78,6 +79,9 @@ HRESULT cMainGame::Setup()
 	}
 
 	SetShader();
+	SetEffect();
+	SetUI();
+	SetLighting();
 
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
 	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
@@ -212,7 +216,7 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cStuff("Object/나뭇잎","Leaf1.x");
+	m_cObjectTree = new cStuff("Object","tree1.x");
 	
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
@@ -226,11 +230,10 @@ HRESULT cMainGame::Setup()
 
 
 
-	SetLighting();
+
 
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "그아아앗", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
-	SetUI();
 
 	///////////////////////////////////
 
@@ -255,6 +258,7 @@ void cMainGame::Update()
 		GETSINGLE(cCameraMgr)->Update();
 
 		GETSINGLE(cTextMgr)->Update();
+
 
 		GETSINGLE(cUIMgr)->Update();
 	}
@@ -288,6 +292,13 @@ void cMainGame::Update()
 		}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
+			D3DXVECTOR3 pos = D3DXVECTOR3(20, 2, 10);
+			D3DXMATRIXA16 m, m2, rot;
+			D3DXMatrixRotationX(&m, D3DX_PI / 2);
+			D3DXMatrixRotationY(&m2, D3DX_PI / 4);
+			rot = m * m2;
+//			D3DXMatrixIdentity(&rot);
+			GETSINGLE(cEffectMgr)->AddList("orcaAtk", pos, rot);
 		//	m_pEffect2->SetTechnique(E_TECH_Orca1_Remove);
 		}
 
@@ -335,6 +346,7 @@ void cMainGame::Update()
 //	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //m_pDynamicMeshEffect->Setup();
 
+	GETSINGLE(cEffectMgr)->Update();
 	if (m_pEffect)
 		m_pEffect->Update();
 	if (m_pEffect2)
@@ -403,19 +415,25 @@ void cMainGame::Render()
 //		}
 ////		if (GETSINGLE())
 //	}
-
+	
+	if (m_pMap)
+		m_pMap->Render();
+	m_pGrid->Render();
+	
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();
 
-	GETSINGLE(cUIMgr)->Render();
+	GETSINGLE(cEffectMgr)->Render();
 
-	if (m_pMap)
-		m_pMap->Render();
+	if (m_cObjectTree)
+		m_cObjectTree->Render();
+
+	GETSINGLE(cUIMgr)->Render();
+	
 
 	///////////////임시////////////////
 	
-	m_pGrid->Render();
 
 
 
@@ -461,8 +479,7 @@ void cMainGame::Render()
 
 
 	
-//	if (m_cObjectTree)
-//		m_cObjectTree->Render();
+
 	
 
 	///////////////////////////////////
@@ -488,6 +505,7 @@ void cMainGame::Release()
 	GETSINGLE(cCameraMgr)->Release();
 	GETSINGLE(cUIMgr)->Release();
 	GETSINGLE(cShaderMgr)->Release();
+	GETSINGLE(cEffectMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
@@ -545,14 +563,14 @@ void cMainGame::SetUI()
 	ui2->SetColor(XRED);
 	//	ui2->SetScaleX(0.5f);
 	ui2->SetSprite(pSprite);
-	ui2->SetTag(1);
+	ui2->SetTag(E_UITAG_HP);
 	ui->AddChild(ui2);
 
 	cUITextView* ui3 = new cUITextView;
 	ui3->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
 	ui3->SetSize(ST_SIZE(100, 56));
 	ui3->SetPosition(D3DXVECTOR3(223, 0, 0));
-	ui3->SetTag(2);
+	ui3->SetTag(E_UITAG_HPTEXT);
 	ui->AddChild(ui3);
 
 	//	m_pUIBossHp = ui;
@@ -586,17 +604,17 @@ void cMainGame::SetUI()
 	pUI3->SetPosition(D3DXVECTOR3(6, 13, 0));
 	pUI3->SetScaleX(1.5);
 	pUI3->SetScaleY(1.5);
-	pUI3->SetTag(1);
+	pUI3->SetTag(E_UITAG_HP);
 	pUI3->SetSprite(pSprite);
 	pUI->AddChild(pUI3);
 
-	////HP Text
-	//cUITextView* pUI4 = new cUITextView;
-	//pUI4->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
-	//pUI4->SetSize(ST_SIZE(100, 56));
-	//pUI4->SetPosition(D3DXVECTOR3(20, 0, 0));
-	//pUI4->SetTag(2);
-	//pUI->AddChild(pUI4);
+	//HP Text
+	cUITextView* pUI4 = new cUITextView;
+	pUI4->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI4->SetSize(ST_SIZE(400, 56));
+	pUI4->SetPosition(D3DXVECTOR3(36, -3, 0));
+	pUI4->SetTag(E_UITAG_HPTEXT);
+	pUI->AddChild(pUI4);
 
 	//MP
 	cUIImageView* pUI5 = new cUIImageView;
@@ -604,15 +622,35 @@ void cMainGame::SetUI()
 	pUI5->SetPosition(D3DXVECTOR3(6, pUI->GetSize().fHeight + 13, 0));
 	pUI5->SetScaleX(1.5);
 	pUI5->SetScaleY(1.5);
-	pUI5->SetTag(3);
+	pUI5->SetTag(E_UITAG_MP);
 	pUI5->SetSprite(pSprite);
 	pUI->AddChild(pUI5);
 
+	//MP Text
+	cUITextView* pUI6 = new cUITextView;
+	pUI6->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI6->SetSize(ST_SIZE(400, 56));
+	pUI6->SetPosition(D3DXVECTOR3(36, 29, 0));
+	pUI6->SetTag(E_UITAG_MPTEXT);
+	pUI->AddChild(pUI6);
 
+	//Text
+	cUITextView* pUI7 = new cUITextView;
+	pUI7->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI7->SetSize(ST_SIZE(55, 56));
+	pUI7->SetText("HP");
+	pUI7->SetPosition(D3DXVECTOR3(0, -3, 0));
+	pUI->AddChild(pUI7);
+
+	pUI7 = new cUITextView;
+	pUI7->SetFont(GETSINGLE(cFontMgr)->GetFont(E_FONT_BOSS_STATUS));
+	pUI7->SetSize(ST_SIZE(55, 56));
+	pUI7->SetText("MP");
+	pUI7->SetPosition(D3DXVECTOR3(0, 29, 0));
+	pUI->AddChild(pUI7);
 
 	//	m_pUIPlayerHp = pUI;
 	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
-	GETSINGLE(cUIMgr)->AddList("Player");
 
 	SAFE_RELEASE(pSprite);
 }
@@ -653,4 +691,79 @@ void cMainGame::SetShader()
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
 
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_MAP, "mapShader.fx");
+}
+
+
+void cMainGame::SetEffect()
+{
+	D3DXMATRIXA16 m, m2, m3;
+	cEffect* pEffect = new cEffect;
+	//오르카 스킬1 (구체)
+	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_BILLBOARING | EFFECT_CUTTEDFRAME);
+	pEffect->SetTexture("Effect/Lens00_emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/Lens04_emis.tga", E_TEXTURE2);
+	pEffect->SetTexture("Effect/A_Lightning001_emis.tga", E_TEXTURE3);
+	pEffect->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
+	pEffect->SetTotalFrame(4, 4, 16);
+	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
+	pEffect->SetTechnique(E_TECH_ORCA1);
+	pEffect->SetLoop(true);
+	pEffect->SetName("orca1");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//오르카 평타
+	pEffect = new cEffect;
+	pEffect->Setup(200, 200, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
+	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
+	pEffect->SetTechnique(E_TECH_ORCA2);
+
+	//m_pEffect2->SetAngle(D3DX_PI / 2);
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+
+	pEffect->SetLoop(false);
+	pEffect->SetRemoveTime(2);
+	pEffect->SetName("orca2");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//오르카 백어택
+	pEffect = new cEffect;
+	pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/B_160Trail001_emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
+	pEffect->SetTechnique(E_TECH_BACKATK);
+
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
+	m3 = m * m2;
+	pEffect->SetMatRotation(m3);
+	//	m_pEffect2->SetAngle(D3DX_PI / 2);
+	//	m_pEffect2->SetLoop(false);
+	pEffect->SetRemoveTime(3);
+	pEffect->SetName("orcaBackAtk");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//마법진
+	pEffect = new cEffect;
+	pEffect->Setup(20, 20, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/G_MagicArray002_Tex.tga", E_TEXTURE1);
+	pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
+
+	pEffect->SetAngle(D3DX_PI / 2);
+
+	pEffect->SetTechnique(E_TECH_MAGICARRAY);
+//	D3DXMATRIXA16 ma;
+//	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+	pEffect->SetRemoveTime(5);
+	pEffect->SetName("MagicArray");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 }

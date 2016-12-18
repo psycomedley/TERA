@@ -24,12 +24,53 @@ cEffect::cEffect()
 	, m_nOffsetY(1)
 {
 	D3DXMatrixIdentity(&m_matScale);
+	D3DXMatrixIdentity(&m_matRotation);
 }
 
 
 cEffect::~cEffect()
 {
-	SAFE_RELEASE(m_pVB);
+}
+
+
+cEffect::cEffect(cEffect* pEffect)
+{
+	m_sName = pEffect->m_sName;
+	m_fWidth = pEffect->m_fWidth;
+	m_fHeight = pEffect->m_fHeight;
+	m_fAlpha = pEffect->m_fAlpha;
+	m_nOption = pEffect->m_nOption;
+
+	Setup(m_fWidth, m_fHeight, m_fAlpha, m_nOption);
+
+	m_pTexture = pEffect->m_pTexture;
+	m_pTexture2 = pEffect->m_pTexture2;
+	m_pTexture3 = pEffect->m_pTexture3;
+	m_pBumpMap = pEffect->m_pBumpMap;
+
+	m_nMaxFrameX = pEffect->m_nMaxFrameX;
+	m_nMaxFrameY = pEffect->m_nMaxFrameY;
+	m_nMaxFrame = pEffect->m_nMaxFrame;
+
+	m_nOffsetX = pEffect->m_nOffsetX;
+	m_nOffsetY = pEffect->m_nOffsetY;
+	m_fRatioX = pEffect->m_fRatioX;
+	m_fRatioY = pEffect->m_fRatioY;
+
+	m_nCurrentFrame = 0;
+	m_fPassedTime = 0.0f;
+	m_fRemovePassedTime = 0.0f;
+	m_fNextTime = pEffect->m_fNextTime;
+	m_fRemoveTime = pEffect->m_fRemoveTime;
+
+	m_eTechnique = pEffect->m_eTechnique;
+
+	m_fAngle = pEffect->m_fAngle;
+	m_matScale = pEffect->m_matScale;
+
+	m_bLoop = pEffect->m_bLoop;
+	m_bEnd = false;
+	m_bProcess = true;
 }
 
 
@@ -40,6 +81,8 @@ HRESULT cEffect::Setup(float fWidth, float fHeight, float fAlpha /*= 1.0f*/,
 
 	m_vecVertex.resize(6);
 
+	m_fWidth = fWidth;
+	m_fHeight = fHeight;
 	float fHalfWidth = fWidth / 2;
 	float fHalfHeight = fHeight / 2;
 	m_fAlpha = fAlpha;
@@ -177,7 +220,38 @@ void cEffect::Update()
 		{
 			m_fRemovePassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 			if (m_fRemovePassedTime >= m_fRemoveTime)
+			{
 				Stop();
+				return;
+			}
+		}
+
+		if (m_nOption & EFFECT_CUTTEDFRAME)
+		{
+			if (m_fPassedTime >= m_fNextTime)
+			{
+				//	m_fPassedTime -= m_fNextTime;
+				if (++m_nCurrentFrame >= m_nMaxFrame)
+				{
+					if (!m_bLoop)
+						Stop();
+					else
+						m_nCurrentFrame -= m_nMaxFrame;
+				}
+				UpdateUV();
+			}
+
+			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
+		}
+		else if (!m_bLoop)
+		{
+			if (m_fPassedTime >= m_fRemoveTime)
+			{
+				Stop();
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+				return;
+			}
 		}
 	}
 }
@@ -201,33 +275,7 @@ void cEffect::Render()
 			g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 			g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		}
-		if (m_nOption & EFFECT_CUTTEDFRAME)
-		{
-			if (m_fPassedTime >= m_fNextTime)
-			{
-			//	m_fPassedTime -= m_fNextTime;
-				if (++m_nCurrentFrame >= m_nMaxFrame)
-				{
-					if (!m_bLoop)
-						Stop();
-					else
-						m_nCurrentFrame -= m_nMaxFrame;
-				}
-				UpdateUV();
-			}
-
-			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
-			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
-		}
-		else if (!m_bLoop)
-		{
-			if (m_fPassedTime >= m_fRemoveTime)
-			{
-				Stop();
-				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-				return;
-			}
-		}
+		
 		if (m_nOption & EFFECT_BILLBOARING)
 		{
 			D3DXMatrixInverse(&matWorld, 0, &matView);
@@ -250,7 +298,8 @@ void cEffect::Render()
 
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-		
+		g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, false);
+
 		g_pD3DDevice->SetFVF(ST_PCT_VERTEX::FVF);
 		
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
@@ -285,10 +334,17 @@ void cEffect::Render()
 		}
 		m_pEffect->End();
 
+		g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
+}
+
+
+void cEffect::Release()
+{
+	SAFE_RELEASE(m_pVB);
 }
 
 
@@ -407,9 +463,14 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_ORCA2:
 		m_pEffect->SetTechnique("Orca2");
 		break;
+	case E_TECH_BACKATK:
+		m_pEffect->SetTechnique("OrcaBackAtk");
+		break;
 	case E_TECH_TEST:
 		m_pEffect->SetTechnique("Test");
 		break;
+	case E_TECH_MAGICARRAY:
+		m_pEffect->SetTechnique("MagicArray");
 	default:
 		break;
 	}

@@ -66,7 +66,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(10, 100);
+	m_skillLongMove.SetInfo(60, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 255, 1.0f);
 
@@ -234,7 +234,7 @@ void cOrca::Update()
 						SAFE_RELEASE(m_pAction);
 					m_skillAttack.fPassedTime = 0.0f;
 					LookTarget();
-					ChangeState(E_STATE_SKILL, E_BOSS_ATK1);
+					ChangeState(E_STATE_SKILL, E_BOSS_ATK2);
 				}
 				else
 				{

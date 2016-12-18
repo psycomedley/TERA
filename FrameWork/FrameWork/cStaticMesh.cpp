@@ -33,7 +33,6 @@ cStaticMesh::~cStaticMesh()
 
 HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 {
-	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
 
 
 	std::string sFullPath(szFolder);
@@ -92,8 +91,8 @@ HRESULT cStaticMesh::Load(char* szFolder, char* szFile)
 	ST_PNT_VERTEX* vertices;
 	m_pMesh->GetVertexBuffer(&m_VB);
 	
-	/*int a = m_pMesh->GetNumBytesPerVertex();
-	int b = sizeof(ST_PNT_VERTEX);*/
+	int a = m_pMesh->GetNumBytesPerVertex();
+	int b = sizeof(ST_PNT_VERTEX);
 
 	vertices = new ST_PNT_VERTEX[m_pMesh->GetNumVertices()];
 	m_vecPNTVertaxies.resize(m_pMesh->GetNumVertices());
@@ -143,12 +142,14 @@ void cStaticMesh::Update()
 
 void cStaticMesh::Render()
 {
+
 	for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
 	{
 		g_pD3DDevice->SetTexture(0, vecTexture[i]);
 		g_pD3DDevice->SetMaterial(&vecMaterial[i]);
 		m_pMesh->DrawSubset(i);
 	}
+
 }
 
 
