@@ -31,8 +31,10 @@ protected:
 	float						m_fRemovePassedTime;
 	float						m_fTime;
 
+	vector<E_EFFECT_TECHNIQUE>	m_vecTechnique;
+	int							m_nCurrentTechIdx;
 	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eTechnique, Technique);
-	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eNextTechnique, NextTechnique);
+//	SYNTHESIZE(E_EFFECT_TECHNIQUE, m_eNextTechnique, NextTechnique);
 
 	SYNTHESIZE(float, m_fAngle, Angle);
 	SYNTHESIZE(float, m_fAlpha, Alpha);
@@ -42,7 +44,8 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matScale, MatScale);
 
 	SYNTHESIZE(bool, m_bLoop, Loop);
-	SYNTHESIZE(int, m_nLoopTimes, LoopTimes);
+	int m_nLoopTimes;
+//	SYNTHESIZE(int, m_nLoopTimes, LoopTimes);
 	SYNTHESIZE(int, m_nLeftLoopTimes, LeftLoopTimes);
 	SYNTHESIZE(bool, m_bEnd, End);
 	SYNTHESIZE(bool, m_bProcess, Process);
@@ -66,6 +69,7 @@ public:
 	int GetCurrentFrame() { return m_nCurrentFrame; }
 
 	void SetCurrentFrame(int nFrame);
+	void SetLoopTimes(int nLoopTimes);
 
 public:
 	virtual void Start();
@@ -74,6 +78,7 @@ public:
 
 	void	SetTexture(string sKey, E_EFFECT_TEXTURE eTex);
 	void	SetTotalFrame(int nFrameX, int nFrameY, int nTotalFrame);
+	void	AddTechList(E_EFFECT_TECHNIQUE eTech);
 
 public:
 	HRESULT	Setup(float fWidth, float fHeight, float fAlpha = 1.0f,

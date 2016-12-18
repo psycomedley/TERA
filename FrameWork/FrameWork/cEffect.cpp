@@ -68,7 +68,9 @@ cEffect::cEffect(cEffect* pEffect)
 	m_fRemoveTime = pEffect->m_fRemoveTime;
 
 	m_eTechnique = pEffect->m_eTechnique;
-	m_eNextTechnique = pEffect->m_eNextTechnique;
+	m_vecTechnique = pEffect->m_vecTechnique;
+	m_nCurrentTechIdx = pEffect->m_nCurrentTechIdx;
+//	m_eNextTechnique = pEffect->m_eNextTechnique;
 
 	m_fAngle = pEffect->m_fAngle;
 	m_matScale = pEffect->m_matScale;
@@ -235,16 +237,12 @@ void cEffect::Update()
 
 		if (m_nOption & EFFECT_CUTTEDFRAME)
 		{
-		//	static float fTime = 0.0f;
-			m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			/*m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 			if (m_fTime >= m_fNextTime)
 			{
 				m_fTime -= m_fNextTime;
-				//	m_fPassedTime -= m_fNextTime;
 				if (++m_nCurrentFrame >= m_nMaxFrame)
 				{
-					//					if (--m_nLoopTimes <= 0)
-					//						Stop();
 					if (!m_bLoop)
 						Stop();
 					else
@@ -254,36 +252,46 @@ void cEffect::Update()
 			}
 
 			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
-			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
-			//if (m_fPassedTime >= m_fNextTime)
-			//{
-			//	//	m_fPassedTime -= m_fNextTime;
-			//	if (++m_nCurrentFrame >= m_nMaxFrame)
-			//	{
-			//		if (!m_bLoop)
-			//		{
-			//			if (!m_bEnd)
-			//			{
-			//				if (--m_nLeftLoopTimes <= 0)
-			//				{
-			//					if (m_eNextTechnique != E_TECH_NONE)
-			//					{
-			//						SetTech(m_eNextTechnique);
-			//						m_eNextTechnique = E_TECH_NONE;
-			//					}
-			//					else
-			//						m_bEnd = true;
-			//				}
-			//			}
-			//		}
-			//		else
-			//			m_nCurrentFrame -= m_nMaxFrame;
-			//	}
-			//	UpdateUV();
-			//}
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);*/
 
-			//m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
-			//m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
+			m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+			if (m_fTime >= m_fNextTime)
+			{
+				m_fTime -= m_fNextTime;
+				if (++m_nCurrentFrame >= m_nMaxFrame)
+				{
+					if (!m_bLoop)
+					{
+						if (!m_bEnd)
+						{
+							if (--m_nLeftLoopTimes <= 0)
+							{
+								if (++m_nCurrentTechIdx >= m_vecTechnique.size())
+								{
+									m_bEnd = true;
+								}
+								else
+								{
+									m_eTechnique = m_vecTechnique[m_nCurrentTechIdx];
+								}
+								//if (m_eNextTechnique != E_TECH_NONE)
+								//{
+								//	m_eTechnique = m_eNextTechnique;
+								//	m_eNextTechnique = E_TECH_NONE;
+								//}
+								//else
+								//	m_bEnd = true;
+							}
+							else
+								m_nCurrentFrame -= m_nMaxFrame;
+						}
+					}
+				}
+				UpdateUV();
+			}
+
+			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
+			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);
 		}
 		else if (!m_bLoop)
 		{
@@ -421,6 +429,9 @@ void cEffect::UpdateUV()
 void cEffect::Start()
 {
 	m_bProcess = true;
+	m_nCurrentTechIdx = 0;
+	m_eTechnique = m_vecTechnique[m_nCurrentFrame];
+	SetTech(m_eTechnique);
 }
 
 
@@ -432,6 +443,7 @@ void cEffect::Stop()
 	m_fRemovePassedTime = 0.0f;
 	m_nCurrentFrame = 0;
 	m_nLeftLoopTimes = m_nLoopTimes;
+	m_fTime = 0.0f;
 }
 
 
@@ -540,4 +552,17 @@ void cEffect::SetCurrentFrame(int nFrame)
 	m_nCurrentFrame = nFrame;
 	m_nOffsetX = m_nCurrentFrame % m_nMaxFrameX;
 	m_nOffsetY = m_nCurrentFrame / m_nMaxFrameX;
+}
+
+
+void cEffect::SetLoopTimes(int nLoopTimes)
+{
+	m_nLoopTimes = nLoopTimes;
+	m_nLeftLoopTimes = m_nLoopTimes;
+}
+
+
+void cEffect::AddTechList(E_EFFECT_TECHNIQUE eTech)
+{
+	m_vecTechnique.push_back(eTech);
 }

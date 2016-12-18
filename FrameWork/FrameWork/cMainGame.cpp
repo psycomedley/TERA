@@ -563,13 +563,14 @@ void cMainGame::SetEffect()
 	pEffect->SetTexture("Effect/bumpnoisesemi64.tga", E_BUMPMAP);
 	pEffect->SetTotalFrame(4, 4, 16);
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
-	pEffect->SetTechnique(E_TECH_ORCA1);
-	pEffect->SetNextTechnique(E_TECH_ORCA1_Remove);
-	pEffect->SetNextTime(0.05);
-	pEffect->SetLoop(true);
-	pEffect->SetRemoveTime(30.0f);
-	pEffect->SetLoopTimes(30);
-	pEffect->SetLeftLoopTimes(300);
+	pEffect->AddTechList(E_TECH_ORCA1);
+	pEffect->AddTechList(E_TECH_ORCA1_Remove);
+//	pEffect->SetTechnique(E_TECH_ORCA1);
+//	pEffect->SetNextTechnique(E_TECH_ORCA1_Remove);
+	pEffect->SetNextTime(0.03);
+//	pEffect->SetLoop(true);
+	pEffect->SetRemoveTime(3.0f);
+	pEffect->SetLoopTimes(20);
 	pEffect->SetName("orca1");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
@@ -581,7 +582,8 @@ void cMainGame::SetEffect()
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
 	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
-	pEffect->SetTechnique(E_TECH_ORCA2);
+	pEffect->AddTechList(E_TECH_ORCA2);
+//	pEffect->SetTechnique(E_TECH_ORCA2);
 
 	//m_pEffect2->SetAngle(D3DX_PI / 2);
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
@@ -599,7 +601,8 @@ void cMainGame::SetEffect()
 	pEffect->SetTexture("Effect/B_160Trail001_emis.tga", E_TEXTURE1);
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
-	pEffect->SetTechnique(E_TECH_BACKATK);
+	pEffect->AddTechList(E_TECH_BACKATK);
+//	pEffect->SetTechnique(E_TECH_BACKATK);
 
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
 	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
@@ -620,7 +623,8 @@ void cMainGame::SetEffect()
 
 	pEffect->SetAngle(D3DX_PI / 2);
 
-	pEffect->SetTechnique(E_TECH_MAGICARRAY);
+	pEffect->AddTechList(E_TECH_MAGICARRAY);
+//	pEffect->SetTechnique(E_TECH_MAGICARRAY);
 //	D3DXMATRIXA16 ma;
 //	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
 	pEffect->SetMatRotation(m);
