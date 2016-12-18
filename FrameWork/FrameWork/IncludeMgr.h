@@ -14,3 +14,4 @@
 #include "cCameraMgr.h"
 #include "cUIMgr.h"
 #include "cEffectMgr.h"
+#include "cSoundMgr.h"
