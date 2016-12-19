@@ -134,12 +134,12 @@ HRESULT cMainGame::Setup()
 	m_cObjectTree = new cObjectToolMgr;
 	m_cObjectTree->Setup();
 
-	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
+//	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
 
 
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
+//	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
 	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
 	m_pRushEffect->Setup(40, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
@@ -224,10 +224,10 @@ void cMainGame::Update()
 //m_pDynamicMeshEffect->Setup();
 
 	GETSINGLE(cEffectMgr)->Update();
-	if (m_pCircleEffect)
-	{
-		m_pCircleEffect->Update();
-	}
+	//if (m_pCircleEffect)
+	//{
+	//	m_pCircleEffect->Update();
+	//}
 	if (m_pRushEffect)
 	{
 		m_pRushEffect->Update();
@@ -315,10 +315,10 @@ void cMainGame::Render()
 //	//	m_pBoss->Bounding_Render();
 	//}
 
-	if (m_pCircleEffect)
-	{
-		m_pCircleEffect->Render();
-	}
+	//if (m_pCircleEffect)
+	//{
+	//	m_pCircleEffect->Render();
+	//}
 	if (m_pRushEffect)
 	{
 		m_pRushEffect->Render();
