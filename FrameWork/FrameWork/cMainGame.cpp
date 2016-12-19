@@ -211,11 +211,9 @@ void cMainGame::Update()
 		//}
 	}
 
-
 	CHAR str[16];
 	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
 	SetWindowText(g_hWnd, str);
-
 
 
 	/*if (m_pBoss)
@@ -255,8 +253,8 @@ void cMainGame::Render()
 	POINT ptPosition;
 	GetCursorPos(&ptPosition);
 	
-	OutputInteger(msg, "x", ptPosition.x);
-	OutputInteger(msg, "y", ptPosition.y);
+//	OutputInteger(msg, "x", ptPosition.x);
+//	OutputInteger(msg, "y", ptPosition.y);
 
 //	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //	{
@@ -321,7 +319,7 @@ void cMainGame::Render()
 	//}
 	if (m_pRushEffect)
 	{
-		m_pRushEffect->Render();
+//		m_pRushEffect->Render();
 	}
 	if (m_pEffect4)
 	{
@@ -363,6 +361,7 @@ void cMainGame::Release()
 	GETSINGLE(cUIMgr)->Release();
 	GETSINGLE(cShaderMgr)->Release();
 	GETSINGLE(cEffectMgr)->Release();
+	GETSINGLE(cSoundMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }

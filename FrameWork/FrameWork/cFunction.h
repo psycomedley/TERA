@@ -24,4 +24,6 @@ namespace MY_FUNCTION
 	bool IsActive();
 
 	void DevideFilename(string szFile, string& filename, string& extension);
+
+	void MSGBOX(string str);
 }

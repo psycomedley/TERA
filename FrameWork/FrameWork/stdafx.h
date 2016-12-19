@@ -40,7 +40,7 @@ extern HWND	g_hWnd;
 #include "Struct.h"
 #include "cObject.h"
 
-#include "IncludeMgr.h"
 #include "MacroFunc.h"
 #include "cFunction.h"
+#include "IncludeMgr.h"
 using namespace MY_FUNCTION;

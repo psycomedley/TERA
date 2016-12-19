@@ -92,4 +92,11 @@ namespace MY_FUNCTION
 		filename = szFile.substr(0, underlineIdx);
 		extension = szFile.substr(dotIdx, szFile.length());
 	}
+
+	void MSGBOX(string str)
+	{
+#ifdef _DEBUG
+		MessageBox(NULL, str.c_str(), "Message", MB_OK);
+#endif
+	}
 }

@@ -47,6 +47,19 @@ void cStateCombo::Start()
 
 void cStateCombo::Update()
 {
+	vector<cDynamicObj*> monsterList = GETSINGLE(cObjMgr)->GetALLMonsterList();
+
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+//		if (GETSINGLE(cCollision)->Collision(&m_pParent->GetSphere(), &monsterList[i]->GetSphere()))
+		if (GETSINGLE(cCollision)->CollisionOBB(&m_pParent->GetBox(), &monsterList[i]->GetBox()))
+		{
+			//Damage
+			OutputDebugString("Hit\n");
+		}
+	}
+
+
 	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_bNextAttack = true;

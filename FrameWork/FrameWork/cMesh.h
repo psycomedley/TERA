@@ -23,6 +23,7 @@ public:
 
 public:
 	virtual void Render();
+	void Bounding_Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle = 0, D3DXMATRIXA16* matRevision = NULL);
 	void Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle = 0, D3DXMATRIXA16* matRevision = NULL);
 	virtual void Release();
 
