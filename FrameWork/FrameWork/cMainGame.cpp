@@ -16,14 +16,14 @@
 #include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
-#include "cObjectToolMgr.h"
+#include "cObjectTool.h"
 
 //임시
 
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
-	, m_cObjectTree(NULL)
+	, m_cObjectTool(NULL)
 {
 }
 
@@ -32,8 +32,8 @@ cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
-	SAFE_DELETE(m_cObjectTree);
 
+	SAFE_RELEASE(m_cObjectTool);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
 	SAFE_RELEASE(m_pEffect4);
 	
@@ -103,8 +103,12 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
+	GETSINGLE(cObjectToolMgr)->Setup();
+
 	m_pMap = new cMap("Map","fieldmap1.x");
 	
+	m_cObjectTool = new cObjectTool;
+	m_cObjectTool->Setup();
 
 	///////////////임시////////////////
 
@@ -131,8 +135,6 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cObjectToolMgr;
-	m_cObjectTree->Setup();
 
 	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
@@ -179,7 +181,11 @@ void cMainGame::Update()
 		GETSINGLE(cUIMgr)->Update();
 	}
 
-
+	if (KEYBOARD->IsToggleKey(VK_F1))
+	{
+		if (m_cObjectTool)
+			m_cObjectTool->Update();
+	}
 
 	///////////////임시////////////////
 

@@ -33,7 +33,7 @@ void cStuff::Render()
 {
 	
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	//g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
@@ -55,5 +55,5 @@ void cStuff::Render()
 	cStaticObj::Render();
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	//g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }

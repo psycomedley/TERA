@@ -55,6 +55,8 @@ void cMap::Update()
 		pPlayer->SetPosition(D3DXVECTOR3(playerPos.x, playerPos.y, playerPos.z));
 	}
 
+	vector<cDynamicObj*>* pMonster = GETSINGLE(cObjMgr)->GetMonsterList("Orca");
+
 	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
 	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
 	{

@@ -23,6 +23,7 @@ public:
 	bool IsOnceKeyDown(int key);
 	bool IsStayKeyDown(int key);
 	bool IsOnceKeyUp(int key);
+	bool IsToggleKey(int key);
 
 public:
 	HRESULT		Setup(LPDIRECTINPUT8 pInput);
