@@ -67,10 +67,10 @@ void cObjMgr::Render()
 		}
 	}
 
-//	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
-//	{
-//		iter->second->Render();
-//	}
+	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
+	{
+		iter->second->Render();
+	}
 }
 
 

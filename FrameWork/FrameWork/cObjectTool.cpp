@@ -23,5 +23,12 @@ void cObjectTool::Update()
 	playerPos.z += 2.0f;
 	m_BodyStuff->SetPosition(playerPos);
 	
-
-}	
+	ChangeBodyStuff();
+}
+void cObjectTool::ChangeBodyStuff()
+{
+	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+	}
+}
