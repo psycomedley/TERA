@@ -51,6 +51,8 @@ void cEffectMgr::Render()
 
 void cEffectMgr::Release()
 {
+	m_listEffect.clear();
+
 	for each (auto iter in m_mapEffect)
 		for each (auto effect in iter.second)
 			effect->Release();

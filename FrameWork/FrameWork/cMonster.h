@@ -9,7 +9,6 @@ protected:
 	float			m_fDetectRange;
 //	float			m_fHpRatio;
 	cUIObject*		m_pUIHp;
-	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 
 public:
 	void SetName(string sName) { m_stInfo.sName = sName; }

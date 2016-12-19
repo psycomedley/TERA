@@ -18,12 +18,13 @@ public:
 	virtual void ResetTime();
 
 public:
-	virtual HRESULT Setup(E_FONT_TYPE eType, string sText, float fShowTime,
+	virtual HRESULT Setup(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
 		D3DXVECTOR2 vPosition, ST_SIZE stSize,
-		D3DCOLOR dwColor = XWHITE, int nAlpha = 255, float fAlphaTime = 0.0f,
+		D3DCOLOR dwColor = XWHITE,
+		int nOption = TEXT_NONE, int nAlpha = 255, float fAlphaTime = 0.0f,
 		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
 
-	virtual bool Update(float fPassedTime);
+	virtual void Update(float fPassedTime);
 	virtual void Render();
 
 public:

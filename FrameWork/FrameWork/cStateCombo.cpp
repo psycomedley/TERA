@@ -37,37 +37,73 @@ void cStateCombo::Update()
 {
 	vector<cDynamicObj*> monsterList = GETSINGLE(cObjMgr)->GetALLMonsterList();
 
-	for (int i = 0; i < monsterList.size(); i++)
-	{
-//		if (GETSINGLE(cCollision)->Collision(&m_pParent->GetSphere(), &monsterList[i]->GetSphere()))
-		if (GETSINGLE(cCollision)->CollisionOBB(&m_pParent->GetBox(), &monsterList[i]->GetBox()))
-		{
-			//Damage
-			OutputDebugString("Hit\n");
-		}
-	}
-
-
 	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_bNextAttack = true;
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1 ||
-		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 || 
+		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO3)
+	{
 		m_pParent->Move(0.05f);
 
+		if (m_pParent->GetCurrentAnimPosition() > 0.57f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					monsterList[i]->Damaged(m_pParent->GetInfo().fDamage);
+					m_vecHitted.push_back(monsterList[i]);
+				}
+			}
+		}
+	}
+
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
+	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_pParent->Move(0.05f);
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.73f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					monsterList[i]->Damaged(m_pParent->GetInfo().fDamage);
+					m_vecHitted.push_back(monsterList[i]);
+				}
+			}
+		}
+	}
+
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
+	{
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
 			m_pParent->Move(0.05f);
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.46f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					monsterList[i]->Damaged(m_pParent->GetInfo().fDamage * 2);
+					m_vecHitted.push_back(monsterList[i]);
+				}
+			}
+		}
+	}
 }
 
 
 void cStateCombo::End()
 {
+	for (int i = 0; i < m_vecHitted.size(); i++)
+		m_vecHitted[i]->SetHit(false);
+	m_vecHitted.clear();
+
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
 }
@@ -92,6 +128,10 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
 			pController->AnimationNext();
 			m_bNextAttack = false;
+
+			for (int i = 0; i < m_vecHitted.size(); i++)
+				m_vecHitted[i]->SetHit(false);
+			m_vecHitted.clear();
 		}
 	}
 	else

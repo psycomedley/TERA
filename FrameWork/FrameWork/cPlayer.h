@@ -13,7 +13,6 @@ private:
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
 
-	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(int, m_nKeyDir, KeyDir);
 	SYNTHESIZE(float, m_fTempAngle, TempAngle);
 
@@ -42,6 +41,9 @@ public:
 	void CheckState();
 
 	virtual void SetScale(D3DXVECTOR3 vScale) override;
+
+	cBoundingBox GetRightWeaponBox() { return m_pRightWeapon->GetBox(); }
+	cBoundingBox GetLeftWeaponBox() { return m_pLeftWeapon->GetBox(); }
 
 	//юс╫ц
 	void dlatl();
