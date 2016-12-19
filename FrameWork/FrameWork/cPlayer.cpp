@@ -129,7 +129,7 @@ void cPlayer::SetupBaseWeapon()
 	m_pLeftWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
-
+	
 
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet00_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");

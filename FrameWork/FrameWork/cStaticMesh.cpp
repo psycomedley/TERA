@@ -18,11 +18,16 @@ cStaticMesh::cStaticMesh(char* szFolder, char* szFilename)
 
 	m_vecVertaxies = pStaticdMesh->m_vecVertaxies;
 	m_vecPNTVertaxies = pStaticdMesh->m_vecPNTVertaxies;
+
+	m_IsCullMode = pStaticdMesh->m_IsCullMode;
+	m_DwSubSetNum = pStaticdMesh->m_DwSubSetNum;
 }
 
 
 cStaticMesh::cStaticMesh()
 {
+	m_IsCullMode = false;
+	m_DwSubSetNum = 0;
 }
 
 
@@ -142,13 +147,37 @@ void cStaticMesh::Update()
 
 void cStaticMesh::Render()
 {
-
-	for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+	if (m_IsCullMode)
 	{
-		g_pD3DDevice->SetTexture(0, vecTexture[i]);
-		g_pD3DDevice->SetMaterial(&vecMaterial[i]);
-		m_pMesh->DrawSubset(i);
+		for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+		{
+			if (i == m_DwSubSetNum)
+			{
+				g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+				g_pD3DDevice->SetTexture(0, vecTexture[i]);
+				g_pD3DDevice->SetMaterial(&vecMaterial[i]);
+				m_pMesh->DrawSubset(i);
+				g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+			}
+			else
+			{
+				g_pD3DDevice->SetTexture(0, vecTexture[i]);
+				g_pD3DDevice->SetMaterial(&vecMaterial[i]);
+				m_pMesh->DrawSubset(i);
+			}
+			
+		}
 	}
+	else
+	{
+		for (DWORD i = 0; i < m_dwSubSetCnt; ++i)
+		{
+			g_pD3DDevice->SetTexture(0, vecTexture[i]);
+			g_pD3DDevice->SetMaterial(&vecMaterial[i]);
+			m_pMesh->DrawSubset(i);
+		}
+	}
+	
 
 }
 

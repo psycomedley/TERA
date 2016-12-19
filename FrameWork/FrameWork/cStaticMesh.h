@@ -19,6 +19,10 @@ protected:
 
 	vector<D3DXVECTOR3>			m_vecVertaxies;
 	vector<ST_PNT_VERTEX>		m_vecPNTVertaxies;
+
+	//특정 서브셋의 컬모드를 위한변수
+	SYNTHESIZE(bool, m_IsCullMode, IsCullMode);
+	SYNTHESIZE(DWORD, m_DwSubSetNum, DwSubSetNum);//특정서브셋의 번호
 	
 
 public:

@@ -16,7 +16,8 @@ cObjectToolMgr::~cObjectToolMgr()
 void cObjectToolMgr::Setup()
 {
 	cStuff* pTree = new cStuff("Object", "tree1.x");
-	GETSINGLE(cObjMgr)->AddStuff("나무1", pTree);
+
+	GETSINGLE(cObjMgr)->AddStuff("나무", pTree);
 }
 void cObjectToolMgr::Render()
 {
