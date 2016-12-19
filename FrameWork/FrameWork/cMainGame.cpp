@@ -363,6 +363,7 @@ void cMainGame::Release()
 	GETSINGLE(cUIMgr)->Release();
 	GETSINGLE(cShaderMgr)->Release();
 	GETSINGLE(cEffectMgr)->Release();
+	GETSINGLE(cSoundMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
