@@ -67,15 +67,18 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(1, 100);
+	m_skillLongMove.SetInfo(60.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
-	pText->Setup(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_SHOWTIME | TEXT_ALPHA | TEXT_MOVE);
+	pText->Setup(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 
+		D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), 
+		XWHITE, TEXT_SHOWTIME | TEXT_ALPHA | TEXT_MOVE | TEXT_MOVEAFTERTIME);
 	pText->SetShowTime(3.0f);
 	pText->SetAlphaTime(1.0f);
 	pText->SetMoveSpeed(0.3f);
-	pText->SetDirection(DIRECTION_UP | DIRECTION_RIGHT);
+	pText->SetDirection(DIRECTION_UP);
+	pText->SetMoveTime(3.0f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
 	m_skillHeavyAtk.SetInfo(35.0f, 100);

@@ -55,6 +55,7 @@ void cStateCombo::Update()
 				{
 					monsterList[i]->Damaged(m_pParent->GetInfo().fDamage);
 					m_vecHitted.push_back(monsterList[i]);
+					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
 				}
 			}
 		}

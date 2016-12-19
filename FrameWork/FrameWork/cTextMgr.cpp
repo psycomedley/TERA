@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "cTextMgr.h"
 #include "cText.h"
-#include "cAlphaText.h"
 
 
 cTextMgr::cTextMgr()

@@ -37,6 +37,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	GETSINGLE(cUIMgr)->AddList("Player");
 	m_pUIHp = GETSINGLE(cUIMgr)->GetUIInList("Player");
 
+
 	//юс╫ц
 	SetupBaseWeapon();
 	SetupState();
