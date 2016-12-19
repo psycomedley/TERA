@@ -253,8 +253,8 @@ void cMainGame::Render()
 	POINT ptPosition;
 	GetCursorPos(&ptPosition);
 	
-	OutputInteger(msg, "x", ptPosition.x);
-	OutputInteger(msg, "y", ptPosition.y);
+//	OutputInteger(msg, "x", ptPosition.x);
+//	OutputInteger(msg, "y", ptPosition.y);
 
 //	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
 //	{
@@ -319,7 +319,7 @@ void cMainGame::Render()
 	}
 	if (m_pRushEffect)
 	{
-		m_pRushEffect->Render();
+//		m_pRushEffect->Render();
 	}
 	if (m_pEffect4)
 	{

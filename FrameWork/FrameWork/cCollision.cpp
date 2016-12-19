@@ -70,5 +70,146 @@ bool cCollision::Collision(cBoundingBox* pBox1, cBoundingBox* pBox2)
 
 bool cCollision::CollisionOBB(cBoundingBox* pBox1, cBoundingBox* pBox2)
 {
-	return false;
+	ST_OBB stObb1 = pBox1->GetObb();
+	ST_OBB stObb2 = pBox2->GetObb();
+
+	float cos[3][3];
+	float absCos[3][3];
+	float dist[3];
+	float r0, r1, r;
+
+	const float cutOff = 0.999999f;
+	bool existsParallelPair = false;
+
+	D3DXVECTOR3 D = stObb2.vCenterPos - stObb1.vCenterPos;
+
+	// OBB_A 의 3 축을 기준으로 OBB_B 의 3축을 검사
+	for (int a = 0; a < 3; a++)
+	{
+		for (int b = 0; b < 3; b++)
+		{
+			//OBB_A a 축과 OBB_B b 축의 cos 값
+			cos[a][b] = D3DXVec3Dot(&stObb1.vAxisDir[a], &stObb2.vAxisDir[b]);
+
+			//위에서 구한 cos 값의 절대값
+			absCos[a][b] = abs(cos[a][b]);
+
+
+			//한축이 직각이다 
+			//이러한경우 AABB 형태가 된다.
+			if (absCos[a][b] > cutOff)
+				existsParallelPair = true;
+		}
+
+
+		//사각형 끼리의 중심 거리 벡터를 OBB_A 의 a 축으로 투영한 거리
+		dist[a] = D3DXVec3Dot(&stObb1.vAxisDir[a], &D);
+		r = abs(dist[a]);
+
+		//OBB_A 의 a 축의 길이
+		r0 = stObb1.fAxisHalfLen[a];
+
+		//OBB_B 의 꼭지점이 OBB_A 의a 축으로 투영된 길이
+		r1 = stObb2.fAxisHalfLen[0] * absCos[a][0] +
+			stObb2.fAxisHalfLen[1] * absCos[a][1] +
+			stObb2.fAxisHalfLen[2] * absCos[a][2];
+
+		if (r > r0 + r1)
+			return false;
+	}
+
+
+
+	// OBB_B 의 3축을 기준으로 OBB_A 의 3축을 검사
+	for (int b = 0; b < 3; b++)
+	{
+		r = abs(D3DXVec3Dot(&stObb2.vAxisDir[b], &D));
+		r0 = stObb1.fAxisHalfLen[0] * absCos[0][b] +
+			stObb1.fAxisHalfLen[1] * absCos[1][b] +
+			stObb1.fAxisHalfLen[2] * absCos[2][b];
+
+		r1 = stObb2.fAxisHalfLen[b];
+
+		if (r > r0 + r1)
+			return false;
+	}
+
+
+	if (existsParallelPair) return true;
+
+
+
+
+	/////////////////////////////////////////////////////////////////
+
+	r = abs(dist[0] * cos[2][0] - dist[2] * cos[0][0]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[2][0] + stObb1.fAxisHalfLen[2] * absCos[0][0];
+	r1 = stObb2.fAxisHalfLen[1] * absCos[1][2] + stObb2.fAxisHalfLen[2] * absCos[1][1];
+	if (r > r0 + r1)
+		return false;
+
+	r = abs(dist[0] * cos[2][1] - dist[2] * cos[0][1]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[2][1] + stObb1.fAxisHalfLen[2] * absCos[0][1];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[1][2] + stObb2.fAxisHalfLen[2] * absCos[1][0];
+	if (r > r0 + r1)
+		return false;
+
+	r = abs(dist[0] * cos[2][2] - dist[2] * cos[0][2]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[2][2] + stObb1.fAxisHalfLen[2] * absCos[0][2];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[1][1] + stObb2.fAxisHalfLen[1] * absCos[1][0];
+	if (r > r0 + r1)
+		return false;
+
+
+	/////////////////////////////////////////////////////////////////	 
+
+
+	r = abs(dist[1] * cos[0][0] - dist[0] * cos[1][0]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[1][0] + stObb1.fAxisHalfLen[1] * absCos[0][0];
+	r1 = stObb2.fAxisHalfLen[1] * absCos[2][2] + stObb2.fAxisHalfLen[2] * absCos[2][1];
+	if (r > r0 + r1)
+		return false;
+
+	r = abs(dist[1] * cos[0][1] - dist[0] * cos[1][1]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[1][1] + stObb1.fAxisHalfLen[1] * absCos[0][1];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[2][2] + stObb2.fAxisHalfLen[2] * absCos[2][0];
+	if (r > r0 + r1)
+		return false;
+
+
+	r = abs(dist[1] * cos[0][2] - dist[0] * cos[1][2]);
+	r0 = stObb1.fAxisHalfLen[0] * absCos[1][2] + stObb1.fAxisHalfLen[1] * absCos[0][2];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[2][1] + stObb2.fAxisHalfLen[1] * absCos[2][0];
+	if (r > r0 + r1)
+		return false;
+
+
+	/////////////////////////////////////////////////////////////////
+
+	r = abs(dist[2] * cos[1][0] - dist[1] * cos[2][0]);
+	r0 = stObb1.fAxisHalfLen[1] * absCos[2][0] + stObb1.fAxisHalfLen[2] * absCos[1][0];
+	r1 = stObb2.fAxisHalfLen[1] * absCos[0][2] + stObb2.fAxisHalfLen[2] * absCos[0][1];
+	if (r > r0 + r1)
+		return false;
+
+
+
+	r = abs(dist[2] * cos[1][1] - dist[1] * cos[2][1]);
+	r0 = stObb1.fAxisHalfLen[1] * absCos[2][1] + stObb1.fAxisHalfLen[2] * absCos[1][1];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[0][2] + stObb2.fAxisHalfLen[2] * absCos[0][0];
+	if (r > r0 + r1)
+		return false;
+
+
+
+	r = abs(dist[2] * cos[1][2] - dist[1] * cos[2][2]);
+	r0 = stObb1.fAxisHalfLen[1] * absCos[2][2] + stObb1.fAxisHalfLen[2] * absCos[1][2];
+	r1 = stObb2.fAxisHalfLen[0] * absCos[0][1] + stObb2.fAxisHalfLen[1] * absCos[0][0];
+	if (r > r0 + r1)
+		return false;
+
+
+
+
+	return true;
 }

@@ -62,14 +62,15 @@ void cObjMgr::Render()
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
 			(*iter2)->UpdateAndRender();
+			(*iter2)->Bounding_Update();
 			(*iter2)->Bounding_Render();
 		}
 	}
 
-	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
-	{
-		iter->second->Render();
-	}
+//	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
+//	{
+//		iter->second->Render();
+//	}
 }
 
 
