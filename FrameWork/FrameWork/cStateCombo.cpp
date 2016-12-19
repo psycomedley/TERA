@@ -39,10 +39,11 @@ void cStateCombo::Update()
 
 	for (int i = 0; i < monsterList.size(); i++)
 	{
-		if (GETSINGLE(cCollision)->Collision(&m_pParent->GetSphere(), &monsterList[i]->GetSphere()))
+//		if (GETSINGLE(cCollision)->Collision(&m_pParent->GetSphere(), &monsterList[i]->GetSphere()))
+		if (GETSINGLE(cCollision)->CollisionOBB(&m_pParent->GetBox(), &monsterList[i]->GetBox()))
 		{
 			//Damage
-			int a = 0;
+			OutputDebugString("Hit\n");
 		}
 	}
 

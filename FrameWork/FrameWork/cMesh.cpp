@@ -25,6 +25,13 @@ void cMesh::Render()
 }
 
 
+void cMesh::Bounding_Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle /*= 0*/, D3DXMATRIXA16* matRevision /*= NULL*/)
+{
+	if (m_pBox)
+		m_pBox->Update(vPos, vScale, fAngle, matRevision);
+}
+
+
 void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle /*= 0*/, D3DXMATRIXA16* matRevision /*= NULL*/)
 {
 	if (m_pBox)
@@ -74,6 +81,8 @@ cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*=
 
 	box.SetvMin(vMin);
 	box.SetvMax(vMax);
+
+	box.m_stObb = m_pBox->m_stObb;
 	//юс╫ц
 	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
 	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,

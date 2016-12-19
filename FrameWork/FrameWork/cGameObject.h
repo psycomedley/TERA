@@ -38,6 +38,7 @@ public:
 public:
 	virtual void Update();
 	virtual void Render();
+	void Bounding_Update();
 	void Bounding_Render();
 
 public:
