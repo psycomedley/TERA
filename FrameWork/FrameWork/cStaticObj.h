@@ -1,7 +1,7 @@
 #pragma once
 #include "cGameObject.h"
+#include "cStaticMesh.h"
 
-class cStaticMesh;
 class cStaticObj : public cGameObject
 {
 public:

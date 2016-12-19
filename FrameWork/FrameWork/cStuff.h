@@ -1,6 +1,5 @@
 #pragma once
 
-#include"cStaticMesh.h"
 #include"cStaticObj.h"
 class cStuff :public cStaticObj
 {
