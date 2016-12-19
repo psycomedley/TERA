@@ -45,13 +45,13 @@ void cOrcaClone::SetupStatus()
 {
 	m_stInfo.sName = "Orca_Clone";
 
-	m_stInfo.fMaxHp = 100;
+	m_stInfo.fMaxHp = 100000;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
 	m_stInfo.fDamage = 100.0f;
-	m_stInfo.fDefence = 100.0f;
+	m_stInfo.fDefence = 10000.0f;
 
 	m_fDetectRange = 15.0f;
 

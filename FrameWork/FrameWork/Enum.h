@@ -26,6 +26,8 @@
 #define ABLUE(a)	D3DCOLOR_ARGB(a, 0, 0, 255)
 #define AYELLOW(a)	D3DCOLOR_ARGB(a, 255, 255, 0)
 
+#define MAXSOUND	20
+
 //enum E_DIRECTION
 //{
 //	E_NONE = 0,

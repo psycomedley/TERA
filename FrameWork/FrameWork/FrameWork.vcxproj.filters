@@ -145,6 +145,9 @@
     <Filter Include="소스 파일\19.Effect\StraightEffect">
       <UniqueIdentifier>{a5b76a47-e5d1-465c-a486-aa0aa3842ad5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\22. Sound">
+      <UniqueIdentifier>{cac1ea04-89f9-4486-8b24-053ec26abfb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -408,6 +411,9 @@
     <ClInclude Include="IncludeMgr.h">
       <Filter>헤더 파일\00. Include</Filter>
     </ClInclude>
+    <ClInclude Include="cSoundMgr.h">
+      <Filter>소스 파일\22. Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -646,6 +652,9 @@
     </ClCompile>
     <ClCompile Include="cObjectToolMgr.cpp">
       <Filter>소스 파일\21. ObjecTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cSoundMgr.cpp">
+      <Filter>소스 파일\22. Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

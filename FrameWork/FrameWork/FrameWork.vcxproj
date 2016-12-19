@@ -25,9 +25,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -46,8 +46,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,6 +131,7 @@
     <ClInclude Include="cRushEffect.h" />
     <ClInclude Include="cShaderMgr.h" />
     <ClInclude Include="cSingleton.h" />
+    <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
     <ClInclude Include="cStateDeath.h" />
@@ -223,6 +222,7 @@
     <ClCompile Include="cRushEffect.cpp" />
     <ClCompile Include="cShaderMgr.cpp" />
     <ClCompile Include="cSingleton.cpp" />
+    <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
     <ClCompile Include="cStateDeath.cpp" />

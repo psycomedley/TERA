@@ -191,8 +191,11 @@ void cStateBossSkill::OnAnimationFinish(cAnimationController* pController, ST_AN
 	else if (animInfo.nIndex == E_BOSS_LONGMOVE_END)
 	{
 //		D3DXVECTOR3 dir = m_pParent->GetDirection();
-		float angle = m_pParent->GetAngle();
-		m_pParent->SetPosition(m_pParent->GetPosition());
+//		float angle = m_pParent->GetAngle();
+//		D3DXVECTOR3 vec;
+//		vec = D3DXVECTOR3(-sinf(angle), 0.0f, -cosf(angle)) * -5;
+
+//		m_pParent->SetPosition(m_pParent->GetPosition() + vec);
 		End();
 	}
 	else

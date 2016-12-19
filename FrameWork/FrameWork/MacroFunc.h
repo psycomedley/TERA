@@ -1,4 +1,4 @@
-#define MSGBOX(string) MessageBox(NULL, string, "Message", MB_OK)
+//#define MSGBOX(string) MessageBox(NULL, string, "Message", MB_OK)
 #define OutputInteger(msg, string, value) \
 	sprintf_s(msg, "%s : %d\n", string, value);\
 	OutputDebugString(msg);\
