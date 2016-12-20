@@ -19,6 +19,7 @@ private:
 
 	cUIObject*		m_pUIHp;
 
+
 	//이후에 몸통 따로 구성
 	/*cDynamicObj*	m_pArm;
 	cDynamicObj*	m_pLeg;
@@ -45,6 +46,7 @@ public:
 
 	//임시
 	void dlatl();
+
 
 public:
 	cPlayer(char* szFolder, char* szFilename);

@@ -45,6 +45,7 @@ cMainGame::~cMainGame()
 
 	SAFE_RELEASE(m_pMap);
 	
+
 	Release();
 
 //	SAFE_RELEASE(m_pPlayer);

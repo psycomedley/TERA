@@ -14,10 +14,7 @@ cStateCombo::cStateCombo()
 
 cStateCombo::~cStateCombo()
 {
-	SAFE_RELEASE(m_pCombo1Effect);
-	SAFE_RELEASE(m_pCombo2Effect);
-	SAFE_RELEASE(m_pCombo3Effect);
-	SAFE_RELEASE(m_pCombo4Effect);
+
 }
 
 
@@ -191,6 +188,7 @@ void cStateCombo::Update()
 			SAFE_RELEASE(m_pCombo4Effect);
 		}
 	}
+
 }
 
 	

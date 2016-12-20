@@ -2,8 +2,12 @@
 #include "iState.h"
 
 class cDynamicObj;
+class cStaticMeshEffect;
 class cStateDefence : public iState
 {
+private:
+	cStaticMeshEffect*	m_pDefenseEffect;
+
 public:
 	virtual void Start() override;
 	virtual void Update() override;

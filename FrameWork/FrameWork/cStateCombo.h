@@ -31,5 +31,6 @@ public:
 	~cStateCombo();
 
 public:
+	
 };
 
