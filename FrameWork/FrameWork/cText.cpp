@@ -50,6 +50,7 @@ cText::cText(cText* pText)
 	m_sKey = pText->m_sKey;
 	m_bProcess = false;
 	m_fMoveSpeed = pText->m_fMoveSpeed;
+	m_nDirection = pText->m_nDirection;
 	m_fMoveTime = pText->m_fMoveTime;
 }
 

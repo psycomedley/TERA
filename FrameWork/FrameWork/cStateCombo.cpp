@@ -8,7 +8,6 @@
 
 cStateCombo::cStateCombo()
 	: m_bNextAttack(false)
-	, m_bHit(false)
 {
 }
 
@@ -50,85 +49,31 @@ void cStateCombo::Update()
 		m_pParent->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.57f)
-		{
-			for (int i = 0; i < monsterList.size(); i++)
-			{
-				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
-				{
-					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
-					m_vecHitted.push_back(monsterList[i]);
-					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
-					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-					text->SetTextFloat(damage);
-					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
-					text->Start();
-				}
-			}
-		}
+			AddDamage(false);
 	}
 
-	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_pParent->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.73f)
-		{
-			for (int i = 0; i < monsterList.size(); i++)
-			{
-				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
-				{
-					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
-					m_vecHitted.push_back(monsterList[i]);
-					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
-					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-					text->SetTextFloat(damage);
-					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
-					text->Start();
-				}
-			}
-		}
+			AddDamage(false);
 	}
 
-	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
 	{
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
 			m_pParent->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.28f)
-		{
-			for (int i = 0; i < monsterList.size(); i++)
-			{
-				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
-				{
-					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
-					m_vecHitted.push_back(monsterList[i]);
-					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
-					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-					text->SetTextFloat(damage);
-					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
-					text->Start();
-				}
-			}
-		}
+			AddDamage(false);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.46f)
 		{
 			if (!m_bHit)
 			{
-				for (int i = 0; i < monsterList.size(); i++)
-				{
-					if (GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
-					{
-						float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
-						m_vecHitted.push_back(monsterList[i]);
-						GETSINGLE(cTextMgr)->AddList("PlayerDamage");
-						cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-						text->SetTextFloat(damage);
-						text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
-						text->Start();
-					}
-				}
+				AddDamage(true);
 				m_bHit = true;
 			}
 		}

@@ -83,11 +83,11 @@ HRESULT cMainGame::Setup()
 	cText* pText = new cText;
 	pText->Setup(E_FONT_DAMAGE, "PlayerDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XYELLOW,
 		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
-	pText->SetShowTime(3.0f);
-	pText->SetAlphaTime(1.0f);
-	pText->SetMoveSpeed(0.3f);
+	pText->SetShowTime(2.0f);
+	pText->SetAlphaTime(0.5f);
+	pText->SetMoveSpeed(0.5f);
 	pText->SetDirection(DIRECTION_UP);
-	pText->SetMoveTime(1.0f);
+	pText->SetMoveTime(0.5f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");

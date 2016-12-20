@@ -49,7 +49,7 @@ LPD3DXFONT cFontMgr::GetFont(E_FONT_TYPE eFontType)
 			break;
 		case E_FONT_DAMAGE:
 			fd.Height = 35;
-			fd.Width = 15;
+			fd.Width = 20;
 			fd.Weight = FW_NORMAL;
 			fd.Italic = false;
 			fd.CharSet = DEFAULT_CHARSET;
