@@ -3,6 +3,7 @@
 #include "cDynamicObj.h"
 #include "cPlayer.h"
 #include "cCamera.h"
+#include "cText.h"
 
 
 cStateCombo::cStateCombo()
@@ -53,9 +54,14 @@ void cStateCombo::Update()
 			{
 				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
 				{
-					monsterList[i]->Damaged(m_pParent->GetInfo().fDamage);
+					float damage = monsterList[i]->Damaged(m_pParent->GetInfo().fDamage);
 					m_vecHitted.push_back(monsterList[i]);
 					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
+					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+					text->SetTextFloat(GetFromIntTo(30, 100));
+					//랜덤 위치로 변경하기
+					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-100, 100)));
+					text->Start();
 				}
 			}
 		}

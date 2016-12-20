@@ -101,34 +101,6 @@ void AddText(E_FONT_TYPE eType, string sKey, string sText,
 }
 
 
-//void cTextMgr::AddText(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
-//	D3DXVECTOR2 vPosition, ST_SIZE stSize,
-//	D3DCOLOR dwColor /*= XWHITE*/,
-//	int nOption /*= TEXT_NONE*/,
-//	DWORD dwFormat /*= DT_VCENTER | DT_CENTER | DT_WORDBREAK*/)
-//{
-//	cText* pText = new cText;
-//	pText->Setup(eType, sKey, sText, fShowTime, vPosition, stSize, dwColor, nOption, dwFormat);
-//	m_mapText[sKey].push_back(pText);
-//
-//	//ST_TEXT stText(eFontType, sText, fShowTime, _rect);
-//	//D3DXCreateSprite(g_pD3DDevice, &stText.pSprite);
-//	//m_listText.push_back(stText);
-//}
-//
-//
-//void cTextMgr::AddAlphaText(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
-//	D3DXVECTOR2 vPosition, ST_SIZE stSize,
-//	D3DCOLOR dwColor /*= XWHITE*/,
-//	int nOption /*= TEXT_NONE*/, int nAlpha /*= 255*/, float fAlphaTime /*= 0.0f*/,
-//	DWORD dwFormat /*= DT_VCENTER | DT_CENTER | DT_WORDBREAK*/)
-//{
-//	cText* pText = new cAlphaText;
-//	((cAlphaText*)pText)->Setup(eType, sKey, sText, fShowTime, vPosition, stSize, dwColor, nOption, nAlpha, fAlphaTime, dwFormat);
-//	m_mapText[sKey].push_back(pText);
-//}
-
-
 void cTextMgr::AddList(string sKey)
 {
 	for (auto iter = m_mapText[sKey].begin(); iter != m_mapText[sKey].end(); iter++)
@@ -136,14 +108,14 @@ void cTextMgr::AddList(string sKey)
 		if (!(*iter)->GetProcess())
 		{
 			m_listText.push_back((*iter));
-			(*iter)->SetProcess(true);
+			(*iter)->Start();
 			return;
 		}
 	}
 	if (m_mapText[sKey].size() > 0)
 	{
 		cText* pText = new cText(m_mapText[sKey].front());
-		pText->SetProcess(true);
+		pText->Start();
 		m_mapText[sKey].push_back(pText);
 		m_listText.push_back(pText);
 	}
@@ -171,9 +143,9 @@ void cTextMgr::RemoveList(string sKey, cText* pText)
 }
 
 
-//cText* cTextMgr::GetText(string key)
-//{
-//	if (m_mapText.find(key) == m_mapText.end())
-//		return NULL;
-//	return m_mapText[key];
-//}
+cText* cTextMgr::GetText(string sKey)
+{
+	if (m_mapText.find(sKey) == m_mapText.end())
+		return NULL;
+	return m_mapText[sKey].front();
+}

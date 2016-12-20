@@ -34,9 +34,13 @@ protected:
 	SYNTHESIZE(float, m_fMoveTime, MoveTime);		//MoveAfterTime Option
 
 public:
-	virtual void ResetTime();
+	void Start();
+	void Stop();
+	void ResetTime();
 	void Move();									//Move Option
 	void SetAlphaTime(float fAlphaTime);
+	void SetTextInteger(int nNum);
+	void SetTextFloat(float fNum);
 
 public:
 	/*virtual HRESULT Setup(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
