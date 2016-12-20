@@ -90,6 +90,18 @@ HRESULT cMainGame::Setup()
 	pText->SetMoveTime(0.5f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
+	pText = new cText;
+	pText->Setup(E_FONT_MONSTERDAMAGE, "MonsterDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XRED,
+		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
+	pText->SetShowTime(2.0f);
+	pText->SetAlphaTime(0.5f);
+	pText->SetMoveSpeed(0.5f);
+	pText->SetDirection(DIRECTION_UP);
+	pText->SetMoveTime(0.5f);
+	GETSINGLE(cTextMgr)->AddText(pText);
+
+
+
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
 	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;

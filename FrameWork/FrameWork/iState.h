@@ -20,6 +20,7 @@ public:
 //	virtual void Render() PURE;
 	virtual void End() PURE;
 	void AddDamage(bool bDoubleHit);
+	void AddEnemyDamage(cBoundingSphere sphere);
 
 public:
 	iState();

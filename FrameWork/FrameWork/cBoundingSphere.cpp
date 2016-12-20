@@ -42,7 +42,10 @@ void cBoundingSphere::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, D3DXMATRIXA16
 		vPos.x,
 		vPos.y + m_fOriginalY * vScale.y,
 		vPos.z);
-	mat = *matRevision * matS * matT;
+	if (matRevision)
+		mat = *matRevision * matS * matT;
+	else
+		mat = matS * matT;
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	m_pSphereMesh->DrawSubset(0);
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

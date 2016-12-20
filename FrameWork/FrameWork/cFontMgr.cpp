@@ -59,6 +59,17 @@ LPD3DXFONT cFontMgr::GetFont(E_FONT_TYPE eFontType)
 			strcpy_s(fd.FaceName, "umberto");
 			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
 			break;
+		case E_FONT_MONSTERDAMAGE:
+			fd.Height = 20;
+			fd.Width = 20;
+			fd.Weight = FW_NORMAL;
+			fd.Italic = false;
+			fd.CharSet = DEFAULT_CHARSET;
+			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
+			fd.PitchAndFamily = FF_DONTCARE;
+			strcpy_s(fd.FaceName, "휴먼편지체");
+			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
+			break;
 		}
 	}
 	return m_mapFont[eFontType];

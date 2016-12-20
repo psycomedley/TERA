@@ -53,3 +53,40 @@ void iState::AddDamage(bool bDoubleHit)
 		}
 	}
 }
+
+//나중에 바꿉시다
+void iState::AddEnemyDamage(cBoundingSphere sphere)
+{
+	cDynamicObj* pTarget = GETSINGLE(cObjMgr)->GetPlayer();
+
+//	if (!bDoubleHit)
+//	{
+	if (!pTarget->GetHit() && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
+		{
+			float damage = pTarget->Damaged(m_pParent->GetInfo());
+			if (damage == -1)
+				return;
+			m_vecHitted.push_back(pTarget);
+			GETSINGLE(cTextMgr)->AddList("MonsterDamage");
+			cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+			text->SetTextFloat(damage);
+			text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-200, 200), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+			text->Start();
+		}
+	//}
+	//else
+	//{
+	//	if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &pTarget->GetSphere()))
+	//	{
+	//		float damage = pTarget->Damaged(m_pParent->GetInfo());
+	//		if (damage == -1)
+	//			return;
+	//		m_vecHitted.push_back(pTarget);
+	//		GETSINGLE(cTextMgr)->AddList("MonsterDamage");
+	//		cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+	//		text->SetTextFloat(damage);
+	//		text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+	//		text->Start();
+	//	}
+	//}
+}
