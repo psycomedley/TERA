@@ -13,7 +13,6 @@ protected:
 	float			m_fElapseX;						//Move Option
 	float			m_fElapseY;						//Move Option
 
-	int				m_nCurrentAlpha;				//Alpha Option
 	float			m_fPassedAlphaTime;				//Alpha Option
 
 	float			m_fAlphaTime;					//Alpha Option
@@ -55,7 +54,7 @@ public:
 		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
 
 	virtual void Update(float fPassedTime);
-	virtual void Render();
+	virtual void Render(LPD3DXSPRITE pSprite);
 
 public:
 	cText();

@@ -12,7 +12,6 @@ cText::cText()
 	, m_fElapseX(0.0f)
 	, m_fElapseY(0.0f)
 	, m_nAlpha(255)
-	, m_nCurrentAlpha(255)
 	, m_fPassedAlphaTime(0.0f)
 	, m_fDecreasePerSecond(0.0f)
 	, m_fAlphaTime(0.0f)
@@ -39,13 +38,13 @@ cText::cText(cText* pText)
 	m_fElapseX = 0.0f;
 	m_fElapseY = 0.0f;
 	m_nAlpha = pText->m_nAlpha;
-	m_nCurrentAlpha = m_nAlpha;
 	m_fPassedAlphaTime = 0.0f;
 	m_fDecreasePerSecond = pText->m_fDecreasePerSecond;
 	m_fPassedMoveTime = 0.0f;
 
 	m_fAlphaTime = pText->m_fAlphaTime;
 	m_dwColor = pText->m_dwColor;
+	m_dwColor.a = m_nAlpha / 255.0f;
 	m_vPosition = pText->m_vPosition;
 	m_sText = pText->m_sText;
 	m_sKey = pText->m_sKey;
@@ -157,9 +156,9 @@ void cText::Update(float fPassedTime)
 }
 
 
-void cText::Render()
+void cText::Render(LPD3DXSPRITE pSprite)
 {
-	m_pFont->DrawTextA(NULL,
+	m_pFont->DrawText(pSprite,
 		m_sText.c_str(),
 		m_sText.size(),
 		&m_rect,
@@ -176,7 +175,7 @@ void cText::ResetTime()
 	m_fElapseX = 0.0f;
 	m_fElapseY = 0.0f;
 	m_bProcess = false;
-	m_nCurrentAlpha = m_nAlpha;
+	m_dwColor.a = m_nAlpha / 255.0f;
 }
 
 

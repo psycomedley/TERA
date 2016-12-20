@@ -134,8 +134,9 @@ void cDynamicObj::LookTarget()
 }
 
 
-float cDynamicObj::Damaged(float fDamage)
+float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 {
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
 	if (m_pState != m_aStates[E_STATE_DEATH])
 	{
 		if (m_stInfo.fDefence > fDamage)

@@ -33,7 +33,7 @@ public:
 	long			GetWheelCount();
 
 	POINT			GetFixPos() { return m_FixPos; }
-	void			SetFixPos(POINT _fixPos){ m_FixPos = _fixPos; }
+	void			SetFixPos(POINT _fixPos) { m_FixPos = _fixPos; }
 
 	DIMOUSESTATE*	GetMouseState() { return &m_MouseState; }
 	POINT			GetMouseVariation();
