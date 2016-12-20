@@ -306,6 +306,8 @@ void cMainGame::Render()
 		m_pMap->Render();
 	m_pGrid->Render();
 	
+	m_cObjectTool->Render();
+
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();

@@ -38,6 +38,10 @@ void cObjMgr::AddStuff(string sKey, cStaticObj* pStuff)
 	else
 		iter->second;
 }
+void cObjMgr::AddCloneStuff(cStaticObj* pStuff)
+{
+	m_vecCloneStuff.push_back(pStuff);
+}
 
 void cObjMgr::Update()
 {
@@ -68,10 +72,15 @@ void cObjMgr::Render()
 		}
 	}
 
-	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
+	for each(auto p in m_vecCloneStuff)
+	{
+		p->Render();
+	}
+
+	/*for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
 	{
 		iter->second->Render();
-	}
+	}*/
 }
 
 
@@ -91,6 +100,11 @@ void cObjMgr::Release()
 	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
 	{
 		SAFE_RELEASE(iter->second);
+	}
+
+	for each(auto p in m_vecCloneStuff)
+	{
+		p->Release();
 	}
 
 	cSingleton::Release();
