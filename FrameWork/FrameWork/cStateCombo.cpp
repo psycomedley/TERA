@@ -4,10 +4,12 @@
 #include "cPlayer.h"
 #include "cCamera.h"
 #include "cCircleEffect.h"
+#include "cText.h"
 
 
 cStateCombo::cStateCombo()
 	: m_bNextAttack(false)
+	, m_bHit(false)
 {
 }
 
@@ -46,32 +48,103 @@ void cStateCombo::Update()
 {
 	vector<cDynamicObj*> monsterList = GETSINGLE(cObjMgr)->GetALLMonsterList();
 
-	for (int i = 0; i < monsterList.size(); i++)
-	{
-//		if (GETSINGLE(cCollision)->Collision(&m_pParent->GetSphere(), &monsterList[i]->GetSphere()))
-		if (GETSINGLE(cCollision)->CollisionOBB(&m_pParent->GetBox(), &monsterList[i]->GetBox()))
-		{
-			//Damage
-			OutputDebugString("Hit\n");
-		}
-	}
-
-
 	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_bNextAttack = true;
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1 ||
-		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 || 
+		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO3)
+	{
 		m_pParent->Move(0.05f);
 
+		if (m_pParent->GetCurrentAnimPosition() > 0.57f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
+					m_vecHitted.push_back(monsterList[i]);
+					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
+					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+					text->SetTextFloat(damage);
+					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+					text->Start();
+				}
+			}
+		}
+	}
+
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
+	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			m_pParent->Move(0.05f);
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.73f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
+					m_vecHitted.push_back(monsterList[i]);
+					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
+					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+					text->SetTextFloat(damage);
+					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+					text->Start();
+				}
+			}
+		}
+	}
+
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
+	{
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
 			m_pParent->Move(0.05f);
+
+
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.28f)
+		{
+			for (int i = 0; i < monsterList.size(); i++)
+			{
+				if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+				{
+					float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
+					m_vecHitted.push_back(monsterList[i]);
+					GETSINGLE(cTextMgr)->AddList("PlayerDamage");
+					cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+					text->SetTextFloat(damage);
+					text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+					text->Start();
+				}
+			}
+		}
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.46f)
+		{
+			if (!m_bHit)
+			{
+				for (int i = 0; i < monsterList.size(); i++)
+				{
+					if (GETSINGLE(cCollision)->Collision(((cPlayer*)m_pParent), monsterList[i]))
+					{
+						float damage = monsterList[i]->Damaged(m_pParent->GetInfo());
+						m_vecHitted.push_back(monsterList[i]);
+						GETSINGLE(cTextMgr)->AddList("PlayerDamage");
+						cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+						text->SetTextFloat(damage);
+						text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-100, 100), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
+						text->Start();
+					}
+				}
+				m_bHit = true;
+			}
+		}
+	}
+
 
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO1)
 	{
@@ -194,6 +267,11 @@ void cStateCombo::Update()
 	
 void cStateCombo::End()
 {
+	for (int i = 0; i < m_vecHitted.size(); i++)
+		m_vecHitted[i]->SetHit(false);
+	m_vecHitted.clear();
+	m_bHit = false;
+
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
 }
@@ -218,6 +296,10 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
 			pController->AnimationNext();
 			m_bNextAttack = false;
+
+			for (int i = 0; i < m_vecHitted.size(); i++)
+				m_vecHitted[i]->SetHit(false);
+			m_vecHitted.clear();
 		}
 	}
 	else
@@ -262,4 +344,3 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 	if (animInfo.nIndex == E_ANI_COMBO5)
 		End();
 }
-

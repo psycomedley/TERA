@@ -15,3 +15,4 @@
 #include "cUIMgr.h"
 #include "cEffectMgr.h"
 #include "cSoundMgr.h"
+#include "cObjectToolMgr.h"

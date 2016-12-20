@@ -10,6 +10,8 @@ protected:
 	iState*			m_pState;
 	iState*			m_aStates[E_STATE_END];
 	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
+	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
+	SYNTHESIZE(bool, m_bHit, Hit);
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }
@@ -33,6 +35,8 @@ public:
 	virtual bool IsMoveAble() PURE;
 	virtual bool IsTargetCollision();
 	virtual void LookTarget();
+
+	virtual float Damaged(ST_UNIT_INFO stInfo);
 
 public:
 	virtual cBoundingSphere GetSphere() { return cGameObject::GetSphere(); }

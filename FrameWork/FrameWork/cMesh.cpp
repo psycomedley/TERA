@@ -73,8 +73,8 @@ cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*=
 	D3DXVECTOR3	vMin = m_pBox->GetvMin() * fScale;
 	D3DXVECTOR3	vMax = m_pBox->GetvMax() * fScale;
 
-	D3DXVec3TransformCoord(&vMin, &vMin, &matR);
-	D3DXVec3TransformCoord(&vMax, &vMax, &matR);
+//	D3DXVec3TransformCoord(&vMin, &vMin, &matR);
+//	D3DXVec3TransformCoord(&vMax, &vMax, &matR);
 
 	vMin += vPosition;
 	vMax += vPosition;
@@ -104,6 +104,8 @@ cBoundingBox cMesh::GetBox(D3DXMATRIXA16* mat)
 
 	box.SetvMin(vMin);
 	box.SetvMax(vMax);
+
+	box.m_stObb = m_pBox->m_stObb;
 	//юс╫ц
 	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
 	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,

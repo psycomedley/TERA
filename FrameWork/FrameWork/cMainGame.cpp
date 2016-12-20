@@ -16,14 +16,15 @@
 #include "cRushEffect.h"
 #include "cUIImageView.h"
 #include "cUITextView.h"
-#include "cObjectToolMgr.h"
+#include "cObjectTool.h"
+#include "cText.h"
 
 //임시
 
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
-	, m_cObjectTree(NULL)
+	, m_cObjectTool(NULL)
 {
 }
 
@@ -32,8 +33,8 @@ cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
-	SAFE_DELETE(m_cObjectTree);
 
+	SAFE_RELEASE(m_cObjectTool);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
 	SAFE_RELEASE(m_pEffect4);
 	
@@ -80,6 +81,16 @@ HRESULT cMainGame::Setup()
 	SetUI();
 	SetLighting();
 
+	cText* pText = new cText;
+	pText->Setup(E_FONT_DAMAGE, "PlayerDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XYELLOW,
+		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
+	pText->SetShowTime(3.0f);
+	pText->SetAlphaTime(1.0f);
+	pText->SetMoveSpeed(0.3f);
+	pText->SetDirection(DIRECTION_UP);
+	pText->SetMoveTime(1.0f);
+	GETSINGLE(cTextMgr)->AddText(pText);
+
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
 	pPlayer->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	D3DXMATRIXA16 matR;
@@ -104,8 +115,12 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
+	GETSINGLE(cObjectToolMgr)->Setup();
+
 	m_pMap = new cMap("Map","fieldmap1.x");
 	
+	m_cObjectTool = new cObjectTool;
+	m_cObjectTool->Setup();
 
 	///////////////임시////////////////
 
@@ -132,8 +147,6 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetPosition(D3DXVECTOR3(30, 0, 0));
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
-	m_cObjectTree = new cObjectToolMgr;
-	m_cObjectTree->Setup();
 
 //	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
@@ -180,7 +193,11 @@ void cMainGame::Update()
 		GETSINGLE(cUIMgr)->Update();
 	}
 
-
+	if (KEYBOARD->IsToggleKey(VK_F1))
+	{
+		if (m_cObjectTool)
+			m_cObjectTool->Update();
+	}
 
 	///////////////임시////////////////
 
@@ -290,6 +307,8 @@ void cMainGame::Render()
 		m_pMap->Render();
 	m_pGrid->Render();
 	
+	m_cObjectTool->Render();
+
 	GETSINGLE(cObjMgr)->Render();
 
 	GETSINGLE(cTextMgr)->Render();

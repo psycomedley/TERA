@@ -108,3 +108,12 @@ bool cKeyBoard::IsOnceKeyUp(int key)
 	}
 	return false;
 }
+bool cKeyBoard::IsToggleKey(int key)
+{
+	if (GetKeyState(key))
+	{
+		return true;
+	}
+	return false;
+
+}

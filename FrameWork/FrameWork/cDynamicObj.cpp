@@ -5,6 +5,7 @@
 
 
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
+	: m_bHit(false)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	SetBoundingPos();
@@ -12,6 +13,7 @@ cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 
 
 cDynamicObj::cDynamicObj()
+	: m_bHit(false)
 {
 }
 
@@ -129,4 +131,26 @@ void cDynamicObj::LookTarget()
 
 		m_fAngle = D3DX_PI / 2 - atan2(nZ, nX);
 	}
+}
+
+
+float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
+{
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
+	if (m_pState != m_aStates[E_STATE_DEATH])
+	{
+		if (m_stInfo.fDefence > fDamage)
+			fDamage = 1;
+		fDamage = fDamage - m_stInfo.fDefence;
+		m_stInfo.fHp -= fDamage;
+		m_bHit = true;
+
+		if (m_stInfo.fHp <= 0)
+		{
+			ChangeState(E_STATE_DEATH);
+			m_stInfo.fHp = 0;
+		}
+		return fDamage;
+	}
+	return 0;
 }

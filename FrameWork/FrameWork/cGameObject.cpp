@@ -14,6 +14,9 @@ cGameObject::cGameObject(void)
 	, m_pAction(NULL)
 	, m_vPrevPosition(0, 0, 0)
 	, m_fRevisionAngle(0.f)
+	, m_fRotX(0)
+	, m_fRotY(0)
+	, m_fRotZ(0)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matRevision);

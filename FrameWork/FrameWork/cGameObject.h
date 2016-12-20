@@ -21,6 +21,10 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXMATRIXA16, m_matRevision, Revision);
 	SYNTHESIZE(float, m_fRevisionAngle, RevisionAngle);
 
+	SYNTHESIZE(float, m_fRotX, fRotX);
+	SYNTHESIZE(float, m_fRotY, fRotY);
+	SYNTHESIZE(float, m_fRotZ, fRotZ);
+
 public:
 	void Move(float fSpeed);
 

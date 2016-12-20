@@ -12,6 +12,12 @@
 #define EFFECT_CUTTEDFRAME	(1 << 2)
 //#define EFFECT_LOOPEDFRAME	(1 << 3)
 
+#define	TEXT_NONE			0
+#define TEXT_ALPHA			(1 << 0)
+#define TEXT_SHOWTIME		(1 << 1)
+#define	TEXT_MOVE			(1 << 2)
+#define TEXT_MOVEAFTERTIME	(1 << 3)
+
 #define XWHITE		D3DCOLOR_XRGB(255, 255, 255)
 #define XBLACK		D3DCOLOR_XRGB(0, 0, 0)
 #define XRED		D3DCOLOR_XRGB(255, 0, 0)
@@ -135,6 +141,7 @@ enum E_FONT_TYPE
 {
 	E_FONT_BOSS,
 	E_FONT_BOSS_STATUS,
+	E_FONT_DAMAGE,
 	E_FONT_END,
 };
 

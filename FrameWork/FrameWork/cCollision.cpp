@@ -3,6 +3,8 @@
 #include "cRay.h"
 #include "cBoundingBox.h"
 #include "cBoundingSphere.h"
+#include "cPlayer.h"
+
 
 cCollision::cCollision()
 {
@@ -212,4 +214,16 @@ bool cCollision::CollisionOBB(cBoundingBox* pBox1, cBoundingBox* pBox2)
 
 
 	return true;
+}
+
+
+bool cCollision::Collision(cPlayer* pPlayer, cDynamicObj* pMonster)
+{
+	cBoundingBox stMonsterBox = pMonster->GetBox();
+	if (Collision(&pPlayer->GetRightWeaponBox(), &stMonsterBox))
+		return true;
+	if (Collision(&pPlayer->GetLeftWeaponBox(), &stMonsterBox))
+		return true;
+
+	return false;
 }
