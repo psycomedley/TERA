@@ -125,7 +125,11 @@ void cObjectTool::AddClone()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
 	{
-		cStuff* pcloneStuff = new cStuff("Object", "tree1.x");
+		char* folderName = ((cStuff*)m_BodyStuff)->GetFoldername();
+		char* fileName = ((cStuff*)m_BodyStuff)->GetFilename();
+	
+		cStuff* pcloneStuff = new cStuff(folderName, fileName);
+		
 		pcloneStuff = CopyInfoToClone(m_BodyStuff, pcloneStuff);
 		GETSINGLE(cObjMgr)->AddCloneStuff(pcloneStuff);
 	}
