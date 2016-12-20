@@ -402,5 +402,7 @@ void cPlayer::SetupStatus()
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
 	m_stInfo.fDamage = 197.0f;
+	m_stInfo.fMinDamage = 152.0f;
+	m_stInfo.fMaxDamage = 219.0f;
 	m_stInfo.fDefence = 29.0f;
 }

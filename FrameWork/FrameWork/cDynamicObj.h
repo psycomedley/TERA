@@ -36,7 +36,7 @@ public:
 	virtual bool IsTargetCollision();
 	virtual void LookTarget();
 
-	virtual float Damaged(float fDamage);
+	virtual float Damaged(ST_UNIT_INFO stInfo);
 
 public:
 	virtual cBoundingSphere GetSphere() { return cGameObject::GetSphere(); }

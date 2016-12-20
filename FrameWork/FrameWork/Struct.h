@@ -103,6 +103,8 @@ struct ST_UNIT_INFO
 	float	fMp;
 
 	float	fDamage;
+	float	fMinDamage;
+	float	fMaxDamage;
 	float	fDefence;
 };
 

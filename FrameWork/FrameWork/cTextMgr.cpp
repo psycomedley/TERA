@@ -5,6 +5,7 @@
 
 cTextMgr::cTextMgr()
 {
+	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 }
 
 
@@ -47,10 +48,10 @@ void cTextMgr::Update()
 
 void cTextMgr::Render()
 {
+	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	for each (auto text in m_listText)
-	{
-		text->Render();
-	}
+		text->Render(m_pSprite);
+	m_pSprite->End();
 	/*for each (auto text in m_mapText)
 	{
 	LPD3DXFONT pFont = GETSINGLE(cFontMgr)->GetFont(text.second.eFontType);
@@ -76,6 +77,8 @@ void cTextMgr::Release()
 	for each (auto iter in m_mapText)
 		for each (auto text in iter.second)
 			SAFE_DELETE(text);
+
+	SAFE_RELEASE(m_pSprite);
 
 //	for each(auto p in m_mapText)
 //		SAFE_DELETE(p.second);

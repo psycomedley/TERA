@@ -4,6 +4,7 @@ class cText;
 class cTextMgr : public cSingleton<cTextMgr>
 {
 private:
+	LPD3DXSPRITE				m_pSprite;
 	map<string, list<cText*>>	m_mapText;
 	list<cText*>				m_listText;
 //	map<E_FONT_TYPE, ST_TEXT> m_mapFont;
