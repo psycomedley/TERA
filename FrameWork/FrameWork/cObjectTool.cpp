@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cObjectTool.h"
 #include "cPlayer.h"
+#include "cStuff.h"
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
@@ -29,6 +30,11 @@ void cObjectTool::Update()
 	
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
+	AddClone();
+}
+void cObjectTool::Render()
+{
+	m_BodyStuff->Render(); // 바디 오브젝트만 렌더
 }
 void cObjectTool::ResetVariable()
 {
@@ -37,8 +43,6 @@ void cObjectTool::ResetVariable()
 }
 void cObjectTool::ChangeBodyStuff()
 {
-	
-
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
 		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
@@ -116,4 +120,25 @@ void cObjectTool::ChangeScaleAndAngle()
 	default:
 		break;
 	}
+}
+void cObjectTool::AddClone()
+{
+	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
+	{
+		cStuff* pcloneStuff = new cStuff("Object", "tree1.x");
+		pcloneStuff = CopyInfoToClone(m_BodyStuff, pcloneStuff);
+		GETSINGLE(cObjMgr)->AddCloneStuff(pcloneStuff);
+	}
+	
+}
+cStuff* cObjectTool::CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff)
+{
+	cStuff* cloneStuff = CloneStuff;
+	cloneStuff->SetPosition(BodyStuff->GetPosition());
+	cloneStuff->SetScale(BodyStuff->GetScale());
+	cloneStuff->SetfRotX(BodyStuff->GetfRotX());
+	cloneStuff->SetfRotY(BodyStuff->GetfRotY());
+	cloneStuff->SetfRotZ(BodyStuff->GetfRotZ());
+
+	return cloneStuff;
 }

@@ -2,6 +2,7 @@
 
 #include "cStaticObj.h"
 
+class cStuff;
 
 class cObjectTool :public cStaticObj
 {
@@ -17,7 +18,12 @@ public:
 	void Setup();
 	void ResetVariable();
 	void Update() override;
+	void Render() override;
+
+
 	void ChangeBodyStuff();
 	void ChangeScaleAndAngle();
+	void AddClone();
+	cStuff* CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff);
 };
 

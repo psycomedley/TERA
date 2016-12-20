@@ -9,10 +9,12 @@ private:
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
 	map<string, vector<cDynamicObj*>>		m_mapMonster;
 	map<string, cStaticObj*>				m_mapStuff;
+	vector<cStaticObj*>						m_vecCloneStuff;
 
 public:
 	void AddMonster(string sKey, cDynamicObj* pMonster);
 	void AddStuff(string sKey, cStaticObj* pStuff);
+	void AddCloneStuff(cStaticObj* pStuff);
 
 	
 	map<string, vector<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
