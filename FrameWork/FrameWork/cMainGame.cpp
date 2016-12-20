@@ -87,7 +87,7 @@ HRESULT cMainGame::Setup()
 	pText->SetAlphaTime(1.0f);
 	pText->SetMoveSpeed(0.3f);
 	pText->SetDirection(DIRECTION_UP);
-	pText->SetMoveTime(3.0f);
+	pText->SetMoveTime(1.0f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");

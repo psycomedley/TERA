@@ -139,14 +139,14 @@
     <Filter Include="소스 파일\19.Effect\RushEffect">
       <UniqueIdentifier>{ffeee2b2-3580-44a2-8ec1-4d784e8400df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\17. Shader\MultiAnimation\Effect">
-      <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\19.Effect\StraightEffect">
       <UniqueIdentifier>{a5b76a47-e5d1-465c-a486-aa0aa3842ad5}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\22. Sound">
       <UniqueIdentifier>{cac1ea04-89f9-4486-8b24-053ec26abfb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\17. Shader\Effect">
+      <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

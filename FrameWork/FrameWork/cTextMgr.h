@@ -15,19 +15,10 @@ public:
 		D3DCOLOR dwColor = XWHITE, int nOption = TEXT_NONE,
 		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);
 
-	/*void AddText(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
-		D3DXVECTOR2 vPosition, ST_SIZE stSize,
-		D3DCOLOR dwColor = XWHITE,
-		int nOption = TEXT_NONE,
-		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);*/
-	/*void AddAlphaText(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
-		D3DXVECTOR2 vPosition, ST_SIZE stSize,
-		D3DCOLOR dwColor = XWHITE,
-		int nOption = TEXT_NONE, int nAlpha = 255, float fAlphaTime = 0.0f,
-		DWORD dwFormat = DT_VCENTER | DT_CENTER | DT_WORDBREAK);*/
 	void AddList(string sKey);
 	void RemoveList(string sKey, cText* pText);
-//	cText* GetText(string key);
+	cText* GetLastTextInList() { return m_listText.back(); }
+	cText* GetText(string sKey);
 
 public:
 	void Update();

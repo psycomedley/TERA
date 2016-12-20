@@ -118,19 +118,17 @@ void cText::Update(float fPassedTime)
 			{
 				if (m_fPassedTime >= m_fShowTime)
 				{
+					m_fPassedAlphaTime += fPassedTime;
 					if (m_fPassedAlphaTime >= m_fAlphaTime)
-						m_bProcess = false;
+						Stop();
 					else
-					{
-						m_fPassedAlphaTime += fPassedTime;
 						m_dwColor.a -= m_fDecreasePerSecond * fPassedTime;
-					}
 				}
 			}
 			else
 			{
 				if (m_fPassedTime >= m_fShowTime)
-					m_bProcess = false;
+					Stop();
 			}
 		}
 		else
@@ -139,12 +137,9 @@ void cText::Update(float fPassedTime)
 			{
 				m_fPassedAlphaTime += fPassedTime;
 				if (m_fPassedAlphaTime >= m_fAlphaTime)
-					m_bProcess = false;
+					Stop();
 				else
-				{
-					m_fPassedAlphaTime += fPassedTime;
 					m_dwColor.a -= m_fDecreasePerSecond * fPassedTime;
-				}
 			}
 		}
 		if (m_nOption & TEXT_MOVE)
@@ -176,10 +171,12 @@ void cText::Render()
 void cText::ResetTime()
 {
 	m_fPassedTime = 0.0f;
+	m_fPassedAlphaTime = 0.0f;
+	m_fPassedMoveTime = 0.0f;
 	m_fElapseX = 0.0f;
 	m_fElapseY = 0.0f;
 	m_bProcess = false;
-	m_rect = RectMakeCenter(m_vPosition.x, m_vPosition.y, m_stSize.fWidth, m_stSize.fHeight);
+	m_nCurrentAlpha = m_nAlpha;
 }
 
 
@@ -211,4 +208,34 @@ void cText::SetAlphaTime(float fAlphaTime)
 		m_fDecreasePerSecond = 1 / m_fAlphaTime;
 	else
 		m_fDecreasePerSecond = 0.0f;
+}
+
+
+void cText::SetTextInteger(int nNum)
+{
+	char szStr[32] = { '\0', };
+	sprintf_s(szStr, sizeof(szStr), "%d", nNum);
+	m_sText = szStr;
+}
+
+
+void cText::SetTextFloat(float fNum)
+{
+	char szStr[32] = { '\0', };
+	sprintf_s(szStr, sizeof(szStr), "%.0f", fNum);
+	m_sText = szStr;
+}
+
+
+void cText::Start()
+{
+	m_bProcess = true;
+	m_rect = RectMakeCenter(m_vPosition.x, m_vPosition.y, m_stSize.fWidth, m_stSize.fHeight);
+}
+
+
+void cText::Stop()
+{
+	m_bProcess = false;
+	ResetTime();
 }
