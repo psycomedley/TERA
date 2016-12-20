@@ -152,5 +152,5 @@ float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 		}
 		return fDamage;
 	}
-	return 0;
+	return -1;
 }
