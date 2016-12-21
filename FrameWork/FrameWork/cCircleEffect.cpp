@@ -15,11 +15,12 @@ cCircleEffect::~cCircleEffect()
 }
 
 HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
-	D3DXVECTOR3 s, D3DXVECTOR3 t)
+	D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)
 {
 
 	start = false;
-	m_fAngle = 0;
+	m_fAngle = Angle;
+	RealAngle = 0;
 	needWheels = Wheels;
 	nowWheels = 0;
 	m_fRotationSpeed = RotationSpeed;
@@ -40,11 +41,17 @@ void cCircleEffect::Update()
 {
 	if (start)
 	{
-		if(!isLeft)
+		if (!isLeft)
+		{
 			m_fAngle += m_fRotationSpeed;
+			RealAngle += m_fRotationSpeed;
+		}
 		else
+		{
 			m_fAngle -= m_fRotationSpeed;
-		nowWheels = m_fAngle / (D3DX_PI);
+			RealAngle -= m_fRotationSpeed;
+		}
+		nowWheels = RealAngle / (D3DX_PI);
 		if (abs(nowWheels) >= needWheels)
 		{
 			Stop();

@@ -11,6 +11,7 @@ private:
 	float m_fRotationSpeed;
 	bool start;
 	bool isLeft;
+	float RealAngle;
 
 	cPlayer* pPlayer;
 
@@ -18,7 +19,7 @@ public:
 	cCircleEffect(char* szFolder, char* szFilename);
 	~cCircleEffect();
 	HRESULT Setup(int Wheels, float RotationSpeed, bool Left,
-		D3DXVECTOR3 s, D3DXVECTOR3 t);
+		D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle);
 	void Update();
 	void Render();
 	float GetNowWheels()
@@ -38,6 +39,10 @@ public:
 		m_fAngle = 0.0f;
 		nowWheels = 0;
 		start = false;
+	}
+	bool isStart()
+	{
+		return start;
 	}
 };
 

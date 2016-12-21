@@ -2,8 +2,20 @@
 #include "iState.h"
 
 class cDynamicObj;
+class cCircleEffect;
 class cStateCombo : public iState
 {
+private:
+	cCircleEffect* m_pCombo1Effect;
+	cCircleEffect* m_pCombo2Effect;
+	cCircleEffect* m_pCombo3Effect;
+	cCircleEffect* m_pCombo4Effect;
+	bool StartCombo1;
+	bool StartCombo2;
+	bool StartCombo3;
+	bool StartCombo4;
+
+
 private:
 	SYNTHESIZE(bool, m_bNextAttack, NextAttack);
 
@@ -17,5 +29,8 @@ public:
 public:
 	cStateCombo();
 	~cStateCombo();
+
+public:
+	
 };
 

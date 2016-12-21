@@ -33,6 +33,7 @@ cEffect::cEffect()
 
 cEffect::~cEffect()
 {
+	
 }
 
 
