@@ -137,7 +137,6 @@ void cStateBossSkill::Update()
 			GETSINGLE(cEffectMgr)->AddList("orca2", vec1, matR);
 
 			cBoundingSphere sphere;
-		//	sphere.Setup(&vec1, 5);
 			sphere.SetCenter(vec1);
 			sphere.SetRadius(9);
 
