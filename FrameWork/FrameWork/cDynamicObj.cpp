@@ -139,9 +139,11 @@ float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
 	if (m_pState != m_aStates[E_STATE_DEATH])
 	{
+		fDamage = fDamage - m_stInfo.fDefence;
+
 		if (m_stInfo.fDefence > fDamage)
 			fDamage = 1;
-		fDamage = fDamage - m_stInfo.fDefence;
+
 		m_stInfo.fHp -= fDamage;
 		m_bHit = true;
 

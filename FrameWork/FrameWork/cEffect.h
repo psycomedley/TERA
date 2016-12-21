@@ -79,6 +79,8 @@ public:
 	void	SetTexture(string sKey, E_EFFECT_TEXTURE eTex);
 	void	SetTotalFrame(int nFrameX, int nFrameY, int nTotalFrame);
 	void	AddTechList(E_EFFECT_TECHNIQUE eTech);
+	void	NextTech();
+	void	SetTech(E_EFFECT_TECHNIQUE eTech);
 
 public:
 	HRESULT	Setup(float fWidth, float fHeight, float fAlpha = 1.0f,
@@ -99,7 +101,6 @@ public:
 
 protected:
 	void Setting();
-	void SetTech(E_EFFECT_TECHNIQUE eTech);
 	//	void setFireFrame(int fn);
 //	void attackEffectFrame();
 //	void fireEffectSetup();

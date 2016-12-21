@@ -38,6 +38,7 @@ public:
 //	D3DXVECTOR3 GetPosition() { return m_vPosition; }
 //	void SetPosition(D3DXVECTOR3 vPos);
 	void SetBoundingPos();
+	bool IsMesh() { if (m_pMesh) return true; return false; }
 
 public:
 	virtual void Update();

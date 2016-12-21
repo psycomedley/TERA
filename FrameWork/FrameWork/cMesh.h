@@ -20,6 +20,7 @@ public:
 	cBoundingBox GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle = 0);
 	cBoundingBox GetBox(D3DXMATRIXA16* mat);
 	cBoundingSphere GetSphere(D3DXVECTOR3 vPosition, float fScale);
+	cBoundingSphere GetSphere(D3DXMATRIXA16* mat);
 
 public:
 	virtual void Render();

@@ -131,7 +131,7 @@ void cPlayer::SetupBaseWeapon()
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
 	
-
+	
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet00_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");
@@ -370,6 +370,9 @@ void cPlayer::dlatl()
 void cPlayer::SetScale(D3DXVECTOR3 vScale)
 {
 	cGameObject::SetScale(vScale);
+	m_pLeftWeapon->SetHolderScale(vScale.x);
+	m_pRightWeapon->SetHolderScale(vScale.x);
+
 //	m_pLeftWeapon->SetScale(vScale);
 //	m_pRightWeapon->SetScale(vScale);
 }
@@ -401,7 +404,6 @@ void cPlayer::SetupStatus()
 	m_stInfo.fMaxMp = 1100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fDamage = 197.0f;
 	m_stInfo.fMinDamage = 152.0f;
 	m_stInfo.fMaxDamage = 219.0f;
 	m_stInfo.fDefence = 29.0f;

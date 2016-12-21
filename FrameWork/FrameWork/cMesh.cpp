@@ -133,3 +133,22 @@ cBoundingSphere cMesh::GetSphere(D3DXVECTOR3 vPosition, float fScale)
 
 	return sphere;
 }
+
+
+cBoundingSphere cMesh::GetSphere(D3DXMATRIXA16* mat)
+{
+	cBoundingSphere sphere;
+	D3DXVECTOR3 vPos = m_pSphere->GetCenter();
+
+	D3DXVec3TransformCoord(&vPos, &vPos, mat);
+
+	sphere.SetCenter(vPos);
+
+	//юс╫ц
+	/*D3DXVECTOR3 vPos = m_pBox->GetPosition();
+	m_pBox->SetPosition(D3DXVECTOR3(vPosition.x,
+	((m_pBox->GetvMax().y + m_pBox->GetvMin().y) / 2) + vPosition.y,
+	vPosition.z));*/
+
+	return sphere;
+}

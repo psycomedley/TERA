@@ -3,6 +3,7 @@
 #include "cDynamicObj.h"
 #include "cOrca.h"
 #include "cBoundingSphere.h"
+#include "cSkillElectricGlobe.h"
 
 
 cStateBossSkill::cStateBossSkill()
@@ -85,13 +86,27 @@ void cStateBossSkill::Update()
 		{
 			if (m_pParent->GetCurrentAnimPosition() >= 0.51f)
 			{
-				float angle = m_pParent->GetAngle();
-				D3DXVECTOR3 vec;
-				vec = D3DXVECTOR3(-sinf(angle + D3DX_PI / 3 * 2), 0.5f, -cosf(angle + D3DX_PI / 3 * 2)) * 6;
-				D3DXMATRIXA16 matR;
-				D3DXMatrixIdentity(&matR);
-				GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				m_nEffect++;
+				AddGlobe(D3DX_PI / 3 * 2);
+				//float angle = m_pParent->GetAngle();
+				//D3DXVECTOR3 vec;
+				//vec = D3DXVECTOR3(-sinf(angle + D3DX_PI / 3 * 2), 0.5f, -cosf(angle + D3DX_PI / 3 * 2)) * 6;
+				//D3DXMATRIXA16 matR;
+				//D3DXMatrixIdentity(&matR);
+				//GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
+				//
+				//cDynamicObj* globe = GETSINGLE(cObjMgr)->GetMonsterPool("Globe");
+				//if (globe == NULL)
+				//{
+				//	cSkillElectricGlobe* globe = new cSkillElectricGlobe;
+				//	globe->Setup();
+				//}
+				//else
+				//{
+				//	((cSkillElectricGlobe*)globe)->SetHp(((cSkillElectricGlobe*)globe)->GetMaxHp());
+				//}
+				//globe->SetPosition(m_pParent->GetPosition() + vec);
+				//GETSINGLE(cObjMgr)->AddMonster("Globe", globe);
+				//m_nEffect++;
 			}
 			break;
 		}
@@ -99,13 +114,14 @@ void cStateBossSkill::Update()
 		{
 			if (m_pParent->GetCurrentAnimPosition() >= 0.58f)
 			{
-				float angle = m_pParent->GetAngle();
+				AddGlobe(D3DX_PI / 3 * 4);
+				/*float angle = m_pParent->GetAngle();
 				D3DXVECTOR3 vec;
 				vec = D3DXVECTOR3(-sinf(angle + D3DX_PI / 3 * 4), 0.5f, -cosf(angle + D3DX_PI / 3 * 4)) * 6;
 				D3DXMATRIXA16 matR;
 				D3DXMatrixIdentity(&matR);
 				GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				m_nEffect++;
+				m_nEffect++;*/
 			}
 			break;
 		}
@@ -113,13 +129,14 @@ void cStateBossSkill::Update()
 		{
 			if (m_pParent->GetCurrentAnimPosition() >= 0.65f)
 			{
-				float angle = m_pParent->GetAngle();
-				D3DXVECTOR3 vec;
-				vec = D3DXVECTOR3(-sinf(angle), 0.5f, -cosf(angle)) * 6;
-				D3DXMATRIXA16 matR;
-				D3DXMatrixIdentity(&matR);
-				GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				m_nEffect++;
+				AddGlobe(0.0f);
+				//float angle = m_pParent->GetAngle();
+				//D3DXVECTOR3 vec;
+				//vec = D3DXVECTOR3(-sinf(angle), 0.5f, -cosf(angle)) * 6;
+				//D3DXMATRIXA16 matR;
+				//D3DXMatrixIdentity(&matR);
+				//GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
+				//m_nEffect++;
 			}
 			break;
 		}
@@ -168,11 +185,11 @@ void cStateBossSkill::Update()
 
 			cBoundingSphere sphere;
 			sphere.SetCenter(vec1);
-			sphere.SetRadius(5);
+			sphere.SetRadius(6);
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
 
 			sphere.SetCenter(vec2);
-			sphere.SetRadius(5);
+			sphere.SetRadius(6);
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
 		}
 	}
@@ -226,4 +243,31 @@ void cStateBossSkill::OnAnimationFinish(cAnimationController* pController, ST_AN
 		m_pParent->AnimationNext();
 	}
 	m_nEffect = 0;
+}
+
+
+void cStateBossSkill::AddGlobe(float fAngle)
+{
+	float angle = m_pParent->GetAngle();
+	D3DXVECTOR3 vec;
+	vec = D3DXVECTOR3(-sinf(angle + fAngle), 0.5f, -cosf(angle + fAngle)) * 6;
+	D3DXMATRIXA16 matR;
+	D3DXMatrixIdentity(&matR);
+	cEffect* pEffect = GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
+
+	cDynamicObj* globe = GETSINGLE(cObjMgr)->GetMonsterPool("Globe");
+	if (globe == NULL)
+	{
+		globe = new cSkillElectricGlobe;
+		((cSkillElectricGlobe*)globe)->Setup();
+		((cSkillElectricGlobe*)globe)->SetShotSphere(2.0f);
+	}
+	else
+	{
+		((cSkillElectricGlobe*)globe)->SetHp(((cSkillElectricGlobe*)globe)->GetMaxHp());
+	}
+	globe->SetPosition(m_pParent->GetPosition() + vec);
+	((cSkillElectricGlobe*)globe)->SetEffect(pEffect);
+	GETSINGLE(cObjMgr)->AddMonster("Globe", globe);
+	m_nEffect++;
 }

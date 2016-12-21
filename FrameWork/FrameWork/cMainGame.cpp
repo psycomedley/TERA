@@ -597,11 +597,10 @@ void cMainGame::SetEffect()
 	pEffect->AddTechList(E_TECH_ORCA1);
 	pEffect->AddTechList(E_TECH_ORCA1_Remove);
 //	pEffect->SetTechnique(E_TECH_ORCA1);
-//	pEffect->SetNextTechnique(E_TECH_ORCA1_Remove);
 	pEffect->SetNextTime(0.03);
-//	pEffect->SetLoop(true);
+	pEffect->SetLoop(true);
 	pEffect->SetRemoveTime(3.0f);
-	pEffect->SetLoopTimes(20);
+//	pEffect->SetLoopTimes(20);
 	pEffect->SetName("orca1");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);

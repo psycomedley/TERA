@@ -62,7 +62,8 @@ void cOrca::SetupStatus()
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fDamage = 126.0f;
+	m_stInfo.fMaxDamage = 156.0f;
+	m_stInfo.fMinDamage = 119.0f;
 	m_stInfo.fDefence = 8.0f;
 
 	m_fDetectRange = 15.0f;
