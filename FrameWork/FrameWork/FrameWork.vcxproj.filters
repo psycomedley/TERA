@@ -420,9 +420,6 @@
     <ClInclude Include="cSkillElectricGlobe.h">
       <Filter>소스 파일\16. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="cStateGlobe.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -667,9 +664,6 @@
     </ClCompile>
     <ClCompile Include="cSkillElectricGlobe.cpp">
       <Filter>소스 파일\16. Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="cStateGlobe.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

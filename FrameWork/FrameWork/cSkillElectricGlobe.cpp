@@ -2,7 +2,6 @@
 #include "cSkillElectricGlobe.h"
 #include "iState.h"
 #include "cStateWait.h"
-#include "cStateGlobe.h"
 #include "cStateDeath.h"
 #include "cEffect.h"
 

@@ -137,7 +137,6 @@
     <ClInclude Include="cStateCombo.h" />
     <ClInclude Include="cStateDeath.h" />
     <ClInclude Include="cStateDefence.h" />
-    <ClInclude Include="cStateGlobe.h" />
     <ClInclude Include="cStateIdle.h" />
     <ClInclude Include="cStateRun.h" />
     <ClInclude Include="cStateSkill.h" />
@@ -230,7 +229,6 @@
     <ClCompile Include="cStateCombo.cpp" />
     <ClCompile Include="cStateDeath.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
-    <ClCompile Include="cStateGlobe.cpp" />
     <ClCompile Include="cStateIdle.cpp" />
     <ClCompile Include="cStateRun.cpp" />
     <ClCompile Include="cStateSkill.cpp" />
