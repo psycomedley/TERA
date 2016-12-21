@@ -2,7 +2,6 @@
 #include "cSkillElectricGlobe.h"
 #include "iState.h"
 #include "cStateIdle.h"
-#include "cStateBossSkill.h"
 
 
 cSkillElectricGlobe::cSkillElectricGlobe()
@@ -23,7 +22,7 @@ void cSkillElectricGlobe::SetupState()
 {
 	m_aStates[E_STATE_IDLE] = new cStateIdle;
 	m_aStates[E_STATE_IDLE]->SetParent(this);
-	m_aStates[E_STATE_SKILL] = new cStateBossSkill;
+	//m_aStates[E_STATE_SKILL] = new cStateBossSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
 }
 
@@ -31,4 +30,7 @@ void cSkillElectricGlobe::SetupState()
 void cSkillElectricGlobe::SetupStatus()
 {
 
+}
+void cSkillElectricGlobe::Update()
+{
 }

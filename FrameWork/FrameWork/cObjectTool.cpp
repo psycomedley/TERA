@@ -152,6 +152,8 @@ cStuff* cObjectTool::CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff)
 	cloneStuff->SetfRotZ(BodyStuff->GetfRotZ());
 	cloneStuff->SetFoldername(((cStuff*)BodyStuff)->GetFoldername());
 	cloneStuff->SetFilename(((cStuff*)BodyStuff)->GetFilename());
+	cloneStuff->SetIsCullMode(((cStuff*)BodyStuff)->GetIsCullMode());
+	cloneStuff->SetSubSetNum(((cStuff*)BodyStuff)->GetSubSetNum());
 	return cloneStuff;
 }
 void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
@@ -173,9 +175,11 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	float rx = CloneStuff->GetfRotX();
 	float ry = CloneStuff->GetfRotY();
 	float rz = CloneStuff->GetfRotZ();
+	DWORD SubsetNum = CloneStuff->GetSubSetNum();
+	bool  isCull = CloneStuff->GetIsCullMode();
 
-	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f"
-		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz, 1024);
+	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f %d %d"
+		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz,SubsetNum,isCull);
 	fprintf(fp, "%s", str);
 
 	fclose(fp);
@@ -189,6 +193,8 @@ void cObjectTool::LoadInfoStuff()
 	float Px = 0, Py=0, Pz=0;
 	float Sx =0, Sy=0, Sz=0;
 	float Rx=0, Ry=0, Rz=0;
+	DWORD SubsetNum = 0;
+	int  isCull = false;
 	fopen_s(&fp, "object/StuffInfo.text", "r");
 	while (1)
 	{
@@ -197,8 +203,9 @@ void cObjectTool::LoadInfoStuff()
 		if (str[0] == '\n')
 			continue;
 
-		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f"
-			,foldername,120,filename,120, &Px, &Py, &Pz, &Sx, &Sy, &Sz, &Rx, &Ry, &Rz);
+		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f%d%d"
+			,foldername,120,filename,120, &Px, &Py, &Pz, &Sx, &Sy, &Sz
+			, &Rx, &Ry, &Rz, &SubsetNum, &isCull);
 
 		//저장된 오브젝트 생성하기
 		cStuff* cloneStuff = new cStuff(foldername, filename);
@@ -207,6 +214,8 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetfRotX(Rx);
 		cloneStuff->SetfRotY(Ry);
 		cloneStuff->SetfRotZ(Rz);
+		cloneStuff->SetSubSetNum(SubsetNum);
+		cloneStuff->SetIsCullMode(isCull);
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
