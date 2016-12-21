@@ -58,23 +58,19 @@ void cStateSkill::Update()
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_STRIKE)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.8f)
-			AddDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_DOUBLEATTACK)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
-			AddDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 	}
 }
 
 
 void cStateSkill::End()
 {
-	for (int i = 0; i < m_vecHitted.size(); i++)
-		m_vecHitted[i]->SetHit(false);
-	m_vecHitted.clear();
-	m_bHit = false;
-
+	GETSINGLE(cBattleMgr)->Reset();
 	m_nCount = 0;
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -85,11 +81,9 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 {
 	if (animInfo.nIndex == E_ANI_DOUBLEATTACK)
 	{
-		AddDamage(true);
-		for (int i = 0; i < m_vecHitted.size(); i++)
-			m_vecHitted[i]->SetHit(false);
-		m_vecHitted.clear();
-		m_bHit = false;
+		GETSINGLE(cBattleMgr)->PlayerDamage(true);
+
+		GETSINGLE(cBattleMgr)->ResetList();
 
 		if (!m_pParent->AnimationNext())
 		{

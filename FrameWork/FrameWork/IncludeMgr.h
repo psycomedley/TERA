@@ -16,3 +16,4 @@
 #include "cEffectMgr.h"
 #include "cSoundMgr.h"
 #include "cObjectToolMgr.h"
+#include "cBattleMgr.h"

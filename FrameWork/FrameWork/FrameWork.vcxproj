@@ -88,6 +88,7 @@
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
+    <ClInclude Include="cBattleMgr.h" />
     <ClInclude Include="cBounding.h" />
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="cRushEffect.h" />
     <ClInclude Include="cShaderMgr.h" />
     <ClInclude Include="cSingleton.h" />
+    <ClInclude Include="cSkillElectricGlobe.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
@@ -177,6 +179,7 @@
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
+    <ClCompile Include="cBattleMgr.cpp" />
     <ClCompile Include="cBounding.cpp" />
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="cRushEffect.cpp" />
     <ClCompile Include="cShaderMgr.cpp" />
     <ClCompile Include="cSingleton.cpp" />
+    <ClCompile Include="cSkillElectricGlobe.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />
