@@ -2,6 +2,7 @@
 #include "cSkillElectricGlobe.h"
 #include "iState.h"
 #include "cStateIdle.h"
+#include "cStateBossSkill.h"
 
 
 cSkillElectricGlobe::cSkillElectricGlobe()

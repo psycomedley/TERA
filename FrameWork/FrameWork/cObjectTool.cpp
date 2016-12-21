@@ -183,9 +183,7 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 void cObjectTool::LoadInfoStuff()
 {
 	FILE* fp = NULL;
-	char c = NULL;
 	char str[1024] = { NULL, };
-	char nStr[10] = { NULL, };
 	char foldername[120] = { NULL ,};
 	char filename[120] = { NULL, };
 	float Px = 0, Py=0, Pz=0;
@@ -202,6 +200,7 @@ void cObjectTool::LoadInfoStuff()
 		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f"
 			,foldername,120,filename,120, &Px, &Py, &Pz, &Sx, &Sy, &Sz, &Rx, &Ry, &Rz);
 
+		//저장된 오브젝트 생성하기
 		cStuff* cloneStuff = new cStuff(foldername, filename);
 		cloneStuff->SetPosition(D3DXVECTOR3(Px,Py,Pz));
 		cloneStuff->SetScale(D3DXVECTOR3(Sx, Sy, Sz));
