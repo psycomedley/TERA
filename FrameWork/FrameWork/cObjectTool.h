@@ -25,5 +25,7 @@ public:
 	void ChangeScaleAndAngle();
 	void AddClone();
 	cStuff* CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff);
+	void SaveInfoStuff(cStuff* CloneStuff);
+	void ReadInfoStuff();
 };
 

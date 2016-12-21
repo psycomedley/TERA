@@ -18,8 +18,6 @@ private:
 
 private:
 	SYNTHESIZE(bool, m_bNextAttack, NextAttack);
-	vector<cDynamicObj*> m_vecHitted;
-	bool m_bHit;
 
 public:
 	virtual void Start() override;

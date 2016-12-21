@@ -2,6 +2,7 @@
 #include "cStateBossSkill.h"
 #include "cDynamicObj.h"
 #include "cOrca.h"
+#include "cBoundingSphere.h"
 
 
 cStateBossSkill::cStateBossSkill()
@@ -128,11 +129,18 @@ void cStateBossSkill::Update()
 			m_pParent->GetCurrentAnimPosition() <= 0.485f)
 		{
 			D3DXVECTOR3 vec1;
-			vec1 = -m_pParent->GetDirection() * 13;
+			vec1 = -m_pParent->GetDirection() * 14;
 			vec1.y = 0.1f;
+			vec1 += m_pParent->GetPosition();
 			D3DXMATRIXA16 matR;
 			D3DXMatrixRotationX(&matR, D3DX_PI / 2);
-			GETSINGLE(cEffectMgr)->AddList("orca2", m_pParent->GetPosition() + vec1, matR);
+			GETSINGLE(cEffectMgr)->AddList("orca2", vec1, matR);
+
+			cBoundingSphere sphere;
+			sphere.SetCenter(vec1);
+			sphere.SetRadius(9);
+
+			AddEnemyDamage(sphere);
 		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_BACKATK)
@@ -173,6 +181,11 @@ void cStateBossSkill::Update()
 
 void cStateBossSkill::End()
 {
+	for (int i = 0; i < m_vecHitted.size(); i++)
+		m_vecHitted[i]->SetHit(false);
+	m_vecHitted.clear();
+	m_bHit = false;
+
 	m_pParent->AnimationRemove();
 	m_pParent->ChangeState(E_STATE_WAIT);
 }
