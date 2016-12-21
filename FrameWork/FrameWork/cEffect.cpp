@@ -238,23 +238,6 @@ void cEffect::Update()
 
 		if (m_nOption & EFFECT_CUTTEDFRAME)
 		{
-			/*m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
-			if (m_fTime >= m_fNextTime)
-			{
-				m_fTime -= m_fNextTime;
-				if (++m_nCurrentFrame >= m_nMaxFrame)
-				{
-					if (!m_bLoop)
-						Stop();
-					else
-						m_nCurrentFrame -= m_nMaxFrame;
-				}
-				UpdateUV();
-			}
-
-			m_pEffect->SetInt("g_nOffsetX", m_nOffsetX);
-			m_pEffect->SetInt("g_nOffsetY", m_nOffsetY);*/
-
 			m_fTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 			if (m_fTime >= m_fNextTime)
 			{
@@ -287,6 +270,8 @@ void cEffect::Update()
 								m_nCurrentFrame -= m_nMaxFrame;
 						}
 					}
+					else
+						m_nCurrentFrame -= m_nMaxFrame;
 				}
 				UpdateUV();
 			}
@@ -566,4 +551,17 @@ void cEffect::SetLoopTimes(int nLoopTimes)
 void cEffect::AddTechList(E_EFFECT_TECHNIQUE eTech)
 {
 	m_vecTechnique.push_back(eTech);
+}
+
+
+void cEffect::NextTech()
+{
+	if (++m_nCurrentTechIdx >= m_vecTechnique.size())
+	{
+		m_bEnd = true;
+	}
+	else
+	{
+		m_eTechnique = m_vecTechnique[m_nCurrentTechIdx];
+	}
 }

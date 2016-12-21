@@ -42,7 +42,7 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 			{
 				float damage = monsterList[i]->Damaged(pParent->GetInfo());
 				if (damage == -1)
-					return;
+					continue;
 				m_vecHitted.push_back(monsterList[i]);
 				GETSINGLE(cTextMgr)->AddList("PlayerDamage");
 				cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
@@ -93,7 +93,7 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 		m_bMultiHit = bMultieHit;
 		if (m_fDamageTime > fDamageTime)
 		{
-			if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &pTarget->GetSphere()))
+			if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
 			{
 				float damage = pTarget->Damaged(pParent->GetInfo());
 				if (damage == -1)

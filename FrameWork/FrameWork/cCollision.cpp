@@ -4,6 +4,7 @@
 #include "cBoundingBox.h"
 #include "cBoundingSphere.h"
 #include "cPlayer.h"
+#include "cMonster.h"
 
 
 cCollision::cCollision()
@@ -219,11 +220,24 @@ bool cCollision::CollisionOBB(cBoundingBox* pBox1, cBoundingBox* pBox2)
 
 bool cCollision::Collision(cPlayer* pPlayer, cDynamicObj* pMonster)
 {
-	cBoundingBox stMonsterBox = pMonster->GetBox();
-	if (Collision(&pPlayer->GetRightWeaponBox(), &stMonsterBox))
-		return true;
-	if (Collision(&pPlayer->GetLeftWeaponBox(), &stMonsterBox))
-		return true;
+	if (pMonster->IsMesh())
+	{
+		cBoundingBox stMonsterBox = pMonster->GetBox();
+		if (Collision(&pPlayer->GetRightWeaponBox(), &stMonsterBox))
+			return true;
+		if (Collision(&pPlayer->GetLeftWeaponBox(), &stMonsterBox))
+			return true;
 
-	return false;
+		return false;
+	}
+	else
+	{
+		cBoundingSphere stMonsterSphere = ((cMonster*)pMonster)->GetShotSphere();
+		if (Collision(&pPlayer->GetRightWeaponSphere(), &stMonsterSphere))
+			return true;
+		if (Collision(&pPlayer->GetLeftWeaponSphere(), &stMonsterSphere))
+			return true;
+
+		return false;
+	}
 }

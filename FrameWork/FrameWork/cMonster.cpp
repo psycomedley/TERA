@@ -9,6 +9,7 @@ cMonster::cMonster(char* szFolder, char* szFilename)
 	: m_fDetectRange(0.0f)
 	, m_bIsBattle(false)
 	, m_pUIHp(NULL)
+	, m_pShotSphere(NULL)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 
@@ -18,6 +19,7 @@ cMonster::cMonster(char* szFolder, char* szFilename)
 
 cMonster::cMonster()
 	: m_fDetectRange(0.0f)
+	, m_pShotSphere(NULL)
 {
 	ZeroMemory(&m_stInfo, sizeof(ST_UNIT_INFO));
 }
@@ -25,6 +27,7 @@ cMonster::cMonster()
 
 cMonster::~cMonster()
 {
+	SAFE_DELETE(m_pShotSphere);
 }
 
 
@@ -45,4 +48,26 @@ void cMonster::Update()
 void cMonster::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 {
 	cDynamicObj::UpdateAndRender(pmat);
+}
+
+
+cBoundingSphere cMonster::GetShotSphere()
+{
+	cBoundingSphere sphere;
+	sphere.SetCenter(m_vPosition);
+	sphere.SetRadius(m_pShotSphere->GetRadius());
+	return sphere;
+}
+
+
+void cMonster::SetShotSphere(float fRadius)
+{
+	m_pShotSphere = new cBoundingSphere;
+	m_pShotSphere->SetRadius(fRadius);
+}
+
+
+void cMonster::ResetHp()
+{
+	m_stInfo.fHp = m_stInfo.fMaxHp;
 }

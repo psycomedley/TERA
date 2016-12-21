@@ -45,6 +45,8 @@ public:
 
 	cBoundingBox GetRightWeaponBox() { return m_pRightWeapon->GetBox(); }
 	cBoundingBox GetLeftWeaponBox() { return m_pLeftWeapon->GetBox(); }
+	cBoundingSphere GetRightWeaponSphere() { return m_pRightWeapon->GetSphere(); }
+	cBoundingSphere GetLeftWeaponSphere() { return m_pLeftWeapon->GetSphere(); }
 
 	//юс╫ц
 	void dlatl();
