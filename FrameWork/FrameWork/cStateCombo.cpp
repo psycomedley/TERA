@@ -58,7 +58,8 @@ void cStateCombo::Update()
 		m_pParent->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.57f)
-			AddDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			//AddDamage(false);
 	}
 
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
@@ -67,7 +68,8 @@ void cStateCombo::Update()
 			m_pParent->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.73f)
-			AddDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+//			AddDamage(false);
 	}
 
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
@@ -78,14 +80,16 @@ void cStateCombo::Update()
 
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.28f)
-			AddDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			//AddDamage(false);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.46f)
 		{
-			if (!m_bHit)
+			if (!GETSINGLE(cBattleMgr)->GetHit())
 			{
-				AddDamage(true);
-				m_bHit = true;
+				GETSINGLE(cBattleMgr)->PlayerDamage(true);
+//				AddDamage(true);
+				GETSINGLE(cBattleMgr)->SetHit(true);
 			}
 		}
 	}
@@ -212,10 +216,7 @@ void cStateCombo::Update()
 	
 void cStateCombo::End()
 {
-	for (int i = 0; i < m_vecHitted.size(); i++)
-		m_vecHitted[i]->SetHit(false);
-	m_vecHitted.clear();
-	m_bHit = false;
+	GETSINGLE(cBattleMgr)->Reset();
 
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -242,9 +243,10 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			pController->AnimationNext();
 			m_bNextAttack = false;
 
-			for (int i = 0; i < m_vecHitted.size(); i++)
-				m_vecHitted[i]->SetHit(false);
-			m_vecHitted.clear();
+			GETSINGLE(cBattleMgr)->ResetList();
+	//		for (int i = 0; i < m_vecHitted.size(); i++)
+	//			m_vecHitted[i]->SetHit(false);
+	//		m_vecHitted.clear();
 		}
 	}
 	else
