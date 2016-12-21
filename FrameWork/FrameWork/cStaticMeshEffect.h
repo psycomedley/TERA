@@ -5,6 +5,8 @@ class cStaticMeshEffect : public cStaticObj
 private:
 	float m_fAngle;
 	D3DXMATRIXA16 matWorld, matS, matR, matT;
+	SYNTHESIZE(bool, m_bProcess, Process);
+	SYNTHESIZE(string, m_sName, Name);
 
 public:
 	cStaticMeshEffect(char* szFolder, char* szFilename);

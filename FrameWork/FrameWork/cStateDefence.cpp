@@ -16,24 +16,24 @@ cStateDefence::~cStateDefence()
 
 void cStateDefence::Start()
 {
-	m_pDefenseEffect = new cStaticMeshEffect("Effect", "Shield.x");
+	//m_pDefenseEffect = new cStaticMeshEffect("Effect", "Shield.x");
 	ST_ANIMATION_INFO aniInfo(E_ANI_DEFENCE_START, true, false);
 	m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_DEFENCE_LOOP, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
 
-	m_pDefenseEffect->Setup(D3DXVECTOR3(0.05f, 0.05f, 0.05f), m_pParent->GetPosition(), m_pParent->GetAngle());
-
+	//m_pDefenseEffect->Setup(D3DXVECTOR3(0.05f, 0.05f, 0.05f), m_pParent->GetPosition(), m_pParent->GetAngle());
+	//GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect", "Shield2.x", D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
 }
 
 
 void cStateDefence::Update()
 {
-	if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
-	{
-		m_pDefenseEffect->Render();
-	}
+	//if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
+	//{
+	//	m_pDefenseEffect->Render();
+	//}
 }
 
 
@@ -49,7 +49,7 @@ void cStateDefence::End()
 //	pObj->GetAnimController()->m_pController->SetTrackPosition(0, 0.0f);
 //	pObj->SetAnimationIdx(5, false);
 	
-	SAFE_RELEASE(m_pDefenseEffect);
+	//GETSINGLE(cEffectMgr)->RemoveStaticMeshEffect();
 }
 
 

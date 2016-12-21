@@ -326,6 +326,7 @@ void cMainGame::Render()
 	GETSINGLE(cTextMgr)->Render();
 	GETSINGLE(cEffectMgr)->Render();
 	GETSINGLE(cObjMgr)->Render();
+	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
 
