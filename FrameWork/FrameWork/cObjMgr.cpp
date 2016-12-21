@@ -97,6 +97,15 @@ void cObjMgr::Release()
 		iter->second.clear();
 	}
 
+	for (auto iter = m_mapMonsterPool.begin(); iter != m_mapMonsterPool.end(); iter++)
+	{
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
+		{
+			SAFE_RELEASE((*iter2));
+		}
+		iter->second.clear();
+	}
+
 	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
 	{
 		SAFE_RELEASE(iter->second);
