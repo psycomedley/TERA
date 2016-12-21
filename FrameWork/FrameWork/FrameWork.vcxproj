@@ -88,6 +88,7 @@
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAnimationController.h" />
     <ClInclude Include="cAutoReleasePool.h" />
+    <ClInclude Include="cBattleMgr.h" />
     <ClInclude Include="cBounding.h" />
     <ClInclude Include="cBoundingBox.h" />
     <ClInclude Include="cBoundingSphere.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAnimationController.cpp" />
     <ClCompile Include="cAutoReleasePool.cpp" />
+    <ClCompile Include="cBattleMgr.cpp" />
     <ClCompile Include="cBounding.cpp" />
     <ClCompile Include="cBoundingBox.cpp" />
     <ClCompile Include="cBoundingSphere.cpp" />

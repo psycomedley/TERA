@@ -148,6 +148,9 @@
     <Filter Include="소스 파일\17. Shader\Effect">
       <UniqueIdentifier>{5197f5a4-a9a4-44e4-8cdb-add04913d8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\23. Battle">
+      <UniqueIdentifier>{0adbcb33-3926-4806-a442-1bff178bc610}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork.h">
@@ -414,6 +417,9 @@
     <ClInclude Include="cSkillElectricGlobe.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="cBattleMgr.h">
+      <Filter>소스 파일\23. Battle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -655,6 +661,9 @@
     </ClCompile>
     <ClCompile Include="cSkillElectricGlobe.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cBattleMgr.cpp">
+      <Filter>소스 파일\23. Battle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

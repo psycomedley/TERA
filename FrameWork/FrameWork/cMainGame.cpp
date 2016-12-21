@@ -200,6 +200,7 @@ void cMainGame::Update()
 
 		GETSINGLE(cTextMgr)->Update();
 
+		GETSINGLE(cBattleMgr)->Update();
 
 		GETSINGLE(cUIMgr)->Update();
 	}
@@ -392,6 +393,7 @@ void cMainGame::Release()
 	GETSINGLE(cShaderMgr)->Release();
 	GETSINGLE(cEffectMgr)->Release();
 	GETSINGLE(cSoundMgr)->Release();
+	GETSINGLE(cBattleMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 }
