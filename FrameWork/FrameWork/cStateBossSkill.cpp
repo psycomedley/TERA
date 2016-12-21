@@ -58,10 +58,16 @@ void cStateBossSkill::Update()
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_LONGMOVE_RUN)
 	{
 		m_pParent->Move(1.5f);
+
+		m_fDamageTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+		AddEnemyDamage(m_pParent->GetSphere());
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{
 		m_pParent->Move(0.2f);
+
+		m_fDamageTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+		AddEnemyDamage(m_pParent->GetSphere(), true, 0.2f);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK2)
 	{
@@ -137,6 +143,7 @@ void cStateBossSkill::Update()
 			GETSINGLE(cEffectMgr)->AddList("orca2", vec1, matR);
 
 			cBoundingSphere sphere;
+		//	sphere.Setup(&vec1, 5);
 			sphere.SetCenter(vec1);
 			sphere.SetRadius(9);
 
@@ -161,6 +168,15 @@ void cStateBossSkill::Update()
 
 			GETSINGLE(cEffectMgr)->AddList("orcaBackAtk", m_pParent->GetPosition() + vec1, matR);
 			GETSINGLE(cEffectMgr)->AddList("orcaBackAtk", m_pParent->GetPosition() + vec2, matR2);
+
+			cBoundingSphere sphere;
+			sphere.SetCenter(vec1);
+			sphere.SetRadius(5);
+			AddEnemyDamage(sphere);
+
+			sphere.SetCenter(vec2);
+			sphere.SetRadius(5);
+			AddEnemyDamage(sphere);
 		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_ATK1)
@@ -185,6 +201,7 @@ void cStateBossSkill::End()
 		m_vecHitted[i]->SetHit(false);
 	m_vecHitted.clear();
 	m_bHit = false;
+	m_fDamageTime = 600.0f;
 
 	m_pParent->AnimationRemove();
 	m_pParent->ChangeState(E_STATE_WAIT);

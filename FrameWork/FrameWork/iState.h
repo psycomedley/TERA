@@ -10,6 +10,7 @@ protected:
 
 	vector<cDynamicObj*> m_vecHitted;
 	bool m_bHit;
+	float m_fDamageTime;
 
 public:
 	void SetParent(cDynamicObj* pParent) { m_pParent = pParent; }
@@ -20,7 +21,7 @@ public:
 //	virtual void Render() PURE;
 	virtual void End() PURE;
 	void AddDamage(bool bDoubleHit);
-	void AddEnemyDamage(cBoundingSphere sphere);
+	void AddEnemyDamage(cBoundingSphere sphere, bool bDoubleHit = false, float fDamageTime = 0.0f);
 
 public:
 	iState();

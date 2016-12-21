@@ -130,6 +130,7 @@
     <ClInclude Include="cRushEffect.h" />
     <ClInclude Include="cShaderMgr.h" />
     <ClInclude Include="cSingleton.h" />
+    <ClInclude Include="cSkillElectricGlobe.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cStateBossSkill.h" />
     <ClInclude Include="cStateCombo.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="cRushEffect.cpp" />
     <ClCompile Include="cShaderMgr.cpp" />
     <ClCompile Include="cSingleton.cpp" />
+    <ClCompile Include="cSkillElectricGlobe.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cStateBossSkill.cpp" />
     <ClCompile Include="cStateCombo.cpp" />

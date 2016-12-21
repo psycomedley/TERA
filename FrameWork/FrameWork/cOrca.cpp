@@ -81,7 +81,7 @@ void cOrca::SetupStatus()
 	pText->SetMoveTime(3.0f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
-	m_skillHeavyAtk.SetInfo(35.0f, 100);
+	m_skillHeavyAtk.SetInfo(1, 100);
 	
 	m_skillHeavyAtk2.SetInfo(25.0f, 100);
 
