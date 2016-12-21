@@ -6,7 +6,6 @@ class cEffectMgr : public cSingleton<cEffectMgr>
 private:
 	map<string, list<cEffect*>>	m_mapEffect;
 	list<cEffect*>				m_listEffect;
-	
 public:
 	void AddEffect(string sKey, cEffect* pEffect);
 	void AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matRotation);

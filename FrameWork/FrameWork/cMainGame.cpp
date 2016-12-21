@@ -321,7 +321,6 @@ void cMainGame::Render()
 	m_cObjectTool->Render();
 
 
-
 	GETSINGLE(cTextMgr)->Render();
 	GETSINGLE(cEffectMgr)->Render();
 	GETSINGLE(cObjMgr)->Render();

@@ -19,7 +19,7 @@ void cObjectTool::Setup()
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
-	ReadInfoStuff();
+	
 
 }
 void cObjectTool::Update()
@@ -33,6 +33,10 @@ void cObjectTool::Update()
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
+	if (KEYBOARD->IsOnceKeyDown(DIK_F2))
+	{
+		LoadInfoStuff();
+	}
 }
 void cObjectTool::Render()
 {
@@ -169,31 +173,42 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	float rx = CloneStuff->GetfRotX();
 	float ry = CloneStuff->GetfRotY();
 	float rz = CloneStuff->GetfRotZ();
-	sprintf_s(str, "%s %s %f %f %f %f %f %f %f %f %f\n"
+
+	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f"
 		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz, 1024);
 	fprintf(fp, "%s", str);
 
 	fclose(fp);
 }
-void cObjectTool::ReadInfoStuff()
+void cObjectTool::LoadInfoStuff()
 {
 	FILE* fp = NULL;
+	char c = NULL;
 	char str[1024] = { NULL, };
+	char nStr[10] = { NULL, };
 	char foldername[120] = { NULL ,};
 	char filename[120] = { NULL, };
-	float Px = 0.0f;
-	float Sx, Sy, Sz;
-	float Rx, Ry, Rz;
+	float Px = 0, Py=0, Pz=0;
+	float Sx =0, Sy=0, Sz=0;
+	float Rx=0, Ry=0, Rz=0;
 	fopen_s(&fp, "object/StuffInfo.text", "r");
-	while (!feof(fp))
+	while (1)
 	{
-		fscanf_s(fp, "%s", str, sizeof(str));
-		strcpy_s(foldername,sizeof(foldername), &str[0]);
+		if (feof(fp)) break;
+		fgets(&str[0],1024,fp);
+		if (str[0] == '\n')
+			continue;
 
-		fscanf_s(fp, "%s", str, sizeof(str));
-		strcpy_s(filename, sizeof(filename), &str[0]);
+		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f"
+			,foldername,120,filename,120, &Px, &Py, &Pz, &Sx, &Sy, &Sz, &Rx, &Ry, &Rz);
 
-		fscanf_s(fp, "%f",&Px);
+		cStuff* cloneStuff = new cStuff(foldername, filename);
+		cloneStuff->SetPosition(D3DXVECTOR3(Px,Py,Pz));
+		cloneStuff->SetScale(D3DXVECTOR3(Sx, Sy, Sz));
+		cloneStuff->SetfRotX(Rx);
+		cloneStuff->SetfRotY(Ry);
+		cloneStuff->SetfRotZ(Rz);
+		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
 	
