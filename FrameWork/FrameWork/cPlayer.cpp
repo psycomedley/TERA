@@ -312,6 +312,7 @@ void cPlayer::CheckControl()
 		ShowCursor(false);
 		GETSINGLE(cUIMgr)->AddList("CrossHair");
 	}
+
 }
 
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cEffectMgr.h"
 #include "cEffect.h"
+#include "cStaticMeshEffect.h"
 
 
 cEffectMgr::cEffectMgr()
@@ -46,6 +47,7 @@ void cEffectMgr::Render()
 	}*/
 	for each (auto effect in m_listEffect)
 		effect->Render();
+
 }
 
 
@@ -56,6 +58,10 @@ void cEffectMgr::Release()
 	for each (auto iter in m_mapEffect)
 		for each (auto effect in iter.second)
 			effect->Release();
+
+	for each(auto effect in m_vecStaticMeshEffect)
+		effect->Release();
+
 
 	cSingleton::Release();
 }
@@ -132,4 +138,22 @@ list<cEffect*>* cEffectMgr::GetEffectInList(string sKey)
 list<cEffect*>* cEffectMgr::GetEffectInMap(string sKey)
 {
 	return &m_mapEffect[sKey];
+}
+
+void cEffectMgr::AddStaticMeshEffect(char * szFolder, char * szFilename, D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)
+{
+	cStaticMeshEffect* m_pStaticMeshEffect = new cStaticMeshEffect(szFolder, szFilename);
+	m_pStaticMeshEffect->Setup(s, t, Angle);
+	m_vecStaticMeshEffect.push_back(m_pStaticMeshEffect);
+}
+
+void cEffectMgr::RemoveStaticMeshEffect()
+{
+	m_vecStaticMeshEffect.clear();
+}
+
+void cEffectMgr::StaticMeshEffectRender()
+{
+	for each(auto effect in m_vecStaticMeshEffect)
+		effect->Render();
 }
