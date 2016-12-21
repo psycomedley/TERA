@@ -189,9 +189,11 @@ void cObjectTool::ReadInfoStuff()
 	{
 		fscanf_s(fp, "%s", str, sizeof(str));
 		strcpy_s(foldername,sizeof(foldername), &str[0]);
+
 		fscanf_s(fp, "%s", str, sizeof(str));
 		strcpy_s(filename, sizeof(filename), &str[0]);
-		fscanf_s(fp, "%f", Px);
+
+		fscanf_s(fp, "%f",&Px);
 	}
 	fclose(fp);
 	
