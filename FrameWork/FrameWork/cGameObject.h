@@ -5,7 +5,7 @@ class cMesh;
 class cGameObject : public cObject
 {
 protected:
-	cMesh* m_pMesh;
+	SYNTHESIZE(cMesh*, m_pMesh, pMesh);
 	D3DXVECTOR3 m_vScale;
 	D3DXVECTOR3	m_vPrevPosition;
 

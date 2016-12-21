@@ -75,7 +75,7 @@ void cObjMgr::Render()
 	for each(auto p in m_vecCloneStuff)
 	{
 		p->Render();
-		//p->Bounding_Update();
+		p->Bounding_Update();
 		p->Bounding_Render();
 		
 	}

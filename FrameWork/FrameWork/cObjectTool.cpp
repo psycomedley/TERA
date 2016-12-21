@@ -19,7 +19,7 @@ void cObjectTool::Setup()
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
-	
+
 
 }
 void cObjectTool::Update()
@@ -37,10 +37,21 @@ void cObjectTool::Update()
 	{
 		LoadInfoStuff();
 	}
+	
+	
 }
 void cObjectTool::Render()
 {
 	m_BodyStuff->Render(); // 바디 오브젝트만 렌더
+	
+	m_BodyStuff->Bounding_Render();
+	if (KEYBOARD->IsOnceKeyDown(DIK_5))
+	{
+
+		m_BodyStuff->GetpMesh()->SetupBounding(D3DXVECTOR3(-100, -200, -150), D3DXVECTOR3(100, 200, 150));
+
+	}
+	
 }
 void cObjectTool::ResetVariable()
 {
@@ -133,7 +144,7 @@ void cObjectTool::AddClone()
 	{
 		char* folderName = ((cStuff*)m_BodyStuff)->GetFoldername();
 		char* fileName = ((cStuff*)m_BodyStuff)->GetFilename();
-	
+		
 		cStuff* pcloneStuff = new cStuff(folderName, fileName);
 		pcloneStuff = CopyInfoToClone(m_BodyStuff, pcloneStuff);
 		// 클론오브젝트 정보저장
