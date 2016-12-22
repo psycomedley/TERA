@@ -10,3 +10,9 @@ cEventMgr::cEventMgr()
 cEventMgr::~cEventMgr()
 {
 }
+
+
+void cEventMgr::Play()
+{
+
+}
