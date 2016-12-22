@@ -61,7 +61,20 @@ void cStateSkill::Update()
 		if (m_pParent->GetCurrentAnimPosition() > 0.8f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-		//	GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect","D_BaPho_CrackMake002_Emis.tga")
+
+			
+
+		}
+		if (m_pParent->GetCurrentAnimPosition() > 0.65f &&
+			m_pParent->GetCurrentAnimPosition() < 0.7f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -2.0f;
+			D3DXMatrixIdentity(&mat);
+			D3DXMatrixRotationX(&mat, D3DX_PI / 2);
+			GETSINGLE(cEffectMgr)->AddList("badak", vec, mat);
 		}
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.2f &&

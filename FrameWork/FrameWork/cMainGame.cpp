@@ -142,14 +142,14 @@ HRESULT cMainGame::Setup()
 
 	
 
-	m_pEffect4 = new cEffect;
-	m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
-	m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
-	m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
-	m_pEffect4->AddTechList(E_TECH_NORMAL);
-	D3DXMATRIXA16 rotationMat;
-	D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
-	m_pEffect4->SetMatRotation(rotationMat);
+	//m_pEffect4 = new cEffect;
+	//m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
+	//m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
+	//m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
+	//m_pEffect4->AddTechList(E_TECH_NORMAL);
+	//D3DXMATRIXA16 rotationMat;
+	//D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
+	//m_pEffect4->SetMatRotation(rotationMat);
 
 
 
@@ -216,20 +216,20 @@ void cMainGame::Update()
 
 	if (IsActive())
 	{
-		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
-		{
-			//m_pDynamicMeshEffect->Start();
-			//m_pCircleEffect->Start();
-			m_pRushEffect->Start();
-			if (m_pEffect4->GetProcess())
-			{
-				m_pEffect4->Stop();
-			}
-			else
-			{
-				m_pEffect4->Start();
-			}
-		}
+		//if (KEYBOARD->IsOnceKeyDown(DIK_Q))
+		//{
+		//	//m_pDynamicMeshEffect->Start();
+		//	//m_pCircleEffect->Start();
+		//	m_pRushEffect->Start();
+		//	if (m_pEffect4->GetProcess())
+		//	{
+		//		m_pEffect4->Stop();
+		//	}
+		//	else
+		//	{
+		//		m_pEffect4->Start();
+		//	}
+		//}
 		if (KEYBOARD->IsOnceKeyDown(DIK_T))
 		{
 			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
@@ -662,5 +662,17 @@ void cMainGame::SetEffect()
 	pEffect->SetRemoveTime(5);
 	pEffect->SetName("MagicArray");
 
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//¹Ù´Ú ±úÁö´Â ÀÌÆåÆ®
+	pEffect = new cEffect;
+	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
+	pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pEffect->AddTechList(E_TECH_NORMAL);
+	D3DXMatrixRotationX(&m, 0.0f);
+	pEffect->SetMatRotation(m);
+	pEffect->SetRemoveTime(1);
+	pEffect->SetName("badak");
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 }
