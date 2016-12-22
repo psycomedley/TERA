@@ -5,6 +5,7 @@
 #include "cStateIdle.h"
 #include "cStateRun.h"
 #include "cStateDefence.h"
+#include "cStateDefenceHit.h"
 #include "cStateWait.h"
 #include "cStateCombo.h"
 #include "cStateSkill.h"
@@ -64,7 +65,11 @@ cPlayer::cPlayer()
 cPlayer::~cPlayer()
 {
 	for (int i = 0; i < E_STATE_END; i++)
+	{
+	//	if (i == 3)
+	//		continue;
 		SAFE_DELETE(m_aStates[i]);
+	}
 
 	SAFE_RELEASE(m_pRightWeapon);
 	SAFE_RELEASE(m_pLeftWeapon);
@@ -90,8 +95,9 @@ void cPlayer::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
-	if (m_pState == m_aStates[E_STATE_SKILL])
-		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+	if (m_pState == m_aStates[E_STATE_SKILL] ||
+		m_pState == m_aStates[E_STATE_DEFENCE])
+		m_pState->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
 }
@@ -111,8 +117,9 @@ void cPlayer::ChangeState(int pState, int nSkillIndex /*= -1*/)
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
-	if (m_pState == m_aStates[E_STATE_SKILL])
-		((cStateSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+	if (m_pState == m_aStates[E_STATE_SKILL] ||
+		m_pState == m_aStates[E_STATE_DEFENCE])
+		m_pState->SetSkillIndex(nSkillIndex);
 
 	m_pState->Start();
 }
@@ -145,12 +152,14 @@ void cPlayer::SetupState()
 	m_aStates[E_STATE_IDLE]->SetParent(this);
 	m_aStates[E_STATE_RUN] = new cStateRun;
 	m_aStates[E_STATE_RUN]->SetParent(this);
-	m_aStates[E_STATE_DEFENCE] = new cStateDefence;
-	m_aStates[E_STATE_DEFENCE]->SetParent(this);
-	m_aStates[E_STATE_COMBO] = new cStateCombo;
-	m_aStates[E_STATE_COMBO]->SetParent(this);
 	m_aStates[E_STATE_WAIT] = new cStateWait;
 	m_aStates[E_STATE_WAIT]->SetParent(this);
+	m_aStates[E_STATE_DEFENCE] = new cStateDefence;
+	m_aStates[E_STATE_DEFENCE]->SetParent(this);
+	m_aStates[E_STATE_DEFENCE_HIT] = new cStateDefenceHit;
+	m_aStates[E_STATE_DEFENCE_HIT]->SetParent(this);
+	m_aStates[E_STATE_COMBO] = new cStateCombo;
+	m_aStates[E_STATE_COMBO]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
 	m_aStates[E_STATE_DEATH] = new cStateDeath;
@@ -295,7 +304,8 @@ void cPlayer::CheckControl()
 		}
 		if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
 		{
-			ChangeState(E_STATE_DEFENCE);
+			if (m_pState != m_aStates[E_STATE_DEFENCE_HIT])
+				ChangeState(E_STATE_DEFENCE);
 		}
 		if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
 		{
@@ -330,14 +340,14 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-		m_pRightWeapon->Bounding_Render();
-		m_pRightWeapon->GetBox();
+	//	m_pRightWeapon->Bounding_Render();
+	//	m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-		m_pLeftWeapon->Bounding_Render();
+	//	m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -426,7 +436,13 @@ float cPlayer::Damaged(ST_UNIT_INFO stInfo)
 			if (m_pState->GetPassedTime() <= 0.05f)
 				fDamage = 0;
 			else
+			{
+				float fOriDamage = fDamage;
 				fDamage = (int)fDamage * 0.3f;
+
+				if (fOriDamage >= (m_stInfo.fMaxHp) / 100 * 15)
+					ChangeState(E_STATE_DEFENCE_HIT);
+			}
 		}
 
 		m_stInfo.fHp -= fDamage;

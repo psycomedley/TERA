@@ -423,6 +423,9 @@
     <ClInclude Include="cVerticalCircleEffect.h">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>
     </ClInclude>
+    <ClInclude Include="cStateDefenceHit.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -670,6 +673,9 @@
     </ClCompile>
     <ClCompile Include="cVerticalCircleEffect.cpp">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateDefenceHit.cpp">
+      <Filter>소스 파일\14. State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

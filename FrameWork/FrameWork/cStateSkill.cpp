@@ -5,8 +5,7 @@
 #include "cVerticalCircleEffect.h"
 
 cStateSkill::cStateSkill()
-	: m_nSkillIndex(-1)
-	, m_bNextAttack(false)
+	: m_bNextAttack(false)
 	, m_nCount(0)
 {
 }

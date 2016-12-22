@@ -6,6 +6,7 @@
 
 iState::iState()
 	: m_fPassedTime(0.0f)
+	, m_nSkillIndex(-1)
 {
 }
 
