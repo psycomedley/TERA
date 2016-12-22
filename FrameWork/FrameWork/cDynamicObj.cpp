@@ -6,6 +6,7 @@
 
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 	: m_bHit(false)
+	, m_fPassedVanishTime(0.0f)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	SetBoundingPos();
@@ -14,6 +15,7 @@ cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 
 cDynamicObj::cDynamicObj()
 	: m_bHit(false)
+	, m_fPassedVanishTime(0.0f)
 {
 }
 
@@ -51,7 +53,12 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 
 		m_matWorld = mat;
 	}
-	
+	if (((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_DIE)
+	{
+		m_fPassedVanishTime += GETSINGLE(cTimeMgr)->getElapsedTime() * 0.5f;
+		((cDynamicMesh*)m_pMesh)->GetEffect()->SetFloat("g_fPassedTime", m_fPassedVanishTime);
+	}
+
 	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat);
 }
 

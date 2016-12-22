@@ -8,6 +8,7 @@ private:
 	ST_SKILL_INFO	m_skillLongMove;
 	SYNTHESIZE(bool, m_bActive, Active);
 	SYNTHESIZE(bool, m_bMoveEnd, MoveEnd);
+	SYNTHESIZE(int, m_nLoop, Loop);
 
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;
@@ -17,6 +18,8 @@ public:
 	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
 
 	virtual bool IsMoveAble() override;
+	void SetVanish();
+	void Reset();
 
 public:
 	cOrcaClone(char* szFolder, char* szFilename);

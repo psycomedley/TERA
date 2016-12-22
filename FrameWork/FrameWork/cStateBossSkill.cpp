@@ -9,6 +9,7 @@
 cStateBossSkill::cStateBossSkill()
 	: m_nSkillIndex(-1)
 	, m_nEffect(0)
+	, m_nLoop(1)
 {
 }
 
@@ -30,8 +31,8 @@ void cStateBossSkill::Start()
 		m_pParent->AddAnimation(aniInfo);
 		
 		aniInfo.SetInfo(E_BOSS_LONGMOVE_LOOP, true, false);
-		int loop = GetFromIntTo(1, 3);
-		for (int i = 0; i < loop; i++)
+	//	int loop = GetFromIntTo(1, 3);
+		for (int i = 0; i < m_nLoop; i++)
 			m_pParent->AddAnimation(aniInfo);
 		
 		aniInfo.SetInfo(E_BOSS_LONGMOVE_RUN, true, false);
@@ -60,7 +61,7 @@ void cStateBossSkill::Update()
 	{
 		m_pParent->Move(1.5f);
 
-		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere());
+		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), true, 1.0f);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{

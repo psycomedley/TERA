@@ -2,10 +2,10 @@
 #include "cStateSkill.h"
 #include "cDynamicObj.h"
 #include "cPlayer.h"
+#include "cVerticalCircleEffect.h"
 
 cStateSkill::cStateSkill()
-	: m_nSkillIndex(-1)
-	, m_bNextAttack(false)
+	: m_bNextAttack(false)
 	, m_nCount(0)
 {
 }
@@ -58,12 +58,38 @@ void cStateSkill::Update()
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_STRIKE)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.8f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+		//	GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect","D_BaPho_CrackMake002_Emis.tga")
+		}
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.2f &&
+			m_pParent->GetCurrentAnimPosition() < 0.3f)
+		{
+			if (!StartEffect1)
+			{
+				m_pEffect1 = new cVerticalCircleEffect("Effect", "blueCircle2.x");
+				StartEffect1 = true;
+				m_pEffect1->Setup(1, 0.2f, true, D3DXVECTOR3(0.15f, 0.15f, 0.15f), m_pParent->GetPosition(), m_pParent->GetAngle());
+				m_pEffect1->Start();
+			}
+		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_DOUBLEATTACK)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+	}
+
+	if (StartEffect1)
+	{
+		m_pEffect1->Update();
+		m_pEffect1->Render();
+		if (!m_pEffect1->isStart())
+		{
+			StartEffect1 = false;
+			SAFE_RELEASE(m_pEffect1);
+		}
 	}
 }
 

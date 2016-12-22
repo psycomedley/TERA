@@ -137,6 +137,7 @@
     <ClInclude Include="cStateCombo.h" />
     <ClInclude Include="cStateDeath.h" />
     <ClInclude Include="cStateDefence.h" />
+    <ClInclude Include="cStateDefenceHit.h" />
     <ClInclude Include="cStateIdle.h" />
     <ClInclude Include="cStateRun.h" />
     <ClInclude Include="cStateSkill.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="cUIMgr.h" />
     <ClInclude Include="cUIObject.h" />
     <ClInclude Include="cUITextView.h" />
+    <ClInclude Include="cVerticalCircleEffect.h" />
     <ClInclude Include="cWeapon.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="FrameWork.h" />
@@ -229,6 +231,7 @@
     <ClCompile Include="cStateCombo.cpp" />
     <ClCompile Include="cStateDeath.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
+    <ClCompile Include="cStateDefenceHit.cpp" />
     <ClCompile Include="cStateIdle.cpp" />
     <ClCompile Include="cStateRun.cpp" />
     <ClCompile Include="cStateSkill.cpp" />
@@ -248,6 +251,7 @@
     <ClCompile Include="cUIMgr.cpp" />
     <ClCompile Include="cUIObject.cpp" />
     <ClCompile Include="cUITextView.cpp" />
+    <ClCompile Include="cVerticalCircleEffect.cpp" />
     <ClCompile Include="cWeapon.cpp" />
     <ClCompile Include="FrameWork.cpp" />
     <ClCompile Include="iAnimationDelegate.cpp" />
