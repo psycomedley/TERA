@@ -12,6 +12,7 @@ protected:
 	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
 	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(bool, m_bHit, Hit);
+	SYNTHESIZE(float, m_fPassedVanishTime, PassedVanishTime);
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }

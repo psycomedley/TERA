@@ -9,6 +9,7 @@
 cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
 	: m_bActive(true)
 	, m_bMoveEnd(false)
+	, m_nLoop(1)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	
@@ -20,6 +21,7 @@ cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
 cOrcaClone::cOrcaClone()
 	: m_bActive(true)
 	, m_bMoveEnd(false)
+	, m_nLoop(1)
 {
 }
 
@@ -37,7 +39,7 @@ void cOrcaClone::SetupState()
 	m_aStates[E_STATE_SKILL]->SetParent(this);
 	m_aStates[E_STATE_DEATH] = new cStateDeath;
 	m_aStates[E_STATE_DEATH]->SetParent(this);
-	ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
+	ChangeState(E_STATE_WAIT);
 }
 
 
@@ -64,7 +66,8 @@ void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	if (m_bActive == false)
 		return;
-	if (GetCurrentAnimInfo().nIndex == E_ANI_DEATHWAIT)
+//	if (GetCurrentAnimInfo().nIndex == E_ANI_DEATHWAIT)
+	if (m_fPassedVanishTime >= 1.0f)
 		m_bActive = false;
 	if (m_pState == m_aStates[E_STATE_WAIT])
 		m_bMoveEnd = true;
@@ -90,7 +93,10 @@ void cOrcaClone::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
 	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
 		((cStateBossSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+		((cStateBossSkill*)m_pState)->SetLoop(m_nLoop);
+	}
 
 	m_pState->Start();
 }
@@ -111,8 +117,10 @@ void cOrcaClone::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
 	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
 		((cStateBossSkill*)m_pState)->SetSkillIndex(nSkillIndex);
-
+		((cStateBossSkill*)m_pState)->SetLoop(m_nLoop);
+	}
 	m_pState->Start();
 }
 
@@ -126,4 +134,19 @@ bool cOrcaClone::IsMoveAble()
 void cOrcaClone::Update()
 {
 	cMonster::Update();
+}
+
+
+void cOrcaClone::SetVanish()
+{
+	((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_DIE);
+}
+
+
+void cOrcaClone::Reset()
+{
+	m_bActive = true;
+	m_bMoveEnd = false;
+	m_fPassedVanishTime = 0.0f;
+	((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_NORMAL);
 }

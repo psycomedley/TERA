@@ -38,6 +38,8 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 	{
 		if (!bDoubleHit)
 		{
+			if (monsterList[i]->GetPassedVanishTime() > 0.0f)
+				continue;
 			if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
 				float damage = monsterList[i]->Damaged(pParent->GetInfo());
@@ -53,6 +55,8 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 		}
 		else
 		{
+			if (monsterList[i]->GetPassedVanishTime() > 0.0f)
+				continue;
 			if (GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
 				float damage = monsterList[i]->Damaged(pParent->GetInfo());
