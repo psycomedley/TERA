@@ -7,8 +7,7 @@
 
 
 cStateBossSkill::cStateBossSkill()
-	: m_nSkillIndex(-1)
-	, m_nEffect(0)
+	: m_nEffect(0)
 	, m_nLoop(1)
 {
 }

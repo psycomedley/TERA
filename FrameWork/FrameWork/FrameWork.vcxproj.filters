@@ -426,6 +426,9 @@
     <ClInclude Include="cStateDefenceHit.h">
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
+    <ClInclude Include="cStateReaction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -676,6 +679,9 @@
     </ClCompile>
     <ClCompile Include="cStateDefenceHit.cpp">
       <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateReaction.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
