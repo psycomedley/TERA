@@ -157,6 +157,7 @@
     <ClInclude Include="cUIMgr.h" />
     <ClInclude Include="cUIObject.h" />
     <ClInclude Include="cUITextView.h" />
+    <ClInclude Include="cVerticalCircleEffect.h" />
     <ClInclude Include="cWeapon.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="FrameWork.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="cUIMgr.cpp" />
     <ClCompile Include="cUIObject.cpp" />
     <ClCompile Include="cUITextView.cpp" />
+    <ClCompile Include="cVerticalCircleEffect.cpp" />
     <ClCompile Include="cWeapon.cpp" />
     <ClCompile Include="FrameWork.cpp" />
     <ClCompile Include="iAnimationDelegate.cpp" />

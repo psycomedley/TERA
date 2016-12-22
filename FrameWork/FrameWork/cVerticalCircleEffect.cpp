@@ -1,22 +1,20 @@
 #include "stdafx.h"
-#include "cCircleEffect.h"
+#include "cVerticalCircleEffect.h"
 #include "cStaticMesh.h"
 
 
-cCircleEffect::cCircleEffect(char* szFolder, char* szFilename)
+cVerticalCircleEffect::cVerticalCircleEffect(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 }
 
 
-cCircleEffect::~cCircleEffect()
+cVerticalCircleEffect::~cVerticalCircleEffect()
 {
 }
 
-HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
-	D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)
+HRESULT cVerticalCircleEffect::Setup(int Wheels, float RotationSpeed, bool Front, D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)
 {
-
 	start = false;
 	m_fAngle = Angle;
 	RealAngle = 0;
@@ -24,31 +22,31 @@ HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
 	nowWheels = 0;
 	m_fRotationSpeed = RotationSpeed;
 	D3DXMatrixIdentity(&matWorld);
-	isLeft = Left;
+	isFront = Front;
 	D3DXMatrixIdentity(&matS);
 	D3DXMatrixIdentity(&matR);
 	D3DXMatrixIdentity(&matT);
 
-	D3DXMatrixScaling(&matS,s.x,s.y,s.z);
-	D3DXMatrixTranslation(&matT, t.x,t.y,t.z);
-
+	D3DXMatrixRotationY(&matRy, m_fAngle);
+	D3DXMatrixScaling(&matS, s.x, s.y, s.z);
+	D3DXMatrixTranslation(&matT, t.x, t.y, t.z);
 
 	return S_OK;
 }
 
-void cCircleEffect::Update()
+void cVerticalCircleEffect::Update()
 {
 	if (start)
 	{
-		if (!isLeft)
+		if (!isFront)
 		{
-			m_fAngle += m_fRotationSpeed;
-			RealAngle += m_fRotationSpeed;
+		//	m_fAngle -= m_fRotationSpeed;
+			RealAngle -= m_fRotationSpeed;
 		}
 		else
 		{
-			m_fAngle -= m_fRotationSpeed;
-			RealAngle -= m_fRotationSpeed;
+		//	m_fAngle += m_fRotationSpeed;
+			RealAngle += m_fRotationSpeed;
 		}
 		nowWheels = RealAngle / (D3DX_PI);
 		if (abs(nowWheels) >= needWheels)
@@ -58,7 +56,7 @@ void cCircleEffect::Update()
 	}
 }
 
-void cCircleEffect::Render()
+void cVerticalCircleEffect::Render()
 {
 	if (start)
 	{
@@ -66,7 +64,9 @@ void cCircleEffect::Render()
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000044);
 		g_pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-		D3DXMatrixRotationY(&matR, m_fAngle);
+
+		D3DXMatrixRotationX(&matRx, RealAngle);
+		matR = matRx * matRy;
 		matWorld = matS * matR * matT;
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		cStaticObj::Render();
@@ -74,7 +74,7 @@ void cCircleEffect::Render()
 	}
 }
 
-void cCircleEffect::SetPosition(D3DXVECTOR3 t)
+void cVerticalCircleEffect::SetPosition(D3DXVECTOR3 t)
 {
 	D3DXMatrixTranslation(&matT, t.x, t.y, t.z);
 }

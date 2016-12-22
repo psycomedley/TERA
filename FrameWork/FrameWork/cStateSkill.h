@@ -2,12 +2,17 @@
 #include "iState.h"
 
 class cDynamicObj;
+class cVerticalCircleEffect;
 class cStateSkill : public iState
 {
 private:
 	bool	m_bNextAttack;
 	int		m_nCount;
 //	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
+
+private:
+	cVerticalCircleEffect* m_pEffect1;
+	bool StartEffect1;
 
 public:
 	virtual void Start() override;
