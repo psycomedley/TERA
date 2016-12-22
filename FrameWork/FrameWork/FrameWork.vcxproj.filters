@@ -414,11 +414,11 @@
     <ClInclude Include="cSoundMgr.h">
       <Filter>소스 파일\22. Sound</Filter>
     </ClInclude>
-    <ClInclude Include="cSkillElectricGlobe.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="cBattleMgr.h">
       <Filter>소스 파일\23. Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="cSkillElectricGlobe.h">
+      <Filter>소스 파일\16. Monster</Filter>
     </ClInclude>
     <ClInclude Include="cVerticalCircleEffect.h">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>
@@ -662,11 +662,11 @@
     <ClCompile Include="cSoundMgr.cpp">
       <Filter>소스 파일\22. Sound</Filter>
     </ClCompile>
-    <ClCompile Include="cSkillElectricGlobe.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="cBattleMgr.cpp">
       <Filter>소스 파일\23. Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkillElectricGlobe.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
     </ClCompile>
     <ClCompile Include="cVerticalCircleEffect.cpp">
       <Filter>소스 파일\19.Effect\CircleEffect</Filter>

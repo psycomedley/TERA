@@ -12,10 +12,11 @@ protected:
 	ST_BONE*					m_pRootFrame;
 	DWORD						m_dwWorkingPaletteSize;
 	D3DXMATRIX*					m_pmWorkingPalette;
-	LPD3DXEFFECT				m_pEffect;
+	SYNTHESIZE(LPD3DXEFFECT, m_pEffect, Effect);
 
 	// 객체마다 생성
 	SYNTHESIZE(cAnimationController*, m_pAnimController, AnimController);
+	SYNTHESIZE(E_DYNAMICMESH_TECHNIQE, m_eTechnique, Technique);
 	
 	/*LPD3DXANIMATIONCONTROLLER	m_pAnimController;
 

@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "cWeapon.h"
 #include "cStaticObj.h"
+#include "cPlayer.h"
 
 
 cWeapon::cWeapon(char* szFolder, char* szFilename) //: cStaticMesh(szDirectory, szFilename) 
 	: m_sHolderKey("")
 	, m_sParentKey("")
+	, m_fHolderScale(1.0f)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 	m_matParent = NULL;
@@ -17,6 +19,7 @@ cWeapon::cWeapon(char* szFolder, char* szFilename) //: cStaticMesh(szDirectory, 
 cWeapon::cWeapon()
 	: m_sHolderKey("")
 	, m_sParentKey("")
+	, m_fHolderScale(1.0f)
 {
 	m_matParent = NULL;
 	D3DXMatrixIdentity(&m_matWorld);
@@ -102,4 +105,11 @@ void cWeapon::SetWorldMat()
 cBoundingBox cWeapon::GetBox()
 {
 	return m_pMesh->GetBox(&m_matRevision);
+}
+
+
+cBoundingSphere cWeapon::GetSphere()
+{
+	return m_pMesh->GetSphere(&m_matRevision);
+//	return m_pMesh->GetSphere(m_pMesh->m_pSphere->GetPosition(), m_fHolderScale);
 }

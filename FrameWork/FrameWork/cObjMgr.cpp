@@ -20,7 +20,7 @@ void cObjMgr::AddMonster(string sKey, cDynamicObj* pMonster)
 
 	if (iter == m_mapMonster.end())
 	{
-		vector<cDynamicObj*> ObjList;
+		list<cDynamicObj*> ObjList;
 		ObjList.push_back(pMonster);
 		m_mapMonster.insert(make_pair(sKey, ObjList));
 	}
@@ -75,6 +75,9 @@ void cObjMgr::Render()
 	for each(auto p in m_vecCloneStuff)
 	{
 		p->Render();
+		p->Bounding_Update();
+		p->Bounding_Render();
+		
 	}
 
 	/*for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
@@ -97,6 +100,15 @@ void cObjMgr::Release()
 		iter->second.clear();
 	}
 
+	for (auto iter = m_mapMonsterPool.begin(); iter != m_mapMonsterPool.end(); iter++)
+	{
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
+		{
+			SAFE_RELEASE((*iter2));
+		}
+		iter->second.clear();
+	}
+
 	for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
 	{
 		SAFE_RELEASE(iter->second);
@@ -111,7 +123,7 @@ void cObjMgr::Release()
 }
 
 
-vector<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
+list<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
 {
 	auto iter = m_mapMonster.find(sKey);
 
@@ -130,7 +142,6 @@ cStaticObj* cObjMgr::GetStuffList(string sKey)
 }
 vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
 {
-
 	vector<cDynamicObj*> pVecAllMonster;
 
 	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
@@ -142,4 +153,36 @@ vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
 	}
 
 	return pVecAllMonster;
+}
+
+
+cDynamicObj* cObjMgr::GetMonsterPool(string sKey)
+{
+	auto iter = m_mapMonsterPool.find(sKey);
+
+	if (iter == m_mapMonsterPool.end() || iter->second.size() > 0)
+		return NULL;
+	
+	cDynamicObj* monster = iter->second.front();
+	iter->second.pop_front();
+	return monster;
+}
+
+
+void cObjMgr::AddInMonsterPoolFromMap(string sKey, cDynamicObj* pMonster)
+{
+	auto iter = m_mapMonster.find(sKey);
+
+	if (iter == m_mapMonster.end())
+		return;
+	
+	for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
+	{
+		if (*iter2 == pMonster)
+		{
+			m_mapMonsterPool[sKey].push_back(pMonster);
+			iter->second.remove(pMonster);
+			return;
+		}
+	}
 }

@@ -5,7 +5,7 @@ class cMesh;
 class cGameObject : public cObject
 {
 protected:
-	cMesh* m_pMesh;
+	SYNTHESIZE(cMesh*, m_pMesh, pMesh);
 	D3DXVECTOR3 m_vScale;
 	D3DXVECTOR3	m_vPrevPosition;
 
@@ -38,6 +38,7 @@ public:
 //	D3DXVECTOR3 GetPosition() { return m_vPosition; }
 //	void SetPosition(D3DXVECTOR3 vPos);
 	void SetBoundingPos();
+	bool IsMesh() { if (m_pMesh) return true; return false; }
 
 public:
 	virtual void Update();

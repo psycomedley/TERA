@@ -6,6 +6,7 @@ class cDynamicObj;
 class iState : public iAnimationDelegate
 {
 protected:
+	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 	cDynamicObj* m_pParent;
 
 //	vector<cDynamicObj*> m_vecHitted;

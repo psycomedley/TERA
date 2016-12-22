@@ -16,6 +16,7 @@
 
 cOrca::cOrca(char* szFolder, char* szFilename)
 	: m_nNumClone(0)
+	, m_nLoop(1)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 
@@ -26,6 +27,7 @@ cOrca::cOrca(char* szFolder, char* szFilename)
 
 cOrca::cOrca()
 	: m_nNumClone(0)
+	, m_nLoop(1)
 {
 }
 
@@ -62,12 +64,13 @@ void cOrca::SetupStatus()
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fDamage = 126.0f;
+	m_stInfo.fMaxDamage = 156.0f;
+	m_stInfo.fMinDamage = 119.0f;
 	m_stInfo.fDefence = 8.0f;
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(60.0f, 100);
+	m_skillLongMove.SetInfo(1, 100);
 	m_skillLongMove.sSpeech = "나의 속도를 쬐끔만 느껴보아라!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
@@ -114,7 +117,10 @@ void cOrca::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
 	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
 		((cStateBossSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+		((cStateBossSkill*)m_pState)->SetLoop(m_nLoop);
+	}
 
 	m_pState->Start();
 }
@@ -135,7 +141,10 @@ void cOrca::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
 	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
 		((cStateBossSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+		((cStateBossSkill*)m_pState)->SetLoop(m_nLoop);
+	}
 
 	m_pState->Start();
 }
@@ -197,14 +206,25 @@ void cOrca::Update()
 				{
 					for (auto iter = cloneList->begin(); iter != cloneList->end(); iter++)
 					{
-//						((cOrcaClone*)(*iter))->SetActive(false);
-						((cOrcaClone*)(*iter))->ChangeState(E_STATE_DEATH);
+						((cOrcaClone*)(*iter))->SetVanish();
+//						((cOrcaClone*)(*iter))->ChangeState(E_STATE_DEATH);
 					}
 				}
 
 				return;
 			}
 
+			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
+			{
+				//나중에 일정 체력 이하일 때로 변경 50%, 25%
+				if (m_pAction)
+					SAFE_RELEASE(m_pAction);
+				ChangeState(E_STATE_WAIT);
+				((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_DIE);
+				if (m_fPassedVanishTime >= 1.0f)
+					LongMove();
+				return;
+			}
 			if (IsBehind())
 			{
 				if (IsTargetCollision())
@@ -218,14 +238,6 @@ void cOrca::Update()
 						return;
 					}
 				}
-			}
-			if (m_skillLongMove.fPassedTime >= m_skillLongMove.fCoolTime)
-			{
-				//나중에 일정 체력 이하일 때로 변경 50%, 25%
-				if (m_pAction)
-					SAFE_RELEASE(m_pAction); 
-				LongMove();
-				return;
 			}
 			if (m_skillHeavyAtk.fPassedTime >= m_skillHeavyAtk.fCoolTime)
 			{
@@ -280,11 +292,24 @@ void cOrca::Update()
 
 void cOrca::LongMove()
 {
-//	RECT rect = RectMakeCenter(GetWindowWidth() / 2, 150, 500, 50);
-//	GETSINGLE(cTextMgr)->AddText(E_FONT_BOSS, m_skillLongMove.sSpeech, 3, rect);
+	vector<int> v;
+	
+	for (int i = 0; i < 4; i++)
+		v.push_back(i);
+
+	for (int i = 0; i < 10; i++)
+	{
+		int n1 = GetInt(4);
+		int n2 = GetInt(4);
+
+		int temp = v[n1];
+		v[n1] = v[n2];
+		v[n2] = temp;
+	}
+	((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_NORMAL);
 	GETSINGLE(cTextMgr)->AddList(m_skillLongMove.sSpeech);
-	if (m_pAction)
-		SAFE_RELEASE(m_pAction);
+
+	m_fPassedVanishTime = 0.0f;
 	m_skillLongMove.fPassedTime = 0.0f;
 	m_nNumClone = 3;
 
@@ -293,7 +318,7 @@ void cOrca::LongMove()
 	int nRealOrca = GetInt(4);
 
 	D3DXVECTOR3 vPos(0, 0, 0);
-	switch (nRealOrca)
+	switch (v[nRealOrca])
 	{
 	case 0:
 		vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
@@ -303,14 +328,13 @@ void cOrca::LongMove()
 		break;
 	case 2:
 		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
-//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
 		break;
 	case 3:
 		vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
-//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
 		break;
 	}
 
+	m_nLoop = nRealOrca + 1;
 	SetPosition(vEnemyPos + vPos);
 	LookTarget();
 
@@ -325,7 +349,7 @@ void cOrca::LongMove()
 				continue;
 
 			D3DXVECTOR3 vPos(0, 0, 0);
-			switch (i)
+			switch (v[i])
 			{
 			case 0:
 				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
@@ -335,16 +359,14 @@ void cOrca::LongMove()
 				break;
 			case 2:
 				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
-				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
 				break;
 			case 3:
 				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
-				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
 				break;
 			}
 
-			((cOrcaClone*)(*iter))->SetActive(true);
-			((cOrcaClone*)(*iter))->SetMoveEnd(false);
+			((cOrcaClone*)(*iter))->Reset();
+			((cOrcaClone*)(*iter))->SetLoop(i + 1);
 			(*iter)->SetPosition(vEnemyPos + vPos);
 			(*iter)->LookTarget();
 			(*iter)->ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
@@ -361,7 +383,7 @@ void cOrca::LongMove()
 			if (i == nRealOrca)
 				continue;
 
-			switch (i)
+			switch (v[i])
 			{
 			case 0:
 				vPos = D3DXVECTOR3(30 * cosf(0), 0, 30 * sinf(0));
@@ -371,17 +393,17 @@ void cOrca::LongMove()
 				break;
 			case 2:
 				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 3), 0, 30 * sinf(D3DX_PI / 4 * 3));
-				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * -sinf(D3DX_PI / 4));
 				break;
 			case 3:
 				vPos = D3DXVECTOR3(30 * cosf(D3DX_PI / 4 * 5), 0, 30 * sinf(D3DX_PI / 4 * 5));
-				//		vPos = D3DXVECTOR3(30 * -cosf(D3DX_PI / 4), 0, 30 * sinf(-D3DX_PI / 4));
 				break;
 			}
 
 			cDynamicObj* clone = new cOrcaClone("Monster", "Orca.X");
 			clone->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 			clone->SetRevision(matR);
+			((cOrcaClone*)clone)->SetLoop(i + 1);
+			clone->ChangeState(E_STATE_SKILL, E_BOSS_LONGMOVE_START);
 			clone->SetPosition(vEnemyPos + vPos);
 			clone->SetTarget(m_pTarget);
 			clone->LookTarget();

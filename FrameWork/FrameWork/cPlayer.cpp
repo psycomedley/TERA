@@ -131,7 +131,7 @@ void cPlayer::SetupBaseWeapon()
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
 	
-
+	
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet00_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");
@@ -371,6 +371,9 @@ void cPlayer::dlatl()
 void cPlayer::SetScale(D3DXVECTOR3 vScale)
 {
 	cGameObject::SetScale(vScale);
+	m_pLeftWeapon->SetHolderScale(vScale.x);
+	m_pRightWeapon->SetHolderScale(vScale.x);
+
 //	m_pLeftWeapon->SetScale(vScale);
 //	m_pRightWeapon->SetScale(vScale);
 }
@@ -402,8 +405,39 @@ void cPlayer::SetupStatus()
 	m_stInfo.fMaxMp = 1100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fDamage = 197.0f;
 	m_stInfo.fMinDamage = 152.0f;
 	m_stInfo.fMaxDamage = 219.0f;
 	m_stInfo.fDefence = 29.0f;
+}
+
+
+float cPlayer::Damaged(ST_UNIT_INFO stInfo)
+{
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
+	if (m_pState != m_aStates[E_STATE_DEATH])
+	{
+		fDamage = fDamage - m_stInfo.fDefence;
+
+		if (m_stInfo.fDefence > fDamage)
+			fDamage = 1;
+
+		if (m_pState == m_aStates[E_STATE_DEFENCE])
+		{
+			if (m_pState->GetPassedTime() <= 0.05f)
+				fDamage = 0;
+			else
+				fDamage = (int)fDamage * 0.3f;
+		}
+
+		m_stInfo.fHp -= fDamage;
+		m_bHit = true;
+
+		if (m_stInfo.fHp <= 0)
+		{
+			ChangeState(E_STATE_DEATH);
+			m_stInfo.fHp = 0;
+		}
+		return fDamage;
+	}
+	return -1;
 }

@@ -47,13 +47,15 @@ void cGameObject::Render()
 
 void cGameObject::Bounding_Update()
 {
-	m_pMesh->Bounding_Update(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
+	if (m_pMesh)
+		m_pMesh->Bounding_Update(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
 }
 
 
 void cGameObject::Bounding_Render()
 {
-	m_pMesh->Bounding_Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
+	if (m_pMesh)
+		m_pMesh->Bounding_Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
 }
 
 

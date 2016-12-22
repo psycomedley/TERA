@@ -99,6 +99,29 @@ float4 PixDie(
 	return Color;
 }
 
+float4 PixAppear(
+	float4 Diffuse : COLOR0,
+	float2 TexCoord : TEXCOORD0,
+	float3 fDiffuse : TEXCOORD1,
+	float3 fViewDir : TEXCOORD2,
+	float3 fReflection : TEXCOORD3) : COLOR0
+{
+	float3 color = saturate(Diffuse);
+	float3 reflaction = normalize(fReflection);
+	float3 viewDir = normalize(fViewDir);
+	float3 specular = 0;
+
+	if (color.x > 0)
+	{
+		specular = saturate(dot(reflaction, -viewDir));
+		specular = pow(specular, 20.0f);
+	}
+
+	float4 Color = tex2D(g_samScene, TexCoord) * float4(color + specular, 1.0f);
+	Color.a = g_fPassedTime;
+	return Color;
+}
+
 
 //////////////////////////////////////////////////////////////////
 //--------------------------------------------------------------//
@@ -173,10 +196,20 @@ technique Skinning20
 }
 
 technique SkinningDie
+{
+	pass p0
 	{
-		pass p0
-		{
-			VertexShader = (vsArray20[CurNumBones]);
-			PixelShader = compile ps_2_0 PixDie();
-		}
+		VertexShader = (vsArray20[CurNumBones]);
+		PixelShader = compile ps_2_0 PixDie();
 	}
+}
+
+technique SkinningAppear
+{
+	pass p0
+	{
+		VertexShader = (vsArray20[CurNumBones]);
+		PixelShader = compile ps_2_0 PixAppear();
+	}
+}
+

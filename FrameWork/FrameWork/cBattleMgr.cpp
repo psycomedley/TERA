@@ -38,11 +38,13 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 	{
 		if (!bDoubleHit)
 		{
+			if (monsterList[i]->GetPassedVanishTime() > 0.0f)
+				continue;
 			if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
 				float damage = monsterList[i]->Damaged(pParent->GetInfo());
 				if (damage == -1)
-					return;
+					continue;
 				m_vecHitted.push_back(monsterList[i]);
 				GETSINGLE(cTextMgr)->AddList("PlayerDamage");
 				cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
@@ -53,6 +55,8 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 		}
 		else
 		{
+			if (monsterList[i]->GetPassedVanishTime() > 0.0f)
+				continue;
 			if (GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
 				float damage = monsterList[i]->Damaged(pParent->GetInfo());
@@ -72,7 +76,7 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 
 void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool bMultieHit /*= false*/, float fDamageTime /*= 0.0f*/)
 {
-	cDynamicObj* pTarget = GETSINGLE(cObjMgr)->GetPlayer();
+	cPlayer* pTarget = (cPlayer*)GETSINGLE(cObjMgr)->GetPlayer();
 	if (!bMultieHit)
 	{
 		if (!pTarget->GetHit() && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
@@ -93,7 +97,7 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 		m_bMultiHit = bMultieHit;
 		if (m_fDamageTime > fDamageTime)
 		{
-			if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &pTarget->GetSphere()))
+			if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
 			{
 				float damage = pTarget->Damaged(pParent->GetInfo());
 				if (damage == -1)

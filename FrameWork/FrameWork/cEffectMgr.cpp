@@ -75,7 +75,7 @@ void cEffectMgr::AddEffect(string sKey, cEffect* pEffect)
 }
 
 
-void cEffectMgr::AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matRotation)
+cEffect* cEffectMgr::AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matRotation)
 {
 	for (auto iter = m_mapEffect[sKey].begin(); iter != m_mapEffect[sKey].end(); iter++)
 	{
@@ -87,7 +87,7 @@ void cEffectMgr::AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matR
 //				(*iter)->SetCurrentFrame(GetInt((*iter)->GetMaxFrame()));
 			m_listEffect.push_back(*iter);
 			(*iter)->Start();
-			return;
+			return (*iter);
 		}
 	}
 	if (m_mapEffect[sKey].size() > 0)
@@ -100,6 +100,7 @@ void cEffectMgr::AddList(string sKey, D3DXVECTOR3 vPosition, D3DXMATRIXA16& matR
 		pEffect->Start();
 		m_mapEffect[sKey].push_back(pEffect);
 		m_listEffect.push_back(pEffect);
+		return pEffect;
 	}
 }
 

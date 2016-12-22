@@ -10,6 +10,7 @@ cDynamicMesh::cDynamicMesh(char* szFolder, char* szFilename)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
+	, m_eTechnique(E_DYNA_TECH_NORMAL)
 {
 	cDynamicMesh* pDynamicdMesh = GETSINGLE(cMeshMgr)->GetDynamicMesh(szFolder, szFilename);
 
@@ -30,8 +31,6 @@ cDynamicMesh::cDynamicMesh(char* szFolder, char* szFilename)
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumTracks(),
 		pDynamicdMesh->m_pAnimController->m_pController->GetMaxNumEvents(),
 		&m_pAnimController->m_pController);
-
-	m_pEffect->SetFloat("g_fPassedTime", 0);
 }
 
 
@@ -41,6 +40,7 @@ cDynamicMesh::cDynamicMesh()
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
+	, m_eTechnique(E_DYNA_TECH_NORMAL)
 {
 }
 
@@ -106,40 +106,15 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 
 void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
-	if (KEYBOARD->IsStayKeyDown(DIK_P))
+	if (KEYBOARD->IsOnceKeyDown(DIK_P))
 	{
-		value += (GETSINGLE(cTimeMgr)->getElapsedTime() * 0.1);
-		m_pEffect->SetFloat("g_fPassedTime", value);
+		m_eTechnique = E_DYNA_TECH_DIE;
+//		value += (GETSINGLE(cTimeMgr)->getElapsedTime() * 0.1);
+//		m_pEffect->SetFloat("g_fPassedTime", value);
 	}
 	if (m_pAnimController)
 	{
 		m_pAnimController->Update();
-	//	if (m_pAnimController->m_bPlayOnce)
-	//	{
-	//		D3DXTRACK_DESC td;
-	//		m_pAnimController->m_pController->GetTrackDesc(0, &td);
-	//		if (td.Position <= m_pAnimController->m_dPeriod)
-	//			m_pAnimController->m_pController->AdvanceTime(GETSINGLE(cTimeMgr)->getElapsedTime(), NULL);
-	//	}
-	//	else
-	//		m_pAnimController->m_pController->AdvanceTime(GETSINGLE(cTimeMgr)->getElapsedTime(), NULL);
-	//}
-
-	////Blend
-	//if (m_pAnimController->m_fPassedAnimBlendTime < m_pAnimController->m_fAnimBlendTime)
-	//{
-	//	m_pAnimController->m_fPassedAnimBlendTime += GETSINGLE(cTimeMgr)->getElapsedTime(); //블랜딩 시작
-	//	if (m_pAnimController->m_fPassedAnimBlendTime > m_pAnimController->m_fAnimBlendTime) //블랜딩 시간이 끝나면
-	//	{
-	//		m_pAnimController->m_pController->SetTrackWeight(0, 1.0f); //0번의 웨이트 고정
-	//		m_pAnimController->m_pController->SetTrackEnable(1, false); //1번 트랙은 꺼줌
-	//	}
-	//	else
-	//	{
-	//		float f = m_pAnimController->m_fPassedAnimBlendTime / m_pAnimController->m_fAnimBlendTime; //비율을 구해서
-	//		m_pAnimController->m_pController->SetTrackWeight(0, f);      //0번 트랙의 가중치를 0->1로
-	//		m_pAnimController->m_pController->SetTrackWeight(1, 1 - f);  //1번 트랙의 가중치를 1->0으로
-	//	}
 	}
 
 	if (m_pRootFrame)
@@ -220,7 +195,29 @@ void cDynamicMesh::Render(ST_BONE* pBone /*= NULL*/)
 			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
 
 			// set the technique we use to draw
-			m_pEffect->SetTechnique("Skinning20");
+			switch (m_eTechnique)
+			{
+			case E_DYNA_TECH_NORMAL:
+			//	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+				m_pEffect->SetTechnique("Skinning20");
+				break;
+			case E_DYNA_TECH_DIE:
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+				g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+				g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+				g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+				m_pEffect->SetTechnique("SkinningDie");
+				break;
+			case E_DYNA_TECH_APPEAR:
+				g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+				g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+				g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+				g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+				m_pEffect->SetTechnique("SkinningAppear");
+				break;
+			default:
+				break;
+			}
 
 			UINT uiPasses, uiPass;
 
@@ -233,6 +230,7 @@ void cDynamicMesh::Render(ST_BONE* pBone /*= NULL*/)
 				m_pEffect->EndPass();
 			}
 			m_pEffect->End();
+			g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		}
 	}
 

@@ -16,6 +16,9 @@ cStaticMesh::cStaticMesh(char* szFolder, char* szFilename)
 	m_pBox = pStaticdMesh->m_pBox;
 	m_pSphere = pStaticdMesh->m_pSphere;
 
+	m_vMax = pStaticdMesh->m_vMax;
+	m_vMin = pStaticdMesh->m_vMin;
+
 	m_vecVertaxies = pStaticdMesh->m_vecVertaxies;
 	m_vecPNTVertaxies = pStaticdMesh->m_vecPNTVertaxies;
 
