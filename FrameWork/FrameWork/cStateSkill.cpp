@@ -27,9 +27,14 @@ void cStateSkill::Start()
 		aniInfo.SetInfo(E_ANI_DOUBLEATTACK, true, false);
 		m_pParent->AddAnimation(aniInfo);
 		m_nCount++;
-//		m_bNextAttack = true;
-//		aniInfo.SetInfo(E_ANI_DOUBLEATTACKR, true, false);
-//		m_pParent->AddAnimation(aniInfo);
+	}
+	else if (m_nSkillIndex == E_ANI_SKILL)
+	{
+		m_pParent->AnimationRemove();
+		aniInfo.SetInfo(E_ANI_SKILL, true, false);
+		m_pParent->AddAnimation(aniInfo);
+		aniInfo.SetInfo(E_ANI_SKILLR, true, true);
+		m_pParent->AddAnimation(aniInfo);
 	}
 
 	m_pParent->AnimationStart();
@@ -80,6 +85,17 @@ void cStateSkill::Update()
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 	}
+	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_SKILL)
+	{
+		if (m_pParent->GetCurrentAnimPosition() >= 0.27f &&
+			m_pParent->GetCurrentAnimPosition() <= 0.5f)
+			m_pParent->Move(0.5f);
+		else if (m_pParent->GetCurrentAnimPosition() >= 0.5f &&
+			m_pParent->GetCurrentAnimPosition() <= 0.68f)
+			m_pParent->Move(0.05f);
+		if (m_pParent->GetCurrentAnimPosition() >= 0.4f)
+			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+	}
 
 	if (StartEffect1)
 	{
@@ -118,6 +134,11 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			m_pParent->AnimationNext();
 		}
 		m_bNextAttack = false;
+		return;
+	}
+	else if (animInfo.nIndex == E_ANI_SKILL)
+	{
+		m_pParent->AnimationNext();
 		return;
 	}
 	End();

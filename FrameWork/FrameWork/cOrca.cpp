@@ -28,6 +28,7 @@ cOrca::cOrca(char* szFolder, char* szFilename)
 cOrca::cOrca()
 	: m_nNumClone(0)
 	, m_nLoop(1)
+	, m_fEventCameraRange(20.0f)
 {
 }
 

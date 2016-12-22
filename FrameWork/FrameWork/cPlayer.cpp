@@ -280,6 +280,15 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+	{
+		if (IsMoveAble())
+		{
+			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+			m_bIsBattle = true;
+			bControl = true;
+		}
+	}
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
 	{
@@ -297,7 +306,7 @@ void cPlayer::CheckControl()
 			{
 				if (m_nKeyDir == DIRECTION_NONE &&
 					m_pState != m_aStates[E_STATE_COMBO])
-					m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
+					m_fAngle = CAMERA->GetCamRotX();
 				ChangeState(E_STATE_COMBO);
 				m_bIsBattle = true;
 			}

@@ -237,9 +237,9 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			//else
 		//	if (m_pParent->IsMoveAble())
 			if (((cPlayer*)m_pParent)->GetKeyDir() == DIRECTION_NONE)
-				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX());
+				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->GetCamRotX());
 			else
-				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
+				m_pParent->SetAngle(GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->GetCamRotX() + ((cPlayer*)m_pParent)->GetTempAngle());
 			pController->AnimationNext();
 			m_bNextAttack = false;
 

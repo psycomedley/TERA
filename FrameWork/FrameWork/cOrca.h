@@ -13,6 +13,7 @@ private:
 
 	int				m_nNumClone;
 	SYNTHESIZE(int, m_nLoop, Loop);
+	float			m_fEventCameraRange;
 
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;

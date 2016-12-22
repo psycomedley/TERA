@@ -18,6 +18,7 @@
 #include "cUITextView.h"
 #include "cObjectTool.h"
 #include "cText.h"
+#include "cCamera.h"
 
 //임시
 
@@ -76,6 +77,7 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 
+	SetCamera();
 	SetShader();
 	SetEffect();
 	SetUI();
@@ -109,7 +111,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(20, 100, 0));
+	pPlayer->SetPosition(D3DXVECTOR3(30, 100, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -124,8 +126,8 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
-	GETSINGLE(cCameraMgr)->Setup();
-	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
+//	GETSINGLE(cCameraMgr)->Setup();
+	GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	GETSINGLE(cObjectToolMgr)->Setup();
 
@@ -172,8 +174,6 @@ HRESULT cMainGame::Setup()
 
 
 
-
-
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "그아아앗", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
 
@@ -216,6 +216,23 @@ void cMainGame::Update()
 
 	if (IsActive())
 	{
+		if (KEYBOARD->IsOnceKeyDown(DIK_F11))
+		{
+//			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetPosition() + D3DXVECTOR3(0, 0, 0);
+			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetSphere().GetCenter();
+//			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetVecTarget(&pos);
+			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetLookAt(pos);
+			GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_F12))
+			GETSINGLE(cCameraMgr)->SetCurrentCamera("MainCamera");
+
+		if (KEYBOARD->IsStayKeyDown(DIK_F10))
+		{
+			GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetCamRotY(
+				GETSINGLE(cCameraMgr)->GetCurrentCamera()->GetCamRotY() - 0.01f);
+		}
+
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 		{
 			//m_pDynamicMeshEffect->Start();
@@ -397,6 +414,22 @@ void cMainGame::Release()
 	GETSINGLE(cBattleMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
+}
+
+
+void cMainGame::SetCamera()
+{
+	cCamera* pCamera = new cCamera;
+	pCamera->Setup();
+	GETSINGLE(cCameraMgr)->AddCamera("MainCamera", pCamera);
+	GETSINGLE(cCameraMgr)->SetCurrentCamera("MainCamera");
+
+	pCamera = new cCamera;
+	pCamera->Setup();
+	pCamera->SetCamDist(-20);
+	pCamera->SetControl(false);
+
+	GETSINGLE(cCameraMgr)->AddCamera("EventCamera", pCamera);
 }
 
 //임시
