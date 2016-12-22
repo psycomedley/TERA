@@ -77,7 +77,6 @@ void cObjMgr::Render()
 		p->Render();
 		p->Bounding_Update();
 		p->Bounding_Render();
-		
 	}
 
 	/*for (auto iter = m_mapStuff.begin(); iter != m_mapStuff.end(); iter++)
@@ -139,6 +138,10 @@ cStaticObj* cObjMgr::GetStuffList(string sKey)
 	if (iter == m_mapStuff.end())
 		return NULL;
 	return iter->second;
+}
+vector<cStaticObj*>* cObjMgr::GetAllCloneStuff()
+{
+	return &m_vecCloneStuff;
 }
 vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
 {
