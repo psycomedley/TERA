@@ -20,9 +20,11 @@ public:
 
 	
 	map<string, list<cDynamicObj*>>* GetMonsterMap() { return &m_mapMonster; }
-	map<string, cStaticObj*>* GetStuffMap() { return &m_mapStuff; }
 	list<cDynamicObj*>* GetMonsterList(string sKey);
+
+	map<string, cStaticObj*>* GetStuffMap() { return &m_mapStuff; }
 	cStaticObj* GetStuffList(string sKey);
+	vector<cStaticObj*>* GetAllCloneStuff();
 
 	vector<cDynamicObj*> GetALLMonsterList();
 

@@ -5,8 +5,6 @@
 cMesh::cMesh()
 	: m_vMin(0, 0, 0)
 	, m_vMax(0, 0, 0)
-	, m_pBox(NULL)
-	, m_pSphere(NULL)
 {
 }
 
@@ -63,7 +61,15 @@ HRESULT cMesh::SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
 
 	return S_OK;
 }
+HRESULT cMesh::ReSetupBoundingBox(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
+{
+	m_vMin = vMin;
+	m_vMax = vMax;
 
+
+	if (FAILED(m_pBox->Setup(&m_vMin, &m_vMax)))
+		return E_FAIL;
+}
 
 cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*= 0*/)
 {

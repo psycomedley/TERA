@@ -44,10 +44,10 @@ void cStuff::Render()
 	D3DXMatrixRotationY(&matRy, m_fRotY);
 	D3DXMatrixRotationZ(&matRz, m_fRotZ);
 	pRot = matRx*matRy*matRz;
-	m_matWorld = m_matS * pRot * m_matT;
+	cGameObject::m_matWorld = m_matS * pRot * m_matT;
 
 
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &(cGameObject::m_matWorld));
 	((cStaticMesh*)m_pMesh)->SetIsCullMode(m_IsCullMode);
 	((cStaticMesh*)m_pMesh)->SetDwSubSetNum(m_SubSetNum);
 	cStaticObj::Render();
