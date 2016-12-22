@@ -16,6 +16,7 @@ cStateDefence::~cStateDefence()
 
 void cStateDefence::Start()
 {
+	m_fPassedTime = 0.0f;
 	//m_pDefenseEffect = new cStaticMeshEffect("Effect", "Shield.x");
 	ST_ANIMATION_INFO aniInfo(E_ANI_DEFENCE_START, true, false);
 	m_pParent->AddAnimation(aniInfo);
@@ -30,6 +31,7 @@ void cStateDefence::Start()
 
 void cStateDefence::Update()
 {
+	m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 	//if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
 	//{
 	//	m_pDefenseEffect->Render();

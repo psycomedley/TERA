@@ -76,7 +76,7 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 
 void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool bMultieHit /*= false*/, float fDamageTime /*= 0.0f*/)
 {
-	cDynamicObj* pTarget = GETSINGLE(cObjMgr)->GetPlayer();
+	cPlayer* pTarget = (cPlayer*)GETSINGLE(cObjMgr)->GetPlayer();
 	if (!bMultieHit)
 	{
 		if (!pTarget->GetHit() && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))

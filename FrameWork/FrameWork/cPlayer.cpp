@@ -409,3 +409,35 @@ void cPlayer::SetupStatus()
 	m_stInfo.fMaxDamage = 219.0f;
 	m_stInfo.fDefence = 29.0f;
 }
+
+
+float cPlayer::Damaged(ST_UNIT_INFO stInfo)
+{
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
+	if (m_pState != m_aStates[E_STATE_DEATH])
+	{
+		fDamage = fDamage - m_stInfo.fDefence;
+
+		if (m_stInfo.fDefence > fDamage)
+			fDamage = 1;
+
+		if (m_pState == m_aStates[E_STATE_DEFENCE])
+		{
+			if (m_pState->GetPassedTime() <= 0.05f)
+				fDamage = 0;
+			else
+				fDamage = (int)fDamage * 0.3f;
+		}
+
+		m_stInfo.fHp -= fDamage;
+		m_bHit = true;
+
+		if (m_stInfo.fHp <= 0)
+		{
+			ChangeState(E_STATE_DEATH);
+			m_stInfo.fHp = 0;
+		}
+		return fDamage;
+	}
+	return -1;
+}

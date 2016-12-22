@@ -5,6 +5,7 @@
 
 
 iState::iState()
+	: m_fPassedTime(0.0f)
 {
 }
 
