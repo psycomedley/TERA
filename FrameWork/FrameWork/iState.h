@@ -7,6 +7,7 @@ class iState : public iAnimationDelegate
 {
 protected:
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
+	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
 	cDynamicObj* m_pParent;
 
 //	vector<cDynamicObj*> m_vecHitted;

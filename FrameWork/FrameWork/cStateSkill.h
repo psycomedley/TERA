@@ -7,7 +7,7 @@ class cStateSkill : public iState
 private:
 	bool	m_bNextAttack;
 	int		m_nCount;
-	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
+//	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
 
 public:
 	virtual void Start() override;

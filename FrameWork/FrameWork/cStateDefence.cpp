@@ -5,7 +5,7 @@
 
 
 cStateDefence::cStateDefence()
-{
+{	
 }
 
 
@@ -19,7 +19,9 @@ void cStateDefence::Start()
 	m_fPassedTime = 0.0f;
 	//m_pDefenseEffect = new cStaticMeshEffect("Effect", "Shield.x");
 	ST_ANIMATION_INFO aniInfo(E_ANI_DEFENCE_START, true, false);
-	m_pParent->AddAnimation(aniInfo);
+	
+	if (m_nSkillIndex == -1)
+		m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_DEFENCE_LOOP, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
@@ -59,9 +61,14 @@ void cStateDefence::OnAnimationFinish(cAnimationController* pController, ST_ANIM
 {
 	if (animInfo.nIndex == E_ANI_DEFENCE_START)
 	{
-//		pController->SetAnimationIdx(3, false);
-//		pController->m_stCurrentAnimation = ST_ANIMATION_INFO(3, false, true);
 		pController->AnimationNext();
+	}
+	if (animInfo.nIndex == E_ANI_DEFENCE_HIT)
+	{
+		m_pParent->AnimationRemove();
+		ST_ANIMATION_INFO aniInfo(E_ANI_DEFENCE_LOOP, false, true);
+		m_pParent->AddAnimation(aniInfo);
+		m_pParent->AnimationStart();
 	}
 	/*if (animInfo.nIndex == 5)
 	{
