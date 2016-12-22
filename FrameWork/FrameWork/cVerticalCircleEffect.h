@@ -1,22 +1,21 @@
 #pragma once
 #include "cStaticObj.h"
-class cCircleEffect : public cStaticObj
+class cVerticalCircleEffect : public cStaticObj
 {
 private:
-	D3DXMATRIXA16 matWorld, matS, matR, matT;
+	D3DXMATRIXA16 matWorld, matS, matR, matT, matRx, matRy, matRz;
 	float m_fAngle;
 	int needWheels;
 	int nowWheels;
 	float m_fRotationSpeed;
 	bool start;
-	bool isLeft;
+	bool isFront;
 	float RealAngle;
 
-
 public:
-	cCircleEffect(char* szFolder, char* szFilename);
-	~cCircleEffect();
-	HRESULT Setup(int Wheels, float RotationSpeed, bool Left,
+	cVerticalCircleEffect(char* szFolder, char* szFilename);
+	~cVerticalCircleEffect();
+	HRESULT Setup(int Wheels, float RotationSpeed, bool Front,
 		D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle);
 	void Update();
 	void Render();

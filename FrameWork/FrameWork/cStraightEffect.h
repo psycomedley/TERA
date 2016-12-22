@@ -1,6 +1,5 @@
 #pragma once
 #include "cStaticObj.h"
-class cPlayer;
 class cStraightEffect : public cStaticObj
 {
 private:

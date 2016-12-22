@@ -420,6 +420,9 @@
     <ClInclude Include="cBattleMgr.h">
       <Filter>소스 파일\23. Battle</Filter>
     </ClInclude>
+    <ClInclude Include="cVerticalCircleEffect.h">
+      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -664,6 +667,9 @@
     </ClCompile>
     <ClCompile Include="cBattleMgr.cpp">
       <Filter>소스 파일\23. Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="cVerticalCircleEffect.cpp">
+      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

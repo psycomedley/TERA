@@ -32,3 +32,7 @@ void cSkillElectricGlobe::SetupStatus()
 {
 
 }
+
+void cSkillElectricGlobe::Update()
+{
+}
