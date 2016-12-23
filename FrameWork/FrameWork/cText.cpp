@@ -21,6 +21,9 @@ cText::cText()
 	, m_sKey("")
 	, m_bProcess(false)
 	, m_fMoveSpeed(0.0f)
+	, m_fPassedShowTime(0.0f)
+	, m_fPassedAppearTime(0.0f)
+	, m_fIncreasePerSecond(0.0f)
 {
 }
 
@@ -41,6 +44,11 @@ cText::cText(cText* pText)
 	m_fPassedAlphaTime = 0.0f;
 	m_fDecreasePerSecond = pText->m_fDecreasePerSecond;
 	m_fPassedMoveTime = 0.0f;
+	m_fPassedShowTime = 0.0f;
+	m_fShowAfterTime = pText->m_fShowAfterTime;
+	m_fPassedAppearTime = 0.0f;
+	m_fAppearTime = pText->m_fAppearTime;
+	m_fIncreasePerSecond = pText->m_fIncreasePerSecond;
 
 	m_fAlphaTime = pText->m_fAlphaTime;
 	m_dwColor = pText->m_dwColor;
@@ -60,31 +68,6 @@ cText::~cText()
 }
 
 
-//HRESULT cText::Setup(E_FONT_TYPE eType, string sKey, string sText, float fShowTime,
-//	D3DXVECTOR2 vPosition, ST_SIZE stSize,
-//	D3DCOLOR dwColor /*= XWHITE*/,
-//	int nOption /*= TEXT_NONE*/,
-//	DWORD dwFormat /*= DT_VCENTER | DT_CENTER | DT_WORDBREAK*/)
-//{
-//	m_pFont = GETSINGLE(cFontMgr)->GetFont(eType);
-//	m_eFontType = eType;
-//	m_sKey = sKey;
-//	m_sText = sText;
-//	m_fShowTime = fShowTime;
-//	m_vPosition = vPosition;
-//	m_stSize = stSize;
-//	m_dwColor = dwColor;
-//	m_nOption = nOption;
-//	m_dwFormat = dwFormat;
-//	m_fPassedTime = 0.0f;
-//
-//	m_rect = RectMakeCenter(vPosition.x, vPosition.y, stSize.fWidth, stSize.fHeight);
-//	m_renderRect = m_rect;
-//
-//	return S_OK;
-//}
-
-
 HRESULT cText::Setup(E_FONT_TYPE eType, string sKey, string sText,
 	D3DXVECTOR2 vPosition, ST_SIZE stSize,
 	D3DCOLOR dwColor /*= XWHITE*/, int nOption /*= TEXT_NONE*/,
@@ -99,6 +82,10 @@ HRESULT cText::Setup(E_FONT_TYPE eType, string sKey, string sText,
 	m_dwColor = dwColor;
 	m_nOption = nOption;
 	m_dwFormat = dwFormat;
+	m_nAlpha = m_dwColor.a * 255;
+
+	if (m_nOption & TEXT_APPEARWITHALPHA)
+		m_dwColor.a = 0;
 
 	m_rect = RectMakeCenter(vPosition.x, vPosition.y, stSize.fWidth, stSize.fHeight);
 
@@ -110,6 +97,25 @@ void cText::Update(float fPassedTime)
 {
 	if (m_bProcess)
 	{
+		if (m_nOption & TEXT_SHOWAFTERTIME)
+		{
+			if (m_fShowAfterTime >= m_fPassedShowTime)
+			{
+				m_fPassedShowTime += fPassedTime;
+				return;
+			}
+		}
+
+		if (m_nOption & TEXT_APPEARWITHALPHA)
+		{
+			if (m_fAppearTime >= m_fPassedAppearTime)
+			{
+				m_fPassedAppearTime += fPassedTime;
+				m_dwColor.a += m_fIncreasePerSecond * fPassedTime;
+				return;
+			}
+		}
+
 		if (m_nOption & TEXT_SHOWTIME)
 		{
 			m_fPassedTime += fPassedTime;
@@ -159,6 +165,9 @@ void cText::Update(float fPassedTime)
 
 void cText::Render(LPD3DXSPRITE pSprite)
 {
+	if (m_nOption & TEXT_SHOWAFTERTIME)
+		if (m_fShowAfterTime >= m_fPassedShowTime)
+			return;
 	m_pFont->DrawText(pSprite,
 		m_sText.c_str(),
 		m_sText.size(),
@@ -208,6 +217,17 @@ void cText::SetAlphaTime(float fAlphaTime)
 		m_fDecreasePerSecond = 1 / m_fAlphaTime;
 	else
 		m_fDecreasePerSecond = 0.0f;
+}
+
+
+void cText::SetAppearTime(float fAppearTime)
+{
+	m_fAppearTime = fAppearTime;
+
+	if (m_fAppearTime != 0)
+		m_fIncreasePerSecond = 1 / m_fAppearTime;
+	else
+		m_fIncreasePerSecond = 0.0f;
 }
 
 

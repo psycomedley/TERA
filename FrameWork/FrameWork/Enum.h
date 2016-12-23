@@ -12,11 +12,13 @@
 #define EFFECT_CUTTEDFRAME	(1 << 2)
 //#define EFFECT_LOOPEDFRAME	(1 << 3)
 
-#define	TEXT_NONE			0
-#define TEXT_ALPHA			(1 << 0)
-#define TEXT_SHOWTIME		(1 << 1)
-#define	TEXT_MOVE			(1 << 2)
-#define TEXT_MOVEAFTERTIME	(1 << 3)
+#define	TEXT_NONE				0
+#define TEXT_ALPHA				(1 << 0)
+#define TEXT_SHOWTIME			(1 << 1)
+#define	TEXT_MOVE				(1 << 2)
+#define TEXT_MOVEAFTERTIME		(1 << 3)
+#define TEXT_SHOWAFTERTIME		(1 << 4)
+#define TEXT_APPEARWITHALPHA	(1 << 5)
 
 #define XWHITE		D3DCOLOR_XRGB(255, 255, 255)
 #define XBLACK		D3DCOLOR_XRGB(0, 0, 0)
@@ -181,6 +183,8 @@ enum E_EFFECT_TECHNIQUE
 	E_TECH_ORCA2,
 	E_TECH_BACKATK,
 	E_TECH_MAGICARRAY,
+	E_TECH_GLOBEATK,
+	E_TECH_GLOBEATK2,
 	E_TECH_END,
 };
 

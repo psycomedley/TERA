@@ -10,27 +10,33 @@ protected:
 	ST_SIZE			m_stSize;
 
 	int				m_nOption;
-	float			m_fElapseX;						//Move Option
-	float			m_fElapseY;						//Move Option
+	float			m_fElapseX;							//Move Option
+	float			m_fElapseY;							//Move Option
 
-	float			m_fPassedAlphaTime;				//Alpha Option
+	float			m_fPassedAlphaTime;					//Alpha Option
 
-	float			m_fAlphaTime;					//Alpha Option
-	float			m_fDecreasePerSecond;			//Alpha Option
+	float			m_fAlphaTime;						//Alpha Option
+	float			m_fDecreasePerSecond;				//Alpha Option
+	float			m_fIncreasePerSecond;				//AppearWithAlphaTime Option
+	float			m_fAppearTime;						//AppearWithAlphaTime Option
 
-	float			m_fPassedMoveTime;				//MoveAfterTime Option
+	float			m_fPassedMoveTime;					//MoveAfterTime Option
+
+	float			m_fPassedShowTime;					//ShowAfterTime Option
+	float			m_fPassedAppearTime;				//AppearWithAlphaTime Option
 
 
-	SYNTHESIZE(float, m_fShowTime, ShowTime);		//ShowTime Option
+	SYNTHESIZE(float, m_fShowTime, ShowTime);			//ShowTime Option
 	SYNTHESIZE(int, m_nAlpha, Alpha);
 	SYNTHESIZE(D3DXCOLOR, m_dwColor, Color);
 	SYNTHESIZE(D3DXVECTOR2, m_vPosition, Position);
 	SYNTHESIZE(string, m_sText, Text);
 	SYNTHESIZE(string, m_sKey, Key);
 	SYNTHESIZE(bool, m_bProcess, Process);
-	SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);		//Move Option
-	SYNTHESIZE(int, m_nDirection, Direction);		//Move Option
-	SYNTHESIZE(float, m_fMoveTime, MoveTime);		//MoveAfterTime Option
+	SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);			//Move Option
+	SYNTHESIZE(int, m_nDirection, Direction);			//Move Option
+	SYNTHESIZE(float, m_fMoveTime, MoveTime);			//MoveAfterTime Option
+	SYNTHESIZE(float, m_fShowAfterTime, ShowAfterTime);	//MoveAfterTime Option
 
 public:
 	void Start();
@@ -38,6 +44,7 @@ public:
 	void ResetTime();
 	void Move();									//Move Option
 	void SetAlphaTime(float fAlphaTime);
+	void SetAppearTime(float fAppearTime);
 	void SetTextInteger(int nNum);
 	void SetTextFloat(float fNum);
 

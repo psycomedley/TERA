@@ -17,6 +17,7 @@
 cOrca::cOrca(char* szFolder, char* szFilename)
 	: m_nNumClone(0)
 	, m_nLoop(1)
+	, m_fEventCameraRange(35.0f)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 
@@ -28,7 +29,7 @@ cOrca::cOrca(char* szFolder, char* szFilename)
 cOrca::cOrca()
 	: m_nNumClone(0)
 	, m_nLoop(1)
-	, m_fEventCameraRange(20.0f)
+	, m_fEventCameraRange(35.0f)
 {
 }
 
@@ -71,7 +72,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(1, 100);
+	m_skillLongMove.SetInfo(60.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
@@ -87,7 +88,7 @@ void cOrca::SetupStatus()
 
 	m_skillHeavyAtk.SetInfo(35.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(25.0f, 100);
+	m_skillHeavyAtk2.SetInfo(10.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
@@ -169,6 +170,10 @@ void cOrca::Update()
 	if (!m_bIsBattle)
 	{
 		D3DXVECTOR3 distance = m_vPosition - GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
+		if (D3DXVec3Length(&distance) < m_fEventCameraRange)
+		{
+			GETSINGLE(cEventMgr)->Play();
+		}
 		if (D3DXVec3Length(&distance) < m_fDetectRange)
 		{
 			GETSINGLE(cUIMgr)->AddList("Orca");

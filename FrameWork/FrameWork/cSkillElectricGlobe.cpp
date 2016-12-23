@@ -9,6 +9,7 @@
 cSkillElectricGlobe::cSkillElectricGlobe()
 	: m_bActive(false)
 	, m_pEffect(NULL)
+	, m_fPassedTime(0.0f)
 {
 }
 
@@ -33,9 +34,24 @@ void cSkillElectricGlobe::Update()
 	{
 		cBoundingSphere sphere;
 		sphere.SetCenter(m_vPosition);
-		sphere.SetRadius(3.0f);
+		sphere.SetRadius(5.0f);
 
-		GETSINGLE(cBattleMgr)->EnemyDamage(this, sphere, true, 1.5f);
+
+		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+		if (m_fPassedTime >= 2.5f)
+		{
+			D3DXMATRIXA16 matR, matI;
+			D3DXMatrixRotationX(&matR, D3DX_PI / 2);
+			D3DXMatrixIdentity(&matI);
+			D3DXVECTOR3 vec = m_pEffect->GetPosition();
+
+			vec.y = m_vPosition.y;
+
+			GETSINGLE(cBattleMgr)->EnemyDamage(this, sphere, true);
+			GETSINGLE(cEffectMgr)->AddList("GlobeAtk", vec, matR);
+		//	GETSINGLE(cEffectMgr)->AddList("GlobeAtk2", vec, matI);
+			m_fPassedTime -= 2.5f;
+		}
 	}
 }
 

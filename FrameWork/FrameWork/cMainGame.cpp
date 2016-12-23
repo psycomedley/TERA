@@ -204,6 +204,8 @@ void cMainGame::Update()
 		GETSINGLE(cBattleMgr)->Update();
 
 		GETSINGLE(cUIMgr)->Update();
+
+		GETSINGLE(cEventMgr)->Update();
 	}
 
 	if (KEYBOARD->IsToggleKey(VK_F1))
@@ -246,11 +248,6 @@ void cMainGame::Update()
 			{
 				m_pEffect4->Start();
 			}
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-		{
-			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
-			((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
 		}
 		//	char szStr[16] = { '\0', };
 		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
@@ -352,16 +349,6 @@ void cMainGame::Render()
 
 
 
-	/*if (m_pPlayer)
-	m_pPlayer->UpdateAndRender();*/
-	//	m_pPlayer->Bounding_Render();
-
-	//if (m_pBoss)
-	//{
-	//	m_pBoss->UpdateAndRender();
-//	//	m_pBoss->Bounding_Render();
-	//}
-
 	//if (m_pCircleEffect)
 	//{
 	//	m_pCircleEffect->Render();
@@ -426,7 +413,7 @@ void cMainGame::SetCamera()
 
 	pCamera = new cCamera;
 	pCamera->Setup();
-	pCamera->SetCamDist(-20);
+	pCamera->SetCamDist(-30);
 	pCamera->SetControl(false);
 
 	GETSINGLE(cCameraMgr)->AddCamera("EventCamera", pCamera);
@@ -574,6 +561,22 @@ void cMainGame::SetUI()
 	//	m_pUIPlayerHp = pUI;
 	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
 
+
+
+	////임시
+	//pSprite;
+	//D3DXCreateSprite(g_pD3DDevice, &pSprite);
+	//cUIImageView* p = new cUIImageView;
+	////	m_pUIImage->SetSize(ST_SIZE(1, 1));
+	//p->SetTexture("UI/ComboCounter_I3.tga", 1, 1);
+	//p->SetCurrentFrame(0);
+	//p->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
+
+	//p->SetSprite(pSprite);
+
+	//GETSINGLE(cUIMgr)->AddUI("p", p);
+	//GETSINGLE(cUIMgr)->AddList("p");
+
 	SAFE_RELEASE(pSprite);
 }
 
@@ -696,4 +699,41 @@ void cMainGame::SetEffect()
 	pEffect->SetName("MagicArray");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+
+	//구체 공격
+	pEffect = new cEffect;
+	pEffect->Setup(150, 150, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
+	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
+	pEffect->AddTechList(E_TECH_GLOBEATK);
+//	pEffect->SetTechnique(E_TECH_ORCA2);
+
+	//m_pEffect2->SetAngle(D3DX_PI / 2);
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+
+	pEffect->SetLoop(false);
+	pEffect->SetRemoveTime(2);
+	pEffect->SetName("GlobeAtk");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+
+//	//구체 공격2
+//	pEffect = new cEffect;
+//	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_CUTTEDFRAME /*| EFFECT_LOOPEDFRAME*/);
+//	pEffect->SetTexture("Effect/D_MOVArchaLightBig001_Emis.tga", E_TEXTURE1);
+//	pEffect->SetTotalFrame(8, 4, 32);
+//	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
+//	pEffect->AddTechList(E_TECH_GLOBEATK2);
+//	pEffect->SetNextTime(0.03);
+//	pEffect->SetLoop(false);
+//	pEffect->SetRemoveTime(3.0f);
+////	pEffect->SetLoopTimes(20);
+//	pEffect->SetName("GlobeAtk2");
+//
+//	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 }

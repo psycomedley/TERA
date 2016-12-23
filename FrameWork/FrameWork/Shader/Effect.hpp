@@ -238,6 +238,17 @@ float4 ps_orcaSkill1_2(VS_OUTPUT Input) : COLOR
 	return base;
 }
 
+float4 ps_asdf(VS_OUTPUT Input) : COLOR
+{
+	float4 base = tex2D(DiffuseSampler, Input.mUV);
+
+	//	base.r = base.r * 0.5;
+	//	base.g = base.g * 0.25;
+	//	base.b = base.b * 4;
+
+	return base;
+}
+
 float4 ps_orcaSkill1_Remove(VS_OUTPUT Input) : COLOR
 {
 	float2 uv = float2(Input.mUV.x + g_fPassedTime * 0.2, Input.mUV.y);
@@ -382,6 +393,30 @@ float4 ps_magicArrayShader(VS_OUTPUT Input) : COLOR
 		Output.b = base.b * 2;
 		Output.a = base.a;
 	}
+
+	return Output;
+}
+
+//--------------------------------------------------------------//
+// Globe Attack Shader
+//--------------------------------------------------------------//
+
+float4 ps_globeAtk(VS_OUTPUT Input) : COLOR
+{
+	float4 base2 = tex2D(DiffuseSampler2, Input.mUV);
+	float4 base;
+	float4 Output;
+	if (g_fPassedTime >= 0.5)
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * 10 + float2(0.5, 0.5));
+		Output.rgb = base2 - (g_fPassedTime - 0.5);
+	}
+	else
+	{
+		base = tex2D(DiffuseSampler, (Input.mUV - float2(0.5, 0.5)) * (34 - g_fPassedTime * 48) + float2(0.5, 0.5));
+		Output.rgb = base2;
+	}
+	Output.a = base;
 
 	return Output;
 }
@@ -538,6 +573,30 @@ technique MagicArray
 	{
 		VertexShader = compile vs_2_0 vs_Rotation();
 		PixelShader = compile ps_2_0 ps_magicArrayShader();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for GlobeAtk
+//--------------------------------------------------------------//
+technique GlobeAtk
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_main();
+		PixelShader = compile ps_2_0 ps_globeAtk();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for GlobeAtk
+//--------------------------------------------------------------//
+technique GlobeAtk2
+{
+	pass Pass_0
+	{
+		VertexShader = compile vs_2_0 vs_FrameAdd();
+		PixelShader = compile ps_2_0 ps_asdf();
 	}
 }
 
