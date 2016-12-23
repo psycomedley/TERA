@@ -19,6 +19,7 @@
 #include "cObjectTool.h"
 #include "cText.h"
 #include "cCamera.h"
+#include "cGuardian.h"
 
 //임시
 
@@ -119,6 +120,17 @@ HRESULT cMainGame::Setup()
 	pBoss->SetRevision(matR);
 	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
+
+	
+	//임시//
+	cDynamicObj* pMonster = new cGuardian("Monster", "Guardian.X");
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pMonster->SetRevision(matR);
+	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
+	pMonster->SetPosition(D3DXVECTOR3(30, 0, 20));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
+	////////
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
 	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));

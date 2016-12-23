@@ -438,6 +438,12 @@
     <ClInclude Include="cEvent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="cGuardian.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cGardener.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -696,6 +702,12 @@
       <Filter>소스 파일\14. State</Filter>
     </ClCompile>
     <ClCompile Include="cEvent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cGuardian.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cGardener.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
