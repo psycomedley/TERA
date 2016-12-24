@@ -9,6 +9,8 @@ private:
 	SYNTHESIZE(D3DXVECTOR3, m_vMin, vMin);
 	SYNTHESIZE(D3DXVECTOR3, m_vMax, vMax);
 
+	D3DXVECTOR3 m_vOrgMin;
+	D3DXVECTOR3 m_vOrgMax;
 	ST_OBB m_stObb;
 	//D3DXVECTOR3 m_vOrgCenterPos;
 	//D3DXVECTOR3 m_vOrgAxisDir[3];

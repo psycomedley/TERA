@@ -259,6 +259,7 @@ void cObjectTool::LoadInfoStuff()
 void cObjectTool::CollisionObjWithPlayer()
 {
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	
 
 	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
 	cBoundingBox* playerBox = &(pPlayer->GetBox());
@@ -266,14 +267,15 @@ void cObjectTool::CollisionObjWithPlayer()
 	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
 	{
 		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
-			if (GETSINGLE(cCollision)->CollisionOBB(playerBox, stuffBox))
-			{
-				int a = 0;
-			}
-			else
-			{
-				int b = 0;
-			}
+		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
+		{
+			D3DXVECTOR3 PlayerPos = pPlayer->GetPosition();
+			pPlayer->SetPosition(D3DXVECTOR3(PlayerPos.x+1, PlayerPos.y,PlayerPos.x));
+		}
+		else
+		{
+			int b = 0;
+		}
 
 	}
 

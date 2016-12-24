@@ -24,7 +24,7 @@ HRESULT cBoundingBox::Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax)
 	m_vMin = *pMin;
 	m_vMax = *pMax;
 
-	m_stObb.vOrgCenterPos = (m_vMin + m_vMax) / 2.f;
+	m_stObb.vOrgCenterPos = (m_vMin + m_vMax) / 2.0f;
 
 	m_stObb.vOrgAxisDir[0] = D3DXVECTOR3(1, 0, 0);
 	m_stObb.vOrgAxisDir[1] = D3DXVECTOR3(0, 1, 0);

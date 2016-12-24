@@ -162,6 +162,7 @@ struct ST_OBB
 
 	D3DXVECTOR3 vCenterPos;		// 상자 중앙의 좌표
 	D3DXVECTOR3 vAxisDir[3];		// 상자에 평행한 세 축의 단위벡터
+
 	float		fAxisLen[3];		// 상자의 평행한 세 축의 길이 fAxisLen[n]은 vAxisDir[n]에 각각 대응한다.
 	float		fAxisHalfLen[3];
 };

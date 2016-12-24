@@ -131,12 +131,12 @@ HRESULT cMainGame::Setup()
 	pMonster->SetPosition(D3DXVECTOR3(30, 0, 20));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
-	pMonster = new cGardener("Monster", "Gardener.X");
+	/*pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
 	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);*/
 	////////
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");

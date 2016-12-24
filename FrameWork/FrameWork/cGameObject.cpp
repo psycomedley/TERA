@@ -97,3 +97,7 @@ cBoundingSphere cGameObject::GetSphere()
 {
 	return m_pMesh->GetSphere(m_vPosition, m_vScale.x);
 }
+void cGameObject::SetMinMax()
+{
+	m_pMesh->SetMinMax(m_vPosition, m_vScale.x, m_fAngle + m_fRevisionAngle);
+}

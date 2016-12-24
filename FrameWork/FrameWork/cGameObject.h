@@ -40,7 +40,7 @@ public:
 //	void SetPosition(D3DXVECTOR3 vPos);
 	void SetBoundingPos();
 	bool IsMesh() { if (m_pMesh) return true; return false; }
-
+	void SetMinMax();
 public:
 	virtual void Update();
 	virtual void Render();
