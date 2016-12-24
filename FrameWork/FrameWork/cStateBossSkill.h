@@ -5,7 +5,7 @@ class cDynamicObj;
 class cStateBossSkill : public iState
 {
 private:
-	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
+//	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
 	SYNTHESIZE(int, m_nLoop, Loop);
 	int m_nEffect;
 

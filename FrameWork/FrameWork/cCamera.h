@@ -4,12 +4,12 @@ class cGameObject;
 class cCamera
 {
 private:
-	D3DXVECTOR3		m_vEye;
-	D3DXVECTOR3		m_vLookAt;
-	D3DXVECTOR3		m_vUp;
+	SYNTHESIZE(D3DXVECTOR3, m_vEye, Eye);
+	SYNTHESIZE(D3DXVECTOR3, m_vLookAt, LookAt);
+	SYNTHESIZE(D3DXVECTOR3, m_vUp, Up);
 
-	float			m_fCamDist;
-	float			m_fPrevDist;
+	SYNTHESIZE(float, m_fCamDist, CamDist);
+	SYNTHESIZE(float, m_fPrevDist, PrevDist);
 	SYNTHESIZE(float, m_fCamRotX, CamRotX);
 	SYNTHESIZE(float, m_fCamRotY, CamRotY);
 

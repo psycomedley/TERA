@@ -7,9 +7,9 @@ class cGameObject : public cObject
 protected:
 	SYNTHESIZE(cMesh*, m_pMesh, pMesh);
 	D3DXVECTOR3 m_vScale;
-	D3DXVECTOR3	m_vPrevPosition;
+	SYNTHESIZE(D3DXVECTOR3, m_vPrevPosition, PrevPosition);
 
-	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vPosition, Position);
+	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vCameraFocus, CameraFocus);
 	SYNTHESIZE(float, m_fAngle, Angle);
 //	SYNTHESIZE(D3DXVECTOR3, m_vScale, Scale);
@@ -27,6 +27,7 @@ protected:
 
 public:
 	void Move(float fSpeed);
+	void Move(D3DXVECTOR3 vec);
 
 public:
 	virtual cBoundingSphere GetSphere();

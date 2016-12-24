@@ -7,6 +7,7 @@ class cSkillElectricGlobe : public cMonster
 private:
 	SYNTHESIZE(bool, m_bActive, Active);
 	SYNTHESIZE(cEffect*, m_pEffect, Effect);
+	float m_fPassedTime;
 
 public:
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) override;

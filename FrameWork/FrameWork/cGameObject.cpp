@@ -81,6 +81,12 @@ void cGameObject::Move(float fSpeed)
 }
 
 
+void cGameObject::Move(D3DXVECTOR3 vec)
+{
+	m_vPosition = m_vPosition + vec;
+}
+
+
 cBoundingBox cGameObject::GetBox()
 {
 	return m_pMesh->GetBox(m_vPosition, m_vScale.x, m_fAngle + m_fRevisionAngle);

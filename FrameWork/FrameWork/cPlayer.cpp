@@ -10,6 +10,7 @@
 #include "cStateCombo.h"
 #include "cStateSkill.h"
 #include "cStateDeath.h"
+#include "cStateReaction.h"
 #include "cAnimationController.h"
 #include "cCamera.h"
 #include "cUITextView.h"
@@ -164,6 +165,8 @@ void cPlayer::SetupState()
 	m_aStates[E_STATE_SKILL]->SetParent(this);
 	m_aStates[E_STATE_DEATH] = new cStateDeath;
 	m_aStates[E_STATE_DEATH]->SetParent(this);
+	m_aStates[E_STATE_REACTION] = new cStateReaction;
+	m_aStates[E_STATE_REACTION]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 
@@ -280,6 +283,26 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
+//	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+//	{
+//		if (IsMoveAble())
+//		{
+//			ChangeState(E_STATE_SKILL);
+////			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+//			m_bIsBattle = true;
+//			bControl = true;
+//		}
+//	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4))
+	{
+		if (IsMoveAble())
+		{
+			ChangeState(E_STATE_REACTION);
+			//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+			m_bIsBattle = true;
+			bControl = true;
+		}
+	}
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
 	{
@@ -297,7 +320,7 @@ void cPlayer::CheckControl()
 			{
 				if (m_nKeyDir == DIRECTION_NONE &&
 					m_pState != m_aStates[E_STATE_COMBO])
-					m_fAngle = GETSINGLE(cCameraMgr)->GetCamera()->GetCamRotX();
+					m_fAngle = CAMERA->GetCamRotX();
 				ChangeState(E_STATE_COMBO);
 				m_bIsBattle = true;
 			}
@@ -340,14 +363,14 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-	//	m_pRightWeapon->Bounding_Render();
+		m_pRightWeapon->Bounding_Render();
 	//	m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-	//	m_pLeftWeapon->Bounding_Render();
+		m_pLeftWeapon->Bounding_Render();
 	}
 }
 

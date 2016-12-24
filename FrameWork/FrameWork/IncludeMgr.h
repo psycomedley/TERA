@@ -17,3 +17,4 @@
 #include "cSoundMgr.h"
 #include "cObjectToolMgr.h"
 #include "cBattleMgr.h"
+#include "cEventMgr.h"

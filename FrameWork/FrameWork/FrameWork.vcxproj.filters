@@ -118,14 +118,8 @@
     <Filter Include="소스 파일\18. Font">
       <UniqueIdentifier>{6a5e12ea-3a18-4216-a5c1-73d2f8aaa515}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\19.Effect">
-      <UniqueIdentifier>{5b8ad642-bad7-4002-8720-0d67f075296e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\20. UI">
       <UniqueIdentifier>{c4c0094e-1e50-4690-8e69-73e28a3d62a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\19.Effect\CircleEffect">
-      <UniqueIdentifier>{8ab310ab-fc76-4d00-832b-32f8c17dbb59}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\17. Shader\Test">
       <UniqueIdentifier>{ab043413-e26b-4dfd-97fb-ebd5079bf236}</UniqueIdentifier>
@@ -136,12 +130,6 @@
     <Filter Include="소스 파일\21. ObjecTool">
       <UniqueIdentifier>{3f2f415a-00ff-4a7f-ac70-4b34efb7c76d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\19.Effect\RushEffect">
-      <UniqueIdentifier>{ffeee2b2-3580-44a2-8ec1-4d784e8400df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\19.Effect\StraightEffect">
-      <UniqueIdentifier>{a5b76a47-e5d1-465c-a486-aa0aa3842ad5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\22. Sound">
       <UniqueIdentifier>{cac1ea04-89f9-4486-8b24-053ec26abfb9}</UniqueIdentifier>
     </Filter>
@@ -150,6 +138,21 @@
     </Filter>
     <Filter Include="소스 파일\23. Battle">
       <UniqueIdentifier>{0adbcb33-3926-4806-a442-1bff178bc610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\24. Event">
+      <UniqueIdentifier>{8a720d43-4d69-41c8-b54b-d9409515ea8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\19. Effect">
+      <UniqueIdentifier>{5b8ad642-bad7-4002-8720-0d67f075296e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\19. Effect\CircleEffect">
+      <UniqueIdentifier>{8ab310ab-fc76-4d00-832b-32f8c17dbb59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\19. Effect\RushEffect">
+      <UniqueIdentifier>{ffeee2b2-3580-44a2-8ec1-4d784e8400df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\19. Effect\StraightEffect">
+      <UniqueIdentifier>{a5b76a47-e5d1-465c-a486-aa0aa3842ad5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -343,10 +346,10 @@
       <Filter>소스 파일\18. Font</Filter>
     </ClInclude>
     <ClInclude Include="cEffect.h">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClInclude>
     <ClInclude Include="cEffectMgr.h">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClInclude>
     <ClInclude Include="cCameraMgr.h">
       <Filter>소스 파일\04. Camera</Filter>
@@ -355,13 +358,13 @@
       <Filter>소스 파일\18. Font</Filter>
     </ClInclude>
     <ClInclude Include="cStaticMeshEffect.h">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClInclude>
     <ClInclude Include="cDynamicMeshEffect.h">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClInclude>
     <ClInclude Include="cDynamicEffectObj.h">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClInclude>
     <ClInclude Include="cUIMgr.h">
       <Filter>소스 파일\20. UI</Filter>
@@ -379,7 +382,7 @@
       <Filter>소스 파일\20. UI</Filter>
     </ClInclude>
     <ClInclude Include="cCircleEffect.h">
-      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+      <Filter>소스 파일\19. Effect\CircleEffect</Filter>
     </ClInclude>
     <ClInclude Include="cText.h">
       <Filter>소스 파일\18. Font</Filter>
@@ -400,10 +403,10 @@
       <Filter>소스 파일\21. ObjecTool</Filter>
     </ClInclude>
     <ClInclude Include="cRushEffect.h">
-      <Filter>소스 파일\19.Effect\RushEffect</Filter>
+      <Filter>소스 파일\19. Effect\RushEffect</Filter>
     </ClInclude>
     <ClInclude Include="cStraightEffect.h">
-      <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+      <Filter>소스 파일\19. Effect\StraightEffect</Filter>
     </ClInclude>
     <ClInclude Include="cObjectToolMgr.h">
       <Filter>소스 파일\21. ObjecTool</Filter>
@@ -421,10 +424,34 @@
       <Filter>소스 파일\16. Monster</Filter>
     </ClInclude>
     <ClInclude Include="cVerticalCircleEffect.h">
-      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+      <Filter>소스 파일\19. Effect\CircleEffect</Filter>
     </ClInclude>
     <ClInclude Include="cStateDefenceHit.h">
       <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateReaction.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cGuardian.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cGardener.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cEvent.h">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cEventMgr.h">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateMonsterSkill.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateMonsterSkill2.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateHit.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -603,10 +630,10 @@
       <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
     <ClCompile Include="cEffect.cpp">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClCompile>
     <ClCompile Include="cEffectMgr.cpp">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClCompile>
     <ClCompile Include="cCameraMgr.cpp">
       <Filter>소스 파일\04. Camera</Filter>
@@ -615,13 +642,13 @@
       <Filter>소스 파일\18. Font</Filter>
     </ClCompile>
     <ClCompile Include="cStaticMeshEffect.cpp">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClCompile>
     <ClCompile Include="cDynamicMeshEffect.cpp">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClCompile>
     <ClCompile Include="cDynamicEffectObj.cpp">
-      <Filter>소스 파일\19.Effect</Filter>
+      <Filter>소스 파일\19. Effect</Filter>
     </ClCompile>
     <ClCompile Include="cUIMgr.cpp">
       <Filter>소스 파일\20. UI</Filter>
@@ -636,7 +663,7 @@
       <Filter>소스 파일\20. UI</Filter>
     </ClCompile>
     <ClCompile Include="cCircleEffect.cpp">
-      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+      <Filter>소스 파일\19. Effect\CircleEffect</Filter>
     </ClCompile>
     <ClCompile Include="cText.cpp">
       <Filter>소스 파일\18. Font</Filter>
@@ -654,10 +681,10 @@
       <Filter>소스 파일\21. ObjecTool</Filter>
     </ClCompile>
     <ClCompile Include="cRushEffect.cpp">
-      <Filter>소스 파일\19.Effect\RushEffect</Filter>
+      <Filter>소스 파일\19. Effect\RushEffect</Filter>
     </ClCompile>
     <ClCompile Include="cStraightEffect.cpp">
-      <Filter>소스 파일\19.Effect\StraightEffect</Filter>
+      <Filter>소스 파일\19. Effect\StraightEffect</Filter>
     </ClCompile>
     <ClCompile Include="cObjectToolMgr.cpp">
       <Filter>소스 파일\21. ObjecTool</Filter>
@@ -672,10 +699,34 @@
       <Filter>소스 파일\16. Monster</Filter>
     </ClCompile>
     <ClCompile Include="cVerticalCircleEffect.cpp">
-      <Filter>소스 파일\19.Effect\CircleEffect</Filter>
+      <Filter>소스 파일\19. Effect\CircleEffect</Filter>
     </ClCompile>
     <ClCompile Include="cStateDefenceHit.cpp">
       <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateReaction.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cGuardian.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cGardener.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cEventMgr.cpp">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cEvent.cpp">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateMonsterSkill.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateMonsterSkill2.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateHit.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

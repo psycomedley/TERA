@@ -7,8 +7,7 @@
 
 
 cStateBossSkill::cStateBossSkill()
-	: m_nSkillIndex(-1)
-	, m_nEffect(0)
+	: m_nEffect(0)
 	, m_nLoop(1)
 {
 }
@@ -88,26 +87,6 @@ void cStateBossSkill::Update()
 			if (m_pParent->GetCurrentAnimPosition() >= 0.51f)
 			{
 				AddGlobe(D3DX_PI / 3 * 2);
-				//float angle = m_pParent->GetAngle();
-				//D3DXVECTOR3 vec;
-				//vec = D3DXVECTOR3(-sinf(angle + D3DX_PI / 3 * 2), 0.5f, -cosf(angle + D3DX_PI / 3 * 2)) * 6;
-				//D3DXMATRIXA16 matR;
-				//D3DXMatrixIdentity(&matR);
-				//GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				//
-				//cDynamicObj* globe = GETSINGLE(cObjMgr)->GetMonsterPool("Globe");
-				//if (globe == NULL)
-				//{
-				//	cSkillElectricGlobe* globe = new cSkillElectricGlobe;
-				//	globe->Setup();
-				//}
-				//else
-				//{
-				//	((cSkillElectricGlobe*)globe)->SetHp(((cSkillElectricGlobe*)globe)->GetMaxHp());
-				//}
-				//globe->SetPosition(m_pParent->GetPosition() + vec);
-				//GETSINGLE(cObjMgr)->AddMonster("Globe", globe);
-				//m_nEffect++;
 			}
 			break;
 		}
@@ -116,13 +95,6 @@ void cStateBossSkill::Update()
 			if (m_pParent->GetCurrentAnimPosition() >= 0.58f)
 			{
 				AddGlobe(D3DX_PI / 3 * 4);
-				/*float angle = m_pParent->GetAngle();
-				D3DXVECTOR3 vec;
-				vec = D3DXVECTOR3(-sinf(angle + D3DX_PI / 3 * 4), 0.5f, -cosf(angle + D3DX_PI / 3 * 4)) * 6;
-				D3DXMATRIXA16 matR;
-				D3DXMatrixIdentity(&matR);
-				GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				m_nEffect++;*/
 			}
 			break;
 		}
@@ -131,13 +103,6 @@ void cStateBossSkill::Update()
 			if (m_pParent->GetCurrentAnimPosition() >= 0.65f)
 			{
 				AddGlobe(0.0f);
-				//float angle = m_pParent->GetAngle();
-				//D3DXVECTOR3 vec;
-				//vec = D3DXVECTOR3(-sinf(angle), 0.5f, -cosf(angle)) * 6;
-				//D3DXMATRIXA16 matR;
-				//D3DXMatrixIdentity(&matR);
-				//GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);
-				//m_nEffect++;
 			}
 			break;
 		}
