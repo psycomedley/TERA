@@ -10,6 +10,9 @@ cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	SetBoundingPos();
+
+	for (int i = 0; i < E_STATE_END; i++)
+		m_aStates[i] = NULL;
 }
 
 
@@ -17,6 +20,8 @@ cDynamicObj::cDynamicObj()
 	: m_bHit(false)
 	, m_fPassedVanishTime(0.0f)
 {
+	for (int i = 0; i < E_STATE_END; i++)
+		m_aStates[i] = NULL;
 }
 
 
@@ -53,6 +58,13 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 
 		m_matWorld = mat;
 	}
+	/*if (((cDynamicMesh*)m_pMesh)->GetAnimController()->GetCurrentAnimInfo().nIndex == E_ANI_DEATHWAIT)
+	{
+		((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_DIE);
+		m_fPassedVanishTime += GETSINGLE(cTimeMgr)->getElapsedTime() * 0.5f;
+		((cDynamicMesh*)m_pMesh)->GetEffect()->SetFloat("g_fPassedTime", m_fPassedVanishTime);
+	}*/
+
 	if (((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_DIE)
 	{
 		m_fPassedVanishTime += GETSINGLE(cTimeMgr)->getElapsedTime() * 0.5f;
@@ -125,6 +137,14 @@ bool cDynamicObj::IsTargetCollision()
 }
 
 
+bool cDynamicObj::IsTargetBoxCollision()
+{
+	if (GETSINGLE(cCollision)->Collision(&m_pTarget->GetBox(), &GetBox()))
+		return true;
+	return false;
+}
+
+
 void cDynamicObj::LookTarget()
 {
 	if (m_pTarget)
@@ -150,7 +170,7 @@ float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 
 		if (m_stInfo.fDefence > fDamage)
 			fDamage = 1;
-
+		
 		m_stInfo.fHp -= fDamage;
 		m_bHit = true;
 
@@ -159,6 +179,12 @@ float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 			ChangeState(E_STATE_DEATH);
 			m_stInfo.fHp = 0;
 		}
+		else
+		{
+			if (IsMoveAble() && m_aStates[E_STATE_HIT])
+				ChangeState(E_STATE_HIT);
+		}
+
 		return fDamage;
 	}
 	return -1;

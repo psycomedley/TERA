@@ -142,7 +142,10 @@
     <ClInclude Include="cStateDeath.h" />
     <ClInclude Include="cStateDefence.h" />
     <ClInclude Include="cStateDefenceHit.h" />
+    <ClInclude Include="cStateHit.h" />
     <ClInclude Include="cStateIdle.h" />
+    <ClInclude Include="cStateMonsterSkill.h" />
+    <ClInclude Include="cStateMonsterSkill2.h" />
     <ClInclude Include="cStateReaction.h" />
     <ClInclude Include="cStateRun.h" />
     <ClInclude Include="cStateSkill.h" />
@@ -241,7 +244,10 @@
     <ClCompile Include="cStateDeath.cpp" />
     <ClCompile Include="cStateDefence.cpp" />
     <ClCompile Include="cStateDefenceHit.cpp" />
+    <ClCompile Include="cStateHit.cpp" />
     <ClCompile Include="cStateIdle.cpp" />
+    <ClCompile Include="cStateMonsterSkill.cpp" />
+    <ClCompile Include="cStateMonsterSkill2.cpp" />
     <ClCompile Include="cStateReaction.cpp" />
     <ClCompile Include="cStateRun.cpp" />
     <ClCompile Include="cStateSkill.cpp" />

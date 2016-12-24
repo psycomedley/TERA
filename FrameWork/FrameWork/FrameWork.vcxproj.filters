@@ -429,19 +429,28 @@
     <ClInclude Include="cStateDefenceHit.h">
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
-    <ClInclude Include="cEventMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="cStateReaction.h">
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
-    <ClInclude Include="cEvent.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="cGuardian.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\16. Monster</Filter>
     </ClInclude>
     <ClInclude Include="cGardener.h">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="cEvent.h">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cEventMgr.h">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateMonsterSkill.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateMonsterSkill2.h">
+      <Filter>소스 파일\14. State</Filter>
+    </ClInclude>
+    <ClInclude Include="cStateHit.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -695,19 +704,28 @@
     <ClCompile Include="cStateDefenceHit.cpp">
       <Filter>소스 파일\14. State</Filter>
     </ClCompile>
-    <ClCompile Include="cEventMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="cStateReaction.cpp">
       <Filter>소스 파일\14. State</Filter>
     </ClCompile>
-    <ClCompile Include="cEvent.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="cGuardian.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\16. Monster</Filter>
     </ClCompile>
     <ClCompile Include="cGardener.cpp">
+      <Filter>소스 파일\16. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="cEventMgr.cpp">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cEvent.cpp">
+      <Filter>소스 파일\24. Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateMonsterSkill.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateMonsterSkill2.cpp">
+      <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cStateHit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

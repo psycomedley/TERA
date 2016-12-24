@@ -20,6 +20,7 @@
 #include "cText.h"
 #include "cCamera.h"
 #include "cGuardian.h"
+#include "cGardener.h"
 
 //юс╫ц
 
@@ -87,7 +88,7 @@ HRESULT cMainGame::Setup()
 	cText* pText = new cText;
 	pText->Setup(E_FONT_DAMAGE, "PlayerDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XYELLOW,
 		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
-	pText->SetShowTime(2.0f);
+	pText->SetShowTime(1.0f);
 	pText->SetAlphaTime(0.5f);
 	pText->SetMoveSpeed(0.5f);
 	pText->SetDirection(DIRECTION_UP);
@@ -127,9 +128,15 @@ HRESULT cMainGame::Setup()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
 	pMonster->SetPosition(D3DXVECTOR3(30, 0, 20));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
+
+	pMonster = new cGardener("Monster", "Gardener.X");
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pMonster->SetRevision(matR);
+	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
+	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 	////////
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");

@@ -35,7 +35,7 @@ void cActionMoveToAttack::Update()
 		return;
 	}
 
-	if (m_pTarget->IsTargetCollision())
+	if (m_pTarget->IsTargetBoxCollision())
 	{
 		m_pTarget->Attack();
 		m_vTo = m_pTarget->GetPosition();

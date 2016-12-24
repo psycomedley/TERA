@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "cGuardian.h"
 #include "cDynamicObj.h"
+#include "cStateIdle.h"
 #include "cStateWait.h"
 #include "cStateRun.h"
 #include "cStateDeath.h"
-#include "cStateBossSkill.h"
+#include "cStateHit.h"
+#include "cStateMonsterSkill.h"
 #include "cActionMoveToAttack.h"
 
 cGuardian::cGuardian(char* szFolder, char* szFilename)
@@ -18,6 +20,8 @@ cGuardian::cGuardian(char* szFolder, char* szFilename)
 
 cGuardian::cGuardian()
 {
+	SetupState();
+	SetupStatus();
 }
 
 
@@ -30,14 +34,18 @@ cGuardian::~cGuardian()
 
 void cGuardian::SetupState()
 {
+	m_aStates[E_STATE_IDLE] = new cStateIdle;
+	m_aStates[E_STATE_IDLE]->SetParent(this);
 	m_aStates[E_STATE_WAIT] = new cStateWait;
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_RUN] = new cStateRun;
 	m_aStates[E_STATE_RUN]->SetParent(this);
 	m_aStates[E_STATE_DEATH] = new cStateDeath;
 	m_aStates[E_STATE_DEATH]->SetParent(this);
-	m_aStates[E_STATE_SKILL] = new cStateBossSkill;
+	m_aStates[E_STATE_SKILL] = new cStateMonsterSkill;
 	m_aStates[E_STATE_SKILL]->SetParent(this);
+	m_aStates[E_STATE_HIT] = new cStateHit;
+	m_aStates[E_STATE_HIT]->SetParent(this);
 	ChangeState(E_STATE_IDLE);
 }
 
@@ -46,7 +54,7 @@ void cGuardian::SetupStatus()
 {
 	m_stInfo.sName = "Guardian";
 	
-	m_stInfo.fMaxHp = 1000;
+	m_stInfo.fMaxHp = 100000;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -58,6 +66,7 @@ void cGuardian::SetupStatus()
 	m_fDetectRange = 15.0f;
 
 	m_skillRush.SetInfo(10.0f, 100);
+	m_skillAttack.SetInfo(3.0f, 50);
 }
 
 
@@ -71,19 +80,54 @@ void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat)
 
 void cGuardian::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 {
+	if (m_pState)
+		if (m_pState == pState)
+			return;
 
+	iState* pPrevState = m_pState;
+	m_pState = pState;
+
+	if (pPrevState)
+		pPrevState->End();
+
+	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
+
+	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
+		((cStateMonsterSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+	}
+
+	m_pState->Start();
 }
 
 
 void cGuardian::ChangeState(int pState, int nSkillIndex /*= -1*/)
 {
+	if (m_pState)
+		if (m_pState == m_aStates[pState])
+			return;
 
+	iState* pPrevState = m_pState;
+	m_pState = m_aStates[pState];
+
+	if (pPrevState)
+		pPrevState->End();
+
+	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
+
+	if (m_pState == m_aStates[E_STATE_SKILL])
+	{
+		((cStateMonsterSkill*)m_pState)->SetSkillIndex(nSkillIndex);
+	}
+
+	m_pState->Start();
 }
 
 
 bool cGuardian::IsMoveAble()
 {
 	if (m_pState == m_aStates[E_STATE_RUN] ||
+		m_pState == m_aStates[E_STATE_IDLE] ||
 		m_pState == m_aStates[E_STATE_WAIT])
 		return true;
 	return false;
@@ -110,6 +154,7 @@ void cGuardian::Update()
 	{
 		float fElapsedTime = GETSINGLE(cTimeMgr)->getElapsedTime();
 		m_skillRush.fPassedTime += fElapsedTime;
+		m_skillAttack.fPassedTime += fElapsedTime;
 
 		if (IsMoveAble())
 		{
@@ -124,7 +169,7 @@ void cGuardian::Update()
 			}
 			if (m_skillAttack.fPassedTime >= m_skillAttack.fCoolTime)
 			{
-				if (IsTargetCollision())
+				if (IsTargetBoxCollision())
 				{
 					if (m_pAction)
 						SAFE_RELEASE(m_pAction);

@@ -283,26 +283,26 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+//	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+//	{
+//		if (IsMoveAble())
+//		{
+//			ChangeState(E_STATE_SKILL);
+////			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+//			m_bIsBattle = true;
+//			bControl = true;
+//		}
+//	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4))
 	{
 		if (IsMoveAble())
 		{
-			ChangeState(E_STATE_SKILL);
-//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+			ChangeState(E_STATE_REACTION);
+			//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
 			m_bIsBattle = true;
 			bControl = true;
 		}
 	}
-	//if (KEYBOARD->IsOnceKeyDown(DIK_4))
-	//{
-	//	if (IsMoveAble())
-	//	{
-	//		ChangeState(E_STATE_REACTION);
-	//		//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-	//		m_bIsBattle = true;
-	//		bControl = true;
-	//	}
-	//}
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
 	{

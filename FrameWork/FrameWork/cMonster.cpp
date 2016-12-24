@@ -47,7 +47,8 @@ void cMonster::Update()
 
 void cMonster::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 {
-	cDynamicObj::UpdateAndRender(pmat);
+//	if (m_fPassedVanishTime < 1.0f)
+		cDynamicObj::UpdateAndRender(pmat);
 }
 
 
