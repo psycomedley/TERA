@@ -23,6 +23,7 @@ public:
 
 public:
 	HRESULT Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax);
+	HRESULT ReSetup(float Scale);
 	void Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3DXMATRIXA16* matRevision = NULL);
 	void Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3DXMATRIXA16* matRevision = NULL);
 	void Release();

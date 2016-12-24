@@ -42,7 +42,13 @@ HRESULT cBoundingBox::Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax)
 
 	return S_OK;
 }
-
+HRESULT cBoundingBox::ReSetup(float Scale)
+{
+	m_stObb.fAxisHalfLen[0] =m_stObb.fAxisHalfLen[0]*Scale;
+	m_stObb.fAxisHalfLen[1] =m_stObb.fAxisHalfLen[1]*Scale;
+	m_stObb.fAxisHalfLen[2] =m_stObb.fAxisHalfLen[2]*Scale;
+	return S_OK;
+}
 
 void cBoundingBox::Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3DXMATRIXA16* matRevision)
 {
