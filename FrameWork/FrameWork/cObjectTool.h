@@ -12,7 +12,8 @@ private:
 	float			m_fRx, m_fRy, m_fRz;
 	D3DXVECTOR3		m_vScaling;
 	D3DXVECTOR3		m_vPosition;
-	D3DXVECTOR3		 NewStuffpos;
+	D3DXVECTOR3 playerPos;
+	bool			m_IsSelect[4];
 
 public:
 	cObjectTool();

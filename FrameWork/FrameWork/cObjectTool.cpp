@@ -7,6 +7,8 @@ cObjectTool::cObjectTool()
 	:m_RotDirection(0)
 	, m_vPosition(0,0,0)
 {
+	for (int i = 0; i < 4; i++)
+		m_IsSelect[i] = false;
 }
 
 
@@ -16,7 +18,7 @@ cObjectTool::~cObjectTool()
 }
 void cObjectTool::Setup()
 {
-	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무");
+	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀3");
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
@@ -32,8 +34,7 @@ void cObjectTool::Update()
 	ChangeScaleAndAngle();
 	AddClone();
 	
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	//m_vPosition
+	 playerPos = pPlayer->GetPosition();
 	playerPos.y = playerPos.y+ m_vPosition.y;
 	playerPos.z += 2.0f;
 	m_BodyStuff->SetPosition(playerPos);
@@ -59,6 +60,7 @@ void cObjectTool::Render()
 }
 void cObjectTool::ResetVariable()
 {
+	m_vPosition.x = m_vPosition.y = m_vPosition.z = 0;
 	m_fRx, m_fRy, m_fRz = 0;
 	m_vScaling = m_BodyStuff->GetScale();
 }
@@ -66,7 +68,33 @@ void cObjectTool::ChangeBodyStuff()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[0] = true;
+		
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_0) && m_IsSelect[0])
+	{
 		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("캠프파이어");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_기둥");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("게시판");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 
