@@ -89,11 +89,12 @@ void cStateSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() >= 0.27f &&
 			m_pParent->GetCurrentAnimPosition() <= 0.5f)
-			m_pParent->Move(0.5f);
+			m_pParent->Move(0.4f);
 		else if (m_pParent->GetCurrentAnimPosition() >= 0.5f &&
 			m_pParent->GetCurrentAnimPosition() <= 0.68f)
 			m_pParent->Move(0.05f);
-		if (m_pParent->GetCurrentAnimPosition() >= 0.4f)
+		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
+			m_pParent->GetCurrentAnimPosition() <= 0.6f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 	}
 

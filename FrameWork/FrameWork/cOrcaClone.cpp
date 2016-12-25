@@ -15,6 +15,7 @@ cOrcaClone::cOrcaClone(char* szFolder, char* szFilename)
 	
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -23,6 +24,9 @@ cOrcaClone::cOrcaClone()
 	, m_bMoveEnd(false)
 	, m_nLoop(1)
 {
+	SetupState();
+	SetupStatus();
+	SetBox();
 }
 
 
@@ -68,7 +72,10 @@ void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
 		return;
 //	if (GetCurrentAnimInfo().nIndex == E_ANI_DEATHWAIT)
 	if (m_fPassedVanishTime >= 1.0f)
+	{
 		m_bActive = false;
+		m_stInfo.fHp = 0.0f;
+	}
 	if (m_pState == m_aStates[E_STATE_WAIT])
 		m_bMoveEnd = true;
 
@@ -148,5 +155,6 @@ void cOrcaClone::Reset()
 	m_bActive = true;
 	m_bMoveEnd = false;
 	m_fPassedVanishTime = 0.0f;
+	m_stInfo.fHp = 100000.0f;
 	((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_NORMAL);
 }

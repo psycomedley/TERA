@@ -16,6 +16,7 @@ cGardener::cGardener(char* szFolder, char* szFilename)
 	SetupState();
 	SetupStatus();
 	SetBox();
+	SetSound();
 }
 
 
@@ -24,6 +25,7 @@ cGardener::cGardener()
 	SetupState();
 	SetupStatus();
 	SetBox();
+	SetSound();
 }
 
 
@@ -41,6 +43,8 @@ void cGardener::SetupState()
 	m_aStates[E_STATE_WAIT] = new cStateWait;
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_RUN] = new cStateRun;
+	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.32f);
+	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.78f);
 	m_aStates[E_STATE_RUN]->SetParent(this);
 	m_aStates[E_STATE_DEATH] = new cStateDeath;
 	m_aStates[E_STATE_DEATH]->SetParent(this);
@@ -56,7 +60,7 @@ void cGardener::SetupStatus()
 {
 	m_stInfo.sName = "Gardener";
 
-	m_stInfo.fMaxHp = 100000;
+	m_stInfo.fMaxHp = 1000;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -69,6 +73,23 @@ void cGardener::SetupStatus()
 
 	m_skillRush.SetInfo(10.0f, 100);
 	m_skillAttack.SetInfo(3.0f, 50);
+}
+
+
+void cGardener::SetSound()
+{
+	string sKey = m_stInfo.sName + "_Atk";
+	m_eSoundKey[E_SOUND_ATK] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Death";
+	m_eSoundKey[E_SOUND_DEATH] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Hit";
+	m_eSoundKey[E_SOUND_HIT] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Run";
+	m_eSoundKey[E_SOUND_RUN] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
 }
 
 
@@ -89,15 +110,13 @@ void cGardener::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	iState* pPrevState = m_pState;
 	m_pState = pState;
 
-	if (pPrevState)
+	if (pPrevState && pState != m_aStates[E_STATE_DEATH])
 		pPrevState->End();
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
 	if (m_pState == m_aStates[E_STATE_SKILL])
-	{
 		((cStateMonsterSkill2*)m_pState)->SetSkillIndex(nSkillIndex);
-	}
 
 	m_pState->Start();
 }
@@ -112,7 +131,7 @@ void cGardener::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	iState* pPrevState = m_pState;
 	m_pState = m_aStates[pState];
 
-	if (pPrevState)
+	if (pPrevState && pState != E_STATE_DEATH)
 		pPrevState->End();
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);

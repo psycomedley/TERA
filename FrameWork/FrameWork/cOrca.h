@@ -33,6 +33,7 @@ private:
 	cOrca();
 	virtual void SetupState() override;
 	virtual void SetupStatus() override;
+	virtual void SetSound() override;
 	virtual void Update() override;
 
 	void LongMove();

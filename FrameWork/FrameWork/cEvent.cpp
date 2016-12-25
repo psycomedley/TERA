@@ -20,7 +20,7 @@ cEvent::~cEvent()
 
 void cEvent::Update()
 {
-	/*if (m_bProcess)
+	if (m_bProcess)
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 		GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetCamRotY(
@@ -34,13 +34,13 @@ void cEvent::Update()
 			GETSINGLE(cUIMgr)->AddList("CrossHair");
 			GETSINGLE(cUIMgr)->AddList("Player");
 		}
-	}*/
+	}
 }
 
 
 void cEvent::Play()
 {
-	/*if (!m_bPlayed)
+	if (!m_bPlayed)
 	{
 		m_bProcess = true;
 		GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
@@ -50,7 +50,7 @@ void cEvent::Play()
 
 
 		cText* pText = new cText;
-		pText->Setup(E_FONT_DAMAGE, "Event1", "산책나온", D3DXVECTOR2(GetWindowWidth() / 2 - 65, 600), ST_SIZE(200, 50), XWHITE,
+		pText->Setup(E_FONT_EVENT, "Event1", "산책나온", D3DXVECTOR2(GetWindowWidth() / 2 - 70, 600), ST_SIZE(200, 50), XWHITE,
 			TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME | TEXT_SHOWAFTERTIME | TEXT_APPEARWITHALPHA);
 		pText->SetShowTime(3.0f);
 		pText->SetAlphaTime(1.0f);
@@ -62,7 +62,7 @@ void cEvent::Play()
 		GETSINGLE(cTextMgr)->AddText(pText);
 
 		pText = new cText;
-		pText->Setup(E_FONT_DAMAGE, "Event2", " 오르카", D3DXVECTOR2(GetWindowWidth() / 2 + 65, 600), ST_SIZE(200, 50), XWHITE,
+		pText->Setup(E_FONT_EVENT, "Event2", " 오르카", D3DXVECTOR2(GetWindowWidth() / 2 + 70, 600), ST_SIZE(200, 50), XWHITE,
 			TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME | TEXT_SHOWAFTERTIME | TEXT_APPEARWITHALPHA);
 		pText->SetShowTime(3.0f);
 		pText->SetAlphaTime(1.0f);
@@ -80,5 +80,5 @@ void cEvent::Play()
 
 		GETSINGLE(cUIMgr)->RemoveList("CrossHair");
 		GETSINGLE(cUIMgr)->RemoveList("Player");
-	}*/
+	}
 }

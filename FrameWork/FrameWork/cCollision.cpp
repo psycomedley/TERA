@@ -245,6 +245,8 @@ bool cCollision::Collision(cPlayer* pPlayer, cDynamicObj* pMonster)
 
 bool cCollision::MoveCollision(cPlayer* pPlayer, cDynamicObj* pMonster)
 {
+	if (pMonster->GetInfo().fHp <= 0.0f)
+		return false;
 	if (pMonster->GetpMesh())
 	{
 		cBoundingSphere stMonsterSphere = ((cMonster*)pMonster)->GetMoveColSphere();

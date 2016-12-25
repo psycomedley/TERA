@@ -23,17 +23,29 @@ void cStateRun::Start()
 
 void cStateRun::Update()
 {
-
+	if (m_vTiming.size() >= 1)
+	{
+		if (m_pParent->GetCurrentAnimPosition() >= m_vTiming[0])
+			PlaySound(E_SOUND_RUN, true);
+	}
+	if (m_vTiming.size() >= 2)
+	{
+		if (m_pParent->GetCurrentAnimPosition() >= m_vTiming[1])
+			PlaySound(E_SOUND_RUN);
+	}
 }
 
 
 void cStateRun::End()
 {
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 	m_pParent->AnimationRemove();
 }
 
 
 void cStateRun::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
-
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 }

@@ -42,6 +42,18 @@ void cAnimationController::Update()
 					m_pDelegate->OnAnimationFinish(this, m_vecAnimation[m_nCurrentIdx]);
 				}
 			}
+			else
+			{
+				D3DXTRACK_DESC td;
+				m_pController->GetTrackDesc(0, &td);
+
+				if (td.Position >= m_dPeriod)
+				{
+					td.Position -= m_dPeriod;
+					m_pController->SetTrackDesc(0, &td);
+					m_pDelegate->OnAnimationFinish(this, m_vecAnimation[m_nCurrentIdx]);
+				}
+			}
 		}
 	}
 

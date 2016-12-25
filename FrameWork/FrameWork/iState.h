@@ -6,9 +6,11 @@ class cDynamicObj;
 class iState : public iAnimationDelegate
 {
 protected:
+	cDynamicObj*	m_pParent;
+	bool			m_bSoundPlay;
+	bool			m_bSoundPlay2;
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 	SYNTHESIZE(int, m_nSkillIndex, SkillIndex);
-	cDynamicObj* m_pParent;
 
 //	vector<cDynamicObj*> m_vecHitted;
 //	bool m_bHit;
@@ -22,6 +24,9 @@ public:
 	virtual void Update() PURE;
 //	virtual void Render() PURE;
 	virtual void End() PURE;
+
+protected:
+	void PlaySound(E_SOUND eSound, bool bDouble = false);
 
 public:
 	iState();

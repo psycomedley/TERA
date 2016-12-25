@@ -451,7 +451,7 @@
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
     <ClInclude Include="cStateHit.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\14. State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -726,7 +726,7 @@
       <Filter>소스 파일\14. State</Filter>
     </ClCompile>
     <ClCompile Include="cStateHit.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\14. State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

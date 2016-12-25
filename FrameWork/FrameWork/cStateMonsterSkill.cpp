@@ -25,16 +25,21 @@ void cStateMonsterSkill::Update()
 {
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_ATTACK)
 	{
-		if (m_pParent->GetCurrentAnimPosition() >= 0.36f && m_pParent->GetCurrentAnimPosition() <= 0.53f)
+		if (m_pParent->GetCurrentAnimPosition() >= 0.25f && m_pParent->GetCurrentAnimPosition() <= 0.43f)
+		{
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere());
+			PlaySound(E_SOUND_ATK);
+		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_SKILL1)
 	{
+		PlaySound(E_SOUND_SKILL1);
 		if (m_pParent->GetCurrentAnimPosition() >= 0.64f && m_pParent->GetCurrentAnimPosition() <= 0.86f)
 		{
 			m_pParent->Move(0.4f);
 
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere());
+		//	GETSINGLE(cSoundMgr)->Play(m_pParent->GetSoundKey(E_SOUND_SKILL1));
 		}
 	}
 }
@@ -52,4 +57,6 @@ void cStateMonsterSkill::End()
 void cStateMonsterSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
 	End();
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 }

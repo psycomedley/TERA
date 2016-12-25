@@ -26,7 +26,7 @@ void cStateMonsterSkill2::Update()
 {
 	if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_ATTACK)
 	{
-		if (m_pParent->GetCurrentAnimPosition() >= 0.4f && m_pParent->GetCurrentAnimPosition() <= 0.45f)
+		if (m_pParent->GetCurrentAnimPosition() >= 0.36f && m_pParent->GetCurrentAnimPosition() <= 0.45f)
 		{
 			//cBoundingSphere* sphere = new cBoundingSphere;
 			//D3DXVECTOR3 vec = m_pParent->GetPosition();
@@ -44,6 +44,7 @@ void cStateMonsterSkill2::Update()
 
 
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
+			PlaySound(E_SOUND_ATK);
 		}
 	}
 }
@@ -60,5 +61,7 @@ void cStateMonsterSkill2::End()
 
 void cStateMonsterSkill2::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 	End();
 }

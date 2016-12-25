@@ -59,7 +59,7 @@ void cMonster::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 		cDynamicObj::UpdateAndRender(pmat);
 
 //	m_pMoveColBox->Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
-	m_pMoveColSphere->Render(m_vPosition, m_vScale);
+//	m_pMoveColSphere->Render(m_vPosition, m_vScale);
 }
 
 
@@ -95,7 +95,7 @@ void cMonster::SetBox()
 	m_pMoveColBox->Setup(&vMin, &vMax);
 
 	m_pMoveColSphere = new cBoundingSphere;
-	m_pMoveColSphere->Setup(&m_vPosition, GetSphere().GetRadius() * 0.2f);
+	m_pMoveColSphere->Setup(&m_vPosition, GetSphere().GetRadius() * 0.3f);
 }
 
 

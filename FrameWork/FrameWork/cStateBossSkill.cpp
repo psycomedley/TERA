@@ -116,7 +116,7 @@ void cStateBossSkill::Update()
 			m_pParent->GetCurrentAnimPosition() <= 0.485f)
 		{
 			D3DXVECTOR3 vec1;
-			vec1 = -m_pParent->GetDirection() * 14;
+			vec1 = -m_pParent->GetDirection() * 12;
 			vec1.y = 0.1f;
 			vec1 += m_pParent->GetPosition();
 			D3DXMATRIXA16 matR;
@@ -128,6 +128,7 @@ void cStateBossSkill::Update()
 			sphere.SetRadius(9);
 
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
+			PlaySound(E_SOUND_ATK);
 		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_BACKATK)
@@ -178,6 +179,8 @@ void cStateBossSkill::Update()
 void cStateBossSkill::End()
 {
 	GETSINGLE(cBattleMgr)->Reset(E_MONSTER);
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 
 	m_pParent->AnimationRemove();
 	m_pParent->ChangeState(E_STATE_WAIT);
@@ -209,6 +212,8 @@ void cStateBossSkill::OnAnimationFinish(cAnimationController* pController, ST_AN
 		m_pParent->AnimationNext();
 	}
 	m_nEffect = 0;
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 }
 
 
@@ -216,7 +221,7 @@ void cStateBossSkill::AddGlobe(float fAngle)
 {
 	float angle = m_pParent->GetAngle();
 	D3DXVECTOR3 vec;
-	vec = D3DXVECTOR3(-sinf(angle + fAngle), 0.5f, -cosf(angle + fAngle)) * 6;
+	vec = D3DXVECTOR3(-sinf(angle + fAngle), 0.5f, -cosf(angle + fAngle)) * 7;
 	D3DXMATRIXA16 matR;
 	D3DXMatrixIdentity(&matR);
 	cEffect* pEffect = GETSINGLE(cEffectMgr)->AddList("orca1", m_pParent->GetPosition() + vec, matR);

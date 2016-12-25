@@ -37,6 +37,7 @@ public:
 	void UpdateUI();
 
 public:
+	virtual void SetSound() override;
 	void SetupBaseWeapon();
 	void SetupState();
 	void SetupStatus();

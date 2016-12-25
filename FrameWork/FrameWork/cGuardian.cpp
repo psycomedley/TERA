@@ -16,6 +16,7 @@ cGuardian::cGuardian(char* szFolder, char* szFilename)
 	SetupState();
 	SetupStatus();
 	SetBox();
+	SetSound();
 }
 
 
@@ -24,6 +25,7 @@ cGuardian::cGuardian()
 	SetupState();
 	SetupStatus();
 	SetBox();
+	SetSound();
 }
 
 
@@ -56,7 +58,7 @@ void cGuardian::SetupStatus()
 {
 	m_stInfo.sName = "Guardian";
 	
-	m_stInfo.fMaxHp = 100000;
+	m_stInfo.fMaxHp = 1000;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -69,6 +71,23 @@ void cGuardian::SetupStatus()
 
 	m_skillRush.SetInfo(10.0f, 100);
 	m_skillAttack.SetInfo(3.0f, 50);
+}
+
+
+void cGuardian::SetSound()
+{
+	string sKey = m_stInfo.sName + "_Atk";
+	m_eSoundKey[E_SOUND_ATK] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Death";
+	m_eSoundKey[E_SOUND_DEATH] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Hit";
+	m_eSoundKey[E_SOUND_HIT] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Skill1";
+	m_eSoundKey[E_SOUND_SKILL1] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
 }
 
 
@@ -89,7 +108,7 @@ void cGuardian::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	iState* pPrevState = m_pState;
 	m_pState = pState;
 
-	if (pPrevState)
+	if (pPrevState && pState != m_aStates[E_STATE_DEATH])
 		pPrevState->End();
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
@@ -112,7 +131,7 @@ void cGuardian::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	iState* pPrevState = m_pState;
 	m_pState = m_aStates[pState];
 
-	if (pPrevState)
+	if (pPrevState && pState != E_STATE_DEATH)
 		pPrevState->End();
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);

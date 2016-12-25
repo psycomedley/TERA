@@ -9,6 +9,7 @@ class cDynamicObj : public cGameObject
 protected:
 	iState*			m_pState;
 	iState*			m_aStates[E_STATE_END];
+	string			m_eSoundKey[E_SOUND_END];
 	SYNTHESIZE(cDynamicObj*, m_pTarget, Target);
 	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(bool, m_bHit, Hit);
@@ -29,6 +30,7 @@ public:
 
 	ST_ANIMATION_INFO GetCurrentAnimInfo();
 	double GetCurrentAnimPosition();
+	string GetSoundKey(E_SOUND eSound) { return m_eSoundKey[eSound]; }
 
 	virtual void ChangeState(iState* pState, int nSkillIndex = -1) PURE;
 	virtual void ChangeState(int pState, int nSkillIndex = -1) PURE;
@@ -55,6 +57,7 @@ public:
 
 protected:
 	iState* GetState(E_STATE eState) { return m_aStates[eState]; }
+	virtual void SetSound() {};
 };
 
 //D3DXTRACK_DESC position check

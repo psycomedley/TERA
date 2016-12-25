@@ -25,6 +25,7 @@ private:
 	cGardener();
 	virtual void SetupState() override;
 	virtual void SetupStatus() override;
+	virtual void SetSound() override;
 	virtual void Update() override;
 };
 

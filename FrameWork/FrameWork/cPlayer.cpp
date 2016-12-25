@@ -284,16 +284,16 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
-//	if (KEYBOARD->IsOnceKeyDown(DIK_3))
-//	{
-//		if (IsMoveAble())
-//		{
+	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+	{
+		if (IsMoveAble())
+		{
 //			ChangeState(E_STATE_SKILL);
-////			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-//			m_bIsBattle = true;
-//			bControl = true;
-//		}
-//	}
+			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+			m_bIsBattle = true;
+			bControl = true;
+		}
+	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_4))
 	{
 		if (IsMoveAble())
@@ -364,14 +364,14 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-		m_pRightWeapon->Bounding_Render();
+	//	m_pRightWeapon->Bounding_Render();
 	//	m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-		m_pLeftWeapon->Bounding_Render();
+	//	m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -498,4 +498,10 @@ void cPlayer::Move(float fSpeed)
 			return;
 	}
 	m_vPosition = m_vPrevPosition;
+}
+
+
+void cPlayer::SetSound()
+{
+//	GETSINGLE(cSoundMgr)->Add()
 }

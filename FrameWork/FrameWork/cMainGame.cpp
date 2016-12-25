@@ -78,6 +78,7 @@ HRESULT cMainGame::Setup()
 		MSGBOX("TimeMgr Setup Fail");
 		return E_FAIL;
 	}
+	GETSINGLE(cSoundMgr)->Setup();
 
 	SetCamera();
 	SetShader();
@@ -113,7 +114,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(30, 100, 0));
+	pPlayer->SetPosition(D3DXVECTOR3(30, 100, 80));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -135,7 +136,14 @@ HRESULT cMainGame::Setup()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
+	pMonster->SetPosition(D3DXVECTOR3(20, 0, 50));
+	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+
+	pMonster = new cGardener("Monster", "Gardener.X");
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pMonster->SetRevision(matR);
+	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetPosition(D3DXVECTOR3(40, 0, 50));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 	////////
 
@@ -651,7 +659,7 @@ void cMainGame::SetEffect()
 	pEffect->SetTotalFrame(4, 4, 16);
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
 	pEffect->AddTechList(E_TECH_ORCA1);
-	pEffect->AddTechList(E_TECH_ORCA1_Remove);
+	pEffect->AddTechList(E_TECH_ORCA1_REMOVE);
 //	pEffect->SetTechnique(E_TECH_ORCA1);
 	pEffect->SetNextTime(0.03);
 	pEffect->SetLoop(true);

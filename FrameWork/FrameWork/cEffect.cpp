@@ -502,7 +502,7 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 	case E_TECH_ORCA1:
 		m_pEffect->SetTechnique("Orca1");
 		break;
-	case E_TECH_ORCA1_Remove:
+	case E_TECH_ORCA1_REMOVE:
 		m_bEnd = true;
 		m_pEffect->SetTechnique("Orca1_Remove");
 		break;
