@@ -17,6 +17,7 @@ cGameObject::cGameObject(void)
 	, m_fRotX(0)
 	, m_fRotY(0)
 	, m_fRotZ(0)
+	, m_vRevisionScale(1,1,1)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matRevision);
@@ -55,7 +56,11 @@ void cGameObject::Bounding_Update()
 void cGameObject::Bounding_Render()
 {
 	if (m_pMesh)
-		m_pMesh->Bounding_Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
+	{
+		m_pMesh->Bounding_Render(m_vPosition
+			, D3DXVECTOR3(m_vScale.x*m_vRevisionScale.x, m_vScale.y*m_vRevisionScale.y, m_vScale.z*m_vRevisionScale.z)
+			, m_fAngle, &m_matRevision);
+	}
 }
 
 
@@ -96,8 +101,4 @@ cBoundingBox cGameObject::GetBox()
 cBoundingSphere cGameObject::GetSphere()
 {
 	return m_pMesh->GetSphere(m_vPosition, m_vScale.x);
-}
-void cGameObject::SetMinMax()
-{
-	m_pMesh->SetMinMax(m_vPosition, m_vScale.x, m_fAngle + m_fRevisionAngle);
-}
+}	

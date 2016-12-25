@@ -74,24 +74,6 @@ void cBoundingBox::Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3
 		&m_stObb.vOrgCenterPos,
 		&mat);
 
-	//D3DXVec3TransformCoord(
-	//	&m_vMin,
-	//	&m_vMin,
-	//	&matS);
-
-	//D3DXVec3TransformCoord(
-	//	&m_vMax,
-	//	&m_vMax,
-	//	&matS);
-
-	//m_stObb.fAxisLen[0] = fabs(m_vMax.x - m_vMin.x);
-	//m_stObb.fAxisLen[1] = fabs(m_vMax.y - m_vMin.y);
-	//m_stObb.fAxisLen[2] = fabs(m_vMax.z - m_vMin.z);
-
-	//m_stObb.fAxisHalfLen[0] = m_stObb.fAxisLen[0] / 2.0f;
-	//m_stObb.fAxisHalfLen[1] = m_stObb.fAxisLen[1] / 2.0f;
-	//m_stObb.fAxisHalfLen[2] = m_stObb.fAxisLen[2] / 2.0f;
-
 }
 
 

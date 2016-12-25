@@ -3,9 +3,11 @@
 #include "cStuff.h"
 #include "cStaticMesh.h"
 #include "cStaticObj.h"
+#include "cPlayer.h"
 
 
 cObjectToolMgr::cObjectToolMgr()
+	: m_PrevPlayerPos(0,0,0)
 {
 }
 
@@ -43,6 +45,49 @@ void cObjectToolMgr::Setup()
 }
 void cObjectToolMgr::Update()
 {
+	//======================== 충돌 처리
+
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
+
+	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
+	cBoundingBox* playerBox = &(pPlayer->GetBox());
+
+	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
+	{
+	
+		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
+		// 캐릭터와 오브젝트 충돌
+		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
+		{
+			D3DXVECTOR3 CurPos = pPlayer->GetPosition();
+			D3DXVECTOR3 afterPos = pPlayer->GetPrevPosition();
+			pPlayer->SetPosition(pPlayer->GetPrevPosition());
+		}
+		if (i + 1 == vecCloneStuff.size())
+		{
+			pPlayer->SetPrevPosition(pPlayer->GetPosition());
+		}
+
+		//몬스터와 오브젝트 충돌
+		for (size_t j = 0; j < pVecAllMonster.size(); ++j)
+		{
+			if (pVecAllMonster[j]->GetInfo().sName == "Globe") continue;
+			cBoundingBox* MosterBox = &(pVecAllMonster[j]->GetBox());
+
+			if (GETSINGLE(cCollision)->Collision(MosterBox, stuffBox))
+			{
+				pVecAllMonster[j]->SetPosition(pVecAllMonster[j]->GetPrevPosition());
+			}
+	
+			if (i + 1 == vecCloneStuff.size())
+			{
+				pVecAllMonster[j]->SetPrevPosition(pVecAllMonster[j]->GetPosition());
+			}
+		}
+
+	}
+	///===============================
 }
 void cObjectToolMgr::Render()
 {

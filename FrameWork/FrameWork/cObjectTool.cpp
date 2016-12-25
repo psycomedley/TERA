@@ -5,7 +5,6 @@
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
-	, m_PrevPlayerPos(0,0,0)
 {
 }
 
@@ -26,18 +25,14 @@ void cObjectTool::Setup()
 void cObjectTool::Update()
 {
 
-	/*cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 	playerPos.z += 2.0f;
-	m_BodyStuff->SetPosition(playerPos);*/
+	m_BodyStuff->SetPosition(playerPos);
 	
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
-	
-
-	//충돌처리
-	CollisionObjWithPlayerAndMonster();
 	
 	
 }
@@ -248,9 +243,15 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetIsCullMode(isCull);
 		cloneStuff->SetFoldername(&foldername[0]);
 		cloneStuff->SetFilename(&filename[0]);
-		D3DXVECTOR3 vMIN(MinX*Sx, MinY*Sy, MinZ*Sz);
-		D3DXVECTOR3 vMAX(MaxX*Sx, MaxY*Sy, MaxZ*Sz);
-		//cloneStuff->GetpMesh()->ReSetupBoundingBox(Sx);
+		if (strcmp(filename, "tree1.x") == 0)
+		{
+			
+			D3DXVECTOR3 vMIN(MinX*0.05f, MinY*0.85f, MinZ*0.05f);
+			D3DXVECTOR3 vMAX(MaxX*0.05f, MaxY*0.85f, MaxZ*0.05f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.05f));
+		}
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
@@ -259,44 +260,7 @@ void cObjectTool::LoadInfoStuff()
 }
 void cObjectTool::CollisionObjWithPlayerAndMonster()
 {
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
-
-	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
-	cBoundingBox* playerBox = &(pPlayer->GetBox());
-	//cBoundingBox* MostersBox = 
 	
-	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
-	{
-		// 캐릭터와 오브젝트 충돌
-		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
-		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
-		{
-			pPlayer->SetPosition(m_PrevPlayerPos);
-			D3DXVECTOR3 afterPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
-			int a = 0;
-		}
-		else
-		{
-			m_PrevPlayerPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
-		}
-
-		//몬스터와 오브젝트 충돌
-		for (size_t j = 0; j < pVecAllMonster.size(); ++j)
-		{
-			if (pVecAllMonster[j]->GetInfo().sName =="Globe") continue;
-			cBoundingBox* MosterBox = &(pVecAllMonster[j]->GetBox());
-			
-			if (GETSINGLE(cCollision)->Collision(MosterBox, stuffBox))
-			{
-				pVecAllMonster[j]->SetPosition(pVecAllMonster[j]->GetPrevPosition());
-			}
-			{
-				pVecAllMonster[j]->SetPrevPosition(pVecAllMonster[j]->GetPosition());
-			}
-		}
-
-	}
 
 	
 		

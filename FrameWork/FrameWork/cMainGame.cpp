@@ -225,6 +225,8 @@ void cMainGame::Update()
 		GETSINGLE(cUIMgr)->Update();
 
 		GETSINGLE(cEventMgr)->Update();
+
+		GETSINGLE(cObjectToolMgr)->Update();
 	}
 
 	///////////////юс╫ц////////////////
@@ -297,10 +299,10 @@ void cMainGame::Update()
 
 	if (KEYBOARD->IsToggleKey(VK_F1))
 	{
-
+		if (m_cObjectTool)
+			m_cObjectTool->Update();
 	}
-	if (m_cObjectTool)
-		m_cObjectTool->Update();
+	
 
 	///////////////////////////////////
 

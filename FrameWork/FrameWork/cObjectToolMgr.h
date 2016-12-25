@@ -4,7 +4,7 @@ class cObjectTool;
 class cObjectToolMgr : public cSingleton<cObjectToolMgr>
 {
 private:
-
+	D3DXVECTOR3		m_PrevPlayerPos;
 public:
 	cObjectToolMgr();
 	~cObjectToolMgr();

@@ -9,11 +9,7 @@ private:
 	SYNTHESIZE(D3DXVECTOR3, m_vMin, vMin);
 	SYNTHESIZE(D3DXVECTOR3, m_vMax, vMax);
 
-	D3DXVECTOR3 m_vOrgMin;
-	D3DXVECTOR3 m_vOrgMax;
 	ST_OBB m_stObb;
-	//D3DXVECTOR3 m_vOrgCenterPos;
-	//D3DXVECTOR3 m_vOrgAxisDir[3];
 
 	//D3DXVECTOR3 m_vCenterPos;		// 상자 중앙의 좌표
 	//D3DXVECTOR3 m_vAxisDir[3];		// 상자에 평행한 세 축의 단위벡터
