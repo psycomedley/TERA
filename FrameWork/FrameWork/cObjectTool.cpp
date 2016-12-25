@@ -243,6 +243,7 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetIsCullMode(isCull);
 		cloneStuff->SetFoldername(&foldername[0]);
 		cloneStuff->SetFilename(&filename[0]);
+
 		if (strcmp(filename, "tree1.x") == 0)
 		{
 			
