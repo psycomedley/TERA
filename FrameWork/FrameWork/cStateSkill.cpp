@@ -92,6 +92,25 @@ void cStateSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.3f && m_pParent->GetCurrentAnimPosition() < 0.4f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -1.0f;
+			vec = D3DXVECTOR3(vec.x, vec.y + 1.5f, vec.z);
+			D3DXMatrixIdentity(&mat);
+			GETSINGLE(cEffectMgr)->AddList("skill2", vec, mat);
+		}
+		if (m_pParent->GetCurrentAnimPosition() > 0.7f && m_pParent->GetCurrentAnimPosition() < 0.8f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -1.0f;
+			vec = D3DXVECTOR3(vec.x, vec.y + 1.5f, vec.z);
+			D3DXMatrixIdentity(&mat);
+			GETSINGLE(cEffectMgr)->AddList("skill2", vec, mat);
+		}
 	}
 
 	if (StartEffect1)

@@ -28,9 +28,9 @@ HRESULT cDynamicMeshEffect::Setup()
 {
 	if (start)
 	{
-		ST_ANIMATION_INFO aniInfo(0, true, true);
-		AddAnimation(aniInfo);
-		AnimationStart();
+		//ST_ANIMATION_INFO aniInfo(0, true, true);
+		//AddAnimation(aniInfo);
+		//AnimationStart();
 
 		return S_OK;
 	}
