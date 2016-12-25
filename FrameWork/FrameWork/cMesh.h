@@ -17,7 +17,7 @@ public:
 
 public:
 	HRESULT SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax);
-	HRESULT ReSetupBoundingBox(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax);
+	HRESULT ReSetupBoundingBox(float scale);
 	cBoundingBox GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle = 0);
 	cBoundingBox GetBox(D3DXMATRIXA16* mat);
 	cBoundingSphere GetSphere(D3DXVECTOR3 vPosition, float fScale);

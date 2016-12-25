@@ -28,8 +28,8 @@ void cObjectTool::Update()
 	/*cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 	playerPos.z += 2.0f;
-	m_BodyStuff->SetPosition(playerPos);
-	*/
+	m_BodyStuff->SetPosition(playerPos);*/
+	
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
@@ -249,7 +249,7 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetFilename(&filename[0]);
 		D3DXVECTOR3 vMIN(MinX*Sx, MinY*Sy, MinZ*Sz);
 		D3DXVECTOR3 vMAX(MaxX*Sx, MaxY*Sy, MaxZ*Sz);
-		cloneStuff->GetpMesh()->ReSetupBoundingBox(vMIN,vMAX);
+		//cloneStuff->GetpMesh()->ReSetupBoundingBox(Sx);
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
