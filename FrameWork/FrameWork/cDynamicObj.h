@@ -13,6 +13,7 @@ protected:
 	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(bool, m_bHit, Hit);
 	SYNTHESIZE(float, m_fPassedVanishTime, PassedVanishTime);
+	SYNTHESIZE(float, m_fPassedHitTime, PassedHitTime);
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }
@@ -35,6 +36,7 @@ public:
 	virtual void Attack() {};
 	virtual bool IsMoveAble() PURE;
 	virtual bool IsTargetCollision();
+	virtual bool IsTargetBoxCollision();
 	virtual void LookTarget();
 
 	virtual float Damaged(ST_UNIT_INFO stInfo);
@@ -50,6 +52,9 @@ public:
 	cDynamicObj(char* szFolder, char* szFilename);
 	cDynamicObj();
 	~cDynamicObj();
+
+protected:
+	iState* GetState(E_STATE eState) { return m_aStates[eState]; }
 };
 
 //D3DXTRACK_DESC position check

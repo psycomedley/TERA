@@ -18,6 +18,9 @@
 #include "cUITextView.h"
 #include "cObjectTool.h"
 #include "cText.h"
+#include "cCamera.h"
+#include "cGuardian.h"
+#include "cGardener.h"
 
 //임시
 
@@ -76,6 +79,7 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 
+	SetCamera();
 	SetShader();
 	SetEffect();
 	SetUI();
@@ -84,7 +88,7 @@ HRESULT cMainGame::Setup()
 	cText* pText = new cText;
 	pText->Setup(E_FONT_DAMAGE, "PlayerDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XYELLOW,
 		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
-	pText->SetShowTime(2.0f);
+	pText->SetShowTime(1.0f);
 	pText->SetAlphaTime(0.5f);
 	pText->SetMoveSpeed(0.5f);
 	pText->SetDirection(DIRECTION_UP);
@@ -109,7 +113,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(20, 100, 0));
+	pPlayer->SetPosition(D3DXVECTOR3(30, 100, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -118,14 +122,31 @@ HRESULT cMainGame::Setup()
 	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
+	
+	//임시//
+	cDynamicObj* pMonster = new cGuardian("Monster", "Guardian.X");
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pMonster->SetRevision(matR);
+	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetPosition(D3DXVECTOR3(30, 0, 20));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
+
+	pMonster = new cGardener("Monster", "Gardener.X");
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	pMonster->SetRevision(matR);
+	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetPosition(D3DXVECTOR3(50, 0, 0));
+	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	////////
+
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
 	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	m_pBoss2->SetRevision(matR);
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
-	GETSINGLE(cCameraMgr)->Setup();
-	GETSINGLE(cCameraMgr)->GetCamera()->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
+//	GETSINGLE(cCameraMgr)->Setup();
+	GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	GETSINGLE(cObjectToolMgr)->Setup();
 
@@ -172,8 +193,6 @@ HRESULT cMainGame::Setup()
 
 
 
-
-
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "그아아앗", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
 
@@ -204,6 +223,8 @@ void cMainGame::Update()
 		GETSINGLE(cBattleMgr)->Update();
 
 		GETSINGLE(cUIMgr)->Update();
+
+		GETSINGLE(cEventMgr)->Update();
 	}
 
 	if (KEYBOARD->IsToggleKey(VK_F1))
@@ -216,6 +237,23 @@ void cMainGame::Update()
 
 	if (IsActive())
 	{
+		if (KEYBOARD->IsOnceKeyDown(DIK_F11))
+		{
+//			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetPosition() + D3DXVECTOR3(0, 0, 0);
+			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetSphere().GetCenter();
+//			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetVecTarget(&pos);
+			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetLookAt(pos);
+			GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_F12))
+			GETSINGLE(cCameraMgr)->SetCurrentCamera("MainCamera");
+
+		if (KEYBOARD->IsStayKeyDown(DIK_F10))
+		{
+			GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetCamRotY(
+				GETSINGLE(cCameraMgr)->GetCurrentCamera()->GetCamRotY() - 0.01f);
+		}
+
 		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
 		{
 			//m_pDynamicMeshEffect->Start();
@@ -229,11 +267,6 @@ void cMainGame::Update()
 			{
 				m_pEffect4->Start();
 			}*/
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_T))
-		{
-			auto orca = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->begin();
-			((cOrca*)*orca)->SetHp(((cOrca*)*orca)->GetInfo().fHp - 5);
 		}
 		//	char szStr[16] = { '\0', };
 		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
@@ -335,16 +368,6 @@ void cMainGame::Render()
 
 
 
-	/*if (m_pPlayer)
-	m_pPlayer->UpdateAndRender();*/
-	//	m_pPlayer->Bounding_Render();
-
-	//if (m_pBoss)
-	//{
-	//	m_pBoss->UpdateAndRender();
-//	//	m_pBoss->Bounding_Render();
-	//}
-
 	//if (m_pCircleEffect)
 	//{
 	//	m_pCircleEffect->Render();
@@ -397,6 +420,22 @@ void cMainGame::Release()
 	GETSINGLE(cBattleMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
+}
+
+
+void cMainGame::SetCamera()
+{
+	cCamera* pCamera = new cCamera;
+	pCamera->Setup();
+	GETSINGLE(cCameraMgr)->AddCamera("MainCamera", pCamera);
+	GETSINGLE(cCameraMgr)->SetCurrentCamera("MainCamera");
+
+	pCamera = new cCamera;
+	pCamera->Setup();
+	pCamera->SetCamDist(-30);
+	pCamera->SetControl(false);
+
+	GETSINGLE(cCameraMgr)->AddCamera("EventCamera", pCamera);
 }
 
 //임시
@@ -541,6 +580,22 @@ void cMainGame::SetUI()
 	//	m_pUIPlayerHp = pUI;
 	GETSINGLE(cUIMgr)->AddUI("Player", pUI);
 
+
+
+	////임시
+	//pSprite;
+	//D3DXCreateSprite(g_pD3DDevice, &pSprite);
+	//cUIImageView* p = new cUIImageView;
+	////	m_pUIImage->SetSize(ST_SIZE(1, 1));
+	//p->SetTexture("UI/ComboCounter_I3.tga", 1, 1);
+	//p->SetCurrentFrame(0);
+	//p->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2, 0));
+
+	//p->SetSprite(pSprite);
+
+	//GETSINGLE(cUIMgr)->AddUI("p", p);
+	//GETSINGLE(cUIMgr)->AddList("p");
+
 	SAFE_RELEASE(pSprite);
 }
 
@@ -663,6 +718,43 @@ void cMainGame::SetEffect()
 	pEffect->SetName("MagicArray");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+
+	//구체 공격
+	pEffect = new cEffect;
+	pEffect->Setup(150, 150, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_CircleDecal001_Emis.tga", E_TEXTURE1);
+	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
+	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
+	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
+	pEffect->AddTechList(E_TECH_GLOBEATK);
+//	pEffect->SetTechnique(E_TECH_ORCA2);
+
+	//m_pEffect2->SetAngle(D3DX_PI / 2);
+	D3DXMatrixRotationX(&m, D3DX_PI / 2);
+	pEffect->SetMatRotation(m);
+
+	pEffect->SetLoop(false);
+	pEffect->SetRemoveTime(2);
+	pEffect->SetName("GlobeAtk");
+
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+
+//	//구체 공격2
+//	pEffect = new cEffect;
+//	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_CUTTEDFRAME /*| EFFECT_LOOPEDFRAME*/);
+//	pEffect->SetTexture("Effect/D_MOVArchaLightBig001_Emis.tga", E_TEXTURE1);
+//	pEffect->SetTotalFrame(8, 4, 32);
+//	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
+//	pEffect->AddTechList(E_TECH_GLOBEATK2);
+//	pEffect->SetNextTime(0.03);
+//	pEffect->SetLoop(false);
+//	pEffect->SetRemoveTime(3.0f);
+////	pEffect->SetLoopTimes(20);
+//	pEffect->SetName("GlobeAtk2");
+//
+//	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 	//바닥 깨지는 이펙트
 	pEffect = new cEffect;

@@ -31,11 +31,15 @@ void cStateDeath::Update()
 
 void cStateDeath::End()
 {
-//	m_pParent->AnimationRemove();
+	m_pParent->AnimationRemove();
+	((cDynamicMesh*)m_pParent->GetpMesh())->SetTechnique(E_DYNA_TECH_DIE);
 }
 
 
 void cStateDeath::OnAnimationFinish(cAnimationController* pController, ST_ANIMATION_INFO animInfo)
 {
-	m_pParent->AnimationNext();
+	if (animInfo.nIndex == E_ANI_DEATH)
+		m_pParent->AnimationNext();
+	else
+		End();
 }

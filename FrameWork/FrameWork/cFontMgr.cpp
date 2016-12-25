@@ -48,19 +48,19 @@ LPD3DXFONT cFontMgr::GetFont(E_FONT_TYPE eFontType)
 			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
 			break;
 		case E_FONT_DAMAGE:
-			fd.Height = 35;
+			fd.Height = 40;
 			fd.Width = 20;
 			fd.Weight = FW_NORMAL;
 			fd.Italic = false;
 			fd.CharSet = DEFAULT_CHARSET;
 			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
 			fd.PitchAndFamily = FF_DONTCARE;
-			AddFontResource("umberto.ttf");
-			strcpy_s(fd.FaceName, "umberto");
+			AddFontResource("BUBBLEBOY2.ttf");
+			strcpy_s(fd.FaceName, "BUBBLEBOY2");
 			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
 			break;
 		case E_FONT_MONSTERDAMAGE:
-			fd.Height = 20;
+			fd.Height = 30;
 			fd.Width = 20;
 			fd.Weight = FW_NORMAL;
 			fd.Italic = false;

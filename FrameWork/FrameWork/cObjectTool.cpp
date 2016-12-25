@@ -25,18 +25,18 @@ void cObjectTool::Setup()
 void cObjectTool::Update()
 {
 
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+	/*cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 	playerPos.z += 2.0f;
-	m_BodyStuff->SetPosition(playerPos);
+	m_BodyStuff->SetPosition(playerPos);*/
 	
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
-	if (KEYBOARD->IsOnceKeyDown(DIK_F2))
-	{
-		LoadInfoStuff();
-	}
+	
+
+	//충돌처리
+	CollisionObjWithPlayer();
 	
 	
 }
@@ -48,8 +48,13 @@ void cObjectTool::Render()
 	if (KEYBOARD->IsOnceKeyDown(DIK_5))
 	{
 
-		m_BodyStuff->GetpMesh()->SetupBounding(D3DXVECTOR3(-100, -200, -150), D3DXVECTOR3(100, 200, 150));
+		m_BodyStuff->GetpMesh()->Bounding_Render(
+			m_BodyStuff->GetPosition(), D3DXVECTOR3(0.5f, 0.5f, 0.5f), 0, &m_BodyStuff->GetWorldTM());
 
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_F2))
+	{
+		LoadInfoStuff();
 	}
 	
 }
@@ -188,9 +193,16 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	float rz = CloneStuff->GetfRotZ();
 	DWORD SubsetNum = CloneStuff->GetSubSetNum();
 	bool  isCull = CloneStuff->GetIsCullMode();
+	float MaxX = CloneStuff->GetpMesh()->GetvMax().x;
+	float MaxY = CloneStuff->GetpMesh()->GetvMax().y;
+	float MaxZ = CloneStuff->GetpMesh()->GetvMax().z;
+	float MinX = CloneStuff->GetpMesh()->GetvMin().x;
+	float MinY = CloneStuff->GetpMesh()->GetvMin().y;
+	float MinZ = CloneStuff->GetpMesh()->GetvMin().z;
 
-	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f %d %d"
-		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz,SubsetNum,isCull);
+	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f %d %d %f %f %f %f %f %f"
+		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz,SubsetNum,isCull
+		, MinX, MinY, MinZ, MaxX, MaxY, MaxZ);
 	fprintf(fp, "%s", str);
 
 	fclose(fp);
@@ -198,25 +210,31 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 void cObjectTool::LoadInfoStuff()
 {
 	FILE* fp = NULL;
-	char str[1024] = { NULL, };
+	char str[2048] = { NULL, };
 	char foldername[120] = { NULL ,};
 	char filename[120] = { NULL, };
 	float Px = 0, Py=0, Pz=0;
 	float Sx =0, Sy=0, Sz=0;
 	float Rx=0, Ry=0, Rz=0;
+	float MinX = 0, MinY = 0, MinZ = 0;
+	float MaxX = 0, MaxY = 0, MaxZ = 0;
 	DWORD SubsetNum = 0;
 	int  isCull = false;
+	int a = 0;
+
 	fopen_s(&fp, "object/StuffInfo.text", "r");
+	
 	while (1)
 	{
 		if (feof(fp)) break;
-		fgets(&str[0],1024,fp);
+		fgets(&str[0],2048,fp);
 		if (str[0] == '\n')
 			continue;
 
-		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f%d%d"
-			,foldername,120,filename,120, &Px, &Py, &Pz, &Sx, &Sy, &Sz
-			, &Rx, &Ry, &Rz, &SubsetNum, &isCull);
+		sscanf_s(str, "%s%s%f%f%f%f%f%f%f%f%f%d%d%f%f%f%f%f%f"
+			, foldername, 120, filename, 120, &Px, &Py, &Pz, &Sx, &Sy, &Sz
+			, &Rx, &Ry, &Rz, &SubsetNum, &isCull
+			, &MinX, &MinY, &MinZ, &MaxX, &MaxY, &MaxZ);
 
 		//저장된 오브젝트 생성하기
 		cStuff* cloneStuff = new cStuff(foldername, filename);
@@ -227,9 +245,37 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetfRotZ(Rz);
 		cloneStuff->SetSubSetNum(SubsetNum);
 		cloneStuff->SetIsCullMode(isCull);
+		cloneStuff->SetFoldername(&foldername[0]);
+		cloneStuff->SetFilename(&filename[0]);
+		D3DXVECTOR3 vMIN(MinX*Sx, MinY*Sy, MinZ*Sz);
+		D3DXVECTOR3 vMAX(MaxX*Sx, MaxY*Sy, MaxZ*Sz);
+		//cloneStuff->GetpMesh()->ReSetupBoundingBox(Sx);
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
 	
 
+}
+void cObjectTool::CollisionObjWithPlayer()
+{
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
+
+	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
+	cBoundingBox* playerBox = &(pPlayer->GetBox());
+	
+	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
+	{
+		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
+			if (GETSINGLE(cCollision)->CollisionOBB(playerBox, stuffBox))
+			{
+				int a = 0;
+			}
+			else
+			{
+				int b = 0;
+			}
+
+	}
+
+		
 }

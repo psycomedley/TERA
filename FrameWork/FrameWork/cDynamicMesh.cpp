@@ -106,12 +106,6 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 
 void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_P))
-	{
-		m_eTechnique = E_DYNA_TECH_DIE;
-//		value += (GETSINGLE(cTimeMgr)->getElapsedTime() * 0.1);
-//		m_pEffect->SetFloat("g_fPassedTime", value);
-	}
 	if (m_pAnimController)
 	{
 		m_pAnimController->Update();
@@ -214,6 +208,9 @@ void cDynamicMesh::Render(ST_BONE* pBone /*= NULL*/)
 				g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 				g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 				m_pEffect->SetTechnique("SkinningAppear");
+				break;
+			case E_DYNA_TECH_HIT:
+				m_pEffect->SetTechnique("SkinningHit");
 				break;
 			default:
 				break;

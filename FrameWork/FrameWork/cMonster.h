@@ -2,6 +2,7 @@
 #include "cDynamicObj.h"
 
 class cUIObject;
+class cBoundingBox;
 class cMonster : public cDynamicObj
 {
 protected:
@@ -11,10 +12,14 @@ protected:
 	cUIObject*			m_pUIHp;
 
 	cBoundingSphere*	m_pShotSphere;
+	cBoundingBox*		m_pMoveColBox;
+	cBoundingSphere*	m_pMoveColSphere;
 
 public:
 	float GetMaxHp() { return m_stInfo.fMaxHp; }
 	cBoundingSphere GetShotSphere();
+	cBoundingBox GetMoveColBox();
+	cBoundingSphere GetMoveColSphere();
 
 	void SetName(string sName) { m_stInfo.sName = sName; }
 	void SetMaxHp(float fMaxHp) { m_stInfo.fMaxHp = fMaxHp; }
@@ -25,6 +30,7 @@ public:
 	void SetDefence(float fDefence) { m_stInfo.fDefence = fDefence; }
 	
 	void SetShotSphere(float fRadius);
+	void SetBox();
 	void ResetHp();
 
 public:

@@ -16,6 +16,7 @@ public:
 	bool CollisionOBB(cBoundingBox* pBox1, cBoundingBox* pBox2);
 
 	bool Collision(cPlayer* pPlayer, cDynamicObj* pMonster);
+	bool MoveCollision(cPlayer* pPlayer, cDynamicObj* pMonster);
 
 public:
 	void Release();

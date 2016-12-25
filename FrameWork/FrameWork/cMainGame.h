@@ -43,6 +43,7 @@ private:
 	cCircleEffect*		m_pCircleEffect;
 	cRushEffect*		m_pRushEffect;
 
+	void SetCamera();
 	void SetLighting();
 	void SetUI();
 	void SetShader();

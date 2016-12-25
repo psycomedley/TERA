@@ -517,6 +517,13 @@ void cEffect::SetTech(E_EFFECT_TECHNIQUE eTech)
 		break;
 	case E_TECH_MAGICARRAY:
 		m_pEffect->SetTechnique("MagicArray");
+		break;
+	case E_TECH_GLOBEATK:
+		m_pEffect->SetTechnique("GlobeAtk");
+		break;
+	case E_TECH_GLOBEATK2:
+		m_pEffect->SetTechnique("GlobeAtk2");
+		break;
 	default:
 		break;
 	}
@@ -527,6 +534,7 @@ void cEffect::Setting()
 {
 	m_pEffect->SetTexture("DiffuseMap_Tex", m_pTexture);
 	m_pEffect->SetTexture("DiffuseMap_Tex2", m_pTexture2);
+	m_pEffect->SetTexture("DiffuseMap_Tex3", m_pTexture3);
 	m_pEffect->SetTexture("BumpMap_Tex", m_pBumpMap);
 
 	SetTech(m_eTechnique);

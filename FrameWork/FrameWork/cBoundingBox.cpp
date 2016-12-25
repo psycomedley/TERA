@@ -14,12 +14,12 @@ cBoundingBox::~cBoundingBox()
 
 HRESULT cBoundingBox::Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax)
 {
-	if (FAILED(D3DXCreateBox(g_pD3DDevice, pMax->x - pMin->x,
+	/*if (FAILED(D3DXCreateBox(g_pD3DDevice, pMax->x - pMin->x,
 		pMax->y - pMin->y, pMax->z - pMin->z, &m_pBoxMesh, NULL)))
 	{
 		MSGBOX("Bounding Box Setup Fail");
 		return E_FAIL;
-	}
+	}*/
 
 	m_vMin = *pMin;
 	m_vMax = *pMax;
@@ -42,7 +42,13 @@ HRESULT cBoundingBox::Setup(D3DXVECTOR3* pMin, D3DXVECTOR3* pMax)
 
 	return S_OK;
 }
-
+HRESULT cBoundingBox::ReSetup(float Scale)
+{
+	m_stObb.fAxisHalfLen[0] =m_stObb.fAxisHalfLen[0]*Scale;
+	m_stObb.fAxisHalfLen[1] =m_stObb.fAxisHalfLen[1]*Scale;
+	m_stObb.fAxisHalfLen[2] =m_stObb.fAxisHalfLen[2]*Scale;
+	return S_OK;
+}
 
 void cBoundingBox::Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3DXMATRIXA16* matRevision)
 {
@@ -67,6 +73,25 @@ void cBoundingBox::Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3
 		&m_stObb.vCenterPos,
 		&m_stObb.vOrgCenterPos,
 		&mat);
+
+	//D3DXVec3TransformCoord(
+	//	&m_vMin,
+	//	&m_vMin,
+	//	&matS);
+
+	//D3DXVec3TransformCoord(
+	//	&m_vMax,
+	//	&m_vMax,
+	//	&matS);
+
+	//m_stObb.fAxisLen[0] = fabs(m_vMax.x - m_vMin.x);
+	//m_stObb.fAxisLen[1] = fabs(m_vMax.y - m_vMin.y);
+	//m_stObb.fAxisLen[2] = fabs(m_vMax.z - m_vMin.z);
+
+	//m_stObb.fAxisHalfLen[0] = m_stObb.fAxisLen[0] / 2.0f;
+	//m_stObb.fAxisHalfLen[1] = m_stObb.fAxisLen[1] / 2.0f;
+	//m_stObb.fAxisHalfLen[2] = m_stObb.fAxisLen[2] / 2.0f;
+
 }
 
 
