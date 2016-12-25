@@ -11,6 +11,8 @@ private:
 	int				m_RotDirection;
 	float			m_fRx, m_fRy, m_fRz;
 	D3DXVECTOR3		m_vScaling;
+	D3DXVECTOR3		m_PrevPlayerPos;
+
 public:
 	cObjectTool();
 	~cObjectTool();

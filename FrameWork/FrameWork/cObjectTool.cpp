@@ -5,6 +5,7 @@
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
+	, m_PrevPlayerPos(0,0,0)
 {
 }
 
@@ -259,7 +260,7 @@ void cObjectTool::LoadInfoStuff()
 void cObjectTool::CollisionObjWithPlayer()
 {
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 CollPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
+	
 
 	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
 	cBoundingBox* playerBox = &(pPlayer->GetBox());
@@ -269,15 +270,14 @@ void cObjectTool::CollisionObjWithPlayer()
 		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
 		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
 		{
-			pPlayer->SetPosition(D3DXVECTOR3(CollPos.x, CollPos.y, CollPos.x));
-			//D3DXVECTOR3(PlayerPos.x+0.1, PlayerPos.y,PlayerPos.x)
+			pPlayer->SetPosition(D3DXVECTOR3(m_PrevPlayerPos.x, m_PrevPlayerPos.y, m_PrevPlayerPos.z));
+			D3DXVECTOR3 afterPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
+			int a = 0;
 		}
 		else
 		{
-			 CollPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
+			m_PrevPlayerPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
 		}
-
 	}
-
 		
 }
