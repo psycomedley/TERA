@@ -42,6 +42,13 @@ void cObjectToolMgr::Setup()
 	pBarricatePole->SetFilename("barricatePole.x");
 	GETSINGLE(cObjMgr)->AddStuff("바리게이트_기둥", pBarricatePole);
 
+	cStuff* pCampFire = new cStuff("Object/캠프파이어", "campFire.x");
+	pCampFire->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pCampFire->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pCampFire->SetFoldername("Object/캠프파이어");
+	pCampFire->SetFilename("campFire.x");
+	GETSINGLE(cObjMgr)->AddStuff("캠프파이어", pCampFire);
+
 }
 void cObjectToolMgr::Update()
 {

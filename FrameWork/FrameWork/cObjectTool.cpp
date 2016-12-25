@@ -5,6 +5,7 @@
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
+	, m_vPosition(0,0,0)
 {
 }
 
@@ -19,22 +20,24 @@ void cObjectTool::Setup()
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
-
+	
 
 }
 void cObjectTool::Update()
 {
-
 	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	playerPos.z += 2.0f;
-	m_BodyStuff->SetPosition(playerPos);
+	
 	
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
 	
-	
+	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
+	//m_vPosition
+	playerPos.y = playerPos.y+ m_vPosition.y;
+	playerPos.z += 2.0f;
+	m_BodyStuff->SetPosition(playerPos);
+
 }
 void cObjectTool::Render()
 {
@@ -63,7 +66,7 @@ void cObjectTool::ChangeBodyStuff()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
-		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("캠프파이어");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 
@@ -83,14 +86,24 @@ void cObjectTool::ChangeScaleAndAngle()
 	{
 		m_RotDirection = 3; // z축
 	}
+	
+	//높이조절
+	if (KEYBOARD->IsStayKeyDown(DIK_UP))
+	{
+		m_vPosition.y += 0.05f;
+	}
+	if (KEYBOARD->IsStayKeyDown(DIK_DOWN))
+	{
+		m_vPosition.y -= 0.05f;
+	}
 
 	// 스케일
-	if (KEYBOARD->IsStayKeyDown(DIK_UP))
+	if (KEYBOARD->IsStayKeyDown(DIK_PGUP))
 	{
 		m_vScaling.x += 0.001f; m_vScaling.y += 0.001f; m_vScaling.z += 0.001f;
 		m_BodyStuff->SetScale(m_vScaling);
 	}
-	if (KEYBOARD->IsStayKeyDown(DIK_DOWN))
+	if (KEYBOARD->IsStayKeyDown(DIK_PGDN))
 	{
 		m_vScaling.x -= 0.001f; m_vScaling.y -= 0.001f; m_vScaling.z -= 0.001f;
 		m_BodyStuff->SetScale(m_vScaling);
@@ -258,11 +271,4 @@ void cObjectTool::LoadInfoStuff()
 	fclose(fp);
 	
 
-}
-void cObjectTool::CollisionObjWithPlayerAndMonster()
-{
-	
-
-	
-		
 }

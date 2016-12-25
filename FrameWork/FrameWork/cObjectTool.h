@@ -11,7 +11,8 @@ private:
 	int				m_RotDirection;
 	float			m_fRx, m_fRy, m_fRz;
 	D3DXVECTOR3		m_vScaling;
-
+	D3DXVECTOR3		m_vPosition;
+	D3DXVECTOR3		 NewStuffpos;
 
 public:
 	cObjectTool();
@@ -29,6 +30,5 @@ public:
 	cStuff* CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff);
 	void SaveInfoStuff(cStuff* CloneStuff);
 	void LoadInfoStuff();
-	void CollisionObjWithPlayerAndMonster();
 };
 
