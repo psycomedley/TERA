@@ -23,6 +23,7 @@ cOrca::cOrca(char* szFolder, char* szFilename)
 
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -31,6 +32,9 @@ cOrca::cOrca()
 	, m_nLoop(1)
 	, m_fEventCameraRange(35.0f)
 {
+	SetupState();
+	SetupStatus();
+	SetBox();
 }
 
 
@@ -100,7 +104,7 @@ void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	Update();
 	m_pState->Update();
-	cDynamicObj::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat);
 }
 
 

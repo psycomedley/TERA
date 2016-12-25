@@ -7,6 +7,7 @@
 cBattleMgr::cBattleMgr()
 	: m_bHit(false)
 	, m_fDamageTime(600.0f)
+	, m_bHitted(false)
 {
 }
 
@@ -79,12 +80,13 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 	cPlayer* pTarget = (cPlayer*)GETSINGLE(cObjMgr)->GetPlayer();
 	if (!bMultieHit)
 	{
-		if (!pTarget->GetHit() && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
+		if (!m_bHitted && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
 		{
 			float damage = pTarget->Damaged(pParent->GetInfo());
 			if (damage == -1)
 				return;
-			m_vecHitted.push_back(pTarget);
+			m_bHitted = true;
+			//m_vecHitted.push_back(pTarget);
 			GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 			cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
 			text->SetTextFloat(damage);
@@ -102,7 +104,8 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 				float damage = pTarget->Damaged(pParent->GetInfo());
 				if (damage == -1)
 					return;
-				m_vecHitted.push_back(pTarget);
+				m_bHitted = true;
+				//m_vecHitted.push_back(pTarget);
 				GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 				cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
 				text->SetTextFloat(damage);
@@ -115,20 +118,36 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 }
 
 
-void cBattleMgr::Reset()
+void cBattleMgr::Reset(E_OBJTYPE eType)
 {
-	m_fDamageTime = 600.0f;
-	for (int i = 0; i < m_vecHitted.size(); i++)
-		m_vecHitted[i]->SetHit(false);
-	m_vecHitted.clear();
-	m_bHit = false;
-	m_bMultiHit = false;
+	switch (eType)
+	{
+	case E_MONSTER:
+		m_bHitted = false;
+		break;
+	case E_PLAYER:
+		m_fDamageTime = 600.0f;
+		for (int i = 0; i < m_vecHitted.size(); i++)
+			m_vecHitted[i]->SetHit(false);
+		m_vecHitted.clear();
+		m_bMultiHit = false;
+		m_bHit = false;
+		break;
+	}
 }
 
 
-void cBattleMgr::ResetList()
+void cBattleMgr::ResetList(E_OBJTYPE eType)
 {
-	for (int i = 0; i < m_vecHitted.size(); i++)
-		m_vecHitted[i]->SetHit(false);
-	m_vecHitted.clear();
+	switch (eType)
+	{
+	case E_MONSTER:
+		m_bHitted = false;
+		break;
+	case E_PLAYER:
+		for (int i = 0; i < m_vecHitted.size(); i++)
+			m_vecHitted[i]->SetHit(false);
+		m_vecHitted.clear();
+		break;
+	}
 }

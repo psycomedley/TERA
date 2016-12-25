@@ -177,7 +177,7 @@ void cStateBossSkill::Update()
 
 void cStateBossSkill::End()
 {
-	GETSINGLE(cBattleMgr)->Reset();
+	GETSINGLE(cBattleMgr)->Reset(E_MONSTER);
 
 	m_pParent->AnimationRemove();
 	m_pParent->ChangeState(E_STATE_WAIT);

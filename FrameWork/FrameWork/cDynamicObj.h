@@ -13,6 +13,7 @@ protected:
 	SYNTHESIZE(ST_UNIT_INFO, m_stInfo, Info);
 	SYNTHESIZE(bool, m_bHit, Hit);
 	SYNTHESIZE(float, m_fPassedVanishTime, PassedVanishTime);
+	SYNTHESIZE(float, m_fPassedHitTime, PassedHitTime);
 
 public:
 	cAnimationController* GetAnimController() { return ((cDynamicMesh*)m_pMesh)->GetAnimController(); }

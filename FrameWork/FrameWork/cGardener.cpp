@@ -15,6 +15,7 @@ cGardener::cGardener(char* szFolder, char* szFilename)
 
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -22,6 +23,7 @@ cGardener::cGardener()
 {
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -74,7 +76,7 @@ void cGardener::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	Update();
 	m_pState->Update();
-	cDynamicObj::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat);
 }
 
 

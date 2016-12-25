@@ -241,3 +241,38 @@ bool cCollision::Collision(cPlayer* pPlayer, cDynamicObj* pMonster)
 		return false;
 	}
 }
+
+
+bool cCollision::MoveCollision(cPlayer* pPlayer, cDynamicObj* pMonster)
+{
+	if (pMonster->GetpMesh())
+	{
+		cBoundingSphere stMonsterSphere = ((cMonster*)pMonster)->GetMoveColSphere();
+		cBoundingSphere stPlayerSphere = pPlayer->GetpMesh()->GetSphere(pPlayer->GetPrevPosition(), pPlayer->GetScale().x);
+
+		if (Collision(&stMonsterSphere, &stPlayerSphere))
+			return true;
+		return false;
+	}
+	return false;
+
+
+
+	/*if (pMonster->GetpMesh())
+	{
+		cBoundingBox stMonsterBox = ((cMonster*)pMonster)->GetMoveColBox();
+		
+		cBoundingBox stPlayerBox = pPlayer->GetpMesh()->GetBox(pPlayer->GetPrevPosition(), pPlayer->GetScale().x, pPlayer->GetAngle() + pPlayer->GetRevisionAngle());
+		D3DXVECTOR3 vMax1 = stPlayerBox.GetvMax();
+		D3DXVECTOR3 vMin1 = stPlayerBox.GetvMin();
+		D3DXVECTOR3 vMax2 = stMonsterBox.GetvMax();
+		D3DXVECTOR3 vMin2 = stMonsterBox.GetvMin();
+
+		if ((vMax1.x > vMin2.x && vMin1.x < vMax2.x) &&
+			(vMax1.y > vMin2.y && vMin1.y < vMax2.y) &&
+			(vMax1.z > vMin2.z && vMin1.z < vMax2.z))
+			return true;
+		return false;
+	}
+	return false;*/
+}

@@ -31,6 +31,7 @@ public:
 	virtual void Attack() override;
 
 	virtual float Damaged(ST_UNIT_INFO stInfo) override;
+	virtual void Move(float fSpeed) override;
 
 	bool IsMoveAble();
 	void UpdateUI();

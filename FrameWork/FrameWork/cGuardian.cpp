@@ -15,6 +15,7 @@ cGuardian::cGuardian(char* szFolder, char* szFilename)
 
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -22,6 +23,7 @@ cGuardian::cGuardian()
 {
 	SetupState();
 	SetupStatus();
+	SetBox();
 }
 
 
@@ -74,7 +76,7 @@ void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
 	Update();
 	m_pState->Update();
-	cDynamicObj::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat);
 }
 
 

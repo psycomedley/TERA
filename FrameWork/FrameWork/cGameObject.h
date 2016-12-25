@@ -26,8 +26,8 @@ protected:
 	SYNTHESIZE(float, m_fRotZ, fRotZ);
 
 public:
-	void Move(float fSpeed);
-	void Move(D3DXVECTOR3 vec);
+	virtual void Move(float fSpeed);
+	virtual void Move(D3DXVECTOR3 vec);
 
 public:
 	virtual cBoundingSphere GetSphere();

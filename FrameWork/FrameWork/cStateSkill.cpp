@@ -112,7 +112,7 @@ void cStateSkill::Update()
 
 void cStateSkill::End()
 {
-	GETSINGLE(cBattleMgr)->Reset();
+	GETSINGLE(cBattleMgr)->Reset(E_PLAYER);
 	m_nCount = 0;
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -125,7 +125,7 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 	{
 		GETSINGLE(cBattleMgr)->PlayerDamage(true);
 
-		GETSINGLE(cBattleMgr)->ResetList();
+		GETSINGLE(cBattleMgr)->ResetList(E_PLAYER);
 
 		if (!m_pParent->AnimationNext())
 		{

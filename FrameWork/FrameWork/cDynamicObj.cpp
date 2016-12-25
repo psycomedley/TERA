@@ -7,6 +7,7 @@
 cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 	: m_bHit(false)
 	, m_fPassedVanishTime(0.0f)
+	, m_fPassedHitTime(0.0f)
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);
 	SetBoundingPos();
@@ -19,6 +20,7 @@ cDynamicObj::cDynamicObj(char* szFolder, char* szFilename)
 cDynamicObj::cDynamicObj()
 	: m_bHit(false)
 	, m_fPassedVanishTime(0.0f)
+	, m_fPassedHitTime(0.0f)
 {
 	for (int i = 0; i < E_STATE_END; i++)
 		m_aStates[i] = NULL;
@@ -69,6 +71,16 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 	{
 		m_fPassedVanishTime += GETSINGLE(cTimeMgr)->getElapsedTime() * 0.5f;
 		((cDynamicMesh*)m_pMesh)->GetEffect()->SetFloat("g_fPassedTime", m_fPassedVanishTime);
+	}
+
+	if (((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_HIT)
+	{
+		m_fPassedHitTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+		if (m_fPassedHitTime >= 0.15f)
+		{
+			m_fPassedHitTime = 0.0f;
+			((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_NORMAL);
+		}
 	}
 
 	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat);
@@ -183,6 +195,9 @@ float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
 		{
 			if (IsMoveAble() && m_aStates[E_STATE_HIT])
 				ChangeState(E_STATE_HIT);
+			if (m_pMesh)
+				((cDynamicMesh*)m_pMesh)->SetTechnique(E_DYNA_TECH_HIT);
+			
 		}
 
 		return fDamage;

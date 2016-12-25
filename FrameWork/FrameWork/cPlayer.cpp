@@ -258,7 +258,8 @@ void cPlayer::CheckControl()
 		if (IsMoveAble())
 		{
 			m_fAngle = fCameraAngle + m_fTempAngle;
-			m_vPosition = m_vPosition - m_vDirection * 0.1;
+			//m_vPosition = m_vPosition - m_vDirection * 0.1;
+			Move(0.1f);
 			ChangeState(E_STATE_RUN);
 			bControl = true;
 		}
@@ -479,4 +480,22 @@ float cPlayer::Damaged(ST_UNIT_INFO stInfo)
 		return fDamage;
 	}
 	return -1;
+}
+
+
+void cPlayer::Move(float fSpeed)
+{
+	m_vPrevPosition = m_vPosition - m_vDirection * fSpeed;
+
+	vector<cDynamicObj*> monsterList = GETSINGLE(cObjMgr)->GetALLMonsterList();
+
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+		if (monsterList[i]->GetTarget() == NULL)
+			continue;
+
+		if (GETSINGLE(cCollision)->MoveCollision(this, monsterList[i]))
+			return;
+	}
+	m_vPosition = m_vPrevPosition;
 }

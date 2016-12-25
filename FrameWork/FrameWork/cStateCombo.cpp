@@ -55,7 +55,7 @@ void cStateCombo::Update()
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO2 ||
 		m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO3)
 	{
-		m_pParent->Move(0.05f);
+		((cPlayer*)m_pParent)->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.57f &&
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
@@ -66,7 +66,7 @@ void cStateCombo::Update()
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
-			m_pParent->Move(0.05f);
+			((cPlayer*)m_pParent)->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.73f &&
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
@@ -77,7 +77,7 @@ void cStateCombo::Update()
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
 	{
 		if (m_pParent->GetCurrentAnimPosition() < 0.5f)
-			m_pParent->Move(0.05f);
+			((cPlayer*)m_pParent)->Move(0.05f);
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.275f &&
 			m_pParent->GetCurrentAnimPosition() < 0.31f)
@@ -107,7 +107,7 @@ void cStateCombo::Update()
 				StartCombo1 = true;
 				m_pCombo1Effect->Setup(1, 0.2f, true, D3DXVECTOR3(0.2f, 0.2f, 0.2f), D3DXVECTOR3(m_pParent->GetPosition().x,
 					m_pParent->GetPosition().y + 1,
-					m_pParent->GetPosition().z), m_pParent->GetAngle() + D3DX_PI/2);
+					m_pParent->GetPosition().z), m_pParent->GetAngle() + D3DX_PI / 2);
 				m_pCombo1Effect->Start();
 			}
 		}
@@ -218,7 +218,7 @@ void cStateCombo::Update()
 	
 void cStateCombo::End()
 {
-	GETSINGLE(cBattleMgr)->Reset();
+	GETSINGLE(cBattleMgr)->Reset(E_PLAYER);
 
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -241,7 +241,7 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			pController->AnimationNext();
 			m_bNextAttack = false;
 
-			GETSINGLE(cBattleMgr)->ResetList();
+			GETSINGLE(cBattleMgr)->ResetList(E_PLAYER);
 		}
 	}
 	else

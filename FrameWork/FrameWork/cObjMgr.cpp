@@ -60,7 +60,7 @@ void cObjMgr::Render()
 	if (m_pPlayer)
 		m_pPlayer->UpdateAndRender();
 	m_pPlayer->Bounding_Update();
-//	m_pPlayer->Bounding_Render();
+	m_pPlayer->Bounding_Render();
 
 	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
 	{
