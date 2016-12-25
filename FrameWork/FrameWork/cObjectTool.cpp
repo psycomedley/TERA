@@ -248,9 +248,11 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetIsCullMode(isCull);
 		cloneStuff->SetFoldername(&foldername[0]);
 		cloneStuff->SetFilename(&filename[0]);
-		D3DXVECTOR3 vMIN(MinX*Sx, MinY*Sy, MinZ*Sz);
-		D3DXVECTOR3 vMAX(MaxX*Sx, MaxY*Sy, MaxZ*Sz);
-		//cloneStuff->GetpMesh()->ReSetupBoundingBox(Sx);
+		D3DXVECTOR3 vMIN(MinX*0.05f, MinY*0.85f, MinZ*0.05f);
+		D3DXVECTOR3 vMAX(MaxX*0.05f, MaxY*0.85f, MaxZ*0.05f);
+		cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+		cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+		cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.05f));
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);

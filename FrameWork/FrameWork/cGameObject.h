@@ -7,6 +7,7 @@ class cGameObject : public cObject
 protected:
 	SYNTHESIZE(cMesh*, m_pMesh, pMesh);
 	D3DXVECTOR3 m_vScale;
+	SYNTHESIZE(D3DXVECTOR3, m_vRevisionScale, RevisionScale);
 	SYNTHESIZE(D3DXVECTOR3, m_vPrevPosition, PrevPosition);
 
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
@@ -40,7 +41,6 @@ public:
 //	void SetPosition(D3DXVECTOR3 vPos);
 	void SetBoundingPos();
 	bool IsMesh() { if (m_pMesh) return true; return false; }
-	void SetMinMax();
 public:
 	virtual void Update();
 	virtual void Render();

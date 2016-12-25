@@ -61,11 +61,6 @@ HRESULT cMesh::SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
 
 	return S_OK;
 }
-HRESULT cMesh::ReSetupBoundingBox(float scale)
-{
-	if (FAILED(m_pBox->ReSetup(scale)))
-		return E_FAIL;
-}
 
 cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*= 0*/)
 {
@@ -81,21 +76,6 @@ cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*=
 
 	vMin += vPosition;
 	vMax += vPosition;
-
-	
-	//box.m_stObb.fAxisLen[0] = fabs(vMax.x - vMin.x);
-	//box.m_stObb.fAxisLen[1] = fabs(vMax.y - vMin.y);
-	//box.m_stObb.fAxisLen[2] = fabs(vMax.z - vMin.z);
-
-	//box.m_stObb.fAxisHalfLen[0] = box.m_stObb.fAxisLen[0] / 2.0f;
-	//box.m_stObb.fAxisHalfLen[1] = box.m_stObb.fAxisLen[1] / 2.0f;
-	//box.m_stObb.fAxisHalfLen[2] = box.m_stObb.fAxisLen[2] / 2.0f;
-
-	//
-
-	//box.m_stObb.vAxisDir[0] = m_pBox->m_stObb.vAxisDir[0];
-	//box.m_stObb.vAxisDir[1] = m_pBox->m_stObb.vAxisDir[1];
-	//box.m_stObb.vAxisDir[2] = m_pBox->m_stObb.vAxisDir[2];
 	
 	box.SetvMin(vMin);
 	box.SetvMax(vMax);
@@ -168,18 +148,4 @@ cBoundingSphere cMesh::GetSphere(D3DXMATRIXA16* mat)
 	vPosition.z));*/
 
 	return sphere;
-}
-void cMesh::SetMinMax(D3DXVECTOR3 vPosition, float fScale, float fAngle)
-{
-	D3DXVECTOR3	vMin = m_pBox->GetvMin() * fScale;
-	D3DXVECTOR3	vMax = m_pBox->GetvMax() * fScale;
-
-	//	D3DXVec3TransformCoord(&vMin, &vMin, &matR);
-	//	D3DXVec3TransformCoord(&vMax, &vMax, &matR);
-
-	vMin += vPosition;
-	vMax += vPosition;
-
-	m_pBox->SetvMin(vMin);
-	m_pBox->SetvMax(vMax);
 }
