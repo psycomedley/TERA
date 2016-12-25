@@ -66,11 +66,20 @@ void cObjectTool::ResetVariable()
 }
 void cObjectTool::ChangeBodyStuff()
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD7))
 	{
 		ZeroMemory(m_IsSelect, 4);
 		m_IsSelect[0] = true;
-		
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD8))
+	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[1] = true;
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD9))
+	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[2] = true;
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_0) && m_IsSelect[0])
 	{
@@ -84,17 +93,136 @@ void cObjectTool::ChangeBodyStuff()
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[0])
 	{
-		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무2");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[0])
 	{
-		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_기둥");
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무4");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[0])
 	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_기둥");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("작은바리게이트엑스");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("큰바리게이트엑스");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[0])
+	{
 		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("게시판");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_9) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("원형통");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+
+	//==================2
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("의자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("작은상자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("큰상자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("카트");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("항아리");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무밑둥");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("장작");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("돌1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_9) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_0) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀2");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+
+	// =========================3
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀3");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집2");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집3");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집4");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집5");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("문");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("우물");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 
@@ -287,12 +415,28 @@ void cObjectTool::LoadInfoStuff()
 
 		if (strcmp(filename, "tree1.x") == 0)
 		{
-			
 			D3DXVECTOR3 vMIN(MinX*0.05f, MinY*0.85f, MinZ*0.05f);
 			D3DXVECTOR3 vMAX(MaxX*0.05f, MaxY*0.85f, MaxZ*0.05f);
 			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
 			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
 			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.05f));
+		}
+		if (strcmp(filename, "tree2.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.02f, MinY*0.85f, MinZ*0.07f);
+			D3DXVECTOR3 vMAX(MaxX*0.10f, MaxY*0.85f, MaxZ*0.07f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.07f));
+		}
+		if (strcmp(filename, "tree4.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.06f, MinY*0.85f, (MinZ)*0.01f);
+			D3DXVECTOR3 vMAX(MaxX*0.06f, MaxY*0.85f, (MaxZ)*0.13f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionPosition(D3DXVECTOR3(0, 0, 1.5f));
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.06f, 0.85f, 0.08f));
 		}
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
