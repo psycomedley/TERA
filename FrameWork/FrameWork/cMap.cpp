@@ -59,7 +59,7 @@ void cMap::Update()
 
 	vector<cDynamicObj*> pVecAllMonster = GETSINGLE(cObjMgr)->GetALLMonsterList();
 	for (size_t i = 0; i < pVecAllMonster.size(); ++i)
-	{
+	{	
 		D3DXVECTOR3 MonsterPos = pVecAllMonster[i]->GetPosition();
 		if (GetHeight(MonsterPos.x, MonsterPos.y, MonsterPos.z))
 		{

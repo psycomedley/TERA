@@ -113,7 +113,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(30, 100, 0));
+	pPlayer->SetPosition(D3DXVECTOR3(30, 0, 0));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -227,12 +227,6 @@ void cMainGame::Update()
 		GETSINGLE(cEventMgr)->Update();
 	}
 
-	if (KEYBOARD->IsToggleKey(VK_F1))
-	{
-		if (m_cObjectTool)
-			m_cObjectTool->Update();
-	}
-
 	///////////////юс╫ц////////////////
 
 	if (IsActive())
@@ -299,6 +293,15 @@ void cMainGame::Update()
 
 
 	m_pMap->Update();
+
+
+	if (KEYBOARD->IsToggleKey(VK_F1))
+	{
+
+	}
+	if (m_cObjectTool)
+		m_cObjectTool->Update();
+
 	///////////////////////////////////
 
 	GETSINGLE(cInput)->EndFrame();
