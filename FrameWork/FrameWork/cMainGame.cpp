@@ -43,7 +43,7 @@ cMainGame::~cMainGame()
 	
 
 	SAFE_RELEASE(m_pCircleEffect);
-	SAFE_RELEASE(m_pRushEffect);
+	//SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
 
@@ -171,14 +171,14 @@ HRESULT cMainGame::Setup()
 
 	
 
-	m_pEffect4 = new cEffect;
-	m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
-	m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
-	m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
-	m_pEffect4->AddTechList(E_TECH_NORMAL);
-	D3DXMATRIXA16 rotationMat;
-	D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
-	m_pEffect4->SetMatRotation(rotationMat);
+	//m_pEffect4 = new cEffect;
+	//m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
+	//m_pEffect4->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
+	//m_pEffect4->SetPosition(D3DXVECTOR3(10, 0, 10));
+	//m_pEffect4->AddTechList(E_TECH_NORMAL);
+	//D3DXMATRIXA16 rotationMat;
+	//D3DXMatrixRotationX(&rotationMat, D3DX_PI / 2);
+	//m_pEffect4->SetMatRotation(rotationMat);
 
 
 
@@ -196,8 +196,8 @@ HRESULT cMainGame::Setup()
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
 //	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
-	m_pRushEffect = new cRushEffect("Effect", "RushEffect.x");
-	m_pRushEffect->Setup(40, 0.3f, true, D3DXVECTOR3(0.05f, 0.05f, 0.05f), D3DXVECTOR3(25, 1.5f, 0));
+	//m_pRushEffect = new cRushEffect("Effect", "RushEffect2.x");
+	//m_pRushEffect->Setup(40, 0.015f, true, D3DXVECTOR3(0.005f, 0.005f, 0.005f), D3DXVECTOR3(25, 1.5f, 0));
 
 
 
@@ -266,15 +266,15 @@ void cMainGame::Update()
 		{
 			//m_pDynamicMeshEffect->Start();
 			//m_pCircleEffect->Start();
-			m_pRushEffect->Start();
-			if (m_pEffect4->GetProcess())
+			//m_pRushEffect->Start();
+			/*if (m_pEffect4->GetProcess())
 			{
 				m_pEffect4->Stop();
 			}
 			else
 			{
 				m_pEffect4->Start();
-			}
+			}*/
 		}
 		//	char szStr[16] = { '\0', };
 		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
@@ -298,10 +298,10 @@ void cMainGame::Update()
 	//{
 	//	m_pCircleEffect->Update();
 	//}
-	if (m_pRushEffect)
-	{
-		m_pRushEffect->Update();
-	}
+	//if (m_pRushEffect)
+	//{
+	//	m_pRushEffect->Update();
+	//}
 	if (m_pEffect4)
 		m_pEffect4->Update();
 
@@ -380,10 +380,10 @@ void cMainGame::Render()
 	//{
 	//	m_pCircleEffect->Render();
 	//}
-	if (m_pRushEffect)
-	{
-//		m_pRushEffect->Render();
-	}
+	//if (m_pRushEffect)
+	//{
+	//	m_pRushEffect->Render();
+	//}
 	if (m_pEffect4)
 	{
 		m_pEffect4->Render();
@@ -763,4 +763,28 @@ void cMainGame::SetEffect()
 //	pEffect->SetName("GlobeAtk2");
 //
 //	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//¹Ù´Ú ±úÁö´Â ÀÌÆåÆ®
+	pEffect = new cEffect;
+	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/D_BaPho_CrackMake002_Emis.tga", E_TEXTURE1);
+	pEffect->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pEffect->AddTechList(E_TECH_NORMAL);
+	D3DXMatrixRotationX(&m, 0.0f);
+	pEffect->SetMatRotation(m);
+	pEffect->SetRemoveTime(1);
+	pEffect->SetName("badak");
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+	//2¹ø½ºÅ³ ÀÌÆåÆ®
+	pEffect = new cEffect;
+	pEffect->Setup(3, 3, 1, EFFECT_BILLBOARING | EFFECT_ALPHABLEND);
+	pEffect->SetTexture("Effect/attack.tga", E_TEXTURE1);
+	pEffect->SetPosition(D3DXVECTOR3(0, 1, 0));
+	pEffect->AddTechList(E_TECH_NORMAL);
+	pEffect->SetRemoveTime(0.04f);
+	pEffect->SetName("skill2");
+	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+
+
 }

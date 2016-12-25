@@ -65,7 +65,20 @@ void cStateSkill::Update()
 		if (m_pParent->GetCurrentAnimPosition() > 0.8f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-		//	GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect","D_BaPho_CrackMake002_Emis.tga")
+
+			
+
+		}
+		if (m_pParent->GetCurrentAnimPosition() > 0.65f &&
+			m_pParent->GetCurrentAnimPosition() < 0.7f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -2.0f;
+			D3DXMatrixIdentity(&mat);
+			D3DXMatrixRotationX(&mat, D3DX_PI / 2);
+			GETSINGLE(cEffectMgr)->AddList("badak", vec, mat);
 		}
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.2f &&
@@ -84,6 +97,25 @@ void cStateSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+
+		if (m_pParent->GetCurrentAnimPosition() > 0.3f && m_pParent->GetCurrentAnimPosition() < 0.4f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -1.0f;
+			vec = D3DXVECTOR3(vec.x, vec.y + 1.5f, vec.z);
+			D3DXMatrixIdentity(&mat);
+			GETSINGLE(cEffectMgr)->AddList("skill2", vec, mat);
+		}
+		if (m_pParent->GetCurrentAnimPosition() > 0.7f && m_pParent->GetCurrentAnimPosition() < 0.8f)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXVECTOR3 vec;
+			vec = m_pParent->GetPosition() + m_pParent->GetDirection() * -1.0f;
+			vec = D3DXVECTOR3(vec.x, vec.y + 1.5f, vec.z);
+			D3DXMatrixIdentity(&mat);
+			GETSINGLE(cEffectMgr)->AddList("skill2", vec, mat);
+		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_SKILL)
 	{
