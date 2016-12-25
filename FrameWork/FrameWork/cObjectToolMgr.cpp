@@ -175,6 +175,55 @@ void cObjectToolMgr::Setup()
 	pGrass2->SetIsCullMode(true);
 	pGrass2->SetSubSetNum(1);
 	GETSINGLE(cObjMgr)->AddStuff("풀3", pGrass3);
+
+	cStuff* pHouse1 = new cStuff("Object/집1", "house1.x");
+	pHouse1->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pHouse1->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pHouse1->SetFoldername("Object/집1");
+	pHouse1->SetFilename("house1.x");
+	GETSINGLE(cObjMgr)->AddStuff("집1", pHouse1);
+
+	cStuff* pHouse2 = new cStuff("Object/집2", "house2.x");
+	pHouse2->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pHouse2->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pHouse2->SetFoldername("Object/집2");
+	pHouse2->SetFilename("house2.x");
+	GETSINGLE(cObjMgr)->AddStuff("집2", pHouse2);
+
+	cStuff* pHouse3 = new cStuff("Object/집3", "house3.x");
+	pHouse3->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pHouse3->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pHouse3->SetFoldername("Object/집3");
+	pHouse3->SetFilename("house3.x");
+	GETSINGLE(cObjMgr)->AddStuff("집3", pHouse3);
+
+	cStuff* pHouse4 = new cStuff("Object/집4", "house4.x");
+	pHouse4->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pHouse4->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pHouse4->SetFoldername("Object/집4");
+	pHouse4->SetFilename("house4.x");
+	GETSINGLE(cObjMgr)->AddStuff("집4", pHouse4);
+
+	cStuff* pHouse5 = new cStuff("Object/집5", "house5.x");
+	pHouse5->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pHouse5->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pHouse5->SetFoldername("Object/집5");
+	pHouse5->SetFilename("house5.x");
+	GETSINGLE(cObjMgr)->AddStuff("집5", pHouse5);
+
+	cStuff* pGate = new cStuff("Object/문", "Gate.x");
+	pGate->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pGate->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pGate->SetFoldername("Object/문");
+	pGate->SetFilename("Gate.x");
+	GETSINGLE(cObjMgr)->AddStuff("문", pGate); 
+
+	cStuff* pWell = new cStuff("Object/우물", "Well.x");
+	pWell->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 40.0f));
+	pWell->SetScale(D3DXVECTOR3(0.07f, 0.07f, 0.07f));
+	pWell->SetFoldername("Object/우물");
+	pWell->SetFilename("Well.x");
+	GETSINGLE(cObjMgr)->AddStuff("우물", pWell);
 }
 void cObjectToolMgr::Update()
 {

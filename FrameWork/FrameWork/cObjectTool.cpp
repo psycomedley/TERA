@@ -18,7 +18,7 @@ cObjectTool::~cObjectTool()
 }
 void cObjectTool::Setup()
 {
-	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("Ǯ3");
+	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("�칰");
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();

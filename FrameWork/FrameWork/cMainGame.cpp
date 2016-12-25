@@ -452,7 +452,7 @@ void cMainGame::SetLighting()
 {
 	D3DLIGHT9 stLight;
 	ZeroMemory(&stLight, sizeof(D3DLIGHT9));
-	stLight.Ambient = stLight.Diffuse = stLight.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	stLight.Ambient = stLight.Diffuse = stLight.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
 	D3DXVECTOR3 vDir(1, -1, 1);
 	D3DXVec3Normalize(&vDir, &vDir);
 	stLight.Direction = vDir;
