@@ -128,7 +128,7 @@ HRESULT cMainGame::Setup()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(30, 0, 20));
+	pMonster->SetPosition(D3DXVECTOR3(30, 0, 40));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	/*pMonster = new cGardener("Monster", "Gardener.X");

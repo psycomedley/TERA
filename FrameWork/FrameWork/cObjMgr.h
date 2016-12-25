@@ -8,6 +8,7 @@ private:
 	cDynamicObj*							m_pPlayer;
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
 	map<string, list<cDynamicObj*>>			m_mapMonster;
+
 	map<string, cStaticObj*>				m_mapStuff;
 	vector<cStaticObj*>						m_vecCloneStuff;
 

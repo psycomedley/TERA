@@ -29,6 +29,6 @@ public:
 	cStuff* CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff);
 	void SaveInfoStuff(cStuff* CloneStuff);
 	void LoadInfoStuff();
-	void CollisionObjWithPlayer();
+	void CollisionObjWithPlayerAndMonster();
 };
 

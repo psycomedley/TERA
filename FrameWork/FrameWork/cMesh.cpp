@@ -72,6 +72,7 @@ cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*=
 	cBoundingBox box;
 	D3DXMATRIXA16 matR;
 	D3DXMatrixRotationY(&matR, fAngle);
+	cBoundingBox box1 = *m_pBox;
 	D3DXVECTOR3	vMin = m_pBox->GetvMin() * fScale;
 	D3DXVECTOR3	vMax = m_pBox->GetvMax() * fScale;
 
