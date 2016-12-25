@@ -770,7 +770,7 @@ void cMainGame::SetEffect()
 
 	//2번스킬 이펙트
 	pEffect = new cEffect;
-	pEffect->Setup(1, 1, 0.5f, EFFECT_BILLBOARING | EFFECT_ALPHABLEND);
+	pEffect->Setup(3, 3, 1, EFFECT_BILLBOARING | EFFECT_ALPHABLEND);
 	pEffect->SetTexture("Effect/attack.tga", E_TEXTURE1);
 	pEffect->SetPosition(D3DXVECTOR3(0, 1, 0));
 	pEffect->AddTechList(E_TECH_NORMAL);
