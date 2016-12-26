@@ -4,7 +4,7 @@
 class cBoundingBox : public cBounding
 {
 private:
-	LPD3DXMESH		m_pBoxMesh;
+	/*LPD3DXMESH		m_pBoxMesh;*/
 
 	SYNTHESIZE(D3DXVECTOR3, m_vMin, vMin);
 	SYNTHESIZE(D3DXVECTOR3, m_vMax, vMax);

@@ -7,6 +7,7 @@
 
 
 cObjectToolMgr::cObjectToolMgr()
+	:m_PlayerPrevPos(0,0,0)
 {
 }
 
@@ -234,20 +235,22 @@ void cObjectToolMgr::Update()
 	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
 	cBoundingBox* playerBox = &(pPlayer->GetBox());
 
+
 	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
 	{
 
 		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
 		// 캐릭터와 오브젝트 충돌
+		
 		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
 		{
 			D3DXVECTOR3 CurPos = pPlayer->GetPosition();
 			D3DXVECTOR3 afterPos = pPlayer->GetPrevPosition();
-			pPlayer->SetPosition(pPlayer->GetPrevPosition());
+			pPlayer->SetPosition(m_PlayerPrevPos);
 		}
 		if (i + 1 == vecCloneStuff.size())
 		{
-			pPlayer->SetPrevPosition(pPlayer->GetPosition());
+			m_PlayerPrevPos = pPlayer->GetPosition();
 		}
 
 		//몬스터와 오브젝트 충돌
@@ -273,4 +276,8 @@ void cObjectToolMgr::Update()
 void cObjectToolMgr::Render()
 {
 
+}
+void cObjectToolMgr::Release()
+{
+	cSingleton::Release();
 }

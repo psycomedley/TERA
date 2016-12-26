@@ -99,7 +99,7 @@ void cBoundingBox::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3
 {
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	D3DXMATRIXA16 matS, matR, matT, mat;
-//	D3DXMatrixIdentity(&mat);
+	//	D3DXMatrixIdentity(&mat);
 	D3DXMatrixScaling(&matS, vScale.x, vScale.y, vScale.z);
 	D3DXMatrixRotationY(&matR, fAngle);
 	D3DXMatrixTranslation(&matT,
@@ -217,5 +217,5 @@ void cBoundingBox::Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle, D3
 
 void cBoundingBox::Release()
 {
-	SAFE_RELEASE(m_pBoxMesh);
+	//SAFE_RELEASE(m_pBoxMesh);
 }

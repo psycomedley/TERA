@@ -12,6 +12,10 @@ cEventMgr::cEventMgr()
 
 cEventMgr::~cEventMgr()
 {
+	/*for each(auto p in m_vecEvent)
+	{
+		SAFE_DELETE(p);
+	}*/
 }
 
 
@@ -24,4 +28,8 @@ void cEventMgr::Play(/*string sKey*/)
 void cEventMgr::Update()
 {
 	m_vecEvent[0]->Update();
+}
+void cEventMgr::Release()
+{
+	cSingleton::Release();
 }
