@@ -59,8 +59,10 @@ void cStateCombo::Update()
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.57f &&
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-			//AddDamage(false);
+			PlaySound(E_SOUND_ATK);
+		}
 	}
 
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
@@ -70,8 +72,10 @@ void cStateCombo::Update()
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.73f &&
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-//			AddDamage(false);
+			PlaySound(E_SOUND_ATK2);
+		}
 	}
 
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO5)
@@ -81,8 +85,10 @@ void cStateCombo::Update()
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.275f &&
 			m_pParent->GetCurrentAnimPosition() < 0.31f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-			//AddDamage(false);
+			PlaySound(E_SOUND_ATK2);
+		}
 
 		if (m_pParent->GetCurrentAnimPosition() > 0.46f &&
 			m_pParent->GetCurrentAnimPosition() < 0.48f)
@@ -219,6 +225,8 @@ void cStateCombo::Update()
 void cStateCombo::End()
 {
 	GETSINGLE(cBattleMgr)->Reset(E_PLAYER);
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -242,6 +250,8 @@ void cStateCombo::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			m_bNextAttack = false;
 
 			GETSINGLE(cBattleMgr)->ResetList(E_PLAYER);
+			m_bSoundPlay = false;
+			m_bSoundPlay2 = false;
 		}
 	}
 	else

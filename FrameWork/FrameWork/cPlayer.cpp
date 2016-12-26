@@ -43,6 +43,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	//юс╫ц
 	SetupBaseWeapon();
 	SetupState();
+	SetSound();
 }
 
 
@@ -58,6 +59,7 @@ cPlayer::cPlayer()
 	, m_pHead(NULL)*/
 {
 	SetupStatus();
+	SetSound();
 	GETSINGLE(cUIMgr)->AddList("Player");
 	m_pUIHp = GETSINGLE(cUIMgr)->GetUIInList("Player");
 }
@@ -445,6 +447,26 @@ void cPlayer::SetupStatus()
 }
 
 
+void cPlayer::SetSound()
+{
+	string sKey = m_stInfo.sName + "_Atk";
+	m_eSoundKey[E_SOUND_ATK] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Atk2";
+	m_eSoundKey[E_SOUND_ATK2] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Skill1";
+	m_eSoundKey[E_SOUND_SKILL1] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Skill2";
+	m_eSoundKey[E_SOUND_SKILL2] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Skill3";
+	m_eSoundKey[E_SOUND_SKILL3] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+}
+
+
 float cPlayer::Damaged(ST_UNIT_INFO stInfo)
 {
 	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
@@ -498,10 +520,4 @@ void cPlayer::Move(float fSpeed)
 			return;
 	}
 	m_vPosition = m_vPrevPosition;
-}
-
-
-void cPlayer::SetSound()
-{
-//	GETSINGLE(cSoundMgr)->Add()
 }

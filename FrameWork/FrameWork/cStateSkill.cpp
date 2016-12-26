@@ -66,7 +66,7 @@ void cStateSkill::Update()
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 
-			
+			PlaySound(E_SOUND_SKILL1);
 
 		}
 		if (m_pParent->GetCurrentAnimPosition() > 0.65f &&
@@ -96,8 +96,11 @@ void cStateSkill::Update()
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_DOUBLEATTACK)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
 
+			PlaySound(E_SOUND_SKILL2, true);
+		}
 		if (m_pParent->GetCurrentAnimPosition() > 0.3f && m_pParent->GetCurrentAnimPosition() < 0.4f)
 		{
 			D3DXMATRIXA16 mat;
@@ -127,7 +130,10 @@ void cStateSkill::Update()
 			m_pParent->Move(0.05f);
 		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
 			m_pParent->GetCurrentAnimPosition() <= 0.6f)
+		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+	//		PlaySound(E_SOUND_SKILL3);
+		}
 	}
 
 	if (StartEffect1)
@@ -146,6 +152,8 @@ void cStateSkill::Update()
 void cStateSkill::End()
 {
 	GETSINGLE(cBattleMgr)->Reset(E_PLAYER);
+	m_bSoundPlay = false;
+	m_bSoundPlay2 = false;
 	m_nCount = 0;
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
@@ -157,6 +165,7 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 	if (animInfo.nIndex == E_ANI_DOUBLEATTACK)
 	{
 		GETSINGLE(cBattleMgr)->PlayerDamage(true);
+		PlaySound(E_SOUND_SKILL2);
 
 		GETSINGLE(cBattleMgr)->ResetList(E_PLAYER);
 
@@ -166,11 +175,15 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 			m_pParent->AddAnimation(aniInfo);
 			m_pParent->AnimationNext();
 		}
+		m_bSoundPlay = false;
+		m_bSoundPlay2 = false;
 		m_bNextAttack = false;
 		return;
 	}
 	else if (animInfo.nIndex == E_ANI_SKILL)
 	{
+		m_bSoundPlay = false;
+		m_bSoundPlay2 = false;
 		m_pParent->AnimationNext();
 		return;
 	}

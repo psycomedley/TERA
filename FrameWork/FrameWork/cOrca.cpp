@@ -106,12 +106,15 @@ void cOrca::SetupStatus()
 
 void cOrca::SetSound()
 {
-	string sKey = m_stInfo.sName + "_Atk";
+	/*string sKey = m_stInfo.sName + "_Atk";
 	m_eSoundKey[E_SOUND_ATK] = sKey;
 	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
 	sKey = m_stInfo.sName + "_Run";
 	m_eSoundKey[E_SOUND_RUN] = sKey;
 	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");
+	sKey = m_stInfo.sName + "_Skill1";
+	m_eSoundKey[E_SOUND_SKILL1] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg");*/
 }
 
 

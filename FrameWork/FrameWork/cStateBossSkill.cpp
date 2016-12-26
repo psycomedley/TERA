@@ -87,6 +87,7 @@ void cStateBossSkill::Update()
 			if (m_pParent->GetCurrentAnimPosition() >= 0.51f)
 			{
 				AddGlobe(D3DX_PI / 3 * 2);
+		//		PlaySound(E_SOUND_SKILL1);
 			}
 			break;
 		}
@@ -128,7 +129,7 @@ void cStateBossSkill::Update()
 			sphere.SetRadius(9);
 
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
-			PlaySound(E_SOUND_ATK);
+	//		PlaySound(E_SOUND_ATK);
 		}
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_BACKATK)
