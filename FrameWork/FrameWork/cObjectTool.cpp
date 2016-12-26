@@ -5,7 +5,7 @@
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
-	, m_vPosition(0, 0, 0)
+	, m_vPosition(0, 0, 50)
 {
 	for (int i = 0; i < 4; i++)
 		m_IsSelect[i] = false;
@@ -18,7 +18,8 @@ cObjectTool::~cObjectTool()
 }
 void cObjectTool::Setup()
 {
-	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("우물");
+	LoadInfoStuff();
+	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("작은상자");
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
@@ -52,10 +53,10 @@ void cObjectTool::Render()
 			m_BodyStuff->GetPosition(), D3DXVECTOR3(0.5f, 0.5f, 0.5f), 0, &m_BodyStuff->GetWorldTM());
 
 	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_F2))
+	/*if (KEYBOARD->IsOnceKeyDown(DIK_F2))
 	{
 		LoadInfoStuff();
-	}
+	}*/
 
 }
 void cObjectTool::ResetVariable()

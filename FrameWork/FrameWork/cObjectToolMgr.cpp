@@ -17,7 +17,7 @@ cObjectToolMgr::~cObjectToolMgr()
 }
 void cObjectToolMgr::Setup()
 {
-
+	//m_PlayerPrevPos = GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
 
 	cStuff* pTree = new cStuff("Object", "tree1.x");
 	pTree->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 50.0f));
