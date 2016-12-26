@@ -7,8 +7,10 @@ class cGameObject : public cObject
 protected:
 	SYNTHESIZE(cMesh*, m_pMesh, pMesh);
 	D3DXVECTOR3 m_vScale;
+	SYNTHESIZE(D3DXVECTOR3, m_vRevisionScale, RevisionScale);
 	SYNTHESIZE(D3DXVECTOR3, m_vPrevPosition, PrevPosition);
 
+	SYNTHESIZE(D3DXVECTOR3, m_vRevisionPosition, RevisionPosition);
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vCameraFocus, CameraFocus);
 	SYNTHESIZE(float, m_fAngle, Angle);

@@ -61,11 +61,6 @@ HRESULT cMesh::SetupBounding(D3DXVECTOR3 vMin, D3DXVECTOR3 vMax)
 
 	return S_OK;
 }
-HRESULT cMesh::ReSetupBoundingBox(float scale)
-{
-	if (FAILED(m_pBox->ReSetup(scale)))
-		return E_FAIL;
-}
 
 cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*= 0*/)
 {
