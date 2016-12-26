@@ -26,6 +26,10 @@ void cBattleMgr::Update()
 
 void cBattleMgr::Release()
 {
+	/*for each(auto p in m_vecHitted)
+	{
+		p->Release();
+	}*/
 	cSingleton::Release();
 }
 

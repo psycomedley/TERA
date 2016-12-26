@@ -240,6 +240,10 @@ void cMainGame::Update()
 		if (m_cObjectTool)
 			m_cObjectTool->Update();
 	}
+	else
+	{
+		GETSINGLE(cObjectToolMgr)->Update();
+	}
 
 	///////////////юс╫ц////////////////
 
@@ -426,6 +430,8 @@ void cMainGame::Release()
 	GETSINGLE(cEffectMgr)->Release();
 	GETSINGLE(cSoundMgr)->Release();
 	GETSINGLE(cBattleMgr)->Release();
+	GETSINGLE(cObjectToolMgr)->Release();
+	GETSINGLE(cEventMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
 	
