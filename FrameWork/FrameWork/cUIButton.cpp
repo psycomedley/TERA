@@ -10,6 +10,8 @@ cUIButton::cUIButton()
 
 cUIButton::~cUIButton()
 {
+	/*for (int i = 0; i < 3; ++i)
+		SAFE_RELEASE(m_aTexture[i]);*/
 }
 
 

@@ -48,6 +48,9 @@ void cEffectMgr::Render()
 	for each (auto effect in m_listEffect)
 		effect->Render();
 
+	for each(auto effect in m_vecStaticMeshEffect)
+		effect->Render();
+
 }
 
 

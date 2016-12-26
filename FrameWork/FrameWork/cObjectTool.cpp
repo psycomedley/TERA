@@ -5,17 +5,20 @@
 
 cObjectTool::cObjectTool()
 	:m_RotDirection(0)
+	, m_vPosition(0, 0, 0)
 {
+	for (int i = 0; i < 4; i++)
+		m_IsSelect[i] = false;
 }
 
 
 cObjectTool::~cObjectTool()
 {
-	
+
 }
 void cObjectTool::Setup()
 {
-	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무");
+	m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("우물");
 	m_vScaling = m_BodyStuff->GetScale();
 	ResetVariable();
 	//SaveInfoStuff();
@@ -24,26 +27,23 @@ void cObjectTool::Setup()
 }
 void cObjectTool::Update()
 {
+	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 
-	/*cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	playerPos.z += 2.0f;
-	m_BodyStuff->SetPosition(playerPos);*/
-	
+
 	ChangeBodyStuff();
 	ChangeScaleAndAngle();
 	AddClone();
-	
 
-	//충돌처리
-	CollisionObjWithPlayer();
-	
-	
+	playerPos = pPlayer->GetPosition();
+	playerPos.y = playerPos.y + m_vPosition.y;
+	playerPos.z += 2.0f;
+	m_BodyStuff->SetPosition(playerPos);
+
 }
 void cObjectTool::Render()
 {
 	m_BodyStuff->Render(); // 바디 오브젝트만 렌더
-	
+
 	m_BodyStuff->Bounding_Render();
 	if (KEYBOARD->IsOnceKeyDown(DIK_5))
 	{
@@ -56,18 +56,173 @@ void cObjectTool::Render()
 	{
 		LoadInfoStuff();
 	}
-	
+
 }
 void cObjectTool::ResetVariable()
 {
+	m_vPosition.x = m_vPosition.y = m_vPosition.z = 0;
 	m_fRx, m_fRy, m_fRz = 0;
 	m_vScaling = m_BodyStuff->GetScale();
 }
 void cObjectTool::ChangeBodyStuff()
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD7))
+	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[0] = true;
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD8))
+	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[1] = true;
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_NUMPAD9))
+	{
+		ZeroMemory(m_IsSelect, 4);
+		m_IsSelect[2] = true;
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_0) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("캠프파이어");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무2");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무4");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[0])
 	{
 		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("바리게이트_기둥");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("작은바리게이트엑스");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("큰바리게이트엑스");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("게시판");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_9) && m_IsSelect[0])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("원형통");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+
+	//==================2
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("의자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("작은상자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("큰상자");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("카트");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("항아리");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("나무밑둥");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("장작");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("돌1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_9) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_0) && m_IsSelect[1])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀2");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+
+	// =========================3
+	if (KEYBOARD->IsOnceKeyDown(DIK_1) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("풀3");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집1");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집2");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집3");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_5) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집4");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_6) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("집5");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_7) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("문");
+		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_8) && m_IsSelect[2])
+	{
+		m_BodyStuff = GETSINGLE(cObjMgr)->GetStuffList("우물");
 		ResetVariable(); // 스케일, 회전 변수 다 0으로 초기화
 	}
 
@@ -88,13 +243,23 @@ void cObjectTool::ChangeScaleAndAngle()
 		m_RotDirection = 3; // z축
 	}
 
-	// 스케일
+	//높이조절
 	if (KEYBOARD->IsStayKeyDown(DIK_UP))
+	{
+		m_vPosition.y += 0.05f;
+	}
+	if (KEYBOARD->IsStayKeyDown(DIK_DOWN))
+	{
+		m_vPosition.y -= 0.05f;
+	}
+
+	// 스케일
+	if (KEYBOARD->IsStayKeyDown(DIK_PGUP))
 	{
 		m_vScaling.x += 0.001f; m_vScaling.y += 0.001f; m_vScaling.z += 0.001f;
 		m_BodyStuff->SetScale(m_vScaling);
 	}
-	if (KEYBOARD->IsStayKeyDown(DIK_DOWN))
+	if (KEYBOARD->IsStayKeyDown(DIK_PGDN))
 	{
 		m_vScaling.x -= 0.001f; m_vScaling.y -= 0.001f; m_vScaling.z -= 0.001f;
 		m_BodyStuff->SetScale(m_vScaling);
@@ -149,14 +314,14 @@ void cObjectTool::AddClone()
 	{
 		char* folderName = ((cStuff*)m_BodyStuff)->GetFoldername();
 		char* fileName = ((cStuff*)m_BodyStuff)->GetFilename();
-		
+
 		cStuff* pcloneStuff = new cStuff(folderName, fileName);
 		pcloneStuff = CopyInfoToClone(m_BodyStuff, pcloneStuff);
 		// 클론오브젝트 정보저장
 		SaveInfoStuff(pcloneStuff);
 		GETSINGLE(cObjMgr)->AddCloneStuff(pcloneStuff);
 	}
-	
+
 }
 cStuff* cObjectTool::CopyInfoToClone(cStaticObj* BodyStuff, cStuff* CloneStuff)
 {
@@ -184,7 +349,7 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	char* filename = CloneStuff->GetFilename();
 	float Px = CloneStuff->GetPosition().x;
 	float Py = CloneStuff->GetPosition().y;
-	float Pz = CloneStuff->GetPosition().z; 
+	float Pz = CloneStuff->GetPosition().z;
 	float Sx = CloneStuff->GetScale().x;
 	float Sy = CloneStuff->GetScale().y;
 	float Sz = CloneStuff->GetScale().z;
@@ -201,7 +366,7 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	float MinZ = CloneStuff->GetpMesh()->GetvMin().z;
 
 	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f %d %d %f %f %f %f %f %f"
-		,foldername,filename, Px, Py, Pz,Sx,Sy,Sz,rx,ry,rz,SubsetNum,isCull
+		, foldername, filename, Px, Py, Pz, Sx, Sy, Sz, rx, ry, rz, SubsetNum, isCull
 		, MinX, MinY, MinZ, MaxX, MaxY, MaxZ);
 	fprintf(fp, "%s", str);
 
@@ -211,11 +376,11 @@ void cObjectTool::LoadInfoStuff()
 {
 	FILE* fp = NULL;
 	char str[2048] = { NULL, };
-	char foldername[120] = { NULL ,};
+	char foldername[120] = { NULL, };
 	char filename[120] = { NULL, };
-	float Px = 0, Py=0, Pz=0;
-	float Sx =0, Sy=0, Sz=0;
-	float Rx=0, Ry=0, Rz=0;
+	float Px = 0, Py = 0, Pz = 0;
+	float Sx = 0, Sy = 0, Sz = 0;
+	float Rx = 0, Ry = 0, Rz = 0;
 	float MinX = 0, MinY = 0, MinZ = 0;
 	float MaxX = 0, MaxY = 0, MaxZ = 0;
 	DWORD SubsetNum = 0;
@@ -223,11 +388,11 @@ void cObjectTool::LoadInfoStuff()
 	int a = 0;
 
 	fopen_s(&fp, "object/StuffInfo.text", "r");
-	
+
 	while (1)
 	{
 		if (feof(fp)) break;
-		fgets(&str[0],2048,fp);
+		fgets(&str[0], 2048, fp);
 		if (str[0] == '\n')
 			continue;
 
@@ -238,7 +403,7 @@ void cObjectTool::LoadInfoStuff()
 
 		//저장된 오브젝트 생성하기
 		cStuff* cloneStuff = new cStuff(foldername, filename);
-		cloneStuff->SetPosition(D3DXVECTOR3(Px,Py,Pz));
+		cloneStuff->SetPosition(D3DXVECTOR3(Px, Py, Pz));
 		cloneStuff->SetScale(D3DXVECTOR3(Sx, Sy, Sz));
 		cloneStuff->SetfRotX(Rx);
 		cloneStuff->SetfRotY(Ry);
@@ -247,35 +412,35 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetIsCullMode(isCull);
 		cloneStuff->SetFoldername(&foldername[0]);
 		cloneStuff->SetFilename(&filename[0]);
-		D3DXVECTOR3 vMIN(MinX*Sx, MinY*Sy, MinZ*Sz);
-		D3DXVECTOR3 vMAX(MaxX*Sx, MaxY*Sy, MaxZ*Sz);
-		//cloneStuff->GetpMesh()->ReSetupBoundingBox(Sx);
+
+		if (strcmp(filename, "tree1.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.05f, MinY*0.85f, MinZ*0.05f);
+			D3DXVECTOR3 vMAX(MaxX*0.05f, MaxY*0.85f, MaxZ*0.05f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.05f));
+		}
+		if (strcmp(filename, "tree2.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.02f, MinY*0.85f, MinZ*0.07f);
+			D3DXVECTOR3 vMAX(MaxX*0.10f, MaxY*0.85f, MaxZ*0.07f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.07f));
+		}
+		if (strcmp(filename, "tree4.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.06f, MinY*0.85f, (MinZ)*0.01f);
+			D3DXVECTOR3 vMAX(MaxX*0.06f, MaxY*0.85f, (MaxZ)*0.13f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionPosition(D3DXVECTOR3(0, 0, 1.5f));
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.06f, 0.85f, 0.08f));
+		}
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}
 	fclose(fp);
-	
 
-}
-void cObjectTool::CollisionObjWithPlayer()
-{
-	cDynamicObj* pPlayer = GETSINGLE(cObjMgr)->GetPlayer();
 
-	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
-	cBoundingBox* playerBox = &(pPlayer->GetBox());
-	
-	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
-	{
-		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
-			if (GETSINGLE(cCollision)->CollisionOBB(playerBox, stuffBox))
-			{
-				int a = 0;
-			}
-			else
-			{
-				int b = 0;
-			}
-
-	}
-
-		
 }

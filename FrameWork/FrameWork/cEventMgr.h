@@ -12,6 +12,7 @@ public:
 
 public:
 	void Update();
+	void Release();
 
 public:
 	cEventMgr();

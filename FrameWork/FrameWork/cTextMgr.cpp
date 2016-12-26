@@ -72,6 +72,7 @@ void cTextMgr::Render()
 
 void cTextMgr::Release()
 {
+
 	m_listText.clear();
 
 	for each (auto iter in m_mapText)

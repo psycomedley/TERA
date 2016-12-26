@@ -3,6 +3,7 @@
 
 class cDynamicObj;
 class cVerticalCircleEffect;
+class cCircleEffect;
 class cStateSkill : public iState
 {
 private:
@@ -13,6 +14,8 @@ private:
 private:
 	cVerticalCircleEffect* m_pEffect1;
 	bool StartEffect1;
+	cCircleEffect* m_pSkill3Effect;
+	bool StartSkill3;
 
 public:
 	virtual void Start() override;
