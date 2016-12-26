@@ -453,6 +453,9 @@
     <ClInclude Include="cStateHit.h">
       <Filter>소스 파일\14. State</Filter>
     </ClInclude>
+    <ClInclude Include="cEvent2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -727,6 +730,9 @@
     </ClCompile>
     <ClCompile Include="cStateHit.cpp">
       <Filter>소스 파일\14. State</Filter>
+    </ClCompile>
+    <ClCompile Include="cEvent2.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

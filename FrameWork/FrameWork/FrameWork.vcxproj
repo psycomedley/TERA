@@ -105,6 +105,7 @@
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectMgr.h" />
     <ClInclude Include="cEvent.h" />
+    <ClInclude Include="cEvent2.h" />
     <ClInclude Include="cEventMgr.h" />
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cFrustum.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectMgr.cpp" />
     <ClCompile Include="cEvent.cpp" />
+    <ClCompile Include="cEvent2.cpp" />
     <ClCompile Include="cEventMgr.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cFrustum.cpp" />

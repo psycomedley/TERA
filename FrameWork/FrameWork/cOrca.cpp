@@ -53,8 +53,8 @@ void cOrca::SetupState()
 	m_aStates[E_STATE_IDLE]->SetParent(this);
 	m_aStates[E_STATE_RUN] = new cStateRun;
 	m_aStates[E_STATE_RUN]->SetParent(this);
-	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.06f);
-	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.56f);
+//	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.06f);
+//	((cStateRun*)m_aStates[E_STATE_RUN])->GetVecTiming()->push_back(0.56f);
 	m_aStates[E_STATE_WAIT] = new cStateWait;
 	m_aStates[E_STATE_WAIT]->SetParent(this);
 	m_aStates[E_STATE_SKILL] = new cStateBossSkill;

@@ -7,10 +7,10 @@ private:
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 
 public:
-	void Play();
+	virtual void Play();
 
 public:
-	void Update();
+	virtual void Update();
 
 public:
 	cEvent();
