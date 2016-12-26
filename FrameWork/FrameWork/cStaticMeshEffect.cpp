@@ -12,6 +12,7 @@ cStaticMeshEffect::cStaticMeshEffect(char* szFolder, char* szFilename)
 
 cStaticMeshEffect::~cStaticMeshEffect()
 {
+	SAFE_RELEASE(m_pMesh);
 }
 
 HRESULT cStaticMeshEffect::Setup(D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)

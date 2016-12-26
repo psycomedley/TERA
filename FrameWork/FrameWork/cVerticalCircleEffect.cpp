@@ -11,6 +11,7 @@ cVerticalCircleEffect::cVerticalCircleEffect(char* szFolder, char* szFilename)
 
 cVerticalCircleEffect::~cVerticalCircleEffect()
 {
+	SAFE_RELEASE(m_pMesh);
 }
 
 HRESULT cVerticalCircleEffect::Setup(int Wheels, float RotationSpeed, bool Front, D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)

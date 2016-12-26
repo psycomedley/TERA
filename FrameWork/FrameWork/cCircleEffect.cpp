@@ -11,6 +11,7 @@ cCircleEffect::cCircleEffect(char* szFolder, char* szFilename)
 
 cCircleEffect::~cCircleEffect()
 {
+	SAFE_RELEASE(m_pMesh);
 }
 
 HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
