@@ -312,10 +312,14 @@ void cObjectTool::AddClone()
 {
 	if (KEYBOARD->IsOnceKeyDown(DIK_SPACE))
 	{
-		char* folderName = ((cStuff*)m_BodyStuff)->GetFoldername();
-		char* fileName = ((cStuff*)m_BodyStuff)->GetFilename();
-
-		cStuff* pcloneStuff = new cStuff(folderName, fileName);
+		string folderName = ((cStuff*)m_BodyStuff)->GetFoldername();
+		string fileName = ((cStuff*)m_BodyStuff)->GetFilename();
+		char* strFolderName = (char*)folderName.c_str();
+		char* strFileName = (char*)fileName.c_str();
+	
+		/*strcpy_s(strFolderName, 100, folderName.c_str());
+		strcpy_s(strFileName, 100, fileName.c_str());*/
+		cStuff* pcloneStuff = new cStuff(strFolderName, strFileName);
 		pcloneStuff = CopyInfoToClone(m_BodyStuff, pcloneStuff);
 		// 클론오브젝트 정보저장
 		SaveInfoStuff(pcloneStuff);
@@ -345,8 +349,10 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	char str[1024] = { NULL, };
 	fopen_s(&fp, "object/StuffInfo.text", "a");
 	// 폴더이름, 파일이름 , 포지션, 스케일, 회전x,회전y, 회전z
-	char* foldername = CloneStuff->GetFoldername();
-	char* filename = CloneStuff->GetFilename();
+	string sfoldername = CloneStuff->GetFoldername();
+	string sfilename = CloneStuff->GetFilename();
+	char* strFoldername = (char*)sfoldername.c_str();
+	char* strFilename = (char*)sfilename.c_str();
 	float Px = CloneStuff->GetPosition().x;
 	float Py = CloneStuff->GetPosition().y;
 	float Pz = CloneStuff->GetPosition().z;
@@ -366,7 +372,7 @@ void cObjectTool::SaveInfoStuff(cStuff* CloneStuff)
 	float MinZ = CloneStuff->GetpMesh()->GetvMin().z;
 
 	sprintf_s(str, "\n%s %s %f %f %f %f %f %f %f %f %f %d %d %f %f %f %f %f %f"
-		, foldername, filename, Px, Py, Pz, Sx, Sy, Sz, rx, ry, rz, SubsetNum, isCull
+		, strFoldername, strFilename, Px, Py, Pz, Sx, Sy, Sz, rx, ry, rz, SubsetNum, isCull
 		, MinX, MinY, MinZ, MaxX, MaxY, MaxZ);
 	fprintf(fp, "%s", str);
 
@@ -410,8 +416,8 @@ void cObjectTool::LoadInfoStuff()
 		cloneStuff->SetfRotZ(Rz);
 		cloneStuff->SetSubSetNum(SubsetNum);
 		cloneStuff->SetIsCullMode(isCull);
-		cloneStuff->SetFoldername(&foldername[0]);
-		cloneStuff->SetFilename(&filename[0]);
+		cloneStuff->SetFoldername(foldername);
+		cloneStuff->SetFilename(filename);
 
 		if (strcmp(filename, "tree1.x") == 0)
 		{
@@ -424,10 +430,11 @@ void cObjectTool::LoadInfoStuff()
 		if (strcmp(filename, "tree2.x") == 0)
 		{
 			D3DXVECTOR3 vMIN(MinX*0.02f, MinY*0.85f, MinZ*0.07f);
-			D3DXVECTOR3 vMAX(MaxX*0.10f, MaxY*0.85f, MaxZ*0.07f);
+			D3DXVECTOR3 vMAX(MaxX*0.20f, MaxY*0.85f, MaxZ*0.07f);
 			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
 			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
-			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.05f, 0.85f, 0.07f));
+			cloneStuff->SetRevisionPosition(D3DXVECTOR3(1.0f, 0, 0));
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.06f, 0.85f, 0.08f));
 		}
 		if (strcmp(filename, "tree4.x") == 0)
 		{
@@ -437,6 +444,31 @@ void cObjectTool::LoadInfoStuff()
 			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
 			cloneStuff->SetRevisionPosition(D3DXVECTOR3(0, 0, 1.5f));
 			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.06f, 0.85f, 0.08f));
+		}//campFire.x
+		if (strcmp(filename, "campFire.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.95f, MinY, (MinZ)*0.95f);
+			D3DXVECTOR3 vMAX(MaxX*0.95f, MaxY, (MaxZ)*0.95f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.9f, 1.00f, 0.9f));
+		}
+		if (strcmp(filename, "house1.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.50f, MinY, (MinZ)*0.45f);
+			D3DXVECTOR3 vMAX(MaxX*0.50f, MaxY, (MaxZ)*0.9f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionPosition(D3DXVECTOR3(0, 0, 3.0f));
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.50f, 1.00f, 0.85f));
+		}
+		if (strcmp(filename, "house3.x") == 0)
+		{
+			D3DXVECTOR3 vMIN(MinX*0.90f, MinY, (MinZ)*0.90f);
+			D3DXVECTOR3 vMAX(MaxX*0.90f, MaxY, (MaxZ)*0.90f);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMax(vMAX);
+			cloneStuff->GetpMesh()->GetpBox()->SetvMin(vMIN);
+			cloneStuff->SetRevisionScale(D3DXVECTOR3(0.9f, 1.00f, 0.9f));
 		}
 		GETSINGLE(cObjMgr)->AddCloneStuff(cloneStuff);
 	}

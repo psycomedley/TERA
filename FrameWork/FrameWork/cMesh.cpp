@@ -32,8 +32,8 @@ void cMesh::Bounding_Update(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle /
 
 void cMesh::Bounding_Render(D3DXVECTOR3 vPos, D3DXVECTOR3 vScale, float fAngle /*= 0*/, D3DXMATRIXA16* matRevision /*= NULL*/)
 {
-	if (m_pBox)
-		m_pBox->Render(vPos, vScale, fAngle, matRevision);
+	/*if (m_pBox)
+		m_pBox->Render(vPos, vScale, fAngle, matRevision);*/
 	/*if (m_pSphere)
 		m_pSphere->Render(vPos, vScale, matRevision);*/
 }
@@ -70,8 +70,8 @@ cBoundingBox cMesh::GetBox(D3DXVECTOR3 vPosition, float fScale, float fAngle /*=
 	D3DXVECTOR3	vMin = m_pBox->GetvMin() * fScale;
 	D3DXVECTOR3	vMax = m_pBox->GetvMax() * fScale;
 
-//	D3DXVec3TransformCoord(&vMin, &vMin, &matR);
-//	D3DXVec3TransformCoord(&vMax, &vMax, &matR);
+	//D3DXVec3TransformCoord(&vMin, &vMin, &matR);
+	//D3DXVec3TransformCoord(&vMax, &vMax, &matR);
 
 	vMin += vPosition;
 	vMax += vPosition;

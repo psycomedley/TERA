@@ -238,8 +238,14 @@ void cObjectToolMgr::Update()
 
 	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
 	{
+		string filename = ((cStuff*)vecCloneStuff[i])->GetFilename();
+		if (filename == "grass1.x") 	continue;
+		else if (filename == "Grass2.x") continue;
+		else if (filename == "Grass3.x") continue;
+		else if (filename == "Gate.x") continue;
 
 		cBoundingBox* stuffBox = &(vecCloneStuff[i]->GetBox());
+		
 		// 캐릭터와 오브젝트 충돌
 		
 		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))

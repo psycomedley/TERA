@@ -9,8 +9,8 @@ private:
 	D3DXMATRIXA16	m_matS, m_matT;
 	SYNTHESIZE(bool, m_IsCullMode, IsCullMode);
 	SYNTHESIZE(DWORD, m_SubSetNum, SubSetNum);
-	SYNTHESIZE(char*, m_sfilename, Filename);
-	SYNTHESIZE(char*, m_sFoldername, Foldername);
+	SYNTHESIZE(string, m_sfilename, Filename);
+	SYNTHESIZE(string, m_sFoldername, Foldername);
 
 public:
 	cStuff(char* szFolder, char* szFilename);
