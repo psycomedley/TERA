@@ -428,6 +428,7 @@ void cMainGame::Release()
 	GETSINGLE(cBattleMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
+	
 }
 
 

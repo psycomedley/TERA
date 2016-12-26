@@ -6,7 +6,7 @@ class cDynamicObj;
 class cStateDefence : public iState
 {
 private:
-//	cStaticMeshEffect*	m_pDefenseEffect;
+
 
 public:
 	virtual void Start() override;

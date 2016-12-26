@@ -3,6 +3,7 @@
 #include "cDynamicObj.h"
 #include "cPlayer.h"
 #include "cVerticalCircleEffect.h"
+#include "cCircleEffect.h"
 
 cStateSkill::cStateSkill()
 	: m_bNextAttack(false)
@@ -128,6 +129,20 @@ void cStateSkill::Update()
 		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
 			m_pParent->GetCurrentAnimPosition() <= 0.6f)
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+		
+		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
+			m_pParent->GetCurrentAnimPosition() <= 0.5f)
+		{
+			if (!StartSkill3)
+			{
+				m_pSkill3Effect = new cCircleEffect("Effect", "blueCircle.x");
+				StartSkill3 = true;
+				m_pSkill3Effect->Setup(1, 0.2f, false, D3DXVECTOR3(0.2f, 0.2f, 0.2f), D3DXVECTOR3(m_pParent->GetPosition().x,
+					m_pParent->GetPosition().y + 1,
+					m_pParent->GetPosition().z), m_pParent->GetAngle() - D3DX_PI / 2);
+				m_pSkill3Effect->Start();
+			}
+		}
 	}
 
 	if (StartEffect1)
@@ -138,6 +153,19 @@ void cStateSkill::Update()
 		{
 			StartEffect1 = false;
 			SAFE_RELEASE(m_pEffect1);
+		}
+	}
+	if (StartSkill3)
+	{
+		m_pSkill3Effect->SetPosition(D3DXVECTOR3(m_pParent->GetPosition().x,
+			m_pParent->GetPosition().y + 1,
+			m_pParent->GetPosition().z));
+		m_pSkill3Effect->Update();
+		m_pSkill3Effect->Render();
+		if (!m_pSkill3Effect->isStart())
+		{
+			StartSkill3 = false;
+			SAFE_RELEASE(m_pSkill3Effect);
 		}
 	}
 }
