@@ -55,7 +55,11 @@ void cGameObject::Bounding_Update()
 void cGameObject::Bounding_Render()
 {
 	if (m_pMesh)
-		m_pMesh->Bounding_Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
+	{
+		m_pMesh->Bounding_Render(D3DXVECTOR3(m_vPosition.x + m_vRevisionPosition.x, m_vPosition.y + m_vRevisionPosition.y, m_vPosition.z + m_vRevisionPosition.z)
+			, D3DXVECTOR3(m_vScale.x*m_vRevisionScale.x, m_vScale.y*m_vRevisionScale.y, m_vScale.z*m_vRevisionScale.z)
+			, m_fAngle, &m_matRevision);
+	}
 }
 
 
