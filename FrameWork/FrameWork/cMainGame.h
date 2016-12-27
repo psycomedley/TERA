@@ -23,7 +23,7 @@ class cUIObject;
 class cObjectTool;
 class cSkyBox;
 class cUIButton;
-class cMainGame
+class cMainGame : public iButtonDelegate
 {
 private:
 	cCube*				cube;
@@ -52,7 +52,9 @@ private:
 	void SetUI();
 	void SetShader();
 	void SetEffect();
-	void SetSound();
+	void Title();
+	void RemoveTitle();
+	virtual void OnClick(cUIObject* pObj) override;
 
 
 	//cDynamicMesh*	m_pMesh;

@@ -13,6 +13,7 @@ cCamera::cCamera(void)
 	, m_fPrevDist(6)
 	, m_bUse(false)
 	, m_bControl(true)
+	, m_bTitle(true)
 {
 }
 
@@ -32,51 +33,57 @@ void cCamera::Setup()
 	GetClientRect(g_hWnd, &rc);
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, rc.right / (float)rc.bottom, 1.f, 5000.f);
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
 }
 
 
 void cCamera::Update()
 {
-	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
-	{
-		m_bControl = !m_bControl;
-		ShowCursor(!m_bControl);
+	
 
-		MOUSE->SetFixPos(GetCursorPosition());
+	if (!m_bTitle)
+	{
+		if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+		{
+			m_bControl = !m_bControl;
+			ShowCursor(!m_bControl);
+
+			MOUSE->SetFixPos(GetCursorPosition());
+			if (m_bControl)
+				GETSINGLE(cUIMgr)->AddList("CrossHair");
+			else
+				GETSINGLE(cUIMgr)->RemoveList("CrossHair");
+		}
+
 		if (m_bControl)
-			GETSINGLE(cUIMgr)->AddList("CrossHair");
-		else
-			GETSINGLE(cUIMgr)->RemoveList("CrossHair");
+		{
+			CameraMove();
+			FixMouse();
+		}
+
+		D3DXMATRIXA16 matR, matRX, matRY;
+		D3DXMatrixRotationX(&matRX, m_fCamRotY);
+		D3DXMatrixRotationY(&matRY, m_fCamRotX);
+		matR = matRX * matRY;
+
+		m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
+		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
+
+		if (m_pTarget)
+		{
+			m_vEye = m_vEye + m_pTarget->GetPosition();
+			m_vLookAt = m_pTarget->GetPosition();
+		}
+		else if (m_vTarget)
+		{
+			m_vEye = m_vEye + *m_vTarget;
+			m_vLookAt = *m_vTarget;
+		}
+
+		D3DXMATRIXA16 matView;
+		D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
+		g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 	}
-
-	if (m_bControl)
-	{
-		CameraMove();
-		FixMouse();
-	}
-
-	D3DXMATRIXA16 matR, matRX, matRY;
-	D3DXMatrixRotationX(&matRX, m_fCamRotY);
-	D3DXMatrixRotationY(&matRY, m_fCamRotX);
-	matR = matRX * matRY;
-
-	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
-	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
-
-	if (m_pTarget)
-	{
-		m_vEye = m_vEye + m_pTarget->GetPosition();
-		m_vLookAt = m_pTarget->GetPosition();
-	}
-	else if (m_vTarget)
-	{
-		m_vEye = m_vEye + *m_vTarget;
-		m_vLookAt = *m_vTarget;
-	}
-
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
-	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 }
 
 

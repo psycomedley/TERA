@@ -17,6 +17,8 @@ private:
 	SYNTHESIZE(bool, m_bControl, Control);
 	SYNTHESIZE(cGameObject*, m_pTarget, Target);
 	SYNTHESIZE(D3DXVECTOR3*, m_vTarget, VecTarget);
+
+	SYNTHESIZE(bool, m_bTitle, Title);
 	
 public:
 	cCamera(void);

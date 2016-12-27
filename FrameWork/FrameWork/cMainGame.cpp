@@ -21,6 +21,7 @@
 #include "cCamera.h"
 #include "cGuardian.h"
 #include "cGardener.h"
+#include "cUIButton.h"
 
 //юс╫ц
 
@@ -168,6 +169,10 @@ HRESULT cMainGame::Setup()
 
 	m_pGrid = new cGrid;
 	m_pGrid->Setup(30);
+	if (CAMERA->GetTitle())
+	{
+		Title();
+	}
 
 
 
@@ -307,6 +312,12 @@ void cMainGame::Update()
 
 	//	m_pMap->Update();
 	GETSINGLE(cObjMgr)->Update();
+	if(!CAMERA->GetTitle())
+	{
+		RemoveTitle();
+	}
+
+
 	///////////////////////////////////
 
 	GETSINGLE(cInput)->EndFrame();
@@ -430,7 +441,7 @@ void cMainGame::Release()
 
 
 void cMainGame::SetCamera()
-{
+{ 
 	cCamera* pCamera = new cCamera;
 	pCamera->Setup();
 	GETSINGLE(cCameraMgr)->AddCamera("MainCamera", pCamera);
@@ -601,6 +612,40 @@ void cMainGame::SetUI()
 
 	//GETSINGLE(cUIMgr)->AddUI("p", p);
 	//GETSINGLE(cUIMgr)->AddList("p");
+
+
+	//////////////////////////////////////////////////////////
+	//						Title							//
+	//////////////////////////////////////////////////////////
+
+	cUIImageView* pTitle = new cUIImageView;
+	pTitle->SetTexture("UI/LoadingImage21_Tex.tga", 1, 1);
+	pTitle->SetCenterPosition(D3DXVECTOR3(GetWindowWidth()/2, GetWindowHeight()/2+100, 0));
+	pTitle->SetSprite(pSprite);
+	GETSINGLE(cUIMgr)->AddUI("Title", pTitle);
+
+	cUIImageView* pMenu = new cUIImageView;
+	pMenu->SetTexture("UI/Logout_I3.tga", 1, 1);
+	pMenu->SetCenterPosition(D3DXVECTOR3(GetWindowWidth()/2, GetWindowHeight()/2+100, 0));
+	pMenu->SetSprite(pSprite);
+	GETSINGLE(cUIMgr)->AddUI("Menu", pMenu);
+
+	cUIButton* pButton1 = new cUIButton;
+	pButton1->SetTexture("UI/GameStart_Normal.tga", "UI/GameStart_MouseOver.tga", "UI/GameStart_MouseClick.tga");
+	pButton1->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 + 180, 0));
+	pButton1->SetTag(11);
+	pButton1->SetSprite(pSprite);
+	pButton1->SetDelegate(this);
+	GETSINGLE(cUIMgr)->AddUI("StartButton", pButton1);
+
+	cUIButton* pButton2 = new cUIButton;
+	pButton2->SetTexture("UI/GameQuit_Normal.tga", "UI/GameQuit_MouseOver.tga", "UI/GameQuit_MouseClick.tga");
+	pButton2->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 + 240, 0));
+	pButton2->SetTag(12);
+	pButton2->SetSprite(pSprite);
+	pButton2->SetDelegate(this);
+	GETSINGLE(cUIMgr)->AddUI("QuitButton", pButton2);
+
 
 	SAFE_RELEASE(pSprite);
 }
@@ -785,5 +830,38 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
-	GETSINGLE(cSoundMgr)->Add("Victory", "Sound/SYSMSG_2028.ogg");
+}
+
+
+
+void cMainGame::Title()
+{
+	GETSINGLE(cUIMgr)->AddList("Title");
+	GETSINGLE(cUIMgr)->AddList("Menu");
+	GETSINGLE(cUIMgr)->AddList("StartButton");
+	GETSINGLE(cUIMgr)->AddList("QuitButton");
+	ShowCursor(true);
+	CAMERA->SetControl(false);
+}
+
+void cMainGame::RemoveTitle()
+{
+	GETSINGLE(cUIMgr)->RemoveList("StartButton");
+	GETSINGLE(cUIMgr)->RemoveList("Title");
+	GETSINGLE(cUIMgr)->RemoveList("Menu");
+	GETSINGLE(cUIMgr)->RemoveList("QuitButton");
+}
+
+void cMainGame::OnClick(cUIObject * pObj)
+{
+	if (pObj->GetTag() == 11)
+	{
+		CAMERA->SetTitle(false);
+		CAMERA->SetControl(true);
+		ShowCursor(false);
+	}
+	if (pObj->GetTag() == 12)
+	{
+		PostQuitMessage(0);
+	}
 }
