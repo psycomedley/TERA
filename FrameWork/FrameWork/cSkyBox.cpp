@@ -27,47 +27,54 @@ void cSkyBox::SetUp()
 {
 
 
-	m_pTexture[0] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0A0.tga");
+	/*m_pTexture[0] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0A0.tga");
 	m_pTexture[1] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0A1.tga");
 	m_pTexture[2] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0B0.tga");
 	m_pTexture[3] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0B1.tga");
 	m_pTexture[4] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0C0.tga");
-	m_pTexture[5] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0C1.tga");
+	m_pTexture[5] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage/ASW_TOC_L0C1.tga");*/
 
+	m_pTexture[0] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ATW_cloud_L0D.tga");
+	m_pTexture[1] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ATW_cloud_L0A.tga");
+	m_pTexture[2] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ATW_cloud_L0C-1.tga");
+	m_pTexture[3] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ATW_cloud_L0C.tga");
+	m_pTexture[4] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ATW_cloud_L0B.tga");
+	m_pTexture[5] = GETSINGLE(cTextureMgr)->GetTexture("Map/skyImage2/ASW_TOC_Lz0.tga");
+//ATW_cloud_L0C-1
 	g_pD3DDevice->CreateVertexBuffer(24 * sizeof(SKYVERTEX), D3DUSAGE_WRITEONLY, SKYVERTEX::FVF,
 		D3DPOOL_DEFAULT, &m_VB, NULL);
 
 	SKYVERTEX vertices[24] =
 	{
-		{ -250.0f, 250.0f, -250.0f, 0.0f, 0.0f },		// Top vertices
-		{ 250.0f, 250.0f, -250.0f, 1.0f, 0.0f },
-		{ -250.0f, 250.0f, 250.0f, 0.0f, 1.0f },
-		{ 250.0f, 250.0f, 250.0f, 1.0f, 1.0f },
+		{ -512.0f, 512.0f, -512.0f, 0.0f, 0.0f },		// Top vertices
+		{ 512.0f, 512.0f, -512.0f, 1.0f, 0.0f },
+		{ -512.0f, 512.0f, 512.0f, 0.0f, 1.0f },
+		{ 512.0f, 512.0f, 512.0f, 1.0f, 1.0f },
 
-		{ -250.0f, 250.0f, 250.0f, 0.0f, 0.0f },		// Front vertices
-		{ 250.0f, 250.0f, 250.0f, 1.0f, 0.0f },
-		{ -250.0f, -250.0f, 250.0f, 0.0f, 1.0f },
-		{ 250.0f, -250.0f, 250.0f, 1.0f, 1.0f },
+		{ -512.0f, 512.0f, 512.0f, 0.0f, 0.0f },		// Front vertices
+		{ 512.0f, 512.0f, 512.0f, 1.0f, 0.0f },
+		{ -512.0f, -512.0f, 512.0f, 0.0f, 1.0f },
+		{ 512.0f, -512.0f, 512.0f, 1.0f, 1.0f },
 
-		{ 250.0f, 250.0f, -250.0f, 0.0f, 0.0f },		// Back vertices
-		{ -250.0f, 250.0f, -250.0f, 1.0f, 0.0f },
-		{ 250.0f, -250.0f, -250.0f, 0.0f, 1.0f },
-		{ -250.0f, -250.0f, -250.0f, 1.0f, 1.0f },
+		{ 512.0f, 512.0f, -512.0f, 0.0f, 0.0f },		// Back vertices
+		{ -512.0f, 512.0f, -512.0f, 1.0f, 0.0f },
+		{ 512.0f, -512.0f, -512.0f, 0.0f, 1.0f },
+		{ -512.0f, -512.0f, -512.0f, 1.0f, 1.0f },
 
-		{ -250.0f, 250.0f, -250.0f, 0.0f, 0.0f },		// Left vertices
-		{ -250.0f, 250.0f, 250.0f, 1.0f, 0.0f },
-		{ -250.0f, -250.0f, -250.0f, 0.0f, 1.0f },
-		{ -250.0f, -250.0f, 250.0f, 1.0f, 1.0f },
+		{ -512.0f, 512.0f, -512.0f, 0.0f, 0.0f },		// Left vertices
+		{ -512.0f, 512.0f, 512.0f, 1.0f, 0.0f },
+		{ -512.0f, -512.0f, -512.0f, 0.0f, 1.0f },
+		{ -512.0f, -512.0f, 512.0f, 1.0f, 1.0f },
 
-		{ 250.0f, 250.0f, 250.0f, 0.0f, 0.0f },		// Right vertices
-		{ 250.0f, 250.0f, -250.0f, 1.0f, 0.0f },
-		{ 250.0f, -250.0f, 250.0f, 0.0f, 1.0f },
-		{ 250.0f, -250.0f, -250.0f, 1.0f, 1.0f },
+		{ 512.0f, 512.0f, 512.0f, 0.0f, 0.0f },		// Right vertices
+		{ 512.0f, 512.0f, -512.0f, 1.0f, 0.0f },
+		{ 512.0f, -512.0f, 512.0f, 0.0f, 1.0f },
+		{ 512.0f, -512.0f, -512.0f, 1.0f, 1.0f },
 
-		{ -250.0f, -250.0f, 250.0f, 0.0f, 0.0f },		// Bottom vertices
-		{ 250.0f, -250.0f, 250.0f, 1.0f, 0.0f },
-		{ -250.0f, -250.0f, -250.0f, 0.0f, 1.0f },
-		{ 250.0f, -250.0f, -250.0f, 1.0f, 1.0f }
+		{ -512.0f, -512.0f, 512.0f, 0.0f, 0.0f },		// Bottom vertices
+		{ 512.0f, -512.0f, 512.0f, 1.0f, 0.0f },
+		{ -512.0f, -512.0f, -512.0f, 0.0f, 1.0f },
+		{ 512.0f, -512.0f, -512.0f, 1.0f, 1.0f }
 	};
 
 	VOID* pVertices;
@@ -188,16 +195,19 @@ void cSkyBox::SetUp()
 }
 void cSkyBox::Render()
 {
-	D3DXMATRIX mat;
+	D3DXMATRIX mat,matT;
 	D3DXMatrixIdentity(&mat);
+	D3DXMatrixTranslation(&matT, 100, 450, 200);
+	mat = matT;
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 	// D3DSAMP_ADDRESSU : u 좌표로 사용하는 텍스처어드레싱모드. 디폴트는 D3DTADDRESS_WRAP 이다. 더 자세한 정보는, 「D3DTEXTUREADDRESS 」를 참조할것. 
 	// D3DSAMP_ADDRESSV : v 좌표로 사용하는 텍스처어드레싱모드. 디폴트는 D3DTADDRESS_WRAP 이다. 더 자세한 정보는, 「D3DTEXTUREADDRESS 」를 참조할것. 
 	// D3DTADDRESS_CLAMP: 범위 [0.0, 1.0] 의 외측의 텍스처 좌표가, 각각, 0.0 으로 1.0 의 텍스처 컬러로 설정된다. 
 	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
 	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);	//조명 끄기
 
 	
 	g_pD3DDevice->SetFVF(SKYVERTEX::FVF);
@@ -208,6 +218,10 @@ void cSkyBox::Render()
 		g_pD3DDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i * 4, 2);
 	}
 
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	//for (int i = 0; i < 6; i++)
 	//{
 	//	g_pD3DDevice->SetTexture(0, m_pTexture[i]);
@@ -219,8 +233,5 @@ void cSkyBox::Render()
 
 	//g_pD3DDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0,m_vecVertax.size());
 
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+
 }

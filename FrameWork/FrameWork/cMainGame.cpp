@@ -366,7 +366,7 @@ void cMainGame::Render()
 //		}
 ////		if (GETSINGLE())
 //	}
-	
+	m_cSkyBox->Render();
 	if (m_pMap)
 		m_pMap->Render();
 	m_pGrid->Render();
@@ -380,7 +380,7 @@ void cMainGame::Render()
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
-	m_cSkyBox->Render();
+
 	///////////////юс╫ц////////////////
 	
 
