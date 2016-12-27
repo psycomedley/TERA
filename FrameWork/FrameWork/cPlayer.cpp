@@ -223,6 +223,11 @@ void cPlayer::CheckControl()
 		//ÀÌµ¿
 		if (m_nKeyDir == DIRECTION_NONE)
 		{
+//			m_fAngle = fCameraAngle + m_fTempAngle;
+//			//m_vPosition = m_vPosition - m_vDirection * 0.1;
+//			Move(0.1f);
+//			ChangeState(E_STATE_RUN);
+//			bControl = true;
 			if (m_pState == m_aStates[E_STATE_RUN])
 			{
 				if (m_bIsBattle)
@@ -388,14 +393,17 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-		//	m_pRightWeapon->Bounding_Render();
 		//	m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-		//	m_pLeftWeapon->Bounding_Render();
+	}
+	if (g_nRenderOption & RENDER_BOUNDINGWEAPON)
+	{
+		m_pRightWeapon->Bounding_Render();
+		m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -558,8 +566,8 @@ bool cPlayer::UseSkill(float fMp)
 
 void cPlayer::Regeneration()
 {
-	int nRegenHP = m_stInfo.fMaxHp / 20;
-	int nRegenMP = m_stInfo.fMaxMp / 20;
+	int nRegenHP = m_stInfo.fMaxHp / 40;
+	int nRegenMP = m_stInfo.fMaxMp / 40;
 
 	if (m_stInfo.fHp + nRegenHP >= m_stInfo.fMaxHp)
 		m_stInfo.fHp = m_stInfo.fMaxHp;

@@ -37,7 +37,7 @@ public:
 		nowWheels = 0;
 		start = false;
 	}
-	bool isStart()
+	bool IsStart()
 	{
 		return start;
 	}

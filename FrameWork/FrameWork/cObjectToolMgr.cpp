@@ -253,17 +253,17 @@ void cObjectToolMgr::Update()
 		
 		// 캐릭터와 오브젝트 충돌
 		
-		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
+		/*if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
 		{
 			D3DXVECTOR3 CurPos = pPlayer->GetPosition();
 			D3DXVECTOR3 afterPos = pPlayer->GetPrevPosition();
 			pPlayer->SetPosition(m_PlayerPrevPos);
-		}
+		}*/
 	
 		
 
 		//몬스터와 오브젝트 충돌
-		for (size_t j = 0; j < pVecAllMonster.size(); ++j)
+		/*for (size_t j = 0; j < pVecAllMonster.size(); ++j)
 		{
 			if (pVecAllMonster[j]->GetInfo().sName == "Globe") continue;
 			cBoundingBox* MosterBox = &(pVecAllMonster[j]->GetBox());
@@ -277,7 +277,7 @@ void cObjectToolMgr::Update()
 			{
 				pVecAllMonster[j]->SetPrevPosition(pVecAllMonster[j]->GetPosition());
 			}
-		}
+		}*/
 
 	}
 	///===============================

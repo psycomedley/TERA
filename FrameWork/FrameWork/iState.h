@@ -26,7 +26,7 @@ public:
 	virtual void End() PURE;
 
 protected:
-	void PlaySound(E_SOUND eSound, bool bDouble = false);
+	void PlaySound(E_SOUND eSound, float fVolume = 1.0f, bool bDouble = false);
 
 public:
 	iState();

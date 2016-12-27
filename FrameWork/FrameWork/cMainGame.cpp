@@ -23,8 +23,6 @@
 #include "cGardener.h"
 #include "cUIButton.h"
 
-//임시
-
 
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
@@ -143,6 +141,16 @@ HRESULT cMainGame::Setup()
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
 	pMonster->SetPosition(D3DXVECTOR3(40, 0, 50));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+
+	for (int i = 0; i < 100; i++)
+	{
+		pMonster = new cGardener("Monster", "Gardener.X");
+		pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+		pMonster->SetRevision(matR);
+		pMonster->SetRevisionAngle(D3DX_PI / 2);
+		pMonster->SetPosition(D3DXVECTOR3(60 + 10 * (i % 10), 0, 50 + (10 * i / 10)));
+		GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	}
 	////////
 
 	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
@@ -237,11 +245,31 @@ void cMainGame::Update()
 
 		GETSINGLE(cEventMgr)->Update();
 	}
+	// 오브젝트 툴 켜고끄기
+	if (KEYBOARD->IsToggleKey(VK_F2))
+
+	if (KEYBOARD->IsOnceKeyDown(DIK_F5))
+		g_nRenderOption ^= RENDER_BOUNDINGPLAYER;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F6))
+		g_nRenderOption ^= RENDER_BOUNDINGWEAPON;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F7))
+		g_nRenderOption ^= RENDER_BOUNDINGMONSTER;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F8))
+		g_nRenderOption ^= RENDER_BOUNDINGOBJECT;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F11))
+		g_nRenderOption ^= RENDER_BOUNDINGBOX;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F12))
+		g_nRenderOption ^= RENDER_BOUNDINGSPHERE;
 
 	if (KEYBOARD->IsToggleKey(VK_F1))
 	{
 		if (m_cObjectTool)
 			m_cObjectTool->Update();
+	}
+	//충돌 on/off용
+	if (KEYBOARD->IsToggleKey(VK_F1))
+	{
+		int a = 0;
 	}
 	else
 	{
@@ -249,46 +277,6 @@ void cMainGame::Update()
 	}
 
 	///////////////임시////////////////
-
-	if (IsActive())
-	{
-		if (KEYBOARD->IsOnceKeyDown(DIK_F11))
-		{
-			//			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetPosition() + D3DXVECTOR3(0, 0, 0);
-			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetSphere().GetCenter();
-			//			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetVecTarget(&pos);
-			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetLookAt(pos);
-			GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_F12))
-			GETSINGLE(cCameraMgr)->SetCurrentCamera("MainCamera");
-
-		if (KEYBOARD->IsStayKeyDown(DIK_F10))
-		{
-			GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetCamRotY(
-				GETSINGLE(cCameraMgr)->GetCurrentCamera()->GetCamRotY() - 0.01f);
-		}
-
-		if (KEYBOARD->IsOnceKeyDown(DIK_Q))
-		{
-			//m_pDynamicMeshEffect->Start();
-			//m_pCircleEffect->Start();
-			//m_pRushEffect->Start();
-			/*if (m_pEffect4->GetProcess())
-			{
-			m_pEffect4->Stop();
-			}
-			else
-			{
-			m_pEffect4->Start();
-			}*/
-		}
-		//	char szStr[16] = { '\0', };
-		//	sprintf_s(szStr, sizeof(szStr), "%.0f%%", ((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp * 100);
-		//	((cUITextView*)m_pUIBossHp->FindChildByTag(2))->SetText(szStr);
-		//	((cUIImageView*)m_pUIBossHp->FindChildByTag(1))->SetScaleX(((cOrca*)*orca)->GetInfo().fHp / (float)((cOrca*)*orca)->GetInfo().fMaxHp);
-		//}
-	}
 
 	CHAR str[16];
 	wsprintf(str, TEXT("FPS : %d"), GETSINGLE(cTimeMgr)->getFrameRate());
@@ -372,8 +360,10 @@ void cMainGame::Render()
 	//		m_pMap->Render();
 	m_pGrid->Render();
 
-	m_cObjectTool->Render();
-
+	if (KEYBOARD->IsToggleKey(VK_F2))
+	{
+		m_cObjectTool->Render();
+	}
 
 	GETSINGLE(cObjMgr)->Render();
 	GETSINGLE(cEffectMgr)->Render();

@@ -149,6 +149,22 @@ void cEffectMgr::AddStaticMeshEffect(char * szFolder, char * szFilename, D3DXVEC
 	m_vecStaticMeshEffect.push_back(m_pStaticMeshEffect);
 }
 
+
+void cEffectMgr::AddStaticMeshEffect(cStaticMeshEffect* pEffect)
+{
+	m_vecStaticMeshEffect.push_back(pEffect);
+}
+
+
+bool cEffectMgr::IsInStaticEffect(cStaticMeshEffect* pEffect)
+{
+	for (auto iter = m_vecStaticMeshEffect.begin(); iter != m_vecStaticMeshEffect.end(); iter++)
+		if (*iter == pEffect)
+			return true;
+	return false;
+}
+
+
 void cEffectMgr::RemoveStaticMeshEffect()
 {
 	m_vecStaticMeshEffect.clear();

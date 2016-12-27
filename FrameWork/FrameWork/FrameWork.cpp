@@ -14,6 +14,7 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 
 cMainGame*	g_pMainGame;
 HWND		g_hWnd;
+int			g_nRenderOption;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -48,6 +49,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FRAMEWORK));
 
+	g_nRenderOption = RENDER_NONE;
 	g_pMainGame = new cMainGame;
 	if (FAILED(g_pMainGame->Setup()))
 	{

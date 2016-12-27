@@ -34,7 +34,7 @@ void cSkillElectricGlobe::Update()
 	{
 		cBoundingSphere sphere;
 		sphere.SetCenter(m_vPosition);
-		sphere.SetRadius(5.0f);
+		sphere.SetRadius(7.0f);
 
 
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();

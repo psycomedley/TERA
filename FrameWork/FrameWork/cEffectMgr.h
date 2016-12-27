@@ -18,6 +18,8 @@ public:
 	list<cEffect*>* GetEffectInMap(string sKey);
 
 	void AddStaticMeshEffect(char* szFolder, char* szFilename, D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle);
+	void AddStaticMeshEffect(cStaticMeshEffect* pEffect);
+	bool IsInStaticEffect(cStaticMeshEffect* pEffect);
 	void RemoveStaticMeshEffect();
 
 

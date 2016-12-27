@@ -173,7 +173,7 @@ void cStateCombo::Update()
 			m_pParent->GetPosition().z));
 		m_pCombo1Effect->Update();
 		m_pCombo1Effect->Render();
-		if (!m_pCombo1Effect->isStart())
+		if (!m_pCombo1Effect->IsStart())
 		{
 			StartCombo1 = false;
 			SAFE_RELEASE(m_pCombo1Effect);
@@ -186,7 +186,7 @@ void cStateCombo::Update()
 			m_pParent->GetPosition().z));
 		m_pCombo2Effect->Update();
 		m_pCombo2Effect->Render();
-		if (!m_pCombo2Effect->isStart())
+		if (!m_pCombo2Effect->IsStart())
 		{
 			StartCombo2 = false;
 			SAFE_RELEASE(m_pCombo2Effect);
@@ -199,7 +199,7 @@ void cStateCombo::Update()
 			m_pParent->GetPosition().z));
 		m_pCombo3Effect->Update();
 		m_pCombo3Effect->Render();
-		if (!m_pCombo3Effect->isStart())
+		if (!m_pCombo3Effect->IsStart())
 		{
 			StartCombo3 = false;
 			SAFE_RELEASE(m_pCombo3Effect);
@@ -212,7 +212,7 @@ void cStateCombo::Update()
 			m_pParent->GetPosition().z));
 		m_pCombo4Effect->Update();
 		m_pCombo4Effect->Render();
-		if (!m_pCombo4Effect->isStart())
+		if (!m_pCombo4Effect->IsStart())
 		{
 			StartCombo4 = false;
 			SAFE_RELEASE(m_pCombo4Effect);
