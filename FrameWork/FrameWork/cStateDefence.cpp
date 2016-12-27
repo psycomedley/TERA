@@ -5,6 +5,8 @@
 
 
 cStateDefence::cStateDefence()
+	: nowEffect(false)
+	
 {	
 }
 
@@ -18,14 +20,18 @@ void cStateDefence::Start()
 {
 	m_fPassedTime = 0.0f;
 	ST_ANIMATION_INFO aniInfo(E_ANI_DEFENCE_START, true, false);
-	
+
 	if (m_nSkillIndex == -1)
 		m_pParent->AddAnimation(aniInfo);
 	aniInfo.SetInfo(E_ANI_DEFENCE_LOOP, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
 
-	GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect", "Shield2.x", D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
+	if (!nowEffect)
+	{
+		nowEffect = true;
+		GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect", "Shield2.x", D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
+	}
 }
 
 
@@ -48,6 +54,8 @@ void cStateDefence::End()
 //	pObj->GetAnimController()->m_pController->SetTrackPosition(0, 0.0f);
 //	pObj->SetAnimationIdx(5, false);
 	GETSINGLE(cEffectMgr)->RemoveStaticMeshEffect();
+	nowEffect = false;
+
 	
 }
 

@@ -54,20 +54,32 @@ void cStaticMeshEffect::Render()
 	// D3DBLENDOP_REVSUBTRACT   : dest - src
 	// D3DBLENDOP_MIN         : MIN(src, dest)
 	// D3DBLENDOP_MAX         : MAX(src, dest)
-	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	
+	/*g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE , true);
+	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);*/
+
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, false);
+
+
 	//g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-	cStaticObj::Render();
-	//g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	cStaticObj::Render();/*
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, false);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);*/
+
+	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 

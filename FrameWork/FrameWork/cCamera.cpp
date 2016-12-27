@@ -32,11 +32,14 @@ void cCamera::Setup()
 	GetClientRect(g_hWnd, &rc);
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, rc.right / (float)rc.bottom, 1.f, 5000.f);
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
+	m_bControl = false;
 }
 
 
 void cCamera::Update()
 {
+
 	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
 	{
 		m_bControl = !m_bControl;
@@ -48,7 +51,7 @@ void cCamera::Update()
 		else
 			GETSINGLE(cUIMgr)->RemoveList("CrossHair");
 	}
-
+	
 	if (m_bControl)
 	{
 		CameraMove();

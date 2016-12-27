@@ -6,7 +6,7 @@ class cDynamicObj;
 class cStateDefence : public iState
 {
 private:
-
+	bool nowEffect;
 
 public:
 	virtual void Start() override;

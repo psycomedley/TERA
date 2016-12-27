@@ -12,6 +12,8 @@ private:
 
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
+	bool			m_firstMenu;
+	bool			m_nowMenu;
 
 	SYNTHESIZE(int, m_nKeyDir, KeyDir);
 	SYNTHESIZE(float, m_fTempAngle, TempAngle);
@@ -35,6 +37,10 @@ public:
 
 	bool IsMoveAble();
 	void UpdateUI();
+	bool GetFirstMenu()
+	{
+		return m_firstMenu;
+	}
 
 public:
 	virtual void SetSound() override;

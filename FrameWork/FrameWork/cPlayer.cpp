@@ -24,6 +24,8 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	, m_fWaitTime(IDLESWITCHTIME)
 	, m_nKeyDir(DIRECTION_NONE)
 	, m_fTempAngle(0.0f)
+	, m_firstMenu(true)
+	, m_nowMenu(false)
 	/*, m_pArm(NULL)
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
@@ -44,6 +46,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	SetupBaseWeapon();
 	SetupState();
 	SetSound();
+	
 }
 
 
@@ -194,27 +197,29 @@ void cPlayer::CheckControl()
 {
 	bool bControl = false;
 	m_nKeyDir = DIRECTION_NONE;
-	if (KEYBOARD->IsStayKeyDown(DIK_W))
+	if (CAMERA->GetControl())
 	{
-		m_nKeyDir |= DIRECTION_UP;
-		bControl = true;
+		if (KEYBOARD->IsStayKeyDown(DIK_W))
+		{
+			m_nKeyDir |= DIRECTION_UP;
+			bControl = true;
+		}
+		if (KEYBOARD->IsStayKeyDown(DIK_S))
+		{
+			m_nKeyDir |= DIRECTION_DOWN;
+			bControl = true;
+		}
+		if (KEYBOARD->IsStayKeyDown(DIK_A))
+		{
+			m_nKeyDir |= DIRECTION_LEFT;
+			bControl = true;
+		}
+		if (KEYBOARD->IsStayKeyDown(DIK_D))
+		{
+			m_nKeyDir |= DIRECTION_RIGHT;
+			bControl = true;
+		}
 	}
-	if (KEYBOARD->IsStayKeyDown(DIK_S))
-	{
-		m_nKeyDir |= DIRECTION_DOWN;
-		bControl = true;
-	}
-	if (KEYBOARD->IsStayKeyDown(DIK_A))
-	{
-		m_nKeyDir |= DIRECTION_LEFT;
-		bControl = true;
-	}
-	if (KEYBOARD->IsStayKeyDown(DIK_D))
-	{
-		m_nKeyDir |= DIRECTION_RIGHT;
-		bControl = true;
-	}
-
 	//이동
 	if (m_nKeyDir == DIRECTION_NONE)
 	{
@@ -229,7 +234,7 @@ void cPlayer::CheckControl()
 	else
 	{
 		float fCameraAngle = CAMERA->GetCamRotX();
-//		float fAngle = 0;
+		//		float fAngle = 0;
 		m_fTempAngle = 0.0f;
 		int nKeys = 0;
 
@@ -255,7 +260,7 @@ void cPlayer::CheckControl()
 		if (nKeys >= 2)
 			m_fTempAngle /= 2;
 
-//		m_fAngle = fCameraAngle + fAngle;
+		//		m_fAngle = fCameraAngle + fAngle;
 
 		if (IsMoveAble())
 		{
@@ -267,46 +272,47 @@ void cPlayer::CheckControl()
 		}
 	}
 
-
-	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	if (CAMERA->GetControl())
 	{
-		if (IsMoveAble())
+		if (KEYBOARD->IsOnceKeyDown(DIK_1))
 		{
-			ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
-			m_bIsBattle = true;
-			bControl = true;
+			if (IsMoveAble())
+			{
+				ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
+				m_bIsBattle = true;
+				bControl = true;
+			}
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_2))
+		{
+			if (IsMoveAble())
+			{
+				ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+				m_bIsBattle = true;
+				bControl = true;
+			}
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_3))
+		{
+			if (IsMoveAble())
+			{
+				//			ChangeState(E_STATE_SKILL);
+				ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+				m_bIsBattle = true;
+				bControl = true;
+			}
+		}
+		if (KEYBOARD->IsOnceKeyDown(DIK_4))
+		{
+			if (IsMoveAble())
+			{
+				ChangeState(E_STATE_REACTION);
+				//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+				m_bIsBattle = true;
+				bControl = true;
+			}
 		}
 	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_2))
-	{
-		if (IsMoveAble())
-		{
-			ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
-			m_bIsBattle = true;
-			bControl = true;
-		}
-	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_3))
-	{
-		if (IsMoveAble())
-		{
-//			ChangeState(E_STATE_SKILL);
-			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-			m_bIsBattle = true;
-			bControl = true;
-		}
-	}
-	if (KEYBOARD->IsOnceKeyDown(DIK_4))
-	{
-		if (IsMoveAble())
-		{
-			ChangeState(E_STATE_REACTION);
-			//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-			m_bIsBattle = true;
-			bControl = true;
-		}
-	}
-
 	if (KEYBOARD->IsOnceKeyDown(DIK_M))
 	{
 		//임시
@@ -317,6 +323,16 @@ void cPlayer::CheckControl()
 	//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
 	if (CAMERA->GetControl())
 	{
+		if (m_firstMenu)
+		{
+			GETSINGLE(cUIMgr)->RemoveList("BackGround");
+				m_firstMenu = false;
+		}
+		GETSINGLE(cUIMgr)->RemoveList("Menu");
+		GETSINGLE(cUIMgr)->RemoveList("Button1");
+		GETSINGLE(cUIMgr)->RemoveList("Button2");
+		m_nowMenu = false;
+
 		if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
 		{
 			if (m_pState != m_aStates[E_STATE_SKILL])
@@ -341,11 +357,23 @@ void cPlayer::CheckControl()
 				ChangeState(E_STATE_IDLE);
 		}
 	}
-
+	else
+	{
+		if (!m_nowMenu)
+		{
+			m_nowMenu = true;
+			if (m_firstMenu)
+			{
+				GETSINGLE(cUIMgr)->AddList("BackGround");
+			}
+			GETSINGLE(cUIMgr)->AddList("Menu");
+			GETSINGLE(cUIMgr)->AddList("Button1");
+			GETSINGLE(cUIMgr)->AddList("Button2");
+		}
+	}
 	if (bControl == true && !CAMERA->GetControl())
 	{
 		CAMERA->SetControl(true);
-		ShowCursor(false);
 		GETSINGLE(cUIMgr)->AddList("CrossHair");
 	}
 

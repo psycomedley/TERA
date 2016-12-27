@@ -19,6 +19,7 @@ class cText;
 class cAlphaText;
 class cUIObject;
 class cObjectTool;
+class cUIButton;
 class cMainGame
 {
 private:

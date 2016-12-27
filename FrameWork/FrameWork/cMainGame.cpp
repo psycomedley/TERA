@@ -21,6 +21,7 @@
 #include "cCamera.h"
 #include "cGuardian.h"
 #include "cGardener.h"
+#include "cUIButton.h"
 
 //юс╫ц
 
@@ -59,7 +60,6 @@ cMainGame::~cMainGame()
 
 HRESULT cMainGame::Setup()
 {
-	ShowCursor(false);
 	/*POINT pWinPos;
 	pWinPos.x = GetWindowWidth() / 2;
 	pWinPos.y = GetWindowHeight() / 2;
@@ -206,12 +206,14 @@ HRESULT cMainGame::Setup()
 
 	///////////////////////////////////
 
+
 	return S_OK;
 }
 
 
 void cMainGame::Update()
 {
+
 	if (IsActive())
 	{
 		if (KEYBOARD->IsOnceKeyDown(DIK_SCROLL))
@@ -610,6 +612,49 @@ void cMainGame::SetUI()
 
 	//GETSINGLE(cUIMgr)->AddUI("p", p);
 	//GETSINGLE(cUIMgr)->AddList("p");
+
+	//////////////////////////////////////////////////////////
+	//						Menu							//
+	//////////////////////////////////////////////////////////
+
+	cUIImageView* pBackGround = new cUIImageView;
+	pBackGround->SetSize(ST_SIZE(GetWindowWidth(), GetWindowHeight()));
+	pBackGround->SetTexture("UI/LoadingImage21_Tex2.tga",1,1);
+	pBackGround->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2 + 150, 0));
+
+	pBackGround->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("BackGround", pBackGround);
+
+
+	cUIImageView* pMenu = new cUIImageView;
+	pMenu->SetSize(ST_SIZE(441, 512));
+	pMenu->SetTexture("UI/Logout_I3.tga", 1, 1);
+	pMenu->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2+80, 0));
+
+	pMenu->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("Menu", pMenu);
+
+	cUIButton* pButton1 = new cUIButton;
+	pButton1->SetSize(ST_SIZE(155, 33));
+	pButton1->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
+	pButton1->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +150, 0));
+	
+	pButton1->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("Button1", pButton1);
+
+	cUIButton* pButton2 = new cUIButton;
+	pButton2->SetSize(ST_SIZE(155, 33));
+	pButton2->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
+	pButton2->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +220, 0));
+	
+	pButton2->SetSprite(pSprite);
+
+	GETSINGLE(cUIMgr)->AddUI("Button2", pButton2);
+
+
 
 	SAFE_RELEASE(pSprite);
 }
