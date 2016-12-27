@@ -187,6 +187,12 @@ void cStateSkill::End()
 	m_nCount = 0;
 	m_pParent->AnimationRemove();
 	((cPlayer*)m_pParent)->ChangeState(E_STATE_WAIT);
+
+
+	StartEffect1 = false;
+	SAFE_RELEASE(m_pEffect1);
+	StartSkill3 = false;
+	SAFE_RELEASE(m_pSkill3Effect);
 }
 
 
@@ -208,6 +214,12 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 		m_bSoundPlay = false;
 		m_bSoundPlay2 = false;
 		m_bNextAttack = false;
+
+		StartEffect1 = false;
+		SAFE_RELEASE(m_pEffect1);
+		StartSkill3 = false;
+		SAFE_RELEASE(m_pSkill3Effect);
+
 		return;
 	}
 	else if (animInfo.nIndex == E_ANI_SKILL)
@@ -215,6 +227,12 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 		m_bSoundPlay = false;
 		m_bSoundPlay2 = false;
 		m_pParent->AnimationNext();
+
+		StartEffect1 = false;
+		SAFE_RELEASE(m_pEffect1);
+		StartSkill3 = false;
+		SAFE_RELEASE(m_pSkill3Effect);
+
 		return;
 	}
 	End();

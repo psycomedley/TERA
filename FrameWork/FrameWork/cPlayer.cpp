@@ -31,7 +31,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	, m_pHead(NULL)*/
 {
 	m_pMesh = new cDynamicMesh(szFolder, szFilename);		//Body
-//	m_pArm = new cDynamicObj(szFolder, "Popori_Arm.X");		//Arm
+	//	m_pArm = new cDynamicObj(szFolder, "Popori_Arm.X");		//Arm
 	//Leg
 	//Head
 
@@ -72,8 +72,8 @@ cPlayer::~cPlayer()
 {
 	for (int i = 0; i < E_STATE_END; i++)
 	{
-	//	if (i == 3)
-	//		continue;
+		//	if (i == 3)
+		//		continue;
 		SAFE_DELETE(m_aStates[i]);
 	}
 
@@ -143,8 +143,8 @@ void cPlayer::SetupBaseWeapon()
 	m_pLeftWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pLeftWeapon->SetParentKey("FxHand00");
 	m_pLeftWeapon->SetParentMat();
-	
-	
+
+
 	m_pRightWeapon = new cWeapon("Weapon", "Gauntlet00_R.X");
 	m_pRightWeapon->SetHolderKey("Popori", "Popori.X");
 	m_pRightWeapon->SetParentKey("FxHand01");
@@ -232,7 +232,7 @@ void cPlayer::CheckControl()
 	else
 	{
 		float fCameraAngle = CAMERA->GetCamRotX();
-//		float fAngle = 0;
+		//		float fAngle = 0;
 		m_fTempAngle = 0.0f;
 		int nKeys = 0;
 
@@ -258,7 +258,7 @@ void cPlayer::CheckControl()
 		if (nKeys >= 2)
 			m_fTempAngle /= 2;
 
-//		m_fAngle = fCameraAngle + fAngle;
+		//		m_fAngle = fCameraAngle + fAngle;
 
 		if (IsMoveAble())
 		{
@@ -269,7 +269,7 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
-	
+
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
 		if (IsMoveAble())
@@ -379,21 +379,21 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	m_pState->Update();
 	CheckControl();
 	cDynamicObj::UpdateAndRender(pmat);
-//	GetBox();
-//	m_pArm->UpdateAndRender();
-	
+	//	GetBox();
+	//	m_pArm->UpdateAndRender();
+
 	if (m_pRightWeapon)
 	{
 		m_pRightWeapon->Update();
 		m_pRightWeapon->Render();
-	//	m_pRightWeapon->Bounding_Render();
-	//	m_pRightWeapon->GetBox();
+		//	m_pRightWeapon->Bounding_Render();
+		//	m_pRightWeapon->GetBox();
 	}
 	if (m_pLeftWeapon)
 	{
 		m_pLeftWeapon->Update();
 		m_pLeftWeapon->Render();
-	//	m_pLeftWeapon->Bounding_Render();
+		//	m_pLeftWeapon->Bounding_Render();
 	}
 }
 
@@ -430,8 +430,8 @@ void cPlayer::SetScale(D3DXVECTOR3 vScale)
 	m_pLeftWeapon->SetHolderScale(vScale.x);
 	m_pRightWeapon->SetHolderScale(vScale.x);
 
-//	m_pLeftWeapon->SetScale(vScale);
-//	m_pRightWeapon->SetScale(vScale);
+	//	m_pLeftWeapon->SetScale(vScale);
+	//	m_pRightWeapon->SetScale(vScale);
 }
 
 

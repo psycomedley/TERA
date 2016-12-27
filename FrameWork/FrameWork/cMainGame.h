@@ -1,4 +1,6 @@
 #pragma once
+#include "cUIButton.h"
+
 class cCube;
 class cCamera;
 class cStaticMesh;
@@ -19,6 +21,8 @@ class cText;
 class cAlphaText;
 class cUIObject;
 class cObjectTool;
+class cSkyBox;
+class cUIButton;
 class cMainGame
 {
 private:
@@ -27,7 +31,7 @@ private:
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	cObjectTool*		m_cObjectTool;
-
+	cSkyBox*			m_cSkyBox;
 	bool				m_bLockMouse;
 
 
@@ -37,17 +41,19 @@ private:
 	int a = 0;
 	float b = 0.1;
 
-	cEffect*			m_pEffect4;
+	//cEffect*			m_pEffect4;
 
-	cDynamicMeshEffect*	m_pDynamicMeshEffect;
-	cCircleEffect*		m_pCircleEffect;
-	cRushEffect*		m_pRushEffect;
+	//cDynamicMeshEffect*	m_pDynamicMeshEffect;
+	//cCircleEffect*		m_pCircleEffect;
+	//cRushEffect*		m_pRushEffect;
 
 	void SetCamera();
 	void SetLighting();
 	void SetUI();
 	void SetShader();
 	void SetEffect();
+	void SetSound();
+
 
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;

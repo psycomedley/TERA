@@ -99,6 +99,7 @@ cBoundingBox cGameObject::GetBox()
 }
 
 
+
 cBoundingSphere cGameObject::GetSphere()
 {
 	return m_pMesh->GetSphere(m_vPosition, m_vScale.x);

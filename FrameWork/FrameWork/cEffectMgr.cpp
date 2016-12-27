@@ -62,8 +62,6 @@ void cEffectMgr::Release()
 		for each (auto effect in iter.second)
 			effect->Release();
 
-	for each(auto effect in m_vecStaticMeshEffect)
-		effect->Release();
 
 
 	cSingleton::Release();

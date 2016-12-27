@@ -38,5 +38,6 @@ void iState::PlaySound(E_SOUND eSound, bool bDouble /*= false*/)
 				GETSINGLE(cSoundMgr)->Play(sKey);
 			m_bSoundPlay = true;
 		}
+		
 	}
 }

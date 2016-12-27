@@ -38,22 +38,19 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_pGrid);
 
 	SAFE_RELEASE(m_cObjectTool);
-	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_RELEASE(m_pEffect4);
-	
 
-	SAFE_RELEASE(m_pCircleEffect);
+
 	//SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
 
 	SAFE_RELEASE(m_pMap);
-	
+
 
 	Release();
 
-//	SAFE_RELEASE(m_pPlayer);
-//	SAFE_RELEASE(m_pBoss);
+	//	SAFE_RELEASE(m_pPlayer);
+	//	SAFE_RELEASE(m_pBoss);
 }
 
 
@@ -123,7 +120,7 @@ HRESULT cMainGame::Setup()
 	pBoss->SetRevisionAngle(D3DX_PI / 2);
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
-	
+
 	//임시//
 	cDynamicObj* pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
@@ -153,19 +150,19 @@ HRESULT cMainGame::Setup()
 	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
 
-//	GETSINGLE(cCameraMgr)->Setup();
+	//	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
 	GETSINGLE(cObjectToolMgr)->Setup();
 
-//	m_pMap = new cMap("Map","fieldmap1.x");
+	//	m_pMap = new cMap("Map","fieldmap1.x");
 	cMap* pMap = new cMap("Map", "fieldmap1.x");
 	GETSINGLE(cObjMgr)->SetMap(pMap);
-	
+
 	m_cObjectTool = new cObjectTool;
 	m_cObjectTool->Setup();
 
-//	GETSINGLE(cSoundMgr)->Play(pMap->GetSoundKey(E_MAP_SOUND_BGM));
+	//	GETSINGLE(cSoundMgr)->Play(pMap->GetSoundKey(E_MAP_SOUND_BGM));
 
 	///////////////임시////////////////
 
@@ -173,7 +170,7 @@ HRESULT cMainGame::Setup()
 	m_pGrid->Setup(30);
 
 
-	
+
 
 	//m_pEffect4 = new cEffect;
 	//m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
@@ -193,12 +190,12 @@ HRESULT cMainGame::Setup()
 	//m_pDynamicMeshEffect->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
 
-//	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
+	//	m_pCircleEffect = new cCircleEffect("Effect", "blueCircle.x");
 
 
 
 	//m_pCircleEffect->SetScale(D3DXVECTOR3(0.0000001f, 0.0000001f, 0.0000001f));
-//	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
+	//	m_pCircleEffect->Setup(60, 0.2f, true, D3DXVECTOR3(0.2f,0.2f,0.2f),D3DXVECTOR3(20,1.5f,0));
 
 	//m_pRushEffect = new cRushEffect("Effect", "RushEffect2.x");
 	//m_pRushEffect->Setup(40, 0.015f, true, D3DXVECTOR3(0.005f, 0.005f, 0.005f), D3DXVECTOR3(25, 1.5f, 0));
@@ -252,9 +249,9 @@ void cMainGame::Update()
 	{
 		if (KEYBOARD->IsOnceKeyDown(DIK_F11))
 		{
-//			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetPosition() + D3DXVECTOR3(0, 0, 0);
+			//			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetPosition() + D3DXVECTOR3(0, 0, 0);
 			D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetSphere().GetCenter();
-//			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetVecTarget(&pos);
+			//			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetVecTarget(&pos);
 			GETSINGLE(cCameraMgr)->GetCamera("EventCamera")->SetLookAt(pos);
 			GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
 		}
@@ -274,11 +271,11 @@ void cMainGame::Update()
 			//m_pRushEffect->Start();
 			/*if (m_pEffect4->GetProcess())
 			{
-				m_pEffect4->Stop();
+			m_pEffect4->Stop();
 			}
 			else
 			{
-				m_pEffect4->Start();
+			m_pEffect4->Start();
 			}*/
 		}
 		//	char szStr[16] = { '\0', };
@@ -294,9 +291,9 @@ void cMainGame::Update()
 
 
 	/*if (m_pBoss)
-		m_pBoss->Update();*/
-//	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
-//m_pDynamicMeshEffect->Setup();
+	m_pBoss->Update();*/
+	//	if(MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
+	//m_pDynamicMeshEffect->Setup();
 
 	GETSINGLE(cEffectMgr)->Update();
 	//if (m_pCircleEffect)
@@ -307,11 +304,8 @@ void cMainGame::Update()
 	//{
 	//	m_pRushEffect->Update();
 	//}
-	if (m_pEffect4)
-		m_pEffect4->Update();
 
-
-//	m_pMap->Update();
+	//	m_pMap->Update();
 	GETSINGLE(cObjMgr)->Update();
 	///////////////////////////////////
 
@@ -324,49 +318,49 @@ void cMainGame::Render()
 	GETSINGLE(cDevice)->BeginRender();
 
 	POINT pos = MOUSE->GetWindowPos();
-//	POINT pos;
-//	GetCursorPos(&pos);
+	//	POINT pos;
+	//	GetCursorPos(&pos);
 	char msg[128];
 
 	POINT ptPosition;
 	GetCursorPos(&ptPosition);
-	
-//	OutputInteger(msg, "x", ptPosition.x);
-//	OutputInteger(msg, "y", ptPosition.y);
 
-//	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
-//	{
-//		POINT p = MOUSE->GetWindowPos();
-//
-//		cRay r;
-//		r = cRay::CalcWorldSpace(p);
-//
-//		cBoundingSphere sphere = m_pBoss->GetSphere();
-//		cBoundingSphere sphere2 = m_pBoss2->GetSphere();
-//		r = r.WorldToLocal(sphere.GetCenter());
-//
-//		cRay r2;
-//		r2 = cRay::CalcWorldSpace(p);
-//		r2 = r2.WorldToLocal(sphere2.GetCenter());
-//
-//		//	bool pick = r.IsPick(sphere);
-//		if (GETSINGLE(cCollision)->Collision(&sphere, &r))
-//		{
-//			static int c = 2;
-//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
-//		}
-//		if (GETSINGLE(cCollision)->Collision(&sphere2, &r2))
-//		{
-//			static int c = 2;
-//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
-//		}
-////		if (GETSINGLE())
-//	}
-	
-//	if (m_pMap)
-//		m_pMap->Render();
+	//	OutputInteger(msg, "x", ptPosition.x);
+	//	OutputInteger(msg, "y", ptPosition.y);
+
+	//	if (MOUSE->IsOnceKeyDown(MOUSEBTN_LEFT))
+	//	{
+	//		POINT p = MOUSE->GetWindowPos();
+	//
+	//		cRay r;
+	//		r = cRay::CalcWorldSpace(p);
+	//
+	//		cBoundingSphere sphere = m_pBoss->GetSphere();
+	//		cBoundingSphere sphere2 = m_pBoss2->GetSphere();
+	//		r = r.WorldToLocal(sphere.GetCenter());
+	//
+	//		cRay r2;
+	//		r2 = cRay::CalcWorldSpace(p);
+	//		r2 = r2.WorldToLocal(sphere2.GetCenter());
+	//
+	//		//	bool pick = r.IsPick(sphere);
+	//		if (GETSINGLE(cCollision)->Collision(&sphere, &r))
+	//		{
+	//			static int c = 2;
+	//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
+	//		}
+	//		if (GETSINGLE(cCollision)->Collision(&sphere2, &r2))
+	//		{
+	//			static int c = 2;
+	//			m_pPlayer->SetAnimationIdxBlend(++c % 5);
+	//		}
+	////		if (GETSINGLE())
+	//	}
+
+	//	if (m_pMap)
+	//		m_pMap->Render();
 	m_pGrid->Render();
-	
+
 	m_cObjectTool->Render();
 
 
@@ -378,7 +372,7 @@ void cMainGame::Render()
 
 
 	///////////////임시////////////////
-	
+
 
 
 
@@ -390,10 +384,6 @@ void cMainGame::Render()
 	//{
 	//	m_pRushEffect->Render();
 	//}
-	if (m_pEffect4)
-	{
-		m_pEffect4->Render();
-	}
 	//if (m_pDynamicMeshEffect)
 	//{
 	//	m_pDynamicMeshEffect->Render();
@@ -401,10 +391,10 @@ void cMainGame::Render()
 
 
 
-	
-	
 
-	
+
+
+
 
 	///////////////////////////////////
 
@@ -436,7 +426,7 @@ void cMainGame::Release()
 	GETSINGLE(cEventMgr)->Release();
 
 	GETSINGLE(cDevice)->Release();
-	
+
 }
 
 
@@ -639,15 +629,15 @@ void cMainGame::SetShader()
 	//Test
 	/*D3DXMACRO mac[2] =
 	{
-		{ "MATRIX_PALETTE_SIZE_DEFAULT", "35" },
-		{ NULL, NULL }
+	{ "MATRIX_PALETTE_SIZE_DEFAULT", "35" },
+	{ NULL, NULL }
 	};
 
 	D3DCAPS9 caps;
 	D3DXMACRO *pmac = NULL;
 	g_pD3DDevice->GetDeviceCaps(&caps);
 	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
-		pmac = mac;*/
+	pmac = mac;*/
 
 	GETSINGLE(cShaderMgr)->AddEffect(E_SHADER_EFFECT, "Effect.hpp");
 
@@ -669,11 +659,11 @@ void cMainGame::SetEffect()
 	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
 	pEffect->AddTechList(E_TECH_ORCA1);
 	pEffect->AddTechList(E_TECH_ORCA1_REMOVE);
-//	pEffect->SetTechnique(E_TECH_ORCA1);
+	//	pEffect->SetTechnique(E_TECH_ORCA1);
 	pEffect->SetNextTime(0.03);
 	pEffect->SetLoop(true);
 	pEffect->SetRemoveTime(3.0f);
-//	pEffect->SetLoopTimes(20);
+	//	pEffect->SetLoopTimes(20);
 	pEffect->SetName("orca1");
 
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
@@ -686,7 +676,7 @@ void cMainGame::SetEffect()
 	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
 	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
 	pEffect->AddTechList(E_TECH_ORCA2);
-//	pEffect->SetTechnique(E_TECH_ORCA2);
+	//	pEffect->SetTechnique(E_TECH_ORCA2);
 
 	//m_pEffect2->SetAngle(D3DX_PI / 2);
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
@@ -705,7 +695,7 @@ void cMainGame::SetEffect()
 	pEffect->SetTexture("Effect/K_BlueCaustic001_emis.tga", E_TEXTURE2);
 	pEffect->SetPosition(D3DXVECTOR3(20, 2, 10));
 	pEffect->AddTechList(E_TECH_BACKATK);
-//	pEffect->SetTechnique(E_TECH_BACKATK);
+	//	pEffect->SetTechnique(E_TECH_BACKATK);
 
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
 	D3DXMatrixRotationY(&m2, D3DX_PI / 4);
@@ -727,9 +717,9 @@ void cMainGame::SetEffect()
 	pEffect->SetAngle(D3DX_PI / 2);
 
 	pEffect->AddTechList(E_TECH_MAGICARRAY);
-//	pEffect->SetTechnique(E_TECH_MAGICARRAY);
-//	D3DXMATRIXA16 ma;
-//	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
+	//	pEffect->SetTechnique(E_TECH_MAGICARRAY);
+	//	D3DXMATRIXA16 ma;
+	//	D3DXMatrixRotationX(&ma, D3DX_PI / 2);
 	pEffect->SetMatRotation(m);
 	pEffect->SetRemoveTime(5);
 	pEffect->SetName("MagicArray");
@@ -745,7 +735,7 @@ void cMainGame::SetEffect()
 	//m_pEffect2->SetTexture("Effect/B_NormalMap005_Mask.tga", E_BUMPMAP);
 	pEffect->SetPosition(D3DXVECTOR3(22, 2, 10));
 	pEffect->AddTechList(E_TECH_GLOBEATK);
-//	pEffect->SetTechnique(E_TECH_ORCA2);
+	//	pEffect->SetTechnique(E_TECH_ORCA2);
 
 	//m_pEffect2->SetAngle(D3DX_PI / 2);
 	D3DXMatrixRotationX(&m, D3DX_PI / 2);
@@ -758,20 +748,20 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
-//	//구체 공격2
-//	pEffect = new cEffect;
-//	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_CUTTEDFRAME /*| EFFECT_LOOPEDFRAME*/);
-//	pEffect->SetTexture("Effect/D_MOVArchaLightBig001_Emis.tga", E_TEXTURE1);
-//	pEffect->SetTotalFrame(8, 4, 32);
-//	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
-//	pEffect->AddTechList(E_TECH_GLOBEATK2);
-//	pEffect->SetNextTime(0.03);
-//	pEffect->SetLoop(false);
-//	pEffect->SetRemoveTime(3.0f);
-////	pEffect->SetLoopTimes(20);
-//	pEffect->SetName("GlobeAtk2");
-//
-//	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
+	//	//구체 공격2
+	//	pEffect = new cEffect;
+	//	pEffect->Setup(5, 5, 1, EFFECT_ALPHABLEND | EFFECT_CUTTEDFRAME /*| EFFECT_LOOPEDFRAME*/);
+	//	pEffect->SetTexture("Effect/D_MOVArchaLightBig001_Emis.tga", E_TEXTURE1);
+	//	pEffect->SetTotalFrame(8, 4, 32);
+	//	pEffect->SetPosition(D3DXVECTOR3(20, 5, 10));
+	//	pEffect->AddTechList(E_TECH_GLOBEATK2);
+	//	pEffect->SetNextTime(0.03);
+	//	pEffect->SetLoop(false);
+	//	pEffect->SetRemoveTime(3.0f);
+	////	pEffect->SetLoopTimes(20);
+	//	pEffect->SetName("GlobeAtk2");
+	//
+	//	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 	//바닥 깨지는 이펙트
 	pEffect = new cEffect;

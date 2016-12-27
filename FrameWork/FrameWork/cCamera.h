@@ -17,7 +17,7 @@ private:
 	SYNTHESIZE(bool, m_bControl, Control);
 	SYNTHESIZE(cGameObject*, m_pTarget, Target);
 	SYNTHESIZE(D3DXVECTOR3*, m_vTarget, VecTarget);
-
+	
 public:
 	cCamera(void);
 	~cCamera(void);
@@ -29,5 +29,6 @@ public:
 
 	//
 	void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+public:
 };
 

@@ -3,6 +3,7 @@
 #include "cPlayer.h"
 #include "cOrca.h"
 #include "cFrustum.h"
+#include "cSkyBox.h"
 
 
 cMap::cMap(char* szFolder, char* szFilename)
@@ -25,7 +26,6 @@ cMap::cMap(char* szFolder, char* szFilename)
 	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
 	m_vecPNTVertex = *((cStaticMesh*)m_pMesh)->GetVecPNTVertaxies();
 	
-
 	SetupHeight();
 	SetSound();
 }

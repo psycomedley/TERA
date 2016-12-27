@@ -110,15 +110,15 @@ void cCamera::Update()
 
 void cCamera::CameraMove()
 {
-//	POINT prevPos;
-//	GetCursorPos(&prevPos);
+	//	POINT prevPos;
+	//	GetCursorPos(&prevPos);
 
 	//ÁÜÀÎ ÁÜ¾Æ¿ô ¿¹Á¦
 	/*m_fCamDist -= MOUSE->GetWheelVariation() / 100.0f;
 	if (m_fCamDist < 5)
-		m_fCamDist = 5;
+	m_fCamDist = 5;
 	else if (m_fCamDist > 30)
-		m_fCamDist = 30;*/
+	m_fCamDist = 30;*/
 
 	float var = MOUSE->GetWheelVariation() / 120.0f;
 	if (var)
@@ -133,7 +133,7 @@ void cCamera::CameraMove()
 		}
 		else
 		{
- 			m_fPrevDist -= var;
+			m_fPrevDist -= var;
 			if (m_fPrevDist < 6)
 				m_fPrevDist = 6;
 			else if (m_fPrevDist > 30)
@@ -141,15 +141,15 @@ void cCamera::CameraMove()
 		}
 	}
 
-//	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
-//	{
+	//	if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+	//	{
 	POINT movePoint = MOUSE->GetMouseVariation();
 
-//	m_fCamRotY += (movePoint.y / 300.f);
+	//	m_fCamRotY += (movePoint.y / 300.f);
 	m_fCamRotX += (movePoint.x / 300.f);
 
 	/*if (m_fCamRotY < -D3DX_PI / 2.0f + 0.0001f)
-		m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;*/
+	m_fCamRotY = -D3DX_PI / 2.0f + 0.0001f;*/
 
 	if (movePoint.y >= 0)
 	{
@@ -209,41 +209,41 @@ void cCamera::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	/*switch (message)
 	{
 	case WM_LBUTTONDOWN:
-		m_isLButtonDown = true;
-		m_ptPrevMouse.x = LOWORD(lParam);
-		m_ptPrevMouse.y = HIWORD(lParam);
-		break;
+	m_isLButtonDown = true;
+	m_ptPrevMouse.x = LOWORD(lParam);
+	m_ptPrevMouse.y = HIWORD(lParam);
+	break;
 	case WM_LBUTTONUP:
-		m_isLButtonDown = false;
-		break;
+	m_isLButtonDown = false;
+	break;
 	case WM_MOUSEMOVE:
 	{
-		if (m_isLButtonDown)
-		{
-			POINT ptCurrMouse;
-			ptCurrMouse.x = LOWORD(lParam);
-			ptCurrMouse.y = HIWORD(lParam);
-			float fDeltaX = ptCurrMouse.x - m_ptPrevMouse.x;
-			float fDeltaY = ptCurrMouse.y - m_ptPrevMouse.y;
+	if (m_isLButtonDown)
+	{
+	POINT ptCurrMouse;
+	ptCurrMouse.x = LOWORD(lParam);
+	ptCurrMouse.y = HIWORD(lParam);
+	float fDeltaX = ptCurrMouse.x - m_ptPrevMouse.x;
+	float fDeltaY = ptCurrMouse.y - m_ptPrevMouse.y;
 
-			m_fCamRotX += (fDeltaY / 100.f);
-			m_fCamRotY += (fDeltaX / 100.f);
+	m_fCamRotX += (fDeltaY / 100.f);
+	m_fCamRotY += (fDeltaX / 100.f);
 
-			if (m_fCamRotX < -D3DX_PI / 2.0f + 0.0001f)
-				m_fCamRotX = -D3DX_PI / 2.0f + 0.0001f;
+	if (m_fCamRotX < -D3DX_PI / 2.0f + 0.0001f)
+	m_fCamRotX = -D3DX_PI / 2.0f + 0.0001f;
 
-			if (m_fCamRotX > D3DX_PI / 2.0f - 0.0001f)
-				m_fCamRotX = D3DX_PI / 2.0f - 0.0001f;
+	if (m_fCamRotX > D3DX_PI / 2.0f - 0.0001f)
+	m_fCamRotX = D3DX_PI / 2.0f - 0.0001f;
 
-			m_ptPrevMouse = ptCurrMouse;
-		}
+	m_ptPrevMouse = ptCurrMouse;
+	}
 	}
 	break;
 	case WM_MOUSEWHEEL:
-		m_fCamDist += -GET_WHEEL_DELTA_WPARAM(wParam) / 100.f;
-		if (m_fCamDist < 1)
-			m_fCamDist = 1;
+	m_fCamDist += -GET_WHEEL_DELTA_WPARAM(wParam) / 100.f;
+	if (m_fCamDist < 1)
+	m_fCamDist = 1;
 
-		break;
+	break;
 	}*/
 }

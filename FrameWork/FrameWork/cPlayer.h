@@ -1,7 +1,6 @@
 #pragma once
 #include "cDynamicObj.h"
 #include "cWeapon.h"
-
 class iState;
 class cUIObject;
 class cPlayer : public cDynamicObj
@@ -12,6 +11,8 @@ private:
 
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
+	bool			m_firstMenu;
+	bool			m_nowMenu;
 	cUIObject*		m_pUIHp;
 	float			m_fPassedTime;
 
@@ -38,6 +39,7 @@ public:
 
 	bool IsMoveAble();
 	void UpdateUI();
+
 
 public:
 	virtual void SetSound() override;
