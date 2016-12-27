@@ -42,11 +42,11 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_cSkyBox);
 
 	SAFE_RELEASE(m_cObjectTool);
-	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_RELEASE(m_pEffect4);
-	
+	//SAFE_RELEASE(m_pDynamicMeshEffect);
+	//SAFE_RELEASE(m_pEffect4);
 
-	SAFE_RELEASE(m_pCircleEffect);
+
+	//SAFE_RELEASE(m_pCircleEffect);
 	//SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
@@ -312,8 +312,8 @@ void cMainGame::Update()
 	//{
 	//	m_pRushEffect->Update();
 	//}
-	if (m_pEffect4)
-		m_pEffect4->Update();
+	//if (m_pEffect4)
+	//	m_pEffect4->Update();
 
 
 	m_pMap->Update();
@@ -394,10 +394,10 @@ void cMainGame::Render()
 	//{
 	//	m_pRushEffect->Render();
 	//}
-	if (m_pEffect4)
-	{
-		m_pEffect4->Render();
-	}
+	//if (m_pEffect4)
+	//{
+	//	m_pEffect4->Render();
+	//}
 	//if (m_pDynamicMeshEffect)
 	//{
 	//	m_pDynamicMeshEffect->Render();
@@ -853,7 +853,7 @@ void cMainGame::OnClick(cUIObject * pObj)
 	{
 		CAMERA->SetControl(true);
 		ShowCursor(!CAMERA->GetControl());
-		
+		GETSINGLE(cUIMgr)->AddList("CrossHair");
 	}
 	if (pObj->GetTag() == 6)
 	{

@@ -41,11 +41,11 @@ private:
 	int a = 0;
 	float b = 0.1;
 
-	cEffect*			m_pEffect4;
+	//cEffect*			m_pEffect4;
 
-	cDynamicMeshEffect*	m_pDynamicMeshEffect;
-	cCircleEffect*		m_pCircleEffect;
-	cRushEffect*		m_pRushEffect;
+	//cDynamicMeshEffect*	m_pDynamicMeshEffect;
+	//cCircleEffect*		m_pCircleEffect;
+	//cRushEffect*		m_pRushEffect;
 
 	void SetCamera();
 	void SetLighting();
