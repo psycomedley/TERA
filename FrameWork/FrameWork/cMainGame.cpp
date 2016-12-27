@@ -88,6 +88,7 @@ HRESULT cMainGame::Setup()
 	SetEffect();
 	SetUI();
 	SetLighting();
+	SetSound();
 
 	cText* pText = new cText;
 	pText->Setup(E_FONT_DAMAGE, "PlayerDamage", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XYELLOW,
@@ -174,6 +175,7 @@ HRESULT cMainGame::Setup()
 	m_cSkyBox = new cSkyBox;
 	m_cSkyBox->SetUp();
 	
+	//GETSINGLE(cSoundMgr)->Play("Title");
 
 	//m_pEffect4 = new cEffect;
 	//m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
@@ -250,6 +252,8 @@ void cMainGame::Update()
 	{
 		GETSINGLE(cObjectToolMgr)->Update();
 	}
+
+
 
 	///////////////юс╫ц////////////////
 
@@ -853,7 +857,10 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
+
+
 }
+
 
 void cMainGame::OnClick(cUIObject * pObj)
 {
@@ -867,4 +874,11 @@ void cMainGame::OnClick(cUIObject * pObj)
 	{
 		PostQuitMessage(0);
 	}
+}
+
+void cMainGame::SetSound()
+{
+	GETSINGLE(cSoundMgr)->Add("Title", "Sound/Title.mp3", true);
+	GETSINGLE(cSoundMgr)->Add("Theme1", "Sound/Theme1.mp3", true);
+	GETSINGLE(cSoundMgr)->Add("Hit", "Sound/Hit.ogg");
 }

@@ -331,6 +331,8 @@ void cPlayer::CheckControl()
 			GETSINGLE(cUIMgr)->RemoveList("Button1");
 			m_firstMenu = false;
 			CAMERA->SetFirstMenu(false);
+//			GETSINGLE(cSoundMgr)->Stop("Title");
+//			GETSINGLE(cSoundMgr)->Play("Theme1");
 		}
 		else
 		{
