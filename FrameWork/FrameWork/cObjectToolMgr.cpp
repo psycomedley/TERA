@@ -7,7 +7,7 @@
 
 
 cObjectToolMgr::cObjectToolMgr()
-	:m_PlayerPrevPos(0,0,0)
+	:m_PlayerPrevPos(10,0,100)
 {
 }
 
@@ -234,11 +234,16 @@ void cObjectToolMgr::Update()
 
 	vector<cStaticObj*> vecCloneStuff = *(GETSINGLE(cObjMgr)->GetAllCloneStuff());
 	cBoundingBox* playerBox = &(pPlayer->GetBox());
-
+	D3DXVECTOR3 prePosition;
 
 	for (size_t i = 0; i < vecCloneStuff.size(); ++i)
 	{
 		string filename = ((cStuff*)vecCloneStuff[i])->GetFilename();
+		if (i + 1 == vecCloneStuff.size())
+		{
+			pPlayer->SetPrevPosition(pPlayer->GetPosition());
+			m_PlayerPrevPos = pPlayer->GetPosition();
+		}
 		if (filename == "grass1.x") 	continue;
 		else if (filename == "Grass2.x") continue;
 		else if (filename == "Grass3.x") continue;
@@ -254,10 +259,8 @@ void cObjectToolMgr::Update()
 			D3DXVECTOR3 afterPos = pPlayer->GetPrevPosition();
 			pPlayer->SetPosition(m_PlayerPrevPos);
 		}
-		if (i + 1 == vecCloneStuff.size())
-		{
-			m_PlayerPrevPos = pPlayer->GetPosition();
-		}
+	
+		
 
 		//몬스터와 오브젝트 충돌
 		for (size_t j = 0; j < pVecAllMonster.size(); ++j)

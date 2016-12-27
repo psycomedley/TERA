@@ -165,3 +165,10 @@ struct ST_OBB
 	float		fAxisLen[3];		// 상자의 평행한 세 축의 길이 fAxisLen[n]은 vAxisDir[n]에 각각 대응한다.
 	float		fAxisHalfLen[3];
 };
+
+struct SKYVERTEX
+{
+	float x, y, z, u, v;
+
+	enum { FVF = D3DFVF_XYZ | D3DFVF_TEX1, };
+};
