@@ -263,7 +263,7 @@ void cObjectToolMgr::Update()
 		
 
 		//몬스터와 오브젝트 충돌
-		for (size_t j = 0; j < pVecAllMonster.size(); ++j)
+		/*for (size_t j = 0; j < pVecAllMonster.size(); ++j)
 		{
 			if (pVecAllMonster[j]->GetInfo().sName == "Globe") continue;
 			cBoundingBox* MosterBox = &(pVecAllMonster[j]->GetBox());
@@ -277,7 +277,7 @@ void cObjectToolMgr::Update()
 			{
 				pVecAllMonster[j]->SetPrevPosition(pVecAllMonster[j]->GetPosition());
 			}
-		}
+		}*/
 
 	}
 	///===============================
