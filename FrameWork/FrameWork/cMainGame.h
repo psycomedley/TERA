@@ -1,4 +1,6 @@
 #pragma once
+#include "cUIButton.h"
+
 class cCube;
 class cCamera;
 class cStaticMesh;
@@ -21,7 +23,7 @@ class cUIObject;
 class cObjectTool;
 class cSkyBox;
 class cUIButton;
-class cMainGame
+class cMainGame : public iButtonDelegate
 {
 private:
 	cCube*				cube;
@@ -39,17 +41,20 @@ private:
 	int a = 0;
 	float b = 0.1;
 
-	cEffect*			m_pEffect4;
+	//cEffect*			m_pEffect4;
 
-	cDynamicMeshEffect*	m_pDynamicMeshEffect;
-	cCircleEffect*		m_pCircleEffect;
-	cRushEffect*		m_pRushEffect;
+	//cDynamicMeshEffect*	m_pDynamicMeshEffect;
+	//cCircleEffect*		m_pCircleEffect;
+	//cRushEffect*		m_pRushEffect;
 
 	void SetCamera();
 	void SetLighting();
 	void SetUI();
 	void SetShader();
 	void SetEffect();
+
+
+	virtual void OnClick(cUIObject* pObj) override;
 
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;

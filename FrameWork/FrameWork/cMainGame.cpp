@@ -42,11 +42,11 @@ cMainGame::~cMainGame()
 	SAFE_DELETE(m_cSkyBox);
 
 	SAFE_RELEASE(m_cObjectTool);
-	SAFE_RELEASE(m_pDynamicMeshEffect);
-	SAFE_RELEASE(m_pEffect4);
-	
+	//SAFE_RELEASE(m_pDynamicMeshEffect);
+	//SAFE_RELEASE(m_pEffect4);
 
-	SAFE_RELEASE(m_pCircleEffect);
+
+	//SAFE_RELEASE(m_pCircleEffect);
 	//SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
@@ -312,8 +312,8 @@ void cMainGame::Update()
 	//{
 	//	m_pRushEffect->Update();
 	//}
-	if (m_pEffect4)
-		m_pEffect4->Update();
+	//if (m_pEffect4)
+	//	m_pEffect4->Update();
 
 
 	m_pMap->Update();
@@ -380,7 +380,7 @@ void cMainGame::Render()
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
-	m_cSkyBox->Render();
+	//m_cSkyBox->Render();
 	///////////////юс╫ц////////////////
 	
 
@@ -394,10 +394,10 @@ void cMainGame::Render()
 	//{
 	//	m_pRushEffect->Render();
 	//}
-	if (m_pEffect4)
-	{
-		m_pEffect4->Render();
-	}
+	//if (m_pEffect4)
+	//{
+	//	m_pEffect4->Render();
+	//}
 	//if (m_pDynamicMeshEffect)
 	//{
 	//	m_pDynamicMeshEffect->Render();
@@ -623,7 +623,7 @@ void cMainGame::SetUI()
 
 	cUIImageView* pBackGround = new cUIImageView;
 	pBackGround->SetSize(ST_SIZE(GetWindowWidth(), GetWindowHeight()));
-	pBackGround->SetTexture("UI/LoadingImage21_Tex2.tga",1,1);
+	pBackGround->SetTexture("UI/LoadingImage21_Tex.tga",1,1);
 	pBackGround->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2 + 150, 0));
 
 	pBackGround->SetSprite(pSprite);
@@ -642,23 +642,33 @@ void cMainGame::SetUI()
 
 	cUIButton* pButton1 = new cUIButton;
 	pButton1->SetSize(ST_SIZE(155, 33));
-	pButton1->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
+	pButton1->SetTexture("UI/GameStart_Normal.tga", "UI/GameStart_MouseOver.tga", "UI/GameStart_MouseClick.tga");
 	pButton1->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +150, 0));
-	
+	pButton1->SetTag(5);
+	pButton1->SetDelegate(this);
 	pButton1->SetSprite(pSprite);
 
 	GETSINGLE(cUIMgr)->AddUI("Button1", pButton1);
 
 	cUIButton* pButton2 = new cUIButton;
 	pButton2->SetSize(ST_SIZE(155, 33));
-	pButton2->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
+	pButton2->SetTexture("UI/GameQuit_Normal.tga", "UI/GameQuit_MouseOver.tga", "UI/GameQuit_MouseClick.tga");
 	pButton2->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +220, 0));
-	
+	pButton2->SetTag(6);
+	pButton2->SetDelegate(this);
 	pButton2->SetSprite(pSprite);
 
 	GETSINGLE(cUIMgr)->AddUI("Button2", pButton2);
 
+	cUIButton* pButton3 = new cUIButton;
+	pButton3->SetSize(ST_SIZE(155, 33));
+	pButton3->SetTexture("UI/Resume_Normal.tga", "UI/Resume_MouseOver.tga", "UI/Resume_MouseClick.tga");
+	pButton3->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 + 150, 0));
+	pButton3->SetTag(7);
+	pButton3->SetDelegate(this);
+	pButton3->SetSprite(pSprite);
 
+	GETSINGLE(cUIMgr)->AddUI("Button3", pButton3);
 
 	SAFE_RELEASE(pSprite);
 }
@@ -843,4 +853,18 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
+}
+
+void cMainGame::OnClick(cUIObject * pObj)
+{
+	if (pObj->GetTag() == 5 || pObj->GetTag() == 7)
+	{
+		CAMERA->SetControl(true);
+		ShowCursor(!CAMERA->GetControl());
+		GETSINGLE(cUIMgr)->AddList("CrossHair");
+	}
+	if (pObj->GetTag() == 6)
+	{
+		PostQuitMessage(0);
+	}
 }
