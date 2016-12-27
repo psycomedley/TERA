@@ -323,15 +323,19 @@ void cPlayer::CheckControl()
 	//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
 	if (CAMERA->GetControl())
 	{
+		GETSINGLE(cUIMgr)->RemoveList("Menu");
+		GETSINGLE(cUIMgr)->RemoveList("Button2");
 		if (m_firstMenu)
 		{
 			GETSINGLE(cUIMgr)->RemoveList("BackGround");
+			GETSINGLE(cUIMgr)->RemoveList("Button1");
 			m_firstMenu = false;
 			CAMERA->SetFirstMenu(false);
 		}
-		GETSINGLE(cUIMgr)->RemoveList("Menu");
-		GETSINGLE(cUIMgr)->RemoveList("Button1");
-		GETSINGLE(cUIMgr)->RemoveList("Button2");
+		else
+		{
+			GETSINGLE(cUIMgr)->RemoveList("Button3");
+		}
 		m_nowMenu = false;
 
 		if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
@@ -362,14 +366,18 @@ void cPlayer::CheckControl()
 	{
 		if (!m_nowMenu)
 		{
-			m_nowMenu = true;
 			if (m_firstMenu)
 			{
 				GETSINGLE(cUIMgr)->AddList("BackGround");
 			}
+			m_nowMenu = true;
 			GETSINGLE(cUIMgr)->AddList("Menu");
-			GETSINGLE(cUIMgr)->AddList("Button1");
 			GETSINGLE(cUIMgr)->AddList("Button2");
+			if(m_firstMenu)
+				GETSINGLE(cUIMgr)->AddList("Button1");
+			else
+				GETSINGLE(cUIMgr)->AddList("Button3");
+			
 		}
 	}
 	if (bControl == true && !CAMERA->GetControl())
