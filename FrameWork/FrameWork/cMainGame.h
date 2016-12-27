@@ -52,6 +52,7 @@ private:
 	void SetUI();
 	void SetShader();
 	void SetEffect();
+	void SetSound();
 
 
 	virtual void OnClick(cUIObject* pObj) override;
