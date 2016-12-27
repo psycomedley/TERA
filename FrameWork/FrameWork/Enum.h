@@ -36,6 +36,15 @@
 
 #define MAXSOUND	20
 
+#define	RENDER_NONE				0
+#define RENDER_BOUNDINGBOX		(1 << 0)
+#define RENDER_BOUNDINGSPHERE	(1 << 1)
+#define RENDER_BOUNDINGPLAYER	(1 << 2)
+#define RENDER_BOUNDINGWEAPON	(1 << 3)
+#define RENDER_BOUNDINGMONSTER	(1 << 4)
+#define RENDER_BOUNDINGOBJECT	(1 << 5)
+
+
 //enum E_DIRECTION
 //{
 //	E_NONE = 0,

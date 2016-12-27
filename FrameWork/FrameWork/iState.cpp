@@ -17,7 +17,7 @@ iState::~iState()
 }
 
 
-void iState::PlaySound(E_SOUND eSound, bool bDouble /*= false*/)
+void iState::PlaySound(E_SOUND eSound, float fVolume /*= 1.0f*/, bool bDouble /*= false*/)
 {
 	if (bDouble)
 	{
@@ -25,7 +25,7 @@ void iState::PlaySound(E_SOUND eSound, bool bDouble /*= false*/)
 		{
 			string sKey = m_pParent->GetSoundKey(eSound);
 			if (sKey != "")
-				GETSINGLE(cSoundMgr)->Play(sKey);
+				GETSINGLE(cSoundMgr)->Play(sKey, fVolume);
 			m_bSoundPlay2 = true;
 		}
 	}
