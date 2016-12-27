@@ -5,7 +5,6 @@ class iState;
 class cGardener : public cMonster
 {
 private:
-	ST_SKILL_INFO	m_skillRush;
 	ST_SKILL_INFO	m_skillAttack;
 
 public:

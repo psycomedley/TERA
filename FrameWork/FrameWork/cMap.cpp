@@ -27,6 +27,7 @@ cMap::cMap(char* szFolder, char* szFilename)
 	
 
 	SetupHeight();
+	SetSound();
 }
 cMap::cMap()
 	:m_cFrustum(NULL)
@@ -321,4 +322,15 @@ void cMap::SetShaderTexture()
 
 	m_SpecularTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Spec.tga");
 
+}
+
+
+void cMap::SetSound()
+{
+	string sKey = "Amb_Peace_2";
+	m_eSoundKey[E_MAP_SOUND_BGM] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg", true);
+	sKey = "NewBattle_02";
+	m_eSoundKey[E_MAP_SOUND_BOSS_BGM] = sKey;
+	GETSINGLE(cSoundMgr)->Add(sKey, "Sound/" + sKey + ".ogg", true);
 }

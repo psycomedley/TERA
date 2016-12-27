@@ -30,10 +30,10 @@ void cEvent2::Play()
 
 		cText* pText = new cText;
 		pText->Setup(E_FONT_EVENT, "Ending", "산책나온", D3DXVECTOR2(GetWindowWidth() / 2, GetWindowHeight()), ST_SIZE(200, 50), XWHITE,
-			TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME | TEXT_SHOWAFTERTIME | TEXT_APPEARWITHALPHA);
-		pText->SetShowTime(25.0f);
-		pText->SetAlphaTime(1.0f);
-		pText->SetMoveSpeed(1.5f);
+			TEXT_MOVE | TEXT_SHOWTIME);
+		pText->SetShowTime(60.0f);
+	//	pText->SetAlphaTime(1.0f);
+		pText->SetMoveSpeed(0.5f);
 		pText->SetDirection(DIRECTION_UP);
 	//	pText->SetMoveTime(2.5f);
 //		pText->SetShowAfterTime(1.5f);

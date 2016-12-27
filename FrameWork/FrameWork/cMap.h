@@ -35,6 +35,8 @@ private:
 	float MaxZ = FLT_MIN;
 	float MinZ = FLT_MAX;
 
+	string m_eSoundKey[E_MAP_SOUND_END];
+
 public:
 	cMap(char* szFolder, char* szFilename);
 	~cMap();
@@ -49,6 +51,9 @@ public:
 	vector<D3DXVECTOR3>* cMap::FindCullingVertex();
 
 	void SetShaderTexture();
+	void SetSound();
+
+	string GetSoundKey(E_MAP_SOUND eKey) { return m_eSoundKey[eKey]; }
 private:
 	cMap();
 };

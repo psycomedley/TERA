@@ -11,8 +11,8 @@ private:
 	SYNTHESIZE(bool, m_bHitted, Hitted);	//for Monster
 
 public:
-	void PlayerDamage(bool bDoubleHit);
-	void EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool bMultieHit = false, float fDamageTime = 0.0f);
+	void PlayerDamage(bool bDoubleHit, float fAddDamage = 0.0f);
+	void EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, float fAddDamage = 0.0f, bool bMultieHit = false, float fDamageTime = 0.0f);
 	void Reset(E_OBJTYPE eType);
 	void ResetList(E_OBJTYPE eType);
 

@@ -34,7 +34,7 @@ void cBattleMgr::Release()
 }
 
 
-void cBattleMgr::PlayerDamage(bool bDoubleHit)
+void cBattleMgr::PlayerDamage(bool bDoubleHit, float fAddDamage)
 {
 	cPlayer* pParent = (cPlayer*)GETSINGLE(cObjMgr)->GetPlayer();
 	vector<cDynamicObj*> monsterList = GETSINGLE(cObjMgr)->GetALLMonsterList();
@@ -47,7 +47,7 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 				continue;
 			if (!monsterList[i]->GetHit() && GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
-				float damage = monsterList[i]->Damaged(pParent->GetInfo());
+				float damage = monsterList[i]->Damaged(pParent->GetInfo(), fAddDamage);
 				if (damage == -1)
 					continue;
 				m_vecHitted.push_back(monsterList[i]);
@@ -64,7 +64,7 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 				continue;
 			if (GETSINGLE(cCollision)->Collision(((cPlayer*)pParent), monsterList[i]))
 			{
-				float damage = monsterList[i]->Damaged(pParent->GetInfo());
+				float damage = monsterList[i]->Damaged(pParent->GetInfo(), fAddDamage);
 				if (damage == -1)
 					return;
 				m_vecHitted.push_back(monsterList[i]);
@@ -79,21 +79,21 @@ void cBattleMgr::PlayerDamage(bool bDoubleHit)
 }
 
 
-void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool bMultieHit /*= false*/, float fDamageTime /*= 0.0f*/)
+void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, float fAddDamage /*= 0.0f*/, bool bMultieHit /*= false*/, float fDamageTime /*= 0.0f*/)
 {
 	cPlayer* pTarget = (cPlayer*)GETSINGLE(cObjMgr)->GetPlayer();
 	if (!bMultieHit)
 	{
 		if (!m_bHitted && GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
 		{
-			float damage = pTarget->Damaged(pParent->GetInfo());
+			float damage = pTarget->Damaged(pParent->GetInfo(), fAddDamage);
 			if (damage == -1)
 				return;
 			m_bHitted = true;
 			//m_vecHitted.push_back(pTarget);
 			GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 			cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-			text->SetTextFloat(damage);
+			text->SetTextFloat(-damage);
 			text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-200, 200), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
 			text->Start();
 		}
@@ -105,14 +105,14 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, bool 
 		{
 			if (GETSINGLE(cCollision)->Collision(&pTarget->GetSphere(), &sphere))
 			{
-				float damage = pTarget->Damaged(pParent->GetInfo());
+				float damage = pTarget->Damaged(pParent->GetInfo(), fAddDamage);
 				if (damage == -1)
 					return;
 				m_bHitted = true;
 				//m_vecHitted.push_back(pTarget);
 				GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 				cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-				text->SetTextFloat(damage);
+				text->SetTextFloat(-damage);
 				text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-200, 200), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
 				text->Start();
 				m_fDamageTime = 0.0f;

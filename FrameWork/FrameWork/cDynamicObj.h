@@ -41,7 +41,7 @@ public:
 	virtual bool IsTargetBoxCollision();
 	virtual void LookTarget();
 
-	virtual float Damaged(ST_UNIT_INFO stInfo);
+	virtual float Damaged(ST_UNIT_INFO stInfo, float fAddDamage = 0);
 
 public:
 	virtual cBoundingSphere GetSphere() { return cGameObject::GetSphere(); }

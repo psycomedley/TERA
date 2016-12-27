@@ -173,9 +173,9 @@ void cDynamicObj::LookTarget()
 }
 
 
-float cDynamicObj::Damaged(ST_UNIT_INFO stInfo)
+float cDynamicObj::Damaged(ST_UNIT_INFO stInfo, float fAddDamage)
 {
-	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage) + fAddDamage;
 	if (m_pState != m_aStates[E_STATE_DEATH])
 	{
 		fDamage = fDamage - m_stInfo.fDefence;

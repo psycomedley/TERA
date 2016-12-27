@@ -38,7 +38,7 @@ void cStateMonsterSkill::Update()
 		{
 			m_pParent->Move(0.4f);
 
-			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere());
+			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 100);
 		//	GETSINGLE(cSoundMgr)->Play(m_pParent->GetSoundKey(E_SOUND_SKILL1));
 		}
 	}

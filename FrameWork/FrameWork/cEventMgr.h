@@ -6,9 +6,10 @@ class cEventMgr : public cSingleton<cEventMgr>
 private:
 //	map<string, cEvent*> m_mapEvent;
 	vector<cEvent*> m_vecEvent;
+	SYNTHESIZE(int, m_nEventIdx, EventIdx);
 
 public:
-	void Play(/*string sKey*/);
+	void Play(int nIdx);
 
 public:
 	void Update();

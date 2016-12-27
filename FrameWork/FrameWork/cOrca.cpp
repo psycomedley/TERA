@@ -74,13 +74,13 @@ void cOrca::SetupStatus()
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fMaxDamage = 156.0f;
-	m_stInfo.fMinDamage = 119.0f;
+	m_stInfo.fMaxDamage = 256.0f;
+	m_stInfo.fMinDamage = 209.0f;
 	m_stInfo.fDefence = 8.0f;
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(25.0f, 100);
+	m_skillLongMove.SetInfo(10.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
@@ -136,7 +136,10 @@ void cOrca::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	m_pState = pState;
 
 	if (pPrevState && pState != m_aStates[E_STATE_DEATH])
+	{
 		pPrevState->End();
+	//	GETSINGLE(cEventMgr)->Play(1);
+	}
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
@@ -160,7 +163,10 @@ void cOrca::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	m_pState = m_aStates[pState];
 
 	if (pPrevState && pState != E_STATE_DEATH)
+	{
 		pPrevState->End();
+	//	GETSINGLE(cEventMgr)->Play(1);
+	}
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
@@ -194,7 +200,7 @@ void cOrca::Update()
 		D3DXVECTOR3 distance = m_vPosition - GETSINGLE(cObjMgr)->GetPlayer()->GetPosition();
 		if (D3DXVec3Length(&distance) < m_fEventCameraRange)
 		{
-			GETSINGLE(cEventMgr)->Play();
+			GETSINGLE(cEventMgr)->Play(0);
 		}
 		if (D3DXVec3Length(&distance) < m_fDetectRange)
 		{

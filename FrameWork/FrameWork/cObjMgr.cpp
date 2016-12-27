@@ -2,6 +2,7 @@
 #include "cObjMgr.h"
 #include "cDynamicObj.h"
 #include "cStaticObj.h"
+#include "cMap.h"
 
 
 cObjMgr::cObjMgr()
@@ -28,6 +29,8 @@ void cObjMgr::AddMonster(string sKey, cDynamicObj* pMonster)
 	else
 		iter->second.push_back(pMonster);
 }
+
+
 void cObjMgr::AddStuff(string sKey, cStaticObj* pStuff)
 {
 	auto iter = m_mapStuff.find(sKey);
@@ -38,25 +41,32 @@ void cObjMgr::AddStuff(string sKey, cStaticObj* pStuff)
 	else
 		iter->second;
 }
+
+
 void cObjMgr::AddCloneStuff(cStaticObj* pStuff)
 {
 	m_vecCloneStuff.push_back(pStuff);
 }
 
+
 void cObjMgr::Update()
 {
-	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
+	if (m_pMap)
+		m_pMap->Update();
+	/*for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
 	{
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
 			(*iter2)->Update();
 		}
-	}
+	}*/
 }
 
 
 void cObjMgr::Render()
 {
+	if (m_pMap)
+		m_pMap->Render();
 	if (m_pPlayer)
 		m_pPlayer->UpdateAndRender();
 	m_pPlayer->Bounding_Update();
@@ -131,6 +141,7 @@ list<cDynamicObj*>* cObjMgr::GetMonsterList(string sKey)
 	return &m_mapMonster[sKey];
 }
 
+
 cStaticObj* cObjMgr::GetStuffList(string sKey)
 {
 	auto iter = m_mapStuff.find(sKey);
@@ -139,10 +150,14 @@ cStaticObj* cObjMgr::GetStuffList(string sKey)
 		return NULL;
 	return iter->second;
 }
+
+
 vector<cStaticObj*>* cObjMgr::GetAllCloneStuff()
 {
 	return &m_vecCloneStuff;
 }
+
+
 vector<cDynamicObj*> cObjMgr::GetALLMonsterList()
 {
 	vector<cDynamicObj*> pVecAllMonster;
@@ -188,4 +203,11 @@ void cObjMgr::AddInMonsterPoolFromMap(string sKey, cDynamicObj* pMonster)
 			return;
 		}
 	}
+}
+
+
+void cObjMgr::SetMap(cMap* pMap)
+{
+	m_pMap = pMap;
+	GETSINGLE(cSoundMgr)->Play(m_pMap->GetSoundKey(E_MAP_SOUND_BGM));
 }

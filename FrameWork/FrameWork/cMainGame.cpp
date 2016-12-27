@@ -158,10 +158,14 @@ HRESULT cMainGame::Setup()
 
 	GETSINGLE(cObjectToolMgr)->Setup();
 
-	m_pMap = new cMap("Map","fieldmap1.x");
+//	m_pMap = new cMap("Map","fieldmap1.x");
+	cMap* pMap = new cMap("Map", "fieldmap1.x");
+	GETSINGLE(cObjMgr)->SetMap(pMap);
 	
 	m_cObjectTool = new cObjectTool;
 	m_cObjectTool->Setup();
+
+//	GETSINGLE(cSoundMgr)->Play(pMap->GetSoundKey(E_MAP_SOUND_BGM));
 
 	///////////////임시////////////////
 
@@ -199,9 +203,6 @@ HRESULT cMainGame::Setup()
 	//m_pRushEffect = new cRushEffect("Effect", "RushEffect2.x");
 	//m_pRushEffect->Setup(40, 0.015f, true, D3DXVECTOR3(0.005f, 0.005f, 0.005f), D3DXVECTOR3(25, 1.5f, 0));
 
-
-
-//	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, "그아아앗", 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, 128, 1);
 
 
 	///////////////////////////////////
@@ -310,7 +311,8 @@ void cMainGame::Update()
 		m_pEffect4->Update();
 
 
-	m_pMap->Update();
+//	m_pMap->Update();
+	GETSINGLE(cObjMgr)->Update();
 	///////////////////////////////////
 
 	GETSINGLE(cInput)->EndFrame();
@@ -361,19 +363,19 @@ void cMainGame::Render()
 ////		if (GETSINGLE())
 //	}
 	
-	if (m_pMap)
-		m_pMap->Render();
+//	if (m_pMap)
+//		m_pMap->Render();
 	m_pGrid->Render();
 	
 	m_cObjectTool->Render();
 
 
-	GETSINGLE(cTextMgr)->Render();
-	GETSINGLE(cEffectMgr)->Render();
 	GETSINGLE(cObjMgr)->Render();
+	GETSINGLE(cEffectMgr)->Render();
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
-	
+	GETSINGLE(cTextMgr)->Render();
+
 
 	///////////////임시////////////////
 	

@@ -50,12 +50,14 @@ void cStateSkill::Update()
 		{
 			if (!m_bNextAttack && m_nCount < 5)
 			{
-				if (m_pParent->GetCurrentAnimPosition() > 0.1f)
+				if (((cPlayer*)m_pParent)->UseSkill(120 - ((++m_nCount) * 20)))
 				{
-					ST_ANIMATION_INFO aniInfo(E_ANI_DOUBLEATTACK, true, false);
-					m_pParent->AddAnimation(aniInfo);
-					m_nCount++;
-					m_bNextAttack = true;
+					if (m_pParent->GetCurrentAnimPosition() > 0.1f)
+					{
+						ST_ANIMATION_INFO aniInfo(E_ANI_DOUBLEATTACK, true, false);
+						m_pParent->AddAnimation(aniInfo);
+						m_bNextAttack = true;
+					}
 				}
 			}
 		}
@@ -65,7 +67,7 @@ void cStateSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.8f)
 		{
-			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false, 50.0f);
 
 			PlaySound(E_SOUND_SKILL1);
 
@@ -98,7 +100,7 @@ void cStateSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
 		{
-			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false, -20.0f);
 
 			PlaySound(E_SOUND_SKILL2, true);
 		}
@@ -132,7 +134,7 @@ void cStateSkill::Update()
 		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
 			m_pParent->GetCurrentAnimPosition() <= 0.6f)
 		{
-			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			GETSINGLE(cBattleMgr)->PlayerDamage(false, 100.0f);
 	//		PlaySound(E_SOUND_SKILL3);
 		}
 		
@@ -192,7 +194,7 @@ void cStateSkill::OnAnimationFinish(cAnimationController* pController, ST_ANIMAT
 {
 	if (animInfo.nIndex == E_ANI_DOUBLEATTACK)
 	{
-		GETSINGLE(cBattleMgr)->PlayerDamage(true);
+		GETSINGLE(cBattleMgr)->PlayerDamage(true, -20.0f);
 		PlaySound(E_SOUND_SKILL2);
 
 		GETSINGLE(cBattleMgr)->ResetList(E_PLAYER);

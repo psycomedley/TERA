@@ -63,14 +63,14 @@ void cGuardian::SetupStatus()
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fMaxDamage = 78.0f;
-	m_stInfo.fMinDamage = 58.0f;
+	m_stInfo.fMaxDamage = 212.0f;
+	m_stInfo.fMinDamage = 22.0f;
 	m_stInfo.fDefence = 8.0f;
 
 	m_fDetectRange = 15.0f;
 
 	m_skillRush.SetInfo(10.0f, 100);
-	m_skillAttack.SetInfo(3.0f, 50);
+	m_skillAttack.SetInfo(3.0f, 0);
 }
 
 

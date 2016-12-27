@@ -60,13 +60,13 @@ void cStateBossSkill::Update()
 	{
 		m_pParent->Move(1.5f);
 
-		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), true, 1.0f);
+		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 200.0f, true, 1.0f);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK_LOOP)
 	{
 		m_pParent->Move(0.2f);
 
-		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), true, 0.2f);
+		GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 0.0f, true, 0.2f);
 	}
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_BOSS_HEAVYATK2)
 	{

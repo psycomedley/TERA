@@ -12,11 +12,12 @@ private:
 
 	bool			m_bIsBattle;
 	float			m_fWaitTime;
+	cUIObject*		m_pUIHp;
+	float			m_fPassedTime;
 
 	SYNTHESIZE(int, m_nKeyDir, KeyDir);
 	SYNTHESIZE(float, m_fTempAngle, TempAngle);
 
-	cUIObject*		m_pUIHp;
 
 
 	//이후에 몸통 따로 구성
@@ -29,8 +30,10 @@ public:
 	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
 
 	virtual void Attack() override;
+	void Regeneration();
 
-	virtual float Damaged(ST_UNIT_INFO stInfo) override;
+	virtual float Damaged(ST_UNIT_INFO stInfo, float fAddDamage = 0) override;
+	bool UseSkill(float fMp);
 	virtual void Move(float fSpeed) override;
 
 	bool IsMoveAble();
@@ -54,6 +57,7 @@ public:
 
 	//임시
 	void dlatl();
+	bool IsFull();
 
 
 public:

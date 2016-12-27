@@ -2,10 +2,12 @@
 
 class cStaticObj;
 class cDynamicObj;
+class cMap;
 class cObjMgr : public cSingleton<cObjMgr>
 {
 private:
 	cDynamicObj*							m_pPlayer;
+	cMap*									m_pMap;
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
 	map<string, list<cDynamicObj*>>			m_mapMonster;
 	map<string, cStaticObj*>				m_mapStuff;
@@ -34,6 +36,9 @@ public:
 public:
 	cDynamicObj* GetPlayer() { return m_pPlayer; }
 	void SetPlayer(cDynamicObj* pPlayer) { m_pPlayer = pPlayer; }
+
+	cMap* GetMap() { return m_pMap; }
+	void SetMap(cMap* pMap);
 
 public:
 	void Update();

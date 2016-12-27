@@ -5,6 +5,7 @@
 
 
 cEventMgr::cEventMgr()
+	: m_nEventIdx(0)
 {
 	cEvent* pEvent = new cEvent;
 	m_vecEvent.push_back(pEvent);
@@ -22,15 +23,16 @@ cEventMgr::~cEventMgr()
 }
 
 
-void cEventMgr::Play(/*string sKey*/)
+void cEventMgr::Play(int nIdx)
 {
-	m_vecEvent[1]->Play();
+	m_nEventIdx = nIdx;
+	m_vecEvent[m_nEventIdx]->Play();
 }
 
 
 void cEventMgr::Update()
 {
-	m_vecEvent[1]->Update();
+	m_vecEvent[m_nEventIdx]->Update();
 }
 void cEventMgr::Release()
 {

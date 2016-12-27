@@ -15,6 +15,7 @@
 #include "cCamera.h"
 #include "cUITextView.h"
 #include "cUIImageView.h"
+#include "cText.h"
 
 
 cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, szFilename)
@@ -24,6 +25,7 @@ cPlayer::cPlayer(char* szFolder, char* szFilename) //: cDynamicMesh(szFolder, sz
 	, m_fWaitTime(IDLESWITCHTIME)
 	, m_nKeyDir(DIRECTION_NONE)
 	, m_fTempAngle(0.0f)
+	, m_fPassedTime(0.0f)
 	/*, m_pArm(NULL)
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
@@ -54,6 +56,7 @@ cPlayer::cPlayer()
 	, m_fWaitTime(IDLESWITCHTIME)
 	, m_nKeyDir(DIRECTION_NONE)
 	, m_fTempAngle(0.0f)
+	, m_fPassedTime(0.0f)
 	/*, m_pArm(NULL)
 	, m_pLeg(NULL)
 	, m_pHead(NULL)*/
@@ -266,34 +269,42 @@ void cPlayer::CheckControl()
 			bControl = true;
 		}
 	}
-
-
+	
 	if (KEYBOARD->IsOnceKeyDown(DIK_1))
 	{
 		if (IsMoveAble())
 		{
-			ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
-			m_bIsBattle = true;
-			bControl = true;
+			if (UseSkill(25))
+			{
+				ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
+				m_bIsBattle = true;
+				bControl = true;
+			}
 		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_2))
 	{
 		if (IsMoveAble())
 		{
-			ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
-			m_bIsBattle = true;
-			bControl = true;
+			if (UseSkill(120))
+			{
+				ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+				m_bIsBattle = true;
+				bControl = true;
+			}
 		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_3))
 	{
 		if (IsMoveAble())
 		{
-//			ChangeState(E_STATE_SKILL);
-			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-			m_bIsBattle = true;
-			bControl = true;
+			if (UseSkill(50))
+			{
+				//			ChangeState(E_STATE_SKILL);
+				ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+				m_bIsBattle = true;
+				bControl = true;
+			}
 		}
 	}
 	if (KEYBOARD->IsOnceKeyDown(DIK_4))
@@ -354,6 +365,15 @@ void cPlayer::CheckControl()
 
 void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 {
+	if (!IsFull())
+		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
+
+	if (m_fPassedTime >= 5.0f)
+	{
+		Regeneration();
+		m_fPassedTime -= 3.0f;
+	}
+
 	UpdateUI();
 	CheckState();
 	m_pState->Update();
@@ -467,9 +487,9 @@ void cPlayer::SetSound()
 }
 
 
-float cPlayer::Damaged(ST_UNIT_INFO stInfo)
+float cPlayer::Damaged(ST_UNIT_INFO stInfo, float fAddDamage)
 {
-	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage);
+	float fDamage = GetFromIntTo(stInfo.fMinDamage, stInfo.fMaxDamage) + fAddDamage;
 	if (m_pState != m_aStates[E_STATE_DEATH])
 	{
 		fDamage = fDamage - m_stInfo.fDefence;
@@ -520,4 +540,43 @@ void cPlayer::Move(float fSpeed)
 			return;
 	}
 	m_vPosition = m_vPrevPosition;
+}
+
+
+bool cPlayer::UseSkill(float fMp)
+{
+	if (m_stInfo.fMp >= fMp)
+	{
+		m_stInfo.fMp -= fMp;
+		return true;
+	}
+	return false;
+}
+
+
+void cPlayer::Regeneration()
+{
+	int nRegenHP = m_stInfo.fMaxHp / 20;
+	int nRegenMP = m_stInfo.fMaxMp / 20;
+
+	if (m_stInfo.fHp + nRegenHP >= m_stInfo.fMaxHp)
+		m_stInfo.fHp = m_stInfo.fMaxHp;
+	else
+		m_stInfo.fHp = m_stInfo.fHp + nRegenHP;
+
+	if (m_stInfo.fMp + nRegenMP >= m_stInfo.fMaxMp)
+		m_stInfo.fMp = m_stInfo.fMaxMp;
+	else
+		m_stInfo.fMp = m_stInfo.fMp + nRegenMP;
+}
+
+
+bool cPlayer::IsFull()
+{
+	if (m_stInfo.fHp < m_stInfo.fMaxHp)
+		return false;
+	if (m_stInfo.fMp < m_stInfo.fMaxMp)
+		return false;
+	m_fPassedTime = 0.0f;
+	return true;
 }
