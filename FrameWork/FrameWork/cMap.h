@@ -5,10 +5,13 @@
 #include"cStaticObj.h"
 
 class cFrustum;
+class cSkyBox;
 
 class cMap :public cStaticObj
 {
 private:
+	cSkyBox*				m_cSkyBox;
+
 	LPD3DXEFFECT			m_pEffect;
 	LPDIRECT3DTEXTURE9		m_DiffuseTex;
 	LPDIRECT3DTEXTURE9		m_SpecularTex;

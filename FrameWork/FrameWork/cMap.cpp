@@ -3,6 +3,7 @@
 #include "cPlayer.h"
 #include "cOrca.h"
 #include "cFrustum.h"
+#include "cSkyBox.h"
 
 
 cMap::cMap(char* szFolder, char* szFilename)
@@ -25,8 +26,10 @@ cMap::cMap(char* szFolder, char* szFilename)
 	m_vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
 	m_vecPNTVertex = *((cStaticMesh*)m_pMesh)->GetVecPNTVertaxies();
 	
-
 	SetupHeight();
+
+	//m_cSkyBox = new cSkyBox;
+	//m_cSkyBox->SetUp();
 }
 cMap::cMap()
 	:m_cFrustum(NULL)
@@ -36,6 +39,7 @@ cMap::cMap()
 cMap::~cMap()
 {
 	SAFE_DELETE(m_cFrustum);
+	//SAFE_DELETE(m_cSkyBox);
 
 }
 void cMap::Update()

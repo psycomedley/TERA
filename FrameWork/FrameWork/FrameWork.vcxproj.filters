@@ -456,6 +456,9 @@
     <ClInclude Include="cEvent2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="cSkyBox.h">
+      <Filter>소스 파일\12. Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -733,6 +736,9 @@
     </ClCompile>
     <ClCompile Include="cEvent2.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkyBox.cpp">
+      <Filter>소스 파일\12. Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
