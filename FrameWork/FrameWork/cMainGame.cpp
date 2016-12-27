@@ -240,6 +240,8 @@ void cMainGame::Update()
 
 		GETSINGLE(cEventMgr)->Update();
 	}
+	// 오브젝트 툴 켜고끄기
+	if (KEYBOARD->IsToggleKey(VK_F2))
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_F5))
 		g_nRenderOption ^= RENDER_BOUNDINGPLAYER;
@@ -258,6 +260,11 @@ void cMainGame::Update()
 	{
 		if (m_cObjectTool)
 			m_cObjectTool->Update();
+	}
+	//충돌 on/off용
+	if (KEYBOARD->IsToggleKey(VK_F1))
+	{
+		int a = 0;
 	}
 	else
 	{
@@ -342,8 +349,10 @@ void cMainGame::Render()
 	//		m_pMap->Render();
 	m_pGrid->Render();
 
-	m_cObjectTool->Render();
-
+	if (KEYBOARD->IsToggleKey(VK_F2))
+	{
+		m_cObjectTool->Render();
+	}
 
 	GETSINGLE(cObjMgr)->Render();
 	GETSINGLE(cEffectMgr)->Render();

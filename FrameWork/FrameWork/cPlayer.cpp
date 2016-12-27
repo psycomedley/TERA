@@ -264,7 +264,7 @@ void cPlayer::CheckControl()
 		{
 			m_fAngle = fCameraAngle + m_fTempAngle;
 			//m_vPosition = m_vPosition - m_vDirection * 0.1;
-			Move(0.5f);
+			Move(0.1f);
 			ChangeState(E_STATE_RUN);
 			bControl = true;
 		}
