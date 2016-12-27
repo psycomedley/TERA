@@ -70,7 +70,6 @@ void cStateSkill::Update()
 			GETSINGLE(cBattleMgr)->PlayerDamage(false, 50.0f);
 
 			PlaySound(E_SOUND_SKILL1);
-
 		}
 		if (m_pParent->GetCurrentAnimPosition() > 0.65f &&
 			m_pParent->GetCurrentAnimPosition() < 0.7f)
@@ -135,7 +134,7 @@ void cStateSkill::Update()
 			m_pParent->GetCurrentAnimPosition() <= 0.6f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false, 100.0f);
-	//		PlaySound(E_SOUND_SKILL3);
+			PlaySound(E_SOUND_SKILL3);
 		}
 		
 		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&

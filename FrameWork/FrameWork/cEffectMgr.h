@@ -25,7 +25,6 @@ public:
 	void Update();
 	void Render();
 	void Release();
-	void StaticMeshEffectRender();
 
 public:
 	cEffectMgr();

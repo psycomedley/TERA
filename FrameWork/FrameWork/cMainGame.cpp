@@ -366,7 +366,6 @@ void cMainGame::Render()
 
 	GETSINGLE(cObjMgr)->Render();
 	GETSINGLE(cEffectMgr)->Render();
-	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	GETSINGLE(cTextMgr)->Render();
 
@@ -786,4 +785,5 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
+	GETSINGLE(cSoundMgr)->Add("Victory", "Sound/SYSMSG_2028.ogg");
 }

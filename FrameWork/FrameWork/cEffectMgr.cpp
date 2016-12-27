@@ -153,9 +153,3 @@ void cEffectMgr::RemoveStaticMeshEffect()
 {
 	m_vecStaticMeshEffect.clear();
 }
-
-void cEffectMgr::StaticMeshEffectRender()
-{
-	for each(auto effect in m_vecStaticMeshEffect)
-		effect->Render();
-}
