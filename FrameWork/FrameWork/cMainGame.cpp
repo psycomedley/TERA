@@ -881,4 +881,5 @@ void cMainGame::SetSound()
 	GETSINGLE(cSoundMgr)->Add("Title", "Sound/Title.mp3", true);
 	GETSINGLE(cSoundMgr)->Add("Theme1", "Sound/Theme1.mp3", true);
 	GETSINGLE(cSoundMgr)->Add("Hit", "Sound/Hit.ogg");
+	GETSINGLE(cSoundMgr)->Add("Victory", "Sound/SYSMSG_2028.ogg");
 }
