@@ -326,7 +326,8 @@ void cPlayer::CheckControl()
 		if (m_firstMenu)
 		{
 			GETSINGLE(cUIMgr)->RemoveList("BackGround");
-				m_firstMenu = false;
+			m_firstMenu = false;
+			CAMERA->SetFirstMenu(false);
 		}
 		GETSINGLE(cUIMgr)->RemoveList("Menu");
 		GETSINGLE(cUIMgr)->RemoveList("Button1");

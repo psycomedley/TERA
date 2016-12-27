@@ -380,7 +380,7 @@ void cMainGame::Render()
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
-	m_cSkyBox->Render();
+	//m_cSkyBox->Render();
 	///////////////юс╫ц////////////////
 	
 

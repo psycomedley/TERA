@@ -36,10 +36,6 @@ public:
 
 	bool IsMoveAble();
 	void UpdateUI();
-	bool GetFirstMenu()
-	{
-		return m_firstMenu;
-	}
 
 
 public:

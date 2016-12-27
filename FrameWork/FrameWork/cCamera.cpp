@@ -13,6 +13,7 @@ cCamera::cCamera(void)
 	, m_fPrevDist(6)
 	, m_bUse(false)
 	, m_bControl(true)
+	, m_bFirstMenu(true)
 {
 }
 
@@ -39,19 +40,20 @@ void cCamera::Setup()
 
 void cCamera::Update()
 {
-
-	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+	if (!m_bFirstMenu)
 	{
-		m_bControl = !m_bControl;
-		ShowCursor(!m_bControl);
+		if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
+		{
+			m_bControl = !m_bControl;
+			ShowCursor(!m_bControl);
 
-		MOUSE->SetFixPos(GetCursorPosition());
-		if (m_bControl)
-			GETSINGLE(cUIMgr)->AddList("CrossHair");
-		else
-			GETSINGLE(cUIMgr)->RemoveList("CrossHair");
+			MOUSE->SetFixPos(GetCursorPosition());
+			if (m_bControl)
+				GETSINGLE(cUIMgr)->AddList("CrossHair");
+			else
+				GETSINGLE(cUIMgr)->RemoveList("CrossHair");
+		}
 	}
-	
 	if (m_bControl)
 	{
 		CameraMove();
