@@ -61,22 +61,20 @@ void cStateCombo::Update()
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
-			if(m_pParent->GetCurrentAnimInfo().nIndex != E_ANI_COMBO3)
-				PlaySound(E_SOUND_ATK);
+			PlaySound(E_SOUND_ATK);
 		}
 	}
 
 	else if (m_pParent->GetCurrentAnimInfo().nIndex == E_ANI_COMBO4)
 	{
 		if (m_pParent->GetCurrentAnimPosition() > 0.5f)
-		{
 			((cPlayer*)m_pParent)->Move(0.05f);
-			PlaySound(E_SOUND_ATK2);
-		}
+
 		if (m_pParent->GetCurrentAnimPosition() > 0.73f &&
 			m_pParent->GetCurrentAnimPosition() < 0.8f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false);
+			PlaySound(E_SOUND_ATK2);
 		}
 	}
 
