@@ -128,7 +128,6 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3
 		{
 			y = 1000 - d;
 			return true;
-
 		}
 	}
 	y = 0;

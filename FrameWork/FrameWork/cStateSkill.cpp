@@ -70,6 +70,7 @@ void cStateSkill::Update()
 			GETSINGLE(cBattleMgr)->PlayerDamage(false, 50.0f);
 
 			PlaySound(E_SOUND_SKILL1);
+
 		}
 		if (m_pParent->GetCurrentAnimPosition() > 0.65f &&
 			m_pParent->GetCurrentAnimPosition() < 0.7f)
@@ -134,7 +135,7 @@ void cStateSkill::Update()
 			m_pParent->GetCurrentAnimPosition() <= 0.6f)
 		{
 			GETSINGLE(cBattleMgr)->PlayerDamage(false, 100.0f);
-			PlaySound(E_SOUND_SKILL3);
+	//		PlaySound(E_SOUND_SKILL3);
 		}
 		
 		if (m_pParent->GetCurrentAnimPosition() >= 0.4f &&
@@ -156,7 +157,7 @@ void cStateSkill::Update()
 	{
 		m_pEffect1->Update();
 		m_pEffect1->Render();
-		if (!m_pEffect1->isStart())
+		if (!m_pEffect1->IsStart())
 		{
 			StartEffect1 = false;
 			SAFE_RELEASE(m_pEffect1);
@@ -169,7 +170,7 @@ void cStateSkill::Update()
 			m_pParent->GetPosition().z));
 		m_pSkill3Effect->Update();
 		m_pSkill3Effect->Render();
-		if (!m_pSkill3Effect->isStart())
+		if (!m_pSkill3Effect->IsStart())
 		{
 			StartSkill3 = false;
 			SAFE_RELEASE(m_pSkill3Effect);

@@ -6,6 +6,7 @@ class cDynamicObj;
 class cStateDefence : public iState
 {
 private:
+	cStaticMeshEffect* m_pEffect;
 	bool nowEffect;
 
 public:

@@ -8,11 +8,14 @@ cStateDefence::cStateDefence()
 	: nowEffect(false)
 	
 {	
+	m_pEffect = new cStaticMeshEffect("Effect", "Shield2.x");
+//	m_pStaticMeshEffect->Setup(s, t, Angle);
 }
 
 
 cStateDefence::~cStateDefence()
 {
+	SAFE_RELEASE(m_pEffect);
 }
 
 
@@ -30,7 +33,10 @@ void cStateDefence::Start()
 	if (!nowEffect)
 	{
 		nowEffect = true;
-		GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect", "Shield2.x", D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
+	//	GETSINGLE(cEffectMgr)->AddStaticMeshEffect("Effect", "Shield2.x", D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
+		m_pEffect->Setup(D3DXVECTOR3(0.055f, 0.055f, 0.055f), m_pParent->GetPosition(), m_pParent->GetAngle());
+		if (!GETSINGLE(cEffectMgr)->IsInStaticEffect(m_pEffect))
+			GETSINGLE(cEffectMgr)->AddStaticMeshEffect(m_pEffect);
 	}
 }
 
@@ -38,7 +44,6 @@ void cStateDefence::Start()
 void cStateDefence::Update()
 {
 	m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
-
 }
 
 
@@ -55,8 +60,6 @@ void cStateDefence::End()
 //	pObj->SetAnimationIdx(5, false);
 	GETSINGLE(cEffectMgr)->RemoveStaticMeshEffect();
 	nowEffect = false;
-
-	
 }
 
 

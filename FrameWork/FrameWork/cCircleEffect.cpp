@@ -4,6 +4,7 @@
 
 
 cCircleEffect::cCircleEffect(char* szFolder, char* szFilename)
+	: start(false)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 }
@@ -16,8 +17,6 @@ cCircleEffect::~cCircleEffect()
 HRESULT cCircleEffect::Setup(int Wheels, float RotationSpeed, bool Left,
 	D3DXVECTOR3 s, D3DXVECTOR3 t, float Angle)
 {
-
-	start = false;
 	m_fAngle = Angle;
 	RealAngle = 0;
 	needWheels = Wheels;
