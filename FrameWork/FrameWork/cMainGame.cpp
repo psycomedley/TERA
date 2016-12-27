@@ -22,6 +22,7 @@
 #include "cGuardian.h"
 #include "cGardener.h"
 #include "cUIButton.h"
+#include "cSkyBox.h"
 
 //임시
 
@@ -29,6 +30,7 @@
 cMainGame::cMainGame()
 	: m_bLockMouse(true)
 	, m_cObjectTool(NULL)
+	, m_cSkyBox(NULL)
 {
 }
 
@@ -37,6 +39,7 @@ cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
 	SAFE_DELETE(m_pGrid);
+	SAFE_DELETE(m_cSkyBox);
 
 	SAFE_RELEASE(m_cObjectTool);
 	SAFE_RELEASE(m_pDynamicMeshEffect);
@@ -52,7 +55,7 @@ cMainGame::~cMainGame()
 	
 
 	Release();
-
+	m_cSkyBox->Release();
 //	SAFE_RELEASE(m_pPlayer);
 //	SAFE_RELEASE(m_pBoss);
 }
@@ -114,7 +117,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(-100, 0, 130));
+	pPlayer->SetPosition(D3DXVECTOR3(0, 0, 80));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -168,7 +171,8 @@ HRESULT cMainGame::Setup()
 	m_pGrid = new cGrid;
 	m_pGrid->Setup(30);
 
-
+	m_cSkyBox = new cSkyBox;
+	m_cSkyBox->SetUp();
 	
 
 	//m_pEffect4 = new cEffect;
@@ -376,7 +380,7 @@ void cMainGame::Render()
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
-
+	m_cSkyBox->Render();
 	///////////////임시////////////////
 	
 

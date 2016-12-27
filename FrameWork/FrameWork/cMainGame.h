@@ -19,6 +19,7 @@ class cText;
 class cAlphaText;
 class cUIObject;
 class cObjectTool;
+class cSkyBox;
 class cUIButton;
 class cMainGame
 {
@@ -28,7 +29,7 @@ private:
 	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	cObjectTool*		m_cObjectTool;
-
+	cSkyBox*			m_cSkyBox;
 	bool				m_bLockMouse;
 
 
