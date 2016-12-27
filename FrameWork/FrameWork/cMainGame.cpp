@@ -623,7 +623,7 @@ void cMainGame::SetUI()
 
 	cUIImageView* pBackGround = new cUIImageView;
 	pBackGround->SetSize(ST_SIZE(GetWindowWidth(), GetWindowHeight()));
-	pBackGround->SetTexture("UI/LoadingImage21_Tex2.tga",1,1);
+	pBackGround->SetTexture("UI/LoadingImage21_Tex.tga",1,1);
 	pBackGround->SetCenterPosition(D3DXVECTOR3(GetWindowWidth() / 2, GetWindowHeight() / 2 + 150, 0));
 
 	pBackGround->SetSprite(pSprite);
@@ -644,7 +644,8 @@ void cMainGame::SetUI()
 	pButton1->SetSize(ST_SIZE(155, 33));
 	pButton1->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
 	pButton1->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +150, 0));
-	
+	pButton1->SetTag(5);
+	pButton1->SetDelegate(this);
 	pButton1->SetSprite(pSprite);
 
 	GETSINGLE(cUIMgr)->AddUI("Button1", pButton1);
@@ -653,7 +654,8 @@ void cMainGame::SetUI()
 	pButton2->SetSize(ST_SIZE(155, 33));
 	pButton2->SetTexture("UI/Logout_I5.tga", "UI/Logout_I7.tga", "UI/Logout_I9.tga");
 	pButton2->SetPosition(D3DXVECTOR3(GetWindowWidth() / 2 - 78, GetWindowHeight() / 2 +220, 0));
-	
+	pButton2->SetTag(6);
+	pButton2->SetDelegate(this);
 	pButton2->SetSprite(pSprite);
 
 	GETSINGLE(cUIMgr)->AddUI("Button2", pButton2);
@@ -843,4 +845,18 @@ void cMainGame::SetEffect()
 	GETSINGLE(cEffectMgr)->AddEffect(pEffect->GetName(), pEffect);
 
 
+}
+
+void cMainGame::OnClick(cUIObject * pObj)
+{
+	if (pObj->GetTag() == 5)
+	{
+		CAMERA->SetControl(true);
+		ShowCursor(!CAMERA->GetControl());
+		
+	}
+	if (pObj->GetTag() == 6)
+	{
+		PostQuitMessage(0);
+	}
 }

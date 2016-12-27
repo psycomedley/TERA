@@ -1,7 +1,6 @@
 #pragma once
 #include "cDynamicObj.h"
 #include "cWeapon.h"
-
 class iState;
 class cUIObject;
 class cPlayer : public cDynamicObj
@@ -41,6 +40,7 @@ public:
 	{
 		return m_firstMenu;
 	}
+
 
 public:
 	virtual void SetSound() override;

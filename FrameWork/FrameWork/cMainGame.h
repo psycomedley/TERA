@@ -1,4 +1,6 @@
 #pragma once
+#include "cUIButton.h"
+
 class cCube;
 class cCamera;
 class cStaticMesh;
@@ -21,7 +23,7 @@ class cUIObject;
 class cObjectTool;
 class cSkyBox;
 class cUIButton;
-class cMainGame
+class cMainGame : public iButtonDelegate
 {
 private:
 	cCube*				cube;
@@ -50,6 +52,9 @@ private:
 	void SetUI();
 	void SetShader();
 	void SetEffect();
+
+
+	virtual void OnClick(cUIObject* pObj) override;
 
 	//cDynamicMesh*	m_pMesh;
 	//cDynamicMesh*	m_pMesh2;

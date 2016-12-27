@@ -475,6 +475,7 @@ void cPlayer::SetupStatus()
 }
 
 
+
 void cPlayer::SetSound()
 {
 	string sKey = m_stInfo.sName + "_Atk";
