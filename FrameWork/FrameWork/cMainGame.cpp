@@ -117,7 +117,7 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(0, 0, 80));
+	pPlayer->SetPosition(D3DXVECTOR3(-80, 0, 80));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
@@ -380,7 +380,7 @@ void cMainGame::Render()
 	GETSINGLE(cEffectMgr)->StaticMeshEffectRender();
 	GETSINGLE(cUIMgr)->Render();
 	
-	//m_cSkyBox->Render();
+	m_cSkyBox->Render();
 	///////////////юс╫ц////////////////
 	
 
