@@ -46,7 +46,7 @@ public:
 	void SetupBaseWeapon();
 	void SetupState();
 	void SetupStatus();
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender) override;
 	void CheckControl();
 	void CheckState();
 

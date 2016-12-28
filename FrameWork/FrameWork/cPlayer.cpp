@@ -369,12 +369,12 @@ void cPlayer::CheckControl()
 }
 
 
-void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	if (!IsFull())
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
-	if (m_fPassedTime >= 5.0f)
+	if (m_fPassedTime >= 7.0f)
 	{
 		Regeneration();
 		m_fPassedTime -= 3.0f;
@@ -383,8 +383,13 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	UpdateUI();
 	CheckState();
 	m_pState->Update();
+
+	if (m_pState == m_aStates[E_STATE_DEFENCE])
+		if (!UseSkill(1))
+			ChangeState(E_STATE_WAIT);
+
 	CheckControl();
-	cDynamicObj::UpdateAndRender(pmat);
+	cDynamicObj::UpdateAndRender(pmat, bRender);
 	//	GetBox();
 	//	m_pArm->UpdateAndRender();
 
@@ -508,7 +513,7 @@ float cPlayer::Damaged(ST_UNIT_INFO stInfo, float fAddDamage)
 
 		if (m_pState == m_aStates[E_STATE_DEFENCE])
 		{
-			if (m_pState->GetPassedTime() <= 0.05f)
+			if (m_pState->GetPassedTime() <= 0.1f)
 				fDamage = 0;
 			else
 			{

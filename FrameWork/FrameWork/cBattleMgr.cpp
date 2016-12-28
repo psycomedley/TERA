@@ -93,7 +93,10 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, float
 			//m_vecHitted.push_back(pTarget);
 			GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 			cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-			text->SetTextFloat(-damage);
+			if (damage == 0)
+				text->SetTextFloat(damage);
+			else
+				text->SetTextFloat(-damage);
 			text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-200, 200), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
 			text->Start();
 		}
@@ -112,7 +115,10 @@ void cBattleMgr::EnemyDamage(cDynamicObj* pParent, cBoundingSphere sphere, float
 				//m_vecHitted.push_back(pTarget);
 				GETSINGLE(cTextMgr)->AddList("MonsterDamage");
 				cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
-				text->SetTextFloat(-damage);
+				if (damage == 0)
+					text->SetTextFloat(damage);
+				else
+					text->SetTextFloat(-damage);
 				text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + GetFromIntTo(-200, 200), GetWindowHeight() / 2 + GetFromIntTo(-50, 50)));
 				text->Start();
 				m_fDamageTime = 0.0f;

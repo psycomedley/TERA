@@ -34,7 +34,7 @@ public:
 	void ResetHp();
 
 public:
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL) override;
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL, bool bRender = true) override;
 
 public:
 	cMonster(char* szFolder, char* szFilename);

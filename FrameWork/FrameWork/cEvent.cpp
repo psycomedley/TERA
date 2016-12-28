@@ -21,7 +21,7 @@ cEvent::~cEvent()
 
 void cEvent::Update()
 {
-	if (m_bProcess)
+	/*if (m_bProcess)
 	{
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 		GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetCamRotY(
@@ -35,13 +35,13 @@ void cEvent::Update()
 			GETSINGLE(cUIMgr)->AddList("CrossHair");
 			GETSINGLE(cUIMgr)->AddList("Player");
 		}
-	}
+	}*/
 }
 
 
 void cEvent::Play()
 {
-	if (!m_bPlayed)
+	/*if (!m_bPlayed)
 	{
 		m_bProcess = true;
 		GETSINGLE(cCameraMgr)->SetCurrentCamera("EventCamera");
@@ -83,5 +83,5 @@ void cEvent::Play()
 		GETSINGLE(cUIMgr)->RemoveList("Player");
 		GETSINGLE(cSoundMgr)->Stop(GETSINGLE(cObjMgr)->GetMap()->GetSoundKey(E_MAP_SOUND_BGM));
 		GETSINGLE(cSoundMgr)->Play(GETSINGLE(cObjMgr)->GetMap()->GetSoundKey(E_MAP_SOUND_BOSS_BGM));
-	}
+	}*/
 }

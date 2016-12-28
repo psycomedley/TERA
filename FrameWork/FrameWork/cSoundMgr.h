@@ -19,6 +19,9 @@ public:
 	void Pause(string sKey);
 	void Resume(string sKey);
 
+	bool IsPlay(string sKey);
+	bool IsPlay(int nCount);
+
 public:
 	void Setup();
 	void Update();

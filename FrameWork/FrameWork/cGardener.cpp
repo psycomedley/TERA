@@ -92,11 +92,11 @@ void cGardener::SetSound()
 }
 
 
-void cGardener::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cGardener::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 

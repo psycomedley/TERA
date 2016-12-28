@@ -32,7 +32,7 @@ cDynamicObj::~cDynamicObj()
 }
 
 
-void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
+void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/, bool bRender)
 {
 	cGameObject::Update();
 
@@ -83,7 +83,7 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
 		}
 	}
 
-	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat);
+	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat, bRender);
 }
 
 

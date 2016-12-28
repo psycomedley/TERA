@@ -69,7 +69,7 @@ void cOrca::SetupStatus()
 {
 	m_stInfo.sName = "Orca";
 
-	m_stInfo.fMaxHp = 10000;
+	m_stInfo.fMaxHp = 100;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -118,11 +118,11 @@ void cOrca::SetSound()
 }
 
 
-void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 
@@ -138,8 +138,10 @@ void cOrca::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	if (pPrevState && pState != m_aStates[E_STATE_DEATH])
 	{
 		pPrevState->End();
-	//	GETSINGLE(cEventMgr)->Play(1);
 	}
+
+	if (pState == m_aStates[E_STATE_DEATH])
+		GETSINGLE(cEventMgr)->Play(1);
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
@@ -165,8 +167,10 @@ void cOrca::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	if (pPrevState && pState != E_STATE_DEATH)
 	{
 		pPrevState->End();
-	//	GETSINGLE(cEventMgr)->Play(1);
 	}
+
+	if (m_aStates[pState] == m_aStates[E_STATE_DEATH])
+		GETSINGLE(cEventMgr)->Play(1);
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 

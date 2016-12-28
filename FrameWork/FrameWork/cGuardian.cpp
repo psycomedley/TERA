@@ -91,11 +91,11 @@ void cGuardian::SetSound()
 }
 
 
-void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 

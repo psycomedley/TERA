@@ -88,12 +88,13 @@ void cObjMgr::Render()
 			if ((g_nRenderOption & RENDER_FRUSTUMCULL))
 			{
 				if (GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
-				{
 					(*iter2)->UpdateAndRender();
-					(*iter2)->Bounding_Update();
-					if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
-						(*iter2)->Bounding_Render();
-				}
+				else
+					(*iter2)->UpdateAndRender(NULL, false);
+
+				(*iter2)->Bounding_Update();
+				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
+					(*iter2)->Bounding_Render();
 			}
 			else
 			{
