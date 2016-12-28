@@ -70,8 +70,8 @@ void cObjMgr::Update()
 
 void cObjMgr::Render()
 {
-	if (m_pSkyBox)
-		m_pSkyBox->Render();
+//	if (m_pSkyBox)
+//		m_pSkyBox->Render();
 	if (m_pMap)
 		m_pMap->Render();
 	if (m_pPlayer)
@@ -92,12 +92,26 @@ void cObjMgr::Render()
 				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
 					(*iter2)->Bounding_Render();
 			}
+			else
+			{
+				(*iter2)->UpdateAndRender();
+				(*iter2)->Bounding_Update();
+				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
+					(*iter2)->Bounding_Render();
+			}
 		}
 	}
 
 	for each(auto p in m_vecCloneStuff)
 	{
 		if ((g_nRenderOption & RENDER_FRUSTUMCULL) && GETSINGLE(cFrustum)->IsinFrustum(&p->GetSphere()))
+		{
+			p->Render();
+			p->Bounding_Update();
+			if (g_nRenderOption & RENDER_BOUNDINGOBJECT)
+				p->Bounding_Render();
+		}
+		else
 		{
 			p->Render();
 			p->Bounding_Update();

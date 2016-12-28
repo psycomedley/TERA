@@ -28,8 +28,10 @@ class cMainGame : public iButtonDelegate
 private:
 	cCube*				cube;
 
+	cMap*				m_pMap;
 	cGrid*				m_pGrid;
 	cObjectTool*		m_cObjectTool;
+	cSkyBox*			m_cSkyBox;
 	bool				m_bLockMouse;
 
 

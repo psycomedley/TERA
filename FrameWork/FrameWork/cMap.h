@@ -49,7 +49,6 @@ public:
 	bool GetHeight(IN float x, OUT float& y, IN float z, IN vector<D3DXVECTOR3>	pVecVertex);
 	void SetupHeight();
 	bool GetHeight(IN float x, OUT float& y, IN float z);
-	vector<D3DXVECTOR3>* cMap::FindCullingVertex();
 
 	void SetShaderTexture();
 	void SetSound();

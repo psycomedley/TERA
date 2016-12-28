@@ -7,7 +7,6 @@
 
 
 cMap::cMap(char* szFolder, char* szFilename)
-	:m_cFrustum(NULL)
 {
 	m_pMesh = new cStaticMesh(szFolder, szFilename);
 	m_pEffect = GETSINGLE(cShaderMgr)->GetEffect(E_SHADER_MAP);
@@ -30,13 +29,11 @@ cMap::cMap(char* szFolder, char* szFilename)
 	SetSound();
 }
 cMap::cMap()
-	:m_cFrustum(NULL)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 }
 cMap::~cMap()
 {
-	SAFE_DELETE(m_cFrustum);
 
 }
 void cMap::Update()
@@ -279,42 +276,8 @@ bool cMap::GetHeight(IN float x, OUT float& y, IN float z)
 	return true;
 	
 }
-vector<D3DXVECTOR3>* cMap::FindCullingVertex()
-{
-	vector<D3DXVECTOR3> vecVertex = *((cStaticMesh*)m_pMesh)->GetVecVertaxies();
-	vector<D3DXVECTOR3> vecCullingVertex;
-	D3DXVECTOR3			coodVertex1;
-	D3DXVECTOR3			coodVertex2;
-	D3DXVECTOR3			coodVertex3;
 
-	for (size_t i = 0; i < vecVertex.size(); i+=3)
-	{
-		D3DXVec3TransformCoord(&coodVertex1, &vecVertex[i], &m_matWorld);
-		D3DXVec3TransformCoord(&coodVertex2, &vecVertex[i+1], &m_matWorld);
-		D3DXVec3TransformCoord(&coodVertex3, &vecVertex[i+2], &m_matWorld);
-		if (m_cFrustum->IsinFrustum(&coodVertex1))
-		{
-			vecCullingVertex.push_back(coodVertex1);
-			vecCullingVertex.push_back(coodVertex2);
-			vecCullingVertex.push_back(coodVertex3);
-		}
-		else if (m_cFrustum->IsinFrustum(&coodVertex2))
-		{
-			vecCullingVertex.push_back(coodVertex1);
-			vecCullingVertex.push_back(coodVertex2);
-			vecCullingVertex.push_back(coodVertex3);
-		}
-		else if (m_cFrustum->IsinFrustum(&coodVertex3))
-		{
-			vecCullingVertex.push_back(coodVertex1);
-			vecCullingVertex.push_back(coodVertex2);
-			vecCullingVertex.push_back(coodVertex3);
-		}
 
-	}
-	
-	return &vecCullingVertex;
-}
 void cMap::SetShaderTexture()
 {
 	m_DiffuseTex = GETSINGLE(cTextureMgr)->GetTexture("map/RWS_5557_Diff.tga");
