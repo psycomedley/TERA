@@ -22,6 +22,7 @@
 #include "cGuardian.h"
 #include "cGardener.h"
 #include "cUIButton.h"
+#include "cSkyBox.h"
 
 
 cMainGame::cMainGame()
@@ -35,6 +36,7 @@ cMainGame::~cMainGame()
 {
 	///////////////юс╫ц////////////////
 	SAFE_DELETE(m_pGrid);
+	
 
 	SAFE_RELEASE(m_cObjectTool);
 
@@ -42,8 +44,6 @@ cMainGame::~cMainGame()
 	//SAFE_RELEASE(m_pRushEffect);
 
 	///////////////////////////////////
-
-	SAFE_RELEASE(m_pMap);
 
 
 	Release();
@@ -182,8 +182,11 @@ HRESULT cMainGame::Setup()
 		Title();
 	}
 
+	cSkyBox* pSkyBox = new cSkyBox;
+	GETSINGLE(cObjMgr)->SetSkyBox(pSkyBox);
 
 
+	GETSINGLE(cObjMgr)->Setup();
 
 	//m_pEffect4 = new cEffect;
 	//m_pEffect4->Setup(10, 10, 1, EFFECT_ALPHABLEND);
@@ -298,7 +301,6 @@ void cMainGame::Update()
 	//	m_pRushEffect->Update();
 	//}
 
-	//	m_pMap->Update();
 	GETSINGLE(cObjMgr)->Update();
 	if(!CAMERA->GetTitle())
 	{
@@ -356,8 +358,8 @@ void cMainGame::Render()
 	////		if (GETSINGLE())
 	//	}
 
-	//	if (m_pMap)
-	//		m_pMap->Render();
+	
+
 	m_pGrid->Render();
 
 	if (KEYBOARD->IsToggleKey(VK_F2))

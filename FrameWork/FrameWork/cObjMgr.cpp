@@ -3,7 +3,7 @@
 #include "cDynamicObj.h"
 #include "cStaticObj.h"
 #include "cMap.h"
-
+#include "cSkyBox.h"
 
 cObjMgr::cObjMgr()
 {
@@ -14,6 +14,11 @@ cObjMgr::~cObjMgr()
 {
 }
 
+void cObjMgr::Setup()
+{
+	if (m_pSkyBox)
+		m_pSkyBox->SetUp();
+}
 
 void cObjMgr::AddMonster(string sKey, cDynamicObj* pMonster)
 {
@@ -65,6 +70,8 @@ void cObjMgr::Update()
 
 void cObjMgr::Render()
 {
+	if (m_pSkyBox)
+		m_pSkyBox->Render();
 	if (m_pMap)
 		m_pMap->Render();
 	if (m_pPlayer)
@@ -97,6 +104,9 @@ void cObjMgr::Render()
 
 void cObjMgr::Release()
 {
+
+	SAFE_RELEASE(m_pSkyBox);
+
 	SAFE_RELEASE(m_pPlayer);
 
 	for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
@@ -209,4 +219,8 @@ void cObjMgr::SetMap(cMap* pMap)
 {
 	m_pMap = pMap;
 	GETSINGLE(cSoundMgr)->Play(m_pMap->GetSoundKey(E_MAP_SOUND_BGM));
+}
+void cObjMgr::SetSkyBox(cSkyBox* pSkyBox)
+{
+	m_pSkyBox = pSkyBox;
 }

@@ -3,11 +3,13 @@
 class cStaticObj;
 class cDynamicObj;
 class cMap;
+class cSkyBox;
 class cObjMgr : public cSingleton<cObjMgr>
 {
 private:
 	cDynamicObj*							m_pPlayer;
 	cMap*									m_pMap;
+	cSkyBox*								m_pSkyBox;
 //	SYNTHESIZE(cDynamicObj*, m_pPlayer, Player);
 	map<string, list<cDynamicObj*>>			m_mapMonster;
 	map<string, cStaticObj*>				m_mapStuff;
@@ -40,7 +42,10 @@ public:
 	cMap* GetMap() { return m_pMap; }
 	void SetMap(cMap* pMap);
 
+	void SetSkyBox(cSkyBox* pSkyBox);
+
 public:
+	void Setup();
 	void Update();
 	void Render();
 	void Release();
