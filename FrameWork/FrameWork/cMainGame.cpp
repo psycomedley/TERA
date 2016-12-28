@@ -143,7 +143,7 @@ HRESULT cMainGame::Setup()
 	pMonster->SetPosition(D3DXVECTOR3(40, 0, 50));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		pMonster = new cGardener("Monster", "Gardener.X");
 		pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));

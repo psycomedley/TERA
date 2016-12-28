@@ -49,7 +49,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FRAMEWORK));
 
-	g_nRenderOption = RENDER_NONE;
+	g_nRenderOption = RENDER_FRUSTUMCULL;
 	g_pMainGame = new cMainGame;
 	if (FAILED(g_pMainGame->Setup()))
 	{
