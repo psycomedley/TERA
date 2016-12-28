@@ -111,13 +111,15 @@ HRESULT cMainGame::Setup()
 	D3DXMatrixRotationY(&matR, D3DX_PI / 2);
 	pPlayer->SetRevision(matR);
 	pPlayer->SetRevisionAngle(D3DX_PI / 2);
-	pPlayer->SetPosition(D3DXVECTOR3(-140, 0, 80));
+	//pPlayer->SetPosition(D3DXVECTOR3(-140, 0, 80));
+	pPlayer->SetPosition(D3DXVECTOR3(140, 0, 80));
 	GETSINGLE(cObjMgr)->SetPlayer(pPlayer);
 
 	cDynamicObj* pBoss = new cOrca("Monster", "Orca.X");
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
 	pBoss->SetRevisionAngle(D3DX_PI / 2);
+	pBoss->SetPosition(D3DXVECTOR3(245, 0, 30));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
 	// 일반몬스터 셋팅
@@ -216,8 +218,7 @@ void cMainGame::Update()
 
 		GETSINGLE(cEventMgr)->Update();
 	}
-	// 오브젝트 툴 켜고끄기
-	if (KEYBOARD->IsToggleKey(VK_F2))
+	
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_F5))
 		g_nRenderOption ^= RENDER_BOUNDINGPLAYER;
@@ -234,7 +235,9 @@ void cMainGame::Update()
 	if (KEYBOARD->IsOnceKeyDown(DIK_F12))
 		g_nRenderOption ^= RENDER_BOUNDINGSPHERE;
 
-	if (KEYBOARD->IsToggleKey(VK_F1))
+
+	// 오브젝트 툴 켜고끄기
+	if (KEYBOARD->IsToggleKey(VK_F2))
 	{
 		if (m_cObjectTool)
 			m_cObjectTool->Update();
@@ -768,42 +771,42 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(10, 0, 65));
+	pMonster->SetPosition(D3DXVECTOR3(10, 0, 5));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(15, 0, 60));
+	pMonster->SetPosition(D3DXVECTOR3(15, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(0, 0, 60));
+	pMonster->SetPosition(D3DXVECTOR3(0, 0, 0));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-5, 0, 75));
+	pMonster->SetPosition(D3DXVECTOR3(-5, 0, 10));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 70));
+	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 10));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 70));
+	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 10));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	
@@ -929,6 +932,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFromFloatTo(0,1.0f));
 	pMonster->SetPosition(D3DXVECTOR3(130, 0, 280));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
