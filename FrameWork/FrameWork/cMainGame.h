@@ -51,6 +51,7 @@ private:
 	void SetUI();
 	void SetShader();
 	void SetEffect();
+	void MonsterPositionSetting();
 
 
 	//cDynamicMesh*	m_pMesh;

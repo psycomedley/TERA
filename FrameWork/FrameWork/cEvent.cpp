@@ -48,8 +48,6 @@ void cEvent::Play()
 		D3DXVECTOR3 pos = GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front()->GetSphere().GetCenter();
 		GETSINGLE(cCameraMgr)->GetCurrentCamera()->SetLookAt(pos);
 
-
-
 		cText* pText = new cText;
 		pText->Setup(E_FONT_EVENT, "Event1", "산책나온", D3DXVECTOR2(GetWindowWidth() / 2 - 70, 600), ST_SIZE(200, 50), XWHITE,
 			TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME | TEXT_SHOWAFTERTIME | TEXT_APPEARWITHALPHA);
