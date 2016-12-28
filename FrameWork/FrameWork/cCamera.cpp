@@ -13,7 +13,6 @@ cCamera::cCamera(void)
 	, m_fPrevDist(6)
 	, m_bUse(false)
 	, m_bControl(true)
-	, m_bTitle(true)
 {
 }
 
@@ -39,52 +38,49 @@ void cCamera::Setup()
 
 void cCamera::Update()
 {
-	
 
-	if (!m_bTitle)
+	if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
 	{
-		if (KEYBOARD->IsOnceKeyDown(DIK_ESCAPE))
-		{
-			m_bControl = !m_bControl;
-			ShowCursor(!m_bControl);
+		m_bControl = !m_bControl;
+		ShowCursor(!m_bControl);
 
-			MOUSE->SetFixPos(GetCursorPosition());
-			if (m_bControl)
-				GETSINGLE(cUIMgr)->AddList("CrossHair");
-			else
-				GETSINGLE(cUIMgr)->RemoveList("CrossHair");
-		}
-
+		MOUSE->SetFixPos(GetCursorPosition());
 		if (m_bControl)
-		{
-			CameraMove();
-			FixMouse();
-		}
-
-		D3DXMATRIXA16 matR, matRX, matRY;
-		D3DXMatrixRotationX(&matRX, m_fCamRotY);
-		D3DXMatrixRotationY(&matRY, m_fCamRotX);
-		matR = matRX * matRY;
-
-		m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
-		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
-
-		if (m_pTarget)
-		{
-			m_vEye = m_vEye + m_pTarget->GetPosition();
-			m_vLookAt = m_pTarget->GetPosition();
-		}
-		else if (m_vTarget)
-		{
-			m_vEye = m_vEye + *m_vTarget;
-			m_vLookAt = *m_vTarget;
-		}
-
-		D3DXMATRIXA16 matView;
-		D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
-		g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+			GETSINGLE(cUIMgr)->AddList("CrossHair");
+		else
+			GETSINGLE(cUIMgr)->RemoveList("CrossHair");
 	}
+
+	if (m_bControl)
+	{
+		CameraMove();
+		FixMouse();
+	}
+
+	D3DXMATRIXA16 matR, matRX, matRY;
+	D3DXMatrixRotationX(&matRX, m_fCamRotY);
+	D3DXMatrixRotationY(&matRY, m_fCamRotX);
+	matR = matRX * matRY;
+
+	m_vEye = D3DXVECTOR3(0, 0, -m_fCamDist);
+	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
+
+	if (m_pTarget)
+	{
+		m_vEye = m_vEye + m_pTarget->GetPosition();
+		m_vLookAt = m_pTarget->GetPosition();
+	}
+	else if (m_vTarget)
+	{
+		m_vEye = m_vEye + *m_vTarget;
+		m_vLookAt = *m_vTarget;
+	}
+
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
+	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 }
+
 
 
 //void cCamera::Update(D3DXVECTOR3* pTarget /*= NULL*/)
