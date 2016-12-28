@@ -18,3 +18,4 @@
 #include "cObjectToolMgr.h"
 #include "cBattleMgr.h"
 #include "cEventMgr.h"
+#include "cFrustum.h"

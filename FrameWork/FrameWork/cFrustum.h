@@ -1,7 +1,7 @@
 #pragma once
 
 class cBoundingSphere;
-class cFrustum
+class cFrustum : public cSingleton<cFrustum>
 {
 private:
 	vector<D3DXVECTOR3>		m_vecV;
@@ -12,6 +12,7 @@ public:
 	void Update();
 	bool IsinFrustum(cBoundingSphere* pSphere);
 	bool IsinFrustum(D3DXVECTOR3* v);
+
 public:
 	cFrustum();
 	~cFrustum();

@@ -17,8 +17,6 @@ private:
 	LPDIRECT3DTEXTURE9		m_SpecularTex;
 	D3DXMATRIXA16			m_matWorld;
 
-	cFrustum*				m_cFrustum;
-
 	vector<D3DXVECTOR3>		m_vecVertex;
 	vector<ST_PNT_VERTEX>	m_vecPNTVertex;
 	vector<float>			m_vecHeight;

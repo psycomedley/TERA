@@ -78,19 +78,25 @@ void cObjMgr::Render()
 	{
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
-			(*iter2)->UpdateAndRender();
-			(*iter2)->Bounding_Update();
-			if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
-				(*iter2)->Bounding_Render();
+			if ((g_nRenderOption & RENDER_FRUSTUMCULL) && GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
+			{
+				(*iter2)->UpdateAndRender();
+				(*iter2)->Bounding_Update();
+				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
+					(*iter2)->Bounding_Render();
+			}
 		}
 	}
 
 	for each(auto p in m_vecCloneStuff)
 	{
-		p->Render();
-		p->Bounding_Update();
-		if (g_nRenderOption & RENDER_BOUNDINGOBJECT)
-			p->Bounding_Render();
+		if ((g_nRenderOption & RENDER_FRUSTUMCULL) && GETSINGLE(cFrustum)->IsinFrustum(&p->GetSphere()))
+		{
+			p->Render();
+			p->Bounding_Update();
+			if (g_nRenderOption & RENDER_BOUNDINGOBJECT)
+				p->Bounding_Render();
+		}
 	}
 }
 

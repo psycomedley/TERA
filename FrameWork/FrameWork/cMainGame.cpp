@@ -75,6 +75,7 @@ HRESULT cMainGame::Setup()
 		return E_FAIL;
 	}
 	GETSINGLE(cSoundMgr)->Setup();
+	GETSINGLE(cFrustum)->Setup();
 
 	SetCamera();
 	SetShader();
@@ -234,6 +235,7 @@ void cMainGame::Update()
 			LockMouse();
 		/*D3DXVECTOR3 playerPos = m_pPlayer->GetPosition();*/
 
+		GETSINGLE(cFrustum)->Update();
 
 		GETSINGLE(cCameraMgr)->Update();
 
@@ -256,6 +258,8 @@ void cMainGame::Update()
 		g_nRenderOption ^= RENDER_BOUNDINGMONSTER;
 	if (KEYBOARD->IsOnceKeyDown(DIK_F8))
 		g_nRenderOption ^= RENDER_BOUNDINGOBJECT;
+	if (KEYBOARD->IsOnceKeyDown(DIK_F9))
+		g_nRenderOption ^= RENDER_FRUSTUMCULL;
 	if (KEYBOARD->IsOnceKeyDown(DIK_F11))
 		g_nRenderOption ^= RENDER_BOUNDINGBOX;
 	if (KEYBOARD->IsOnceKeyDown(DIK_F12))
