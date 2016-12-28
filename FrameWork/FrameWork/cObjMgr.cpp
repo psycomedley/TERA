@@ -85,12 +85,15 @@ void cObjMgr::Render()
 	{
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
 		{
-			if ((g_nRenderOption & RENDER_FRUSTUMCULL) && GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
+			if ((g_nRenderOption & RENDER_FRUSTUMCULL))
 			{
-				(*iter2)->UpdateAndRender();
-				(*iter2)->Bounding_Update();
-				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
-					(*iter2)->Bounding_Render();
+				if (GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
+				{
+					(*iter2)->UpdateAndRender();
+					(*iter2)->Bounding_Update();
+					if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
+						(*iter2)->Bounding_Render();
+				}
 			}
 			else
 			{
@@ -104,12 +107,15 @@ void cObjMgr::Render()
 
 	for each(auto p in m_vecCloneStuff)
 	{
-		if ((g_nRenderOption & RENDER_FRUSTUMCULL) && GETSINGLE(cFrustum)->IsinFrustum(&p->GetSphere()))
+		if ((g_nRenderOption & RENDER_FRUSTUMCULL))
 		{
-			p->Render();
-			p->Bounding_Update();
-			if (g_nRenderOption & RENDER_BOUNDINGOBJECT)
-				p->Bounding_Render();
+			if (GETSINGLE(cFrustum)->IsinFrustum(&p->GetSphere()))
+			{
+				p->Render();
+				p->Bounding_Update();
+				if (g_nRenderOption & RENDER_BOUNDINGOBJECT)
+					p->Bounding_Render();
+			}
 		}
 		else
 		{
