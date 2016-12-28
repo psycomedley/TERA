@@ -253,12 +253,12 @@ void cObjectToolMgr::Update()
 		
 		// 캐릭터와 오브젝트 충돌
 		
-		/*if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
+		if (GETSINGLE(cCollision)->Collision(playerBox, stuffBox))
 		{
 			D3DXVECTOR3 CurPos = pPlayer->GetPosition();
 			D3DXVECTOR3 afterPos = pPlayer->GetPrevPosition();
 			pPlayer->SetPosition(m_PlayerPrevPos);
-		}*/
+		}
 	
 		
 
