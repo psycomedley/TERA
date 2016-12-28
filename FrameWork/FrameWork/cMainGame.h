@@ -22,8 +22,7 @@ class cAlphaText;
 class cUIObject;
 class cObjectTool;
 class cSkyBox;
-class cUIButton;
-class cMainGame : public iButtonDelegate
+class cMainGame
 {
 private:
 	cCube*				cube;
@@ -52,9 +51,6 @@ private:
 	void SetUI();
 	void SetShader();
 	void SetEffect();
-	void Title();
-	void RemoveTitle();
-	virtual void OnClick(cUIObject* pObj) override;
 
 
 	//cDynamicMesh*	m_pMesh;
