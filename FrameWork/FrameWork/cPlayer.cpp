@@ -195,178 +195,177 @@ void cPlayer::CheckState()
 
 void cPlayer::CheckControl()
 {
-	if (!CAMERA->GetTitle())
+
+	bool bControl = false;
+	m_nKeyDir = DIRECTION_NONE;
+	if (KEYBOARD->IsStayKeyDown(DIK_W))
 	{
-		bool bControl = false;
-		m_nKeyDir = DIRECTION_NONE;
-		if (KEYBOARD->IsStayKeyDown(DIK_W))
-		{
-			m_nKeyDir |= DIRECTION_UP;
-			bControl = true;
-		}
-		if (KEYBOARD->IsStayKeyDown(DIK_S))
-		{
-			m_nKeyDir |= DIRECTION_DOWN;
-			bControl = true;
-		}
-		if (KEYBOARD->IsStayKeyDown(DIK_A))
-		{
-			m_nKeyDir |= DIRECTION_LEFT;
-			bControl = true;
-		}
-		if (KEYBOARD->IsStayKeyDown(DIK_D))
-		{
-			m_nKeyDir |= DIRECTION_RIGHT;
-			bControl = true;
-		}
+		m_nKeyDir |= DIRECTION_UP;
+		bControl = true;
+	}
+	if (KEYBOARD->IsStayKeyDown(DIK_S))
+	{
+		m_nKeyDir |= DIRECTION_DOWN;
+		bControl = true;
+	}
+	if (KEYBOARD->IsStayKeyDown(DIK_A))
+	{
+		m_nKeyDir |= DIRECTION_LEFT;
+		bControl = true;
+	}
+	if (KEYBOARD->IsStayKeyDown(DIK_D))
+	{
+		m_nKeyDir |= DIRECTION_RIGHT;
+		bControl = true;
+	}
 
-		//이동
-		if (m_nKeyDir == DIRECTION_NONE)
+	//이동
+	if (m_nKeyDir == DIRECTION_NONE)
+	{
+		//			m_fAngle = fCameraAngle + m_fTempAngle;
+		//			//m_vPosition = m_vPosition - m_vDirection * 0.1;
+		//			Move(0.1f);
+		//			ChangeState(E_STATE_RUN);
+		//			bControl = true;
+		if (m_pState == m_aStates[E_STATE_RUN])
 		{
-//			m_fAngle = fCameraAngle + m_fTempAngle;
-//			//m_vPosition = m_vPosition - m_vDirection * 0.1;
-//			Move(0.1f);
-//			ChangeState(E_STATE_RUN);
-//			bControl = true;
-			if (m_pState == m_aStates[E_STATE_RUN])
-			{
-				if (m_bIsBattle)
-					ChangeState(E_STATE_WAIT);
-				else
-					ChangeState(E_STATE_IDLE);
-			}
+			if (m_bIsBattle)
+				ChangeState(E_STATE_WAIT);
+			else
+				ChangeState(E_STATE_IDLE);
 		}
-		else
-		{
-			float fCameraAngle = CAMERA->GetCamRotX();
-			//		float fAngle = 0;
-			m_fTempAngle = 0.0f;
-			int nKeys = 0;
+	}
+	else
+	{
+		float fCameraAngle = CAMERA->GetCamRotX();
+		//		float fAngle = 0;
+		m_fTempAngle = 0.0f;
+		int nKeys = 0;
 
-			if (m_nKeyDir & DIRECTION_UP)
-				nKeys++;
+		if (m_nKeyDir & DIRECTION_UP)
+			nKeys++;
+		if (m_nKeyDir & DIRECTION_DOWN)
+		{
+			m_fTempAngle += D3DX_PI;
+			nKeys++;
+		}
+		if (m_nKeyDir & DIRECTION_LEFT)
+		{
+			m_fTempAngle -= D3DX_PI / 2;
+			nKeys++;
 			if (m_nKeyDir & DIRECTION_DOWN)
-			{
-				m_fTempAngle += D3DX_PI;
-				nKeys++;
-			}
-			if (m_nKeyDir & DIRECTION_LEFT)
-			{
-				m_fTempAngle -= D3DX_PI / 2;
-				nKeys++;
-				if (m_nKeyDir & DIRECTION_DOWN)
-					m_fTempAngle += D3DX_PI * 2;
-			}
-			else if (m_nKeyDir & DIRECTION_RIGHT)
-			{
-				m_fTempAngle += D3DX_PI / 2;
-				nKeys++;
-			}
-			if (nKeys >= 2)
-				m_fTempAngle /= 2;
+				m_fTempAngle += D3DX_PI * 2;
+		}
+		else if (m_nKeyDir & DIRECTION_RIGHT)
+		{
+			m_fTempAngle += D3DX_PI / 2;
+			nKeys++;
+		}
+		if (nKeys >= 2)
+			m_fTempAngle /= 2;
 
-			//		m_fAngle = fCameraAngle + fAngle;
+		//		m_fAngle = fCameraAngle + fAngle;
 
-			if (IsMoveAble())
-			{
-				m_fAngle = fCameraAngle + m_fTempAngle;
-				//m_vPosition = m_vPosition - m_vDirection * 0.1;
-				Move(0.5f);
-				ChangeState(E_STATE_RUN);
-				bControl = true;
-			}
+		if (IsMoveAble())
+		{
+			m_fAngle = fCameraAngle + m_fTempAngle;
+			//m_vPosition = m_vPosition - m_vDirection * 0.1;
+			Move(0.5f);
+			ChangeState(E_STATE_RUN);
+			bControl = true;
 		}
+	}
 
-		if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	if (KEYBOARD->IsOnceKeyDown(DIK_1))
+	{
+		if (IsMoveAble())
 		{
-			if (IsMoveAble())
+			if (UseSkill(25))
 			{
-				if (UseSkill(25))
-				{
-					ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
-					m_bIsBattle = true;
-					bControl = true;
-				}
-			}
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_2))
-		{
-			if (IsMoveAble())
-			{
-				if (UseSkill(120))
-				{
-					ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
-					m_bIsBattle = true;
-					bControl = true;
-				}
-			}
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_3))
-		{
-			if (IsMoveAble())
-			{
-				if (UseSkill(50))
-				{
-					//			ChangeState(E_STATE_SKILL);
-					ChangeState(E_STATE_SKILL, E_ANI_SKILL);
-					m_bIsBattle = true;
-					bControl = true;
-				}
-			}
-		}
-		if (KEYBOARD->IsOnceKeyDown(DIK_4))
-		{
-			if (IsMoveAble())
-			{
-				ChangeState(E_STATE_REACTION);
-				//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+				ChangeState(E_STATE_SKILL, E_ANI_STRIKE);
 				m_bIsBattle = true;
 				bControl = true;
 			}
 		}
-
-		if (KEYBOARD->IsOnceKeyDown(DIK_M))
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_2))
+	{
+		if (IsMoveAble())
 		{
-			//임시
-			dlatl();
-		}
-
-
-		//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
-		if (CAMERA->GetControl())
-		{
-			if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+			if (UseSkill(120))
 			{
-				if (m_pState != m_aStates[E_STATE_SKILL])
-				{
-					if (m_nKeyDir == DIRECTION_NONE &&
-						m_pState != m_aStates[E_STATE_COMBO])
-						m_fAngle = CAMERA->GetCamRotX();
-					ChangeState(E_STATE_COMBO);
-					m_bIsBattle = true;
-				}
+				ChangeState(E_STATE_SKILL, E_ANI_DOUBLEATTACK);
+				m_bIsBattle = true;
+				bControl = true;
 			}
-			if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
-			{
-				if (m_pState != m_aStates[E_STATE_DEFENCE_HIT])
-					ChangeState(E_STATE_DEFENCE);
-			}
-			if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
-			{
-				if (m_bIsBattle)
-					ChangeState(E_STATE_WAIT);
-				else
-					ChangeState(E_STATE_IDLE);
-			}
-		}
-
-		if (bControl == true && !CAMERA->GetControl())
-		{
-			CAMERA->SetControl(true);
-			ShowCursor(false);
-			GETSINGLE(cUIMgr)->AddList("CrossHair");
 		}
 	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_3))
+	{
+		if (IsMoveAble())
+		{
+			if (UseSkill(50))
+			{
+				//			ChangeState(E_STATE_SKILL);
+				ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+				m_bIsBattle = true;
+				bControl = true;
+			}
+		}
+	}
+	if (KEYBOARD->IsOnceKeyDown(DIK_4))
+	{
+		if (IsMoveAble())
+		{
+			ChangeState(E_STATE_REACTION);
+			//			ChangeState(E_STATE_SKILL, E_ANI_SKILL);
+			m_bIsBattle = true;
+			bControl = true;
+		}
+	}
+
+	if (KEYBOARD->IsOnceKeyDown(DIK_M))
+	{
+		//임시
+		dlatl();
+	}
+
+
+	//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
+	if (CAMERA->GetControl())
+	{
+		if (MOUSE->IsStayKeyDown(MOUSEBTN_LEFT))
+		{
+			if (m_pState != m_aStates[E_STATE_SKILL])
+			{
+				if (m_nKeyDir == DIRECTION_NONE &&
+					m_pState != m_aStates[E_STATE_COMBO])
+					m_fAngle = CAMERA->GetCamRotX();
+				ChangeState(E_STATE_COMBO);
+				m_bIsBattle = true;
+			}
+		}
+		if (MOUSE->IsStayKeyDown(MOUSEBTN_RIGHT))
+		{
+			if (m_pState != m_aStates[E_STATE_DEFENCE_HIT])
+				ChangeState(E_STATE_DEFENCE);
+		}
+		if (MOUSE->IsOnceKeyUp(MOUSEBTN_RIGHT))
+		{
+			if (m_bIsBattle)
+				ChangeState(E_STATE_WAIT);
+			else
+				ChangeState(E_STATE_IDLE);
+		}
+	}
+
+	if (bControl == true && !CAMERA->GetControl())
+	{
+		CAMERA->SetControl(true);
+		ShowCursor(false);
+		GETSINGLE(cUIMgr)->AddList("CrossHair");
+	}
+
 }
 
 
