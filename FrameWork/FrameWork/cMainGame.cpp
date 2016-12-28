@@ -124,12 +124,6 @@ HRESULT cMainGame::Setup()
 	MonsterPositionSetting();
 
 
-	/*cDynamicObj* m_pBoss2 = new cOrca("Monster", "Orca.X");
-	m_pBoss2->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	m_pBoss2->SetRevision(matR);
-	m_pBoss2->SetPosition(D3DXVECTOR3(10, 0, 0));
-	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)m_pBoss2)->GetInfo().sName, m_pBoss2);*/
-
 	//	GETSINGLE(cCameraMgr)->Setup();
 	GETSINGLE(cCameraMgr)->GetCamera("MainCamera")->SetVecTarget(&GETSINGLE(cObjMgr)->GetPlayer()->GetCameraFocus());
 
@@ -217,7 +211,7 @@ void cMainGame::Update()
 		GETSINGLE(cEventMgr)->Update();
 	}
 	// 오브젝트 툴 켜고끄기
-	if (KEYBOARD->IsToggleKey(VK_F2))
+	KEYBOARD->IsToggleKey(VK_F2);
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_F5))
 		g_nRenderOption ^= RENDER_BOUNDINGPLAYER;
