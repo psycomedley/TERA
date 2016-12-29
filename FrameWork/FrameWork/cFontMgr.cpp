@@ -83,6 +83,32 @@ LPD3DXFONT cFontMgr::GetFont(E_FONT_TYPE eFontType)
 			//			strcpy_s(fd.FaceName, "umberto");
 			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
 			break;
+		case E_FONT_EVENT2:
+			fd.Height = 20;
+			fd.Width = 10;
+			fd.Weight = FW_NORMAL;
+			fd.Italic = false;
+			fd.CharSet = DEFAULT_CHARSET;
+			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
+			fd.PitchAndFamily = FF_DONTCARE;
+			strcpy_s(fd.FaceName, "πŸ≈¡√º");
+			//			AddFontResource("umberto.ttf");
+			//			strcpy_s(fd.FaceName, "umberto");
+			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
+			break;
+		case E_FONT_EVENT3:
+			fd.Height = 70;
+			fd.Width = 50;
+			fd.Weight = FW_NORMAL;
+			fd.Italic = false;
+			fd.CharSet = DEFAULT_CHARSET;
+			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
+			fd.PitchAndFamily = FF_DONTCARE;
+			strcpy_s(fd.FaceName, "πŸ≈¡√º");
+			//			AddFontResource("umberto.ttf");
+			//			strcpy_s(fd.FaceName, "umberto");
+			D3DXCreateFontIndirect(g_pD3DDevice, &fd, &m_mapFont[eFontType]);
+			break;
 		}
 	}
 	return m_mapFont[eFontType];

@@ -48,7 +48,7 @@ public:
 	virtual cBoundingBox GetBox() { return cGameObject::GetBox(); }
 
 public:
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL);
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL, bool bRender = true);
 
 public:
 	cDynamicObj(char* szFolder, char* szFilename);

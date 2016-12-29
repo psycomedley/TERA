@@ -60,7 +60,7 @@ void cGardener::SetupStatus()
 {
 	m_stInfo.sName = "Gardener";
 
-	m_stInfo.fMaxHp = 1000;
+	m_stInfo.fMaxHp = 1;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -92,11 +92,11 @@ void cGardener::SetSound()
 }
 
 
-void cGardener::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cGardener::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 

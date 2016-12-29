@@ -58,13 +58,10 @@ void cObjMgr::Update()
 {
 	if (m_pMap)
 		m_pMap->Update();
+	
 	/*for (auto iter = m_mapMonster.begin(); iter != m_mapMonster.end(); iter++)
-	{
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++)
-		{
-			(*iter2)->Update();
-		}
-	}*/
+			(*iter2)->Update();*/
 }
 
 
@@ -87,13 +84,19 @@ void cObjMgr::Render()
 		{
 			if ((g_nRenderOption & RENDER_FRUSTUMCULL))
 			{
-				if (GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
+				if ((*iter2)->IsMesh())
 				{
-					(*iter2)->UpdateAndRender();
-					(*iter2)->Bounding_Update();
-					if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
-						(*iter2)->Bounding_Render();
+					if (GETSINGLE(cFrustum)->IsinFrustum(&(*iter2)->GetSphere()))
+						(*iter2)->UpdateAndRender();
+					else
+						(*iter2)->UpdateAndRender(NULL, false);
 				}
+				else
+					(*iter2)->UpdateAndRender(NULL, false);
+
+				(*iter2)->Bounding_Update();
+				if (g_nRenderOption & RENDER_BOUNDINGMONSTER)
+					(*iter2)->Bounding_Render();
 			}
 			else
 			{

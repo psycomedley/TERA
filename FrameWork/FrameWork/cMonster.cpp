@@ -53,12 +53,13 @@ void cMonster::Update()
 }
 
 
-void cMonster::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/)
+void cMonster::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/, bool bRender)
 {
 	if (m_fPassedVanishTime < 1.0f)
-		cDynamicObj::UpdateAndRender(pmat);
-
-//	m_pMoveColBox->Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
+		cDynamicObj::UpdateAndRender(pmat, bRender);
+	
+	if (g_nRenderOption & RENDER_BOUNDINGBOX)
+		m_pMoveColBox->Render(m_vPosition, m_vScale, m_fAngle, &m_matRevision);
 //	m_pMoveColSphere->Render(m_vPosition, m_vScale);
 }
 

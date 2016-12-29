@@ -27,7 +27,7 @@ void cStateMonsterSkill::Update()
 	{
 		if (m_pParent->GetCurrentAnimPosition() >= 0.25f && m_pParent->GetCurrentAnimPosition() <= 0.43f)
 		{
-			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere());
+			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 0, true, 0.7f);
 			PlaySound(E_SOUND_ATK);
 		}
 	}
@@ -38,7 +38,7 @@ void cStateMonsterSkill::Update()
 		{
 			m_pParent->Move(0.4f);
 
-			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 100);
+			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, m_pParent->GetSphere(), 100, true, 0.7f);
 		//	GETSINGLE(cSoundMgr)->Play(m_pParent->GetSoundKey(E_SOUND_SKILL1));
 		}
 	}

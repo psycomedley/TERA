@@ -43,7 +43,7 @@ void cStateMonsterSkill2::Update()
 			sphere.SetRadius(3);
 
 
-			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
+			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere, 0, true, 0.7f);
 			PlaySound(E_SOUND_ATK);
 		}
 	}

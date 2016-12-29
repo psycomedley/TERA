@@ -2,6 +2,7 @@
 #include "cStateDefence.h"
 #include "cDynamicObj.h"
 #include "cStaticMeshEffect.h"
+#include "cPlayer.h"
 
 
 cStateDefence::cStateDefence()
@@ -29,6 +30,8 @@ void cStateDefence::Start()
 	aniInfo.SetInfo(E_ANI_DEFENCE_LOOP, false, true);
 	m_pParent->AddAnimation(aniInfo);
 	m_pParent->AnimationStart();
+
+	((cPlayer*)m_pParent)->UseSkill(20);
 
 	if (!nowEffect)
 	{

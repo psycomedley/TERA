@@ -270,7 +270,7 @@ void cPlayer::CheckControl()
 		{
 			m_fAngle = fCameraAngle + m_fTempAngle;
 			//m_vPosition = m_vPosition - m_vDirection * 0.1;
-			Move(0.1f);
+			Move(0.2f);
 			ChangeState(E_STATE_RUN);
 			bControl = true;
 		}
@@ -330,6 +330,12 @@ void cPlayer::CheckControl()
 		dlatl();
 	}
 
+	if (KEYBOARD->IsOnceKeyDown(DIK_Z))
+	{
+		m_stInfo.fHp = m_stInfo.fMaxHp;
+		m_stInfo.fMp = m_stInfo.fMaxMp;
+	}
+
 
 	//마우스 좌,우클릭은 ESC 눌렸을 때 작동 안함
 	if (CAMERA->GetControl())
@@ -369,12 +375,12 @@ void cPlayer::CheckControl()
 }
 
 
-void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	if (!IsFull())
 		m_fPassedTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 
-	if (m_fPassedTime >= 5.0f)
+	if (m_fPassedTime >= 7.0f)
 	{
 		Regeneration();
 		m_fPassedTime -= 3.0f;
@@ -383,8 +389,13 @@ void cPlayer::UpdateAndRender(D3DXMATRIXA16* pmat)
 	UpdateUI();
 	CheckState();
 	m_pState->Update();
+
+	if (m_pState == m_aStates[E_STATE_DEFENCE])
+		if (!UseSkill(1))
+			ChangeState(E_STATE_WAIT);
+
 	CheckControl();
-	cDynamicObj::UpdateAndRender(pmat);
+	cDynamicObj::UpdateAndRender(pmat, bRender);
 	//	GetBox();
 	//	m_pArm->UpdateAndRender();
 
@@ -508,15 +519,15 @@ float cPlayer::Damaged(ST_UNIT_INFO stInfo, float fAddDamage)
 
 		if (m_pState == m_aStates[E_STATE_DEFENCE])
 		{
-			if (m_pState->GetPassedTime() <= 0.05f)
+			if (m_pState->GetPassedTime() <= 0.1f)
 				fDamage = 0;
 			else
 			{
 				float fOriDamage = fDamage;
 				fDamage = (int)fDamage * 0.3f;
 
-				if (fOriDamage >= (m_stInfo.fMaxHp) / 100 * 15)
-					ChangeState(E_STATE_DEFENCE_HIT);
+	//			if (fOriDamage >= (m_stInfo.fMaxHp) / 100 * 15)
+	//				ChangeState(E_STATE_DEFENCE_HIT);
 			}
 		}
 
@@ -567,16 +578,48 @@ void cPlayer::Regeneration()
 {
 	int nRegenHP = m_stInfo.fMaxHp / 40;
 	int nRegenMP = m_stInfo.fMaxMp / 40;
+	int nDrawHP = nRegenHP;
+	int nDrawMP = nRegenMP;
+	string str = "+";
 
 	if (m_stInfo.fHp + nRegenHP >= m_stInfo.fMaxHp)
+	{
+		nDrawHP = m_stInfo.fMaxHp - m_stInfo.fHp;
 		m_stInfo.fHp = m_stInfo.fMaxHp;
+	}
 	else
 		m_stInfo.fHp = m_stInfo.fHp + nRegenHP;
 
+	char szStr[32] = { '\0', };
+	sprintf_s(szStr, sizeof(szStr), "%d", nDrawHP);
+	string hp = str + szStr;
+	
+	GETSINGLE(cTextMgr)->AddList("RegenHP");
+	cText* text = GETSINGLE(cTextMgr)->GetLastTextInList();
+//	text->SetTextFloat(nDrawHP);
+	text->SetText(hp);
+	text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + 50, GetWindowHeight() / 2 + 50));
+	text->Start();
+
+
 	if (m_stInfo.fMp + nRegenMP >= m_stInfo.fMaxMp)
+	{
+		nDrawMP = m_stInfo.fMaxMp - m_stInfo.fMp;
 		m_stInfo.fMp = m_stInfo.fMaxMp;
+	}
 	else
 		m_stInfo.fMp = m_stInfo.fMp + nRegenMP;
+
+	sprintf_s(szStr, sizeof(szStr), "%d", nDrawMP);
+	string mp = str + szStr;
+
+	GETSINGLE(cTextMgr)->AddList("RegenMP");
+	text = GETSINGLE(cTextMgr)->GetLastTextInList();
+//	text->SetTextFloat(nDrawMP);
+	text->SetText(mp);
+	text->SetPosition(D3DXVECTOR2(GetWindowWidth() / 2 + 50, GetWindowHeight() / 2 + 80));
+	text->Start();
+
 }
 
 

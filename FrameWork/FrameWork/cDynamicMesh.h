@@ -29,7 +29,7 @@ public:
 //	bool IsExistAniController() { if (m_pAnimController) return true; return false; }
 //	LPD3DXANIMATIONCONTROLLER GetAniController() { return m_pAnimController; }
 
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL);
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat = NULL, bool bRender = true);
 
 	D3DXMATRIXA16* GetMatrix(string sKey);
 

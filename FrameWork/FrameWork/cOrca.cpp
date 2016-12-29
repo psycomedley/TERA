@@ -80,7 +80,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(10.0f, 100);
+	m_skillLongMove.SetInfo(57.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
@@ -94,9 +94,9 @@ void cOrca::SetupStatus()
 	pText->SetMoveTime(3.0f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
-	m_skillHeavyAtk.SetInfo(60.0f, 100);
+	m_skillHeavyAtk.SetInfo(37.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(20.0f, 100);
+	m_skillHeavyAtk2.SetInfo(27.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 
@@ -118,11 +118,11 @@ void cOrca::SetSound()
 }
 
 
-void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cOrca::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 
@@ -138,8 +138,10 @@ void cOrca::ChangeState(iState* pState, int nSkillIndex /*= -1*/)
 	if (pPrevState && pState != m_aStates[E_STATE_DEATH])
 	{
 		pPrevState->End();
-	//	GETSINGLE(cEventMgr)->Play(1);
 	}
+
+	if (pState == m_aStates[E_STATE_DEATH])
+		GETSINGLE(cEventMgr)->Play(1);
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 
@@ -165,8 +167,10 @@ void cOrca::ChangeState(int pState, int nSkillIndex /*= -1*/)
 	if (pPrevState && pState != E_STATE_DEATH)
 	{
 		pPrevState->End();
-	//	GETSINGLE(cEventMgr)->Play(1);
 	}
+
+	if (m_aStates[pState] == m_aStates[E_STATE_DEATH])
+		GETSINGLE(cEventMgr)->Play(1);
 
 	((cDynamicMesh*)m_pMesh)->GetAnimController()->SetDelegate(m_pState);
 

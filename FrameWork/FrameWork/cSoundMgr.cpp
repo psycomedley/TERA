@@ -66,7 +66,9 @@ void cSoundMgr::Add(string sKey, string sPath, bool bBgm /*= false*/)
 	if (bBgm)
 		m_pSystem->createStream(sPath.c_str(), FMOD_LOOP_NORMAL, 0, &m_ppSound[m_mapSound.size()]);
 	else
+	{
 		m_pSystem->createSound(sPath.c_str(), FMOD_DEFAULT, 0, &m_ppSound[m_mapSound.size()]);
+	}
 
 	m_mapSound.insert(make_pair(sKey.c_str(), m_ppSound[m_mapSound.size()]));
 }
@@ -130,4 +132,27 @@ void cSoundMgr::Resume(string sKey)
 			break;
 		}
 	}
+}
+
+
+bool cSoundMgr::IsPlay(string sKey)
+{
+	bool isPlay = true;
+	int count = 0;
+	for (auto iter = m_mapSound.begin(); iter != m_mapSound.end(); iter++, count++)
+		if (sKey == iter->first)
+			if (m_ppChannel[count]->isPlaying(&isPlay))
+				return true;
+
+	return false;
+}
+
+
+bool cSoundMgr::IsPlay(int nCount)
+{
+	bool isPlay = true;
+	if (m_ppChannel[nCount]->isPlaying(&isPlay))
+		return true;
+
+	return false;
 }

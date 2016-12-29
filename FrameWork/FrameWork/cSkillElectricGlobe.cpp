@@ -130,7 +130,7 @@ bool cSkillElectricGlobe::IsMoveAble()
 }
 
 
-void cSkillElectricGlobe::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cSkillElectricGlobe::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 //	m_pState->Update();

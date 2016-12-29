@@ -104,7 +104,7 @@ HRESULT cDynamicMesh::Load(char* szFolder, char* szFile)
 }
 
 
-void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	if (m_pAnimController)
 	{
@@ -119,7 +119,8 @@ void cDynamicMesh::UpdateAndRender(D3DXMATRIXA16* pmat)
 	//	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 
 		Update(m_pRootFrame, pmat);
-		Render(m_pRootFrame);
+		if (bRender)
+			Render(m_pRootFrame);
 	}
 }
 

@@ -66,7 +66,7 @@ void cOrcaClone::SetupStatus()
 }
 
 
-void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	if (m_bActive == false)
 		return;
@@ -81,7 +81,7 @@ void cOrcaClone::UpdateAndRender(D3DXMATRIXA16* pmat)
 
 	Update();
 	m_pState->Update();
-	cDynamicObj::UpdateAndRender(pmat);
+	cDynamicObj::UpdateAndRender(pmat, bRender);
 }
 
 

@@ -15,7 +15,7 @@ public:
 	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
 
 public:
-	virtual void UpdateAndRender(D3DXMATRIXA16* pmat) override;
+	virtual void UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender) override;
 
 	virtual bool IsMoveAble() override;
 	void SetVanish();

@@ -58,13 +58,13 @@ void cGuardian::SetupStatus()
 {
 	m_stInfo.sName = "Guardian";
 	
-	m_stInfo.fMaxHp = 1000;
+	m_stInfo.fMaxHp = 1;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
 
-	m_stInfo.fMaxDamage = 212.0f;
-	m_stInfo.fMinDamage = 22.0f;
+	m_stInfo.fMaxDamage = 252.0f;
+	m_stInfo.fMinDamage = 102.0f;
 	m_stInfo.fDefence = 8.0f;
 
 	m_fDetectRange = 15.0f;
@@ -91,11 +91,11 @@ void cGuardian::SetSound()
 }
 
 
-void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat)
+void cGuardian::UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender)
 {
 	Update();
 	m_pState->Update();
-	cMonster::UpdateAndRender(pmat);
+	cMonster::UpdateAndRender(pmat, bRender);
 }
 
 
