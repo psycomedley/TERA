@@ -68,7 +68,7 @@ void cCamera::Update()
 	if (m_pTarget)
 	{
 		m_vEye = m_vEye + m_pTarget->GetPosition();
-		m_vLookAt = m_pTarget->GetPosition();
+	//	m_vLookAt = m_pTarget->GetPosition();
 	}
 	else if (m_vTarget)
 	{

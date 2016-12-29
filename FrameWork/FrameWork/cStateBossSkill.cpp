@@ -152,11 +152,11 @@ void cStateBossSkill::Update()
 			GETSINGLE(cEffectMgr)->AddList("orcaBackAtk", m_pParent->GetPosition() + vec2, matR2);
 
 			cBoundingSphere sphere;
-			sphere.SetCenter(vec1);
+			sphere.SetCenter(m_pParent->GetPosition() + vec1);
 			sphere.SetRadius(6);
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
 
-			sphere.SetCenter(vec2);
+			sphere.SetCenter(m_pParent->GetPosition() + vec2);
 			sphere.SetRadius(6);
 			GETSINGLE(cBattleMgr)->EnemyDamage(m_pParent, sphere);
 		}

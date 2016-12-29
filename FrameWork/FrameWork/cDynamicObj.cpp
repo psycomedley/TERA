@@ -67,13 +67,13 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/, bool bRender)
 		((cDynamicMesh*)m_pMesh)->GetEffect()->SetFloat("g_fPassedTime", m_fPassedVanishTime);
 	}*/
 
-	if (((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_DIE)
+	if (m_pMesh && ((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_DIE)
 	{
 		m_fPassedVanishTime += GETSINGLE(cTimeMgr)->getElapsedTime() * 0.5f;
 		((cDynamicMesh*)m_pMesh)->GetEffect()->SetFloat("g_fPassedTime", m_fPassedVanishTime);
 	}
 
-	if (((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_HIT)
+	if (m_pMesh && ((cDynamicMesh*)m_pMesh)->GetTechnique() == E_DYNA_TECH_HIT)
 	{
 		m_fPassedHitTime += GETSINGLE(cTimeMgr)->getElapsedTime();
 		if (m_fPassedHitTime >= 0.15f)
@@ -83,7 +83,8 @@ void cDynamicObj::UpdateAndRender(D3DXMATRIXA16* pmat /*= NULL*/, bool bRender)
 		}
 	}
 
-	((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat, bRender);
+	if (m_pMesh)
+		((cDynamicMesh*)m_pMesh)->UpdateAndRender(&mat, bRender);
 }
 
 

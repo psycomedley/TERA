@@ -14,6 +14,9 @@ public:
 public:
 	virtual void Update() override;
 
+private:
+	void Next();
+
 public:
 	cEvent2();
 	~cEvent2();

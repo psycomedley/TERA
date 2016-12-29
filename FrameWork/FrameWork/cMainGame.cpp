@@ -35,8 +35,6 @@ cMainGame::cMainGame()
 cMainGame::~cMainGame()
 {
 	///////////////임시////////////////
-	SAFE_DELETE(m_pGrid);
-	
 
 	SAFE_RELEASE(m_cObjectTool);
 
@@ -77,7 +75,6 @@ HRESULT cMainGame::Setup()
 	GETSINGLE(cSoundMgr)->Setup();
 	GETSINGLE(cFrustum)->Setup();
 
-	SetCamera();
 	SetShader();
 	SetEffect();
 	SetUI();
@@ -103,6 +100,26 @@ HRESULT cMainGame::Setup()
 	pText->SetMoveTime(0.5f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
+	pText = new cText;
+	pText->Setup(E_FONT_MONSTERDAMAGE, "RegenHP", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XGREEN,
+		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
+	pText->SetShowTime(0.2f);
+	pText->SetAlphaTime(0.5f);
+	pText->SetMoveSpeed(0.5f);
+	pText->SetDirection(DIRECTION_UP);
+	pText->SetMoveTime(0.5f);
+	GETSINGLE(cTextMgr)->AddText(pText);
+
+	pText = new cText;
+	pText->Setup(E_FONT_MONSTERDAMAGE, "RegenMP", "1", D3DXVECTOR2(100, 100), ST_SIZE(80, 50), XBLUE,
+		TEXT_ALPHA | TEXT_MOVE | TEXT_SHOWTIME | TEXT_MOVEAFTERTIME);
+	pText->SetShowTime(0.2f);
+	pText->SetAlphaTime(0.5f);
+	pText->SetMoveSpeed(0.5f);
+	pText->SetDirection(DIRECTION_UP);
+	pText->SetMoveTime(0.5f);
+	GETSINGLE(cTextMgr)->AddText(pText);
+
 
 
 	cDynamicObj* pPlayer = new cPlayer("Popori", "Popori.X");
@@ -118,8 +135,11 @@ HRESULT cMainGame::Setup()
 	pBoss->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pBoss->SetRevision(matR);
 	pBoss->SetRevisionAngle(D3DX_PI / 2);
+	pBoss->SetPosition(D3DXVECTOR3(245, 0, 30));
 	GETSINGLE(cObjMgr)->AddMonster(((cOrca*)pBoss)->GetInfo().sName, pBoss);
 
+	SetCamera();
+	
 	// 일반몬스터 셋팅
 	MonsterPositionSetting();
 
@@ -140,8 +160,6 @@ HRESULT cMainGame::Setup()
 
 	///////////////임시////////////////
 
-	m_pGrid = new cGrid;
-	m_pGrid->Setup(30);
 
 	cSkyBox* pSkyBox = new cSkyBox;
 	GETSINGLE(cObjMgr)->SetSkyBox(pSkyBox);
@@ -210,8 +228,7 @@ void cMainGame::Update()
 
 		GETSINGLE(cEventMgr)->Update();
 	}
-	// 오브젝트 툴 켜고끄기
-	KEYBOARD->IsToggleKey(VK_F2);
+	
 
 	if (KEYBOARD->IsOnceKeyDown(DIK_F5))
 		g_nRenderOption ^= RENDER_BOUNDINGPLAYER;
@@ -228,7 +245,9 @@ void cMainGame::Update()
 	if (KEYBOARD->IsOnceKeyDown(DIK_F12))
 		g_nRenderOption ^= RENDER_BOUNDINGSPHERE;
 
-	if (KEYBOARD->IsToggleKey(VK_F1))
+
+	// 오브젝트 툴 켜고끄기
+	if (KEYBOARD->IsToggleKey(VK_F3))
 	{
 		if (m_cObjectTool)
 			m_cObjectTool->Update();
@@ -320,8 +339,6 @@ void cMainGame::Render()
 
 	
 
-	m_pGrid->Render();
-
 	if (KEYBOARD->IsToggleKey(VK_F2))
 	{
 		m_cObjectTool->Render();
@@ -366,8 +383,6 @@ void cMainGame::Render()
 
 void cMainGame::Release()
 {
-	SAFE_DELETE(cube);
-
 	GETSINGLE(cTextureMgr)->Release();
 	GETSINGLE(cTimeMgr)->Release();
 	GETSINGLE(cInput)->Release();
@@ -403,6 +418,7 @@ void cMainGame::SetCamera()
 	pCamera->Setup();
 	pCamera->SetCamDist(-30);
 	pCamera->SetControl(false);
+	pCamera->SetTarget(GETSINGLE(cObjMgr)->GetMonsterList("Orca")->front());
 
 	GETSINGLE(cCameraMgr)->AddCamera("EventCamera", pCamera);
 }
@@ -762,93 +778,98 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(10, 0, 65));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetPosition(D3DXVECTOR3(120, 0, 150));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(15, 0, 60));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetPosition(D3DXVECTOR3(125, 0, 145));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(0, 0, 60));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetPosition(D3DXVECTOR3(110, 0, 145));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-5, 0, 75));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
-
-	pMonster = new cGardener("Monster", "Gardener.X");
-	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	pMonster->SetRevision(matR);
-	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 70));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetPosition(D3DXVECTOR3(105, 0, 115));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(-10, 0, 70));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetPosition(D3DXVECTOR3(105, 0, 105));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	
 	//=========== 장작 있는근처
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(0, 0, 150));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	pMonster->SetPosition(D3DXVECTOR3(110, 0, 150));
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(3, 0, 170));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(20, 0, 160));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(5, 0, 120));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(13, 0, 125));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	//============ 중간 큰 공터
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(70, 0, 200));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(75, 0, 205));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -856,43 +877,49 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(70, 0, 208));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	// ==============보스 전면
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(150, 0, 150));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	pMonster->SetAngle(-D3DX_PI / 4);
+	pMonster->SetPosition(D3DXVECTOR3(200, 0, 70));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(140, 0, 155));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	pMonster->SetAngle(-D3DX_PI / 4);
+	pMonster->SetPosition(D3DXVECTOR3(190, 0, 75));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(160, 0, 150));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	pMonster->SetAngle(-D3DX_PI / 4);
+	pMonster->SetPosition(D3DXVECTOR3(180, 0, 70));
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
-	pMonster->SetPosition(D3DXVECTOR3(150, 0, 160));
+	pMonster->SetAngle(-D3DX_PI / 4);
+	pMonster->SetPosition(D3DXVECTOR3(200, 0, 80));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 	///================언덕
 	pMonster = new cGuardian("Monster", "Guardian.X");
-	pMonster->SetScale(D3DXVECTOR3(0.085f, 0.085f, 0.085f));
+	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(80, 0, 65));
 	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
@@ -900,6 +927,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(70, 0, 50));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -907,6 +935,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(80, 0, 50 ));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -914,22 +943,26 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(90, 0, 50));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
 
 	//==============텐트 근처
-	pMonster = new cGardener("Monster", "Guardian.X");
+	pMonster = new cGuardian("Monster", "Guardian.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
+	pMonster->SetAngle(GetFromFloatTo(0,1.0f));
 	pMonster->SetPosition(D3DXVECTOR3(130, 0, 280));
-	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
+	GETSINGLE(cObjMgr)->AddMonster(((cGuardian*)pMonster)->GetInfo().sName, pMonster);
 
 	pMonster = new cGardener("Monster", "Gardener.X");
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(135, 0, 284));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -937,6 +970,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(120, 0, 275));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -944,6 +978,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(138, 0, 280));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 
@@ -951,6 +986,7 @@ void cMainGame::MonsterPositionSetting()
 	pMonster->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 	pMonster->SetRevision(matR);
 	pMonster->SetRevisionAngle(D3DX_PI / 2);
+	pMonster->SetAngle(GetFloat(D3DX_PI));
 	pMonster->SetPosition(D3DXVECTOR3(120, 0, 288));
 	GETSINGLE(cObjMgr)->AddMonster(((cGardener*)pMonster)->GetInfo().sName, pMonster);
 

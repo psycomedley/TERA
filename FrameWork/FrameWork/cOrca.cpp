@@ -69,7 +69,7 @@ void cOrca::SetupStatus()
 {
 	m_stInfo.sName = "Orca";
 
-	m_stInfo.fMaxHp = 100;
+	m_stInfo.fMaxHp = 10000;
 	m_stInfo.fHp = m_stInfo.fMaxHp;
 	m_stInfo.fMaxMp = 100;
 	m_stInfo.fMp = m_stInfo.fMaxMp;
@@ -80,7 +80,7 @@ void cOrca::SetupStatus()
 
 	m_fDetectRange = 15.0f;
 
-	m_skillLongMove.SetInfo(10.0f, 100);
+	m_skillLongMove.SetInfo(57.0f, 100);
 	m_skillLongMove.sSpeech = "³ªÀÇ ¼Óµµ¸¦ ÂØ²û¸¸ ´À²¸º¸¾Æ¶ó!!";
 //	GETSINGLE(cTextMgr)->AddAlphaText(E_FONT_BOSS, m_skillLongMove.sSpeech, m_skillLongMove.sSpeech, 3, D3DXVECTOR2(GetWindowWidth() / 2, 150), ST_SIZE(500, 50), XWHITE, TEXT_MOVEUP, 255, 1.0f);
 	cText* pText = new cText;
@@ -94,9 +94,9 @@ void cOrca::SetupStatus()
 	pText->SetMoveTime(3.0f);
 	GETSINGLE(cTextMgr)->AddText(pText);
 
-	m_skillHeavyAtk.SetInfo(60.0f, 100);
+	m_skillHeavyAtk.SetInfo(37.0f, 100);
 	
-	m_skillHeavyAtk2.SetInfo(20.0f, 100);
+	m_skillHeavyAtk2.SetInfo(27.0f, 100);
 
 	m_skillAttack.SetInfo(3.0f, 10);
 

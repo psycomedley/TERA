@@ -14,7 +14,7 @@ public:
 	virtual void ChangeState(int pState, int nSkillIndex = -1) override;
 	virtual bool IsMoveAble() override;
 	void Setup();
-	void UpdateAndRender(D3DXMATRIXA16* pmat);
+	void UpdateAndRender(D3DXMATRIXA16* pmat, bool bRender = true) override;
 
 public:
 	cSkillElectricGlobe();
